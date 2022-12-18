@@ -8,6 +8,7 @@ export const productsData = [
             'Магический предмет исключительной силы. Это одноручный меч (34 дюйма), созданный из чистого серебра, и достаточно лёгкий, чтобы его мог поднять даже подросток. Рукоять меча отделана рубинами, на лезвии клинка видна гравировка «Годрик Гриффиндор».',
         price: '10$',
         discount: '-10%',
+        stock: 53,
         images: ['./images-storage/mech_Griffindora/grif1.png', './images-storage/mech_Griffindora/grif2.png'],
     },
     {
@@ -19,6 +20,7 @@ export const productsData = [
             'Волшебная мантия из очень лёгкой «серебристой» ткани, делающая невидимым того, кто её надевает. Обычные мантии-невидимки служат очень недолго и их производство очень дорогостоящее. У Гарри была особая мантия-невидимка, так как являлась одним из трех Даров Смерти.',
         price: '10$',
         discount: '-10%',
+        stock: 84,
         images: ['./images-storage/mantiya_nevidimka/mant1.jpg', './images-storage/mantiya_nevidimka/mant2.jpg'],
     },
     {
@@ -30,6 +32,7 @@ export const productsData = [
             'Символизирует легендарные Дары Смерти. Треугольник означает Мантию-невидимку, круг означает Воскрешающий камень, а линия означает Бузинную палочку. Позже этот знак присвоил себе Геллерт Грин-де-Вальд, сделав этот древний символ знаком своих преступлений.',
         price: '10$',
         discount: '-10%',
+        stock: 32,
         images: ['./images-storage/kulon_Dari_smerti/kulon1.jpg', './images-storage/kulon_Dari_smerti/kulon2.jpg'],
     },
     {
@@ -41,6 +44,7 @@ export const productsData = [
             'Волшебный предмет, позволяющий вернуться в недалёкое прошлое. Выглядит как песочные часы, посаженные на ось, которая в свою очередь крепится на длинной золотой цепочке. Маховик времени не может вносить кардинальных изменений в ход событий. Так, например, маховик не может вернуть жизнь убитому человеку.',
         price: '10$',
         discount: '-10%',
+        stock: 28,
         images: ['./images-storage/mahovic_vremeni/mah1.jpg', './images-storage/mahovic_vremeni/mah2.jpg'],
     },
     {
@@ -52,6 +56,7 @@ export const productsData = [
             'В современном квиддиче это маленький золотистый шарик с серебряными крылышками, летающий самостоятельно и произвольно над полем. Золотой снитч имеет размер грецкого ореха и заколдован избегать поимки как можно дольше. Из-за малых размеров и невероятной скорости за ним почти невозможно уследить.',
         price: '10$',
         discount: '-10%',
+        stock: 14,
         images: ['./images-storage/snitch/snitch1.jpg', './images-storage/snitch/snitch2.jpg'],
     },
     {
@@ -63,6 +68,7 @@ export const productsData = [
             'Легендарное вещество, наделённое удивительными силами. По легенде, камень мог превратить любой металл в чистое золото. С его помощью также можно было приготовить эликсир жизни, который делал бессмертным того, кто выпьет этот эликсир.',
         price: '10$',
         discount: '-10%',
+        stock: 8,
         images: ['./images-storage/filosofskii_kamen/stone1.png', './images-storage/filosofskii_kamen/stone2.png'],
     },
     {
@@ -74,6 +80,7 @@ export const productsData = [
             'Шляпа, сорванная со своей головы Годриком Гриффиндоромпри основании школы чародейства и волшебства «Хогвартс». Эта шляпа, по замыслу основателей, должна распределять учеников по 4 факультетам в соответствии с их способностями и склонностями.',
         price: '10$',
         discount: '-10%',
+        stock: 16,
         images: [
             './images-storage/raspredelyaushaya_shlyapa/shlyapa1.jpg',
             './images-storage/raspredelyaushaya_shlyapa/shlyapa2.jpg',
@@ -88,6 +95,7 @@ export const productsData = [
             'Волшебный артефакт, обладающий особой магической силой. Назначение этого предмета — избирать из претендентов наилучшего представителя школы для участия в Турнире Трёх Волшебников.',
         price: '10$',
         discount: '-10%',
+        stock: 20,
         images: ['./images-storage/kubok_ognya/kubok1.png', './images-storage/kubok_ognya/kubok2.png'],
     },
     {
@@ -99,6 +107,7 @@ export const productsData = [
             'Древняя реликвия, принадлежащая Салазару Слизерину, наделяет хозяина магнетическим обаянием и умением распознавать психологию других людей. Раскрывается. Внутри можно хранить фотографию или собственный талисман.',
         price: '10$',
         discount: '-10%',
+        stock: 36,
         images: ['./images-storage/medalion_Slizerina/sliz1.jpg', './images-storage/medalion_Slizerina/sliz2.jpg'],
     },
     {
@@ -110,6 +119,7 @@ export const productsData = [
             'Палочка сделана из бузины, с сердцевиной из волоса хвоста фестрала. Родная сестра тисовой палочки Гарри Поттера.',
         price: '10$',
         discount: '-10%',
+        stock: 38,
         images: [
             './images-storage/palochka_Volan-de-Morta/palochka1.jpg',
             './images-storage/palochka_Volan-de-Morta/palochka2.jpg',
@@ -124,6 +134,7 @@ export const productsData = [
             'Жидкость без цвета и запаха, заставляющая выпившего отвечать правдиво на все заданные вопросы. Очевидно, выпивший не может даже просто о чём-то умолчать. Но опытные маги могут избежать ее воздействия с помощью антидотов и заклинаний.',
         price: '10$',
         discount: '-10%',
+        stock: 39,
         images: [
             './images-storage/syvorotka_pravdi/syvorotka1.jpg',
             './images-storage/syvorotka_pravdi/syvorotka2.jpg',
@@ -138,6 +149,7 @@ export const productsData = [
             'Магическое зеркало. Главную волшебную особенность зеркала Еиналеж можно отследить, прочитав надпись на раме: зеркало не отражает внешний облик человека, а показывает его самые сокровенные желания. Многие волшебники считают, что счастливый человек в зеркале увидит только свое отражение, так как у него все есть, а значит, ему не о чем мечтать.',
         price: '10$',
         discount: '-10%',
+        stock: 19,
         images: ['./images-storage/zerkalo/zerkalo1.jpg', './images-storage/zerkalo/zerkalo2.jpg'],
     },
     {
@@ -149,6 +161,7 @@ export const productsData = [
             'Самая могущественная волшебная палочка из всех, принадлежала: Драко Малфою, Гарри Поттеру, Альбусу Дамблдору, Геллерту Грин-де-Вальду',
         price: '10$',
         discount: '-10%',
+        stock: 145,
         images: ['./images-storage/buzinnaya_palochka/buz1.png', './images-storage/buzinnaya_palochka/buz2.png'],
     },
     {
@@ -160,6 +173,7 @@ export const productsData = [
             'Отличаются от обычных магловских тем, что фигурки в них живые. Они не только сами ходят на указанные клетки, не только бьют друг друга в прямом смысле этого слова, но и нередко дают играющему советы.',
         price: '10$',
         discount: '-10%',
+        stock: 48,
         images: ['./images-storage/volshebnuie_shahmati/shah1.jpg', './images-storage/volshebnuie_shahmati/shah2.jpg'],
     },
     {
@@ -171,6 +185,7 @@ export const productsData = [
             'Легендарный артефакт, который сама Смерть подарила Кадму Певереллу в ответ на его просьбу дать ему средство, способное вернуть жертвы Смерти в мир живых.',
         price: '10$',
         discount: '-10%',
+        stock: 21,
         images: [
             './images-storage/voskreshaiushii_kamen/voskr1.png',
             './images-storage/voskreshaiushii_kamen/voskr2.png',
@@ -185,6 +200,7 @@ export const productsData = [
             'Изначально обычный ежедневник на 1943 год, купленный Томом Реддлом в магловском магазине канцтоваров на Воксхолл-Роуд в Лондоне.',
         price: '10$',
         discount: '-10%',
+        stock: 18,
         images: ['./images-storage/dnevnik_Redla/dnevnik1.jpg', './images-storage/dnevnik_Redla/dnevnik2.jpg'],
     },
     {
@@ -196,6 +212,7 @@ export const productsData = [
             'Большие часы семьи Уизли, на которых вместо времени указывается местонахождение каждого члена семьи. Вместо цифр на циферблате расположены указатели «дом», «больница», «работа», «в пути», «школа»...',
         price: '10$',
         discount: '-10%',
+        stock: 74,
         images: ['./images-storage/chasi_Uizly/clock1.jpg', './images-storage/chasi_Uizly/clock2.jpg'],
     },
     {
@@ -207,6 +224,7 @@ export const productsData = [
             'Изобретённый Альбусом Дамлбдором предмет, уникальный в своем роде. Используется для того, чтобы «вытянуть» свет из помещения или из уличных фонарей.',
         price: '10$',
         discount: '-10%',
+        stock: 12,
         images: ['./images-storage/deluminator/delum1.png', './images-storage/deluminator/delum2.png'],
     },
     {
@@ -218,6 +236,7 @@ export const productsData = [
             'Метла компании Скоростные мётлы Нимбус. Выпущена в августе 1991 года, и в то время была самой скоростной метлой в производстве.',
         price: '10$',
         discount: '-10%',
+        stock: 42,
         images: ['./images-storage/nimbus2000/nimb1.png', './images-storage/nimbus2000/nimb2.png'],
     },
     {
@@ -228,6 +247,7 @@ export const productsData = [
         description: 'Летающая машина, которая принадлежала Артуру Уизли.',
         price: '10$',
         discount: '-10%',
+        stock: 53,
         images: ['./images-storage/automobile/auto1.png', './images-storage/automobile/auto2.png'],
     },
     {
@@ -239,6 +259,7 @@ export const productsData = [
             'Особая карта, показывающая весь замок Хогвартс и его ближайшие окрестности, а также местоположение любого человека в Хогвартсе, где бы тот ни находился, даже если он прячется под мантией-невидимкой.',
         price: '10$',
         discount: '-10%',
+        stock: 57,
         images: ['./images-storage/carta maradera/carta1.jpg', './images-storage/carta maradera/carta2.jpg'],
     },
 ];
