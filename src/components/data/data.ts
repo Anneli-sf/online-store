@@ -296,7 +296,7 @@ export const productsData = [
         price: 25,
         discount: 15,
         stock: 85,
-        images: ['./images_storage/amortecia/amor1.jpg', './images_storage/amortecia/amor2.jpg'],
+        images: ['assets/images-storage/amortecia/amor1.jpg', 'assets/images-storage/amortecia/amor2.jpg'],
     },
     {
         id: 23,
@@ -308,7 +308,7 @@ export const productsData = [
         price: 300,
         discount: 5,
         stock: 10,
-        images: ['./images_storage/chupakabra/chup1.png', './images_storage/chupakabra/chup2.jpg'],
+        images: ['assets/images-storage/chupakabra/chup1.png', 'assets/images-storage/chupakabra/chup2.jpg'],
     },
     {
         id: 24,
@@ -319,7 +319,7 @@ export const productsData = [
         price: 400,
         discount: 0,
         stock: 102,
-        images: ['./images_storage/dementor/demen1.jpg', './images_storage/dementor/demen2.jpg'],
+        images: ['assets/images-storage/dementor/demen1.jpg', 'assets/images-storage/dementor/demen2.jpg'],
     },
     {
         id: 25,
@@ -331,7 +331,7 @@ export const productsData = [
         price: 350,
         discount: 3,
         stock: 67,
-        images: ['./images_storage/dobbi/dob1.jpg', './images_storage/dobbi/dob2.jpg'],
+        images: ['assets/images-storage/dobbi/dob1.jpg', 'assets/images-storage/dobbi/dob2.jpg'],
     },
     {
         id: 26,
@@ -343,8 +343,8 @@ export const productsData = [
         discount: 5,
         stock: 167,
         images: [
-            './images_storage/eliksir_is_mandragori/mandr1.jpg',
-            './images_storage/eliksir_is_mandragori/mandr2.jpg',
+            'assets/images-storage/eliksir_is_mandragori/mandr1.jpg',
+            'assets/images-storage/eliksir_is_mandragori/mandr2.jpg',
         ],
     },
     {
@@ -357,7 +357,7 @@ export const productsData = [
         price: 21,
         discount: 0,
         stock: 77,
-        images: ['./images_storage/eliksir_sgizni/sgizn1.jpg', './images_storage/eliksir_sgizni/sgizn2.jpg'],
+        images: ['assets/images-storage/eliksir_sgizni/sgizn1.jpg', 'assets/images-storage/eliksir_sgizni/sgizn2.jpg'],
     },
     {
         id: 28,
@@ -369,7 +369,7 @@ export const productsData = [
         price: 10000,
         discount: 5,
         stock: 5,
-        images: ['./images_storage/express/exp1.jpg', './images_storage/express/exp2.jpg'],
+        images: ['assets/images-storage/express/exp1.jpg', 'assets/images-storage/express/exp2.jpg'],
     },
     {
         id: 29,
@@ -381,7 +381,7 @@ export const productsData = [
         price: 600,
         discount: 0,
         stock: 5,
-        images: ['./images_storage/fenix/fenix1.jpg', './images_storage/fenix/fenix2.jpg'],
+        images: ['assets/images-storage/fenix/fenix1.jpg', 'assets/images-storage/fenix/fenix2.jpg'],
     },
     {
         id: 30,
@@ -393,7 +393,7 @@ export const productsData = [
         price: 22,
         discount: 3,
         stock: 78,
-        images: ['./images_storage/gerbicid/gerb1.jpg', './images_storage/gerbicid/gerb2.jpg'],
+        images: ['assets/images-storage/gerbicid/gerb1.jpg', 'assets/images-storage/gerbicid/gerb2.jpg'],
     },
     {
         id: 31,
@@ -405,7 +405,7 @@ export const productsData = [
         price: 20,
         discount: 3,
         stock: 105,
-        images: ['./images_storage/kosterost/kost1.jpg', './images_storage/kosterost/kost1.jpg'],
+        images: ['assets/images-storage/kosterost/kost1.jpg', 'assets/images-storage/kosterost/kost1.jpg'],
     },
     {
         id: 32,
@@ -417,7 +417,7 @@ export const productsData = [
         price: 240,
         discount: 5,
         stock: 35,
-        images: ['./images_storage/manticora/mantic1.jpg', './images_storage/manticora/mantic2.jpg'],
+        images: ['assets/images-storage/manticora/mantic1.jpg', 'assets/images-storage/manticora/mantic2.jpg'],
     },
     {
         id: 33,
@@ -429,7 +429,10 @@ export const productsData = [
         price: 16,
         discount: 0,
         stock: 11,
-        images: ['./images_storage/palochka_Wuizli/wuizli1.jpg', './images_storage/palochka_Wuizli/wuizli2.jpg'],
+        images: [
+            'assets/images-storage/palochka_Wuizli/wuizli1.jpg',
+            'assets/images-storage/palochka_Wuizli/wuizli2.jpg',
+        ],
     },
     {
         id: 34,
@@ -442,8 +445,8 @@ export const productsData = [
         discount: 10,
         stock: 103,
         images: [
-            './images_storage/palocka_Draco-Malfoya/malfoi1.jpg',
-            './images_storage/palocka_Draco-Malfoya/malfoi2.jpg',
+            'assets/images-storage/palocka_Draco-Malfoya/malfoi1.jpg',
+            'assets/images-storage/palocka_Draco-Malfoya/malfoi2.jpg',
         ],
     },
     {
@@ -456,7 +459,7 @@ export const productsData = [
         price: 100,
         discount: 5,
         stock: 50,
-        images: ['./images_storage/pushistik/push1.jpg', './images_storage/pushistik/push2.jpg'],
+        images: ['assets/images-storage/pushistik/push1.jpg', 'assets/images-storage/pushistik/push2.jpg'],
     },
     {
         id: 36,
@@ -468,7 +471,7 @@ export const productsData = [
         price: 105,
         discount: 3,
         stock: 100,
-        images: ['./images_storage/salamandra/sal1.png', './images_storage/salamandra/sal2.jpg'],
+        images: ['assets/images-storage/salamandra/sal1.png', 'assets/images-storage/salamandra/sal2.jpg'],
     },
     {
         id: 37,
@@ -480,7 +483,7 @@ export const productsData = [
         price: 70,
         discount: 10,
         stock: 28,
-        images: ['./images_storage/shkaf/shkaf1.jpg', './images_storage/shkaf/shkaf2.jpg'],
+        images: ['assets/images-storage/shkaf/shkaf1.jpg', 'assets/images-storage/shkaf/shkaf2.jpg'],
     },
     {
         id: 38,
@@ -492,7 +495,7 @@ export const productsData = [
         price: 23,
         discount: 3,
         stock: 10,
-        images: ['./images_storage/uidosoros/uido1.jpg', './images_storage/uidosoros/uido2.jpg'],
+        images: ['assets/images-storage/uidosoros/uido1.jpg', 'assets/images-storage/uidosoros/uido2.jpg'],
     },
     {
         id: 39,
@@ -504,7 +507,10 @@ export const productsData = [
         price: 20,
         discount: 3,
         stock: 40,
-        images: ['./images_storage/umenishaiushee_zelie/umen1.jpg', './images_storage/umenishaiushee_zelie/umen2.jpg'],
+        images: [
+            'assets/images-storage/umenishaiushee_zelie/umen1.jpg',
+            'assets/images-storage/umenishaiushee_zelie/umen2.jpg',
+        ],
     },
     {
         id: 40,
@@ -516,6 +522,6 @@ export const productsData = [
         price: 905,
         discount: 10,
         stock: 5,
-        images: ['./images_storage/vasilisk/vasil1.jpg', './images_storage/vasilisk/vasil2.jpg'],
+        images: ['assets/images-storage/vasilisk/vasil1.jpg', 'assets/images-storage/vasilisk/vasil2.jpg'],
     },
 ];
