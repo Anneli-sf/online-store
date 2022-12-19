@@ -63,6 +63,7 @@ export const createBlockWithText = (
     headerClass?: string,
     titleText?: string,
     sectionClass?: string
+    // productId?: number
 ): HTMLElement => {
     const container: HTMLElement = createElement('div', 'block');
     container.classList.add(blockClass);

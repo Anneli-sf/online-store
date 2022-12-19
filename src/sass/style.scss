@@ -9,3 +9,8 @@
 
 @import './elements/header';
 @import './elements/footer';
+
+body {
+    background-color: black;
+    @include flex-column();
+}
