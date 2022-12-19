@@ -6,10 +6,13 @@ export const productsData = [
         title: 'Меч Гриффиндора',
         description:
             'Магический предмет исключительной силы. Это одноручный меч (34 дюйма), созданный из чистого серебра, и достаточно лёгкий, чтобы его мог поднять даже подросток. Рукоять меча отделана рубинами, на лезвии клинка видна гравировка «Годрик Гриффиндор».',
-        price: '10',
-        discount: '10',
+        price: 10,
+        discount: 10,
         stock: 53,
-        images: ['./images-storage/mech_Griffindora/grif1.png', './images-storage/mech_Griffindora/grif2.png'],
+        images: [
+            'assets/images-storage/mech_Griffindora/grif1.png',
+            'assets/images-storage/mech_Griffindora/grif2.png',
+        ],
     },
     {
         id: 2,
@@ -18,10 +21,13 @@ export const productsData = [
         title: 'Мантия-невидимка',
         description:
             'Волшебная мантия из очень лёгкой «серебристой» ткани, делающая невидимым того, кто её надевает. Обычные мантии-невидимки служат очень недолго и их производство очень дорогостоящее. У Гарри была особая мантия-невидимка, так как являлась одним из трех Даров Смерти.',
-        price: '15',
-        discount: '9',
+        price: 15,
+        discount: 9,
         stock: 84,
-        images: ['./images-storage/mantiya_nevidimka/mant1.jpg', './images-storage/mantiya_nevidimka/mant2.jpg'],
+        images: [
+            'assets/images-storage/mantiya_nevidimka/mant1.jpg',
+            'assets/images-storage/mantiya_nevidimka/mant2.jpg',
+        ],
     },
     {
         id: 3,
@@ -30,10 +36,13 @@ export const productsData = [
         title: 'Кулон Дары Смерти',
         description:
             'Символизирует легендарные Дары Смерти. Треугольник означает Мантию-невидимку, круг означает Воскрешающий камень, а линия означает Бузинную палочку. Позже этот знак присвоил себе Геллерт Грин-де-Вальд, сделав этот древний символ знаком своих преступлений.',
-        price: '21',
-        discount: '3',
+        price: 21,
+        discount: 3,
         stock: 32,
-        images: ['./images-storage/kulon_Dari_smerti/kulon1.jpg', './images-storage/kulon_Dari_smerti/kulon2.jpg'],
+        images: [
+            'assets/images-storage/kulon_Dari_smerti/kulon1.jpg',
+            'assets/images-storage/kulon_Dari_smerti/kulon2.jpg',
+        ],
     },
     {
         id: 4,
@@ -42,10 +51,10 @@ export const productsData = [
         title: 'Маховик времени',
         description:
             'Волшебный предмет, позволяющий вернуться в недалёкое прошлое. Выглядит как песочные часы, посаженные на ось, которая в свою очередь крепится на длинной золотой цепочке. Маховик времени не может вносить кардинальных изменений в ход событий. Так, например, маховик не может вернуть жизнь убитому человеку.',
-        price: '13',
-        discount: '5',
+        price: 13,
+        discount: 5,
         stock: 28,
-        images: ['./images-storage/mahovic_vremeni/mah1.jpg', './images-storage/mahovic_vremeni/mah2.jpg'],
+        images: ['assets/images-storage/mahovic_vremeni/mah1.jpg', 'assets/images-storage/mahovic_vremeni/mah2.jpg'],
     },
     {
         id: 5,
@@ -54,10 +63,10 @@ export const productsData = [
         title: 'Золотой снитч',
         description:
             'В современном квиддиче это маленький золотистый шарик с серебряными крылышками, летающий самостоятельно и произвольно над полем. Золотой снитч имеет размер грецкого ореха и заколдован избегать поимки как можно дольше. Из-за малых размеров и невероятной скорости за ним почти невозможно уследить.',
-        price: '34',
-        discount: '10',
+        price: 34,
+        discount: 10,
         stock: 14,
-        images: ['./images-storage/snitch/snitch1.jpg', './images-storage/snitch/snitch2.jpg'],
+        images: ['assets/images-storage/snitch/snitch1.jpg', 'assets/images-storage/snitch/snitch2.jpg'],
     },
     {
         id: 6,
@@ -66,10 +75,13 @@ export const productsData = [
         title: 'Философский камень',
         description:
             'Легендарное вещество, наделённое удивительными силами. По легенде, камень мог превратить любой металл в чистое золото. С его помощью также можно было приготовить эликсир жизни, который делал бессмертным того, кто выпьет этот эликсир.',
-        price: '5',
-        discount: '0',
+        price: 5,
+        discount: 0,
         stock: 8,
-        images: ['./images-storage/filosofskii_kamen/stone1.png', './images-storage/filosofskii_kamen/stone2.png'],
+        images: [
+            'assets/images-storage/filosofskii_kamen/stone1.png',
+            'assets/images-storage/filosofskii_kamen/stone2.png',
+        ],
     },
     {
         id: 7,
@@ -78,12 +90,12 @@ export const productsData = [
         title: 'Распределяющая шляпа',
         description:
             'Шляпа, сорванная со своей головы Годриком Гриффиндоромпри основании школы чародейства и волшебства «Хогвартс». Эта шляпа, по замыслу основателей, должна распределять учеников по 4 факультетам в соответствии с их способностями и склонностями.',
-        price: '12',
-        discount: '2',
+        price: 12,
+        discount: 2,
         stock: 16,
         images: [
-            './images-storage/raspredelyaushaya_shlyapa/shlyapa1.jpg',
-            './images-storage/raspredelyaushaya_shlyapa/shlyapa2.jpg',
+            'assets/images-storage/raspredelyaushaya_shlyapa/shlyapa1.jpg',
+            'assets/images-storage/raspredelyaushaya_shlyapa/shlyapa2.jpg',
         ],
     },
     {
@@ -93,10 +105,10 @@ export const productsData = [
         title: 'Кубок огня',
         description:
             'Волшебный артефакт, обладающий особой магической силой. Назначение этого предмета — избирать из претендентов наилучшего представителя школы для участия в Турнире Трёх Волшебников.',
-        price: '28',
-        discount: '5',
+        price: 28,
+        discount: 5,
         stock: 20,
-        images: ['./images-storage/kubok_ognya/kubok1.png', './images-storage/kubok_ognya/kubok2.png'],
+        images: ['assets/images-storage/kubok_ognya/kubok1.png', 'assets/images-storage/kubok_ognya/kubok2.png'],
     },
     {
         id: 9,
@@ -105,10 +117,13 @@ export const productsData = [
         title: "Крестраж 'Медальон Слизерина'",
         description:
             'Древняя реликвия, принадлежащая Салазару Слизерину, наделяет хозяина магнетическим обаянием и умением распознавать психологию других людей. Раскрывается. Внутри можно хранить фотографию или собственный талисман.',
-        price: '10',
-        discount: '5',
+        price: 10,
+        discount: 5,
         stock: 36,
-        images: ['./images-storage/medalion_Slizerina/sliz1.jpg', './images-storage/medalion_Slizerina/sliz2.jpg'],
+        images: [
+            'assets/images-storage/medalion_Slizerina/sliz1.jpg',
+            'assets/images-storage/medalion_Slizerina/sliz2.jpg',
+        ],
     },
     {
         id: 10,
@@ -117,12 +132,12 @@ export const productsData = [
         title: 'Палочка Волан-де-Морта',
         description:
             'Палочка сделана из бузины, с сердцевиной из волоса хвоста фестрала. Родная сестра тисовой палочки Гарри Поттера.',
-        price: '19',
-        discount: '5',
+        price: 19,
+        discount: 5,
         stock: 38,
         images: [
-            './images-storage/palochka_Volan-de-Morta/palochka1.jpg',
-            './images-storage/palochka_Volan-de-Morta/palochka2.jpg',
+            'assets/images-storage/palochka_Volan-de-Morta/palochka1.jpg',
+            'assets/images-storage/palochka_Volan-de-Morta/palochka2.jpg',
         ],
     },
     {
@@ -132,12 +147,12 @@ export const productsData = [
         title: 'Сыворотка правды',
         description:
             'Жидкость без цвета и запаха, заставляющая выпившего отвечать правдиво на все заданные вопросы. Очевидно, выпивший не может даже просто о чём-то умолчать. Но опытные маги могут избежать ее воздействия с помощью антидотов и заклинаний.',
-        price: '23',
-        discount: '15',
+        price: 23,
+        discount: 15,
         stock: 39,
         images: [
-            './images-storage/syvorotka_pravdi/syvorotka1.jpg',
-            './images-storage/syvorotka_pravdi/syvorotka2.jpg',
+            'assets/images-storage/syvorotka_pravdi/syvorotka1.jpg',
+            'assets/images-storage/syvorotka_pravdi/syvorotka2.jpg',
         ],
     },
     {
@@ -147,10 +162,10 @@ export const productsData = [
         title: 'Зеркало Еиналеж',
         description:
             'Магическое зеркало. Главную волшебную особенность зеркала Еиналеж можно отследить, прочитав надпись на раме: зеркало не отражает внешний облик человека, а показывает его самые сокровенные желания. Многие волшебники считают, что счастливый человек в зеркале увидит только свое отражение, так как у него все есть, а значит, ему не о чем мечтать.',
-        price: '44',
-        discount: '10',
+        price: 44,
+        discount: 10,
         stock: 19,
-        images: ['./images-storage/zerkalo/zerkalo1.jpg', './images-storage/zerkalo/zerkalo2.jpg'],
+        images: ['assets/images-storage/zerkalo/zerkalo1.jpg', 'assets/images-storage/zerkalo/zerkalo2.jpg'],
     },
     {
         id: 13,
@@ -159,10 +174,13 @@ export const productsData = [
         title: 'Бузинная палочка',
         description:
             'Самая могущественная волшебная палочка из всех, принадлежала: Драко Малфою, Гарри Поттеру, Альбусу Дамблдору, Геллерту Грин-де-Вальду',
-        price: '15',
-        discount: '3',
+        price: 15,
+        discount: 3,
         stock: 145,
-        images: ['./images-storage/buzinnaya_palochka/buz1.png', './images-storage/buzinnaya_palochka/buz2.png'],
+        images: [
+            'assets/images-storage/buzinnaya_palochka/buz1.png',
+            'assets/images-storage/buzinnaya_palochka/buz2.png',
+        ],
     },
     {
         id: 14,
@@ -171,10 +189,13 @@ export const productsData = [
         title: 'Волшебные шахматы',
         description:
             'Отличаются от обычных магловских тем, что фигурки в них живые. Они не только сами ходят на указанные клетки, не только бьют друг друга в прямом смысле этого слова, но и нередко дают играющему советы.',
-        price: '67',
-        discount: '15',
+        price: 67,
+        discount: 15,
         stock: 48,
-        images: ['./images-storage/volshebnuie_shahmati/shah1.jpg', './images-storage/volshebnuie_shahmati/shah2.jpg'],
+        images: [
+            'assets/images-storage/volshebnuie_shahmati/shah1.jpg',
+            'assets/images-storage/volshebnuie_shahmati/shah2.jpg',
+        ],
     },
     {
         id: 15,
@@ -183,12 +204,12 @@ export const productsData = [
         title: 'Воскрешающий камень',
         description:
             'Легендарный артефакт, который сама Смерть подарила Кадму Певереллу в ответ на его просьбу дать ему средство, способное вернуть жертвы Смерти в мир живых.',
-        price: '6',
-        discount: '0',
+        price: 6,
+        discount: 0,
         stock: 21,
         images: [
-            './images-storage/voskreshaiushii_kamen/voskr1.png',
-            './images-storage/voskreshaiushii_kamen/voskr2.png',
+            'assets/images-storage/voskreshaiushii_kamen/voskr1.png',
+            'assets/images-storage/voskreshaiushii_kamen/voskr2.png',
         ],
     },
     {
@@ -198,10 +219,13 @@ export const productsData = [
         title: 'Дневник Тома Реддла',
         description:
             'Изначально обычный ежедневник на 1943 год, купленный Томом Реддлом в магловском магазине канцтоваров на Воксхолл-Роуд в Лондоне.',
-        price: '17',
-        discount: '3',
+        price: 17,
+        discount: 3,
         stock: 18,
-        images: ['./images-storage/dnevnik_Redla/dnevnik1.jpg', './images-storage/dnevnik_Redla/dnevnik2.jpg'],
+        images: [
+            'assets/images-storage/dnevnik_Redla/dnevnik1.jpg',
+            'assets/images-storage/dnevnik_Redla/dnevnik2.jpg',
+        ],
     },
     {
         id: 17,
@@ -210,10 +234,10 @@ export const productsData = [
         title: 'Семейные часы Уизли',
         description:
             'Большие часы семьи Уизли, на которых вместо времени указывается местонахождение каждого члена семьи. Вместо цифр на циферблате расположены указатели «дом», «больница», «работа», «в пути», «школа»...',
-        price: '40',
-        discount: '0',
+        price: 40,
+        discount: 0,
         stock: 74,
-        images: ['./images-storage/chasi_Uizly/clock1.jpg', './images-storage/chasi_Uizly/clock2.jpg'],
+        images: ['assets/images-storage/chasi_Uizly/clock1.jpg', 'assets/images-storage/chasi_Uizly/clock2.jpg'],
     },
     {
         id: 18,
@@ -222,10 +246,10 @@ export const productsData = [
         title: 'Делюминатор',
         description:
             'Изобретённый Альбусом Дамлбдором предмет, уникальный в своем роде. Используется для того, чтобы «вытянуть» свет из помещения или из уличных фонарей.',
-        price: '11',
-        discount: '3',
+        price: 11,
+        discount: 3,
         stock: 12,
-        images: ['./images-storage/deluminator/delum1.png', './images-storage/deluminator/delum2.png'],
+        images: ['assets/images-storage/deluminator/delum1.png', 'assets/images-storage/deluminator/delum2.png'],
     },
     {
         id: 19,
@@ -234,10 +258,10 @@ export const productsData = [
         title: 'Нимбус 2000',
         description:
             'Метла компании Скоростные мётлы Нимбус. Выпущена в августе 1991 года, и в то время была самой скоростной метлой в производстве.',
-        price: '100',
-        discount: '10',
+        price: 100,
+        discount: 10,
         stock: 42,
-        images: ['./images-storage/nimbus2000/nimb1.png', './images-storage/nimbus2000/nimb2.png'],
+        images: ['assets/images-storage/nimbus2000/nimb1.png', 'assets/images-storage/nimbus2000/nimb2.png'],
     },
     {
         id: 20,
@@ -245,10 +269,10 @@ export const productsData = [
         subcategory: 'летающие предметы',
         title: 'Летающий автомобиль',
         description: 'Летающая машина, которая принадлежала Артуру Уизли.',
-        price: '5000',
-        discount: '5',
+        price: 5000,
+        discount: 5,
         stock: 53,
-        images: ['./images-storage/automobile/auto1.png', './images-storage/automobile/auto2.png'],
+        images: ['assets/images-storage/automobile/auto1.png', 'assets/images-storage/automobile/auto2.png'],
     },
     {
         id: 21,
@@ -257,10 +281,10 @@ export const productsData = [
         title: 'Карта мародера',
         description:
             'Особая карта, показывающая весь замок Хогвартс и его ближайшие окрестности, а также местоположение любого человека в Хогвартсе, где бы тот ни находился, даже если он прячется под мантией-невидимкой.',
-        price: '14',
-        discount: '0',
+        price: 14,
+        discount: 0,
         stock: 57,
-        images: ['./images-storage/carta maradera/carta1.jpg', './images-storage/carta maradera/carta2.jpg'],
+        images: ['assets/images-storage/carta maradera/carta1.jpg', 'assets/images-storage/carta maradera/carta2.jpg'],
     },
     {
         id: 22,
@@ -269,9 +293,9 @@ export const productsData = [
         title: 'Амортеция',
         description:
             'Очень мощное приворотное зелье. Однако, по словам профессора Слизнорта, создать любовь невозможно, так что Амортенция создаёт лишь безумное, непреодолимое влечение к тому, кто сварил зелье.',
-        price: '25',
-        discount: '15',
-        stock: '85',
+        price: 25,
+        discount: 15,
+        stock: 85,
         images: ['./images_storage/amortecia/amor1.jpg', './images_storage/amortecia/amor2.jpg'],
     },
     {
@@ -281,9 +305,9 @@ export const productsData = [
         title: 'Чупакабра',
         description:
             'Волшебное существо, наполовину ящерица, наполовину человекоподобное животное, обитающее в обеих Америках. Питается кровью.',
-        price: '300',
-        discount: '5',
-        stock: '10',
+        price: 300,
+        discount: 5,
+        stock: 10,
         images: ['./images_storage/chupakabra/chup1.png', './images_storage/chupakabra/chup2.jpg'],
     },
     {
@@ -292,9 +316,9 @@ export const productsData = [
         subcategory: 'отрицательные существа',
         title: 'Дементор',
         description: 'Слепые существа, которые питаются человеческими, преимущественно светлыми, эмоциями.',
-        price: '400',
-        discount: '0',
-        stock: '102',
+        price: 400,
+        discount: 0,
+        stock: 102,
         images: ['./images_storage/dementor/demen1.jpg', './images_storage/dementor/demen2.jpg'],
     },
     {
@@ -304,9 +328,9 @@ export const productsData = [
         title: 'Добби',
         description:
             'Домашний эльф, служивший семье Малфоев. Его хозяева были Тёмными магами и жестоко с ним обращались.',
-        price: '350',
-        discount: '3',
-        stock: '67',
+        price: 350,
+        discount: 3,
+        stock: 67,
         images: ['./images_storage/dobbi/dob1.jpg', './images_storage/dobbi/dob2.jpg'],
     },
     {
@@ -315,9 +339,9 @@ export const productsData = [
         subcategory: 'добрые зелья',
         title: 'Эликсир из мандрагоры',
         description: 'Зелье, которое, по всей видимости, включает в свой состав растение мандрагору.',
-        price: '23',
-        discount: '5',
-        stock: '167',
+        price: 23,
+        discount: 5,
+        stock: 167,
         images: [
             './images_storage/eliksir_is_mandragori/mandr1.jpg',
             './images_storage/eliksir_is_mandragori/mandr2.jpg',
@@ -330,9 +354,9 @@ export const productsData = [
         title: 'Эликсир жизни',
         description:
             'Зелье, для приготовления которого нужен уникальный артефакт — философский камень. Камень создал Николас Фламель; он и является единственным, кто сумел сварить этот эликсир. Зелье гарантирует бессмертие.',
-        price: '21',
-        discount: '0',
-        stock: '77',
+        price: 21,
+        discount: 0,
+        stock: 77,
         images: ['./images_storage/eliksir_sgizni/sgizn1.jpg', './images_storage/eliksir_sgizni/sgizn2.jpg'],
     },
     {
@@ -342,9 +366,9 @@ export const productsData = [
         title: 'Хогвартс-экспресс',
         description:
             'Специальный поезд, влекомый алым паровозом, предназначенный для доставки студентов Хогвартса к месту учёбы и обратно. Иногда «Хогвартс-экспресс» доставляет к месту работы новых преподавателей.',
-        price: '10000',
-        discount: '5',
-        stock: '5',
+        price: 10000,
+        discount: 5,
+        stock: 5,
         images: ['./images_storage/express/exp1.jpg', './images_storage/express/exp2.jpg'],
     },
     {
@@ -354,9 +378,9 @@ export const productsData = [
         title: 'Феникс',
         description:
             'Великолепная алая птица величиной с лебедя, с длинным золотым хвостом, золотыми когтями и клювом. Гнездится на горных скалах, обитает в Египте, Индии и Китае. Феникс живет невероятно долго, поскольку способен регенерировать.',
-        price: '600',
-        discount: '0',
-        stock: '5',
+        price: 600,
+        discount: 0,
+        stock: 5,
         images: ['./images_storage/fenix/fenix1.jpg', './images_storage/fenix/fenix2.jpg'],
     },
     {
@@ -366,9 +390,9 @@ export const productsData = [
         title: 'Гербицид',
         description:
             'Зелье, которое способно уничтожать или повреждать растения. Имеет отвратительный вкус, непригодно для употребления человеком, так как может ухудшить его здоровье.',
-        price: '22',
-        discount: '3',
-        stock: '78',
+        price: 22,
+        discount: 3,
+        stock: 78,
         images: ['./images_storage/gerbicid/gerb1.jpg', './images_storage/gerbicid/gerb2.jpg'],
     },
     {
@@ -378,9 +402,9 @@ export const productsData = [
         title: 'Костерост',
         description:
             'Зелье-лекарство, заставляющее расти заново исчезнувшие кости, либо просто ускоряющее рост костей. Возможно, используется для сращивания переломов. Очень неприятно на вкус.',
-        price: '20',
-        discount: '3',
-        stock: '105',
+        price: 20,
+        discount: 3,
+        stock: 105,
         images: ['./images_storage/kosterost/kost1.jpg', './images_storage/kosterost/kost1.jpg'],
     },
     {
@@ -390,9 +414,9 @@ export const productsData = [
         title: 'Мантикора',
         description:
             'Очень опасное животное с головой человека, телом льва и хвостом скорпиона, обитающее в Греции. Своей свирепостью мантикора не уступает химере и так же редко встречается. Говорят, пожирая свою жертву, она тихо и сладко поет.',
-        price: '240',
-        discount: '5',
-        stock: '35',
+        price: 240,
+        discount: 5,
+        stock: 35,
         images: ['./images_storage/manticora/mantic1.jpg', './images_storage/manticora/mantic2.jpg'],
     },
     {
@@ -402,9 +426,9 @@ export const productsData = [
         title: 'Палочка Уизли',
         description:
             'Она досталась ему «по наследству» от брата Чарли. Мальчику надо было идти в Хогвартс, а денег у родителей, видимо, было в обрез. Вот и экономили на чём только можно.',
-        price: '16',
-        discount: '0',
-        stock: '11',
+        price: 16,
+        discount: 0,
+        stock: 11,
         images: ['./images_storage/palochka_Wuizli/wuizli1.jpg', './images_storage/palochka_Wuizli/wuizli2.jpg'],
     },
     {
@@ -414,9 +438,9 @@ export const productsData = [
         title: 'Палочка Малфоя',
         description:
             'Сделана из боярышника, с волосом единорога внутри и имеет в длину ровно 10 дюймов. Она была куплена в магазине Олливандера 31 июля 1991 года',
-        price: '11',
-        discount: '10',
-        stock: '103',
+        price: 11,
+        discount: 10,
+        stock: 103,
         images: [
             './images_storage/palocka_Draco-Malfoya/malfoi1.jpg',
             './images_storage/palocka_Draco-Malfoya/malfoi2.jpg',
@@ -429,9 +453,9 @@ export const productsData = [
         title: 'Карликовый пушистик',
         description:
             'Этот безобидный зверек встречается по всему миру. Туловище его шарообразной формы и покрыто мягким, пушистым мехом кремового цвета. Пушистик неприхотлив, не возражает, если его гладят или подбрасывают; когда особенно доволен, тихонько урчит.',
-        price: '100',
-        discount: '5',
-        stock: '50',
+        price: 100,
+        discount: 5,
+        stock: 50,
         images: ['./images_storage/pushistik/push1.jpg', './images_storage/pushistik/push2.jpg'],
     },
     {
@@ -441,9 +465,9 @@ export const productsData = [
         title: 'Саламандра',
         description:
             'Небольшая ящерица, живёт в огне и им питается. Шкура саламандры имеет ослепительно-белый цвет, однако может казаться синей или алой в зависимости от температуры пламени, в котором она рождается.',
-        price: '105',
-        discount: '3',
-        stock: '100',
+        price: 105,
+        discount: 3,
+        stock: 100,
         images: ['./images_storage/salamandra/sal1.png', './images_storage/salamandra/sal2.jpg'],
     },
     {
@@ -453,9 +477,9 @@ export const productsData = [
         title: 'Исчезательный шкаф',
         description:
             'Исчезательные шкафы всегда делались парами: два шкафа, связанные между собой стояли в двух местах (например, в двух разных домах) и служили своеобразным «чёрным ходом», путём эвакуации. Почувствовав опасность, человек входил в один шкаф и моментально попадал в другой, таким образом отрываясь от преследования. При этом, выйдя из шкафа, человек попадал в другое место.',
-        price: '70',
-        discount: '10',
-        stock: '28',
+        price: 70,
+        discount: 10,
+        stock: 28,
         images: ['./images_storage/shkaf/shkaf1.jpg', './images_storage/shkaf/shkaf2.jpg'],
     },
     {
@@ -465,9 +489,9 @@ export const productsData = [
         title: 'Уидосорос',
         description:
             'Яд. В 1991 году Северус Снегг оставил один флакон с ядом в загадке с зельями — одном из препятствий на пути к философскому камню.',
-        price: '23',
-        discount: '3',
-        stock: '10',
+        price: 23,
+        discount: 3,
+        stock: 10,
         images: ['./images_storage/uidosoros/uido1.jpg', './images_storage/uidosoros/uido2.jpg'],
     },
     {
@@ -477,9 +501,9 @@ export const productsData = [
         title: 'Уменьшающее зелье',
         description:
             'Эффект уменьшения заключается не только в реальном уменьшении физических размеров живых организмов, но и в их существенном омоложении.',
-        price: '20',
-        discount: '3',
-        stock: '40',
+        price: 20,
+        discount: 3,
+        stock: 40,
         images: ['./images_storage/umenishaiushee_zelie/umen1.jpg', './images_storage/umenishaiushee_zelie/umen2.jpg'],
     },
     {
@@ -489,9 +513,9 @@ export const productsData = [
         title: 'Василиск',
         description:
             'Огромный змей, известный также как «король змей», живущий не одну сотню лет. Очень сильное магическое животное.',
-        price: '905',
-        discount: '10',
-        stock: '5',
+        price: 905,
+        discount: 10,
+        stock: 5,
         images: ['./images_storage/vasilisk/vasil1.jpg', './images_storage/vasilisk/vasil2.jpg'],
     },
 ];
