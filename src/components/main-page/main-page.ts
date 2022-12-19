@@ -1,8 +1,10 @@
-// import { productsData } from '../products-data/products-data';
+
 // import logoImage from '../../assets/images/gif/logo.gif';
 // import basketLogo from '../../assets/images/png/basket.png';
 // import background from '../../assets/images/jpg/background.jpg';
 // import backgroundHeader from '../../assets/images/gif/background.gif';
+import { createElement } from '../global-components/global-components';
+import { productsData } from '../data/data';
 
 // import arrow from '../../assets/images/svg/arrow-down.svg';
 // import foto1 from '../../components/products-data/images_storage/mech_Griffindora/grif1.png';
@@ -89,13 +91,7 @@
 //     foto40,
 // ] as Array<string>;
 
-const createElement = (tag: string, className: string): HTMLElement | null => {
-    const element = document.createElement(tag);
-    element.classList.add(className);
-    return element;
-};
-
-const body = document.querySelector('.body') as HTMLBodyElement;
+// const body = document.querySelector('.body') as HTMLBodyElement;
 const header = document.querySelector('.header') as HTMLBodyElement;
 const main = document.querySelector('.main') as HTMLBodyElement;
 const footer = document.querySelector('.footer') as HTMLBodyElement;
