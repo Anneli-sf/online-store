@@ -101,4 +101,4 @@ export const createLink = (linkText: string, linkClass: string, linkHref: string
     link.textContent = linkText;
 
     return link;
-}
+};
