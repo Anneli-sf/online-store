@@ -1,5 +1,6 @@
 .header {
-    background-image: url('https://frolicking-pothos-172662.netlify.app/404de487b5f47ef0b46a.gif');
+    background-image: url('../public/img/header-background.gif');
+    background-color: black;
     position: relative;
     border: 1px solid white;
     margin-bottom: 10px;
@@ -13,3 +14,4 @@
     overflow: hidden;
     z-index: 4;
 }
+

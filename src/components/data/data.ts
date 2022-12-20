@@ -1,5 +1,17 @@
 export const productsData = [
     {
+        id: 0,
+        category: 'магические существа',
+        subcategory: 'отрицательные существа',
+        title: 'Василиск',
+        description:
+            'Огромный змей, известный также как «король змей», живущий не одну сотню лет. Очень сильное магическое животное.',
+        price: 905,
+        discount: 10,
+        stock: 5,
+        images: ['assets/images-storage/vasilisk/vasil1.jpg', 'assets/images-storage/vasilisk/vasil2.jpg'],
+    },
+    {
         id: 1,
         category: 'магические предметы',
         subcategory: 'камни',
@@ -11,7 +23,7 @@ export const productsData = [
         stock: 53,
         images: [
             'assets/images-storage/mech_Griffindora/grif1.png',
-            'assets/images-storage/mech_Griffindora/grif2.png',
+            'assets/images-storage/mech_Griffindora/grif2.jpg',
         ],
     },
     {
@@ -26,7 +38,7 @@ export const productsData = [
         stock: 84,
         images: [
             'assets/images-storage/mantiya_nevidimka/mant1.jpg',
-            'assets/images-storage/mantiya_nevidimka/mant2.jpg',
+            'assets/images-storage/mantiya_nevidimka/mant2.png',
         ],
     },
     {
@@ -54,7 +66,7 @@ export const productsData = [
         price: 13,
         discount: 5,
         stock: 28,
-        images: ['assets/images-storage/mahovic_vremeni/mah1.jpg', 'assets/images-storage/mahovic_vremeni/mah2.jpg'],
+        images: ['assets/images-storage/mahovic_vremeni/mah1.jpg', 'assets/images-storage/mahovic_vremeni/mah2.jpeg'],
     },
     {
         id: 5,
@@ -108,7 +120,7 @@ export const productsData = [
         price: 28,
         discount: 5,
         stock: 20,
-        images: ['assets/images-storage/kubok_ognya/kubok1.png', 'assets/images-storage/kubok_ognya/kubok2.png'],
+        images: ['assets/images-storage/kubok_ognya/kubok1.jpg', 'assets/images-storage/kubok_ognya/kubok2.png'],
     },
     {
         id: 9,
@@ -137,7 +149,7 @@ export const productsData = [
         stock: 38,
         images: [
             'assets/images-storage/palochka_Volan-de-Morta/palochka1.jpg',
-            'assets/images-storage/palochka_Volan-de-Morta/palochka2.jpg',
+            'assets/images-storage/palochka_Volan-de-Morta/palochka2.png',
         ],
     },
     {
@@ -152,7 +164,7 @@ export const productsData = [
         stock: 39,
         images: [
             'assets/images-storage/syvorotka_pravdi/syvorotka1.jpg',
-            'assets/images-storage/syvorotka_pravdi/syvorotka2.jpg',
+            'assets/images-storage/syvorotka_pravdi/syvorotka2.png',
         ],
     },
     {
@@ -194,7 +206,7 @@ export const productsData = [
         stock: 48,
         images: [
             'assets/images-storage/volshebnuie_shahmati/shah1.jpg',
-            'assets/images-storage/volshebnuie_shahmati/shah2.jpg',
+            'assets/images-storage/volshebnuie_shahmati/shah2.png',
         ],
     },
     {
@@ -209,7 +221,7 @@ export const productsData = [
         stock: 21,
         images: [
             'assets/images-storage/voskreshaiushii_kamen/voskr1.png',
-            'assets/images-storage/voskreshaiushii_kamen/voskr2.png',
+            'assets/images-storage/voskreshaiushii_kamen/voskr2.jpg',
         ],
     },
     {
@@ -284,7 +296,7 @@ export const productsData = [
         price: 14,
         discount: 0,
         stock: 57,
-        images: ['assets/images-storage/carta maradera/carta1.jpg', 'assets/images-storage/carta maradera/carta2.jpg'],
+        images: ['assets/images-storage/carta_maradera/carta1.jpg', 'assets/images-storage/carta_maradera/carta2.jpg'],
     },
     {
         id: 22,
@@ -511,17 +523,5 @@ export const productsData = [
             'assets/images-storage/umenishaiushee_zelie/umen1.jpg',
             'assets/images-storage/umenishaiushee_zelie/umen2.jpg',
         ],
-    },
-    {
-        id: 40,
-        category: 'магические существа',
-        subcategory: 'отрицательные существа',
-        title: 'Василиск',
-        description:
-            'Огромный змей, известный также как «король змей», живущий не одну сотню лет. Очень сильное магическое животное.',
-        price: 905,
-        discount: 10,
-        stock: 5,
-        images: ['assets/images-storage/vasilisk/vasil1.jpg', 'assets/images-storage/vasilisk/vasil2.jpg'],
     },
 ];

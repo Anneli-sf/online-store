@@ -2,11 +2,14 @@ import './products-section.scss';
 import { createElement, createImage, createInput, createParagraph } from '../../global-components/global-components';
 import { createProductCard } from '../item-card/item-card';
 
+
 //----------------------CONTENT
 
-const contentBlock = createElement('div', 'products') as HTMLDivElement;
-contentBlock.append(sortBlock);
-contentBlock.append(productsList);
+export function createProductsSection(): HTMLDivElement {
+    const contentBlock = createElement('div', 'products') as HTMLDivElement;
+    contentBlock.append(createProductsHeader(), createProductsList());
+    return contentBlock;
+}
 
 function createProductsHeader() {
     const sortBlock = createElement('div', 'products__header') as HTMLDivElement;
@@ -33,7 +36,7 @@ function createProductsHeader() {
     sortItemDiscount.textContent = 'Сортировка по скидке';
 
     const sortArrow = createImage(
-        'https://frolicking-pothos-172662.netlify.app/a62cfa717af19e1d7080.svg',
+        '../../../public/icons/arrow-down.svg',
         'sort-arrow',
         'sort-arrow'
     ) as HTMLImageElement;
@@ -56,8 +59,8 @@ function createProductsHeader() {
 
 function createProductsList(): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
-    let i = 1;
-    while (i < 41) {
+    let i = 0;
+    while (i < 40) {
         // productsList.append(productsItem.cloneNode(true));
         productsList.append(createProductCard(i));
         i++;

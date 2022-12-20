@@ -99,15 +99,6 @@ const main = document.querySelector('.main') as HTMLBodyElement;
 main.append(asideBlock);
 main.append(contentBlock);
 
-// body.style.backgroundImage = `url(${background})`;
-// header.style.backgroundImage = `url(${backgroundHeader})`;
-// footer.style.backgroundImage = `url(${backgroundHeader})`;
-
-// logo.src = logoImage;
-// basket.src = basketLogo;
-
-// sortArrow.src = arrow;
-
 document.querySelectorAll('.category-label').forEach((item) => {
     item.append(checkbox.cloneNode(true));
 });
@@ -122,46 +113,6 @@ document.querySelectorAll('.category-input').forEach((item) => {
 
 document.querySelectorAll('.subcategory-input').forEach((item) => {
     item.setAttribute('type', 'checkbox');
-});
-
-const fillProductsList = () => {
-    let i = 0;
-    while (i < 40) {
-        productsList.append(productsItem.cloneNode(true));
-        i++;
-    }
-    return productsList;
-};
-fillProductsList();
-
-
-
-// document.querySelectorAll('.products__discount').forEach((item, index) => {
-//     item.textContent = productsData[index].discount;
-// });
-
-document.querySelectorAll('.image-container').forEach((item) => {
-    item.append(productImage.cloneNode(true));
-});
-
-// document.querySelectorAll('.products-image').forEach((item, index: number) => {
-//     item.setAttribute('src', array[index]);
-// });
-
-// document.querySelectorAll('.products-title').forEach((item, index) => {
-//     item.textContent = productsData[index].title;
-// });
-
-// document.querySelectorAll('.products-category').forEach((item, index) => {
-//     item.textContent = productsData[index].category;
-// });
-
-// document.querySelectorAll('.products-price').forEach((item, index) => {
-//     item.textContent = productsData[index].price;
-// });
-
-document.querySelectorAll('.products-quantity').forEach((item) => {
-    item.textContent = '100 шт';
 });
 
 sortArrow.addEventListener('click', () => {

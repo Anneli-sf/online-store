@@ -1,5 +1,6 @@
 import './global-components.scss';
 
+// T extends keyof HTMLElementTagNameMap
 export const createElement = (elTag: string, elClassName: string): HTMLElement => {
     const element = document.createElement(elTag);
     element.classList.add(elClassName);
@@ -33,7 +34,7 @@ export const createInput = (
 };
 
 export const createLabel = (inputName: string, inputText: string): HTMLLabelElement => {
-    const label: HTMLLabelElement = createElement('label', 'label');
+    const label = createElement('label', 'label') as HTMLLabelElement;
     label.setAttribute('for', inputName);
     label.innerText = inputText;
     return label;
@@ -45,10 +46,10 @@ export const createBlock = (
     headerClass?: string,
     sectionClass?: string
 ): HTMLElement => {
-    const container: HTMLElement = createElement('div', 'block');
+    const container = createElement('div', 'block') as HTMLElement;
     container.classList.add(blockClass);
 
-    const blockHeader: HTMLElement = createElement('div', 'block-header');
+    const blockHeader = createElement('div', 'block-header') as HTMLElement;
     headerClass ? blockHeader.classList.add(headerClass) : undefined;
     const title = createElement('p', 'block-title');
     if (titleText) title.innerHTML = `${titleText}`;

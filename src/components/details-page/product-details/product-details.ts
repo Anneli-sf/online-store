@@ -45,6 +45,7 @@ const createMiniPhotosSection = (productId: number): HTMLElement => {
         'mini-photo-img'
     );
 
+    console.log(miniPhotoSecondImg);
     miniPhotoFirstItem.append(miniPhotoFirsImg);
     miniPhotoSecondItem.append(miniPhotoSecondImg);
     miniPhotosSection.append(miniPhotoFirstItem, miniPhotoSecondItem);
