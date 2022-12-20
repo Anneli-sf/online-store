@@ -1,0 +1,12 @@
+.footer {
+    background-image: url('https://frolicking-pothos-172662.netlify.app/404de487b5f47ef0b46a.gif');
+    padding: 20px 100px;
+    color: white;
+    width: 100%;
+    position: relative;
+    top: 110px;
+    // display: flex;
+    // justify-content: space-around;
+    // align-items: center;
+    @include flex-row(space-around, center);
+}

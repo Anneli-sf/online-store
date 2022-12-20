@@ -1,3 +1,32 @@
+@import '../../sass/abstracts/mixins';
+
+// .body {
+//     background-image: url('https://frolicking-pothos-172662.netlify.app/981efe9….jpg');
+//     width: 100%;
+//     height: 100%;
+//     color: white;
+//     background-size: cover;
+//     background-attachment: fixed;
+// }
+
+// .wrapper {
+//     margin: 0 auto;
+//     height: 100%;
+// }
+
+// .main {
+//     // display: flex;
+//     // align-items: flex-start;
+//     @include flex-row(normal, flex-start);
+//     padding: 10px;
+//     top: 110px;
+//     position: relative;
+// }
+
+
+
+
+
 li {
     list-style: none;
 }

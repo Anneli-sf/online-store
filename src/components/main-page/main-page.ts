@@ -1,8 +1,8 @@
-
 // import logoImage from '../../assets/images/gif/logo.gif';
 // import basketLogo from '../../assets/images/png/basket.png';
 // import background from '../../assets/images/jpg/background.jpg';
 // import backgroundHeader from '../../assets/images/gif/background.gif';
+import './main-page.scss';
 import { createElement } from '../global-components/global-components';
 import { productsData } from '../data/data';
 
@@ -92,47 +92,28 @@ import { productsData } from '../data/data';
 // ] as Array<string>;
 
 // const body = document.querySelector('.body') as HTMLBodyElement;
-const header = document.querySelector('.header') as HTMLBodyElement;
+
 const main = document.querySelector('.main') as HTMLBodyElement;
+main.append(asideBlock);
+main.append(contentBlock);
 const footer = document.querySelector('.footer') as HTMLBodyElement;
 
+//-------------------HEADER
+const header = document.querySelector('.header') as HTMLBodyElement;
 const logo = createElement('img', 'logo') as HTMLImageElement;
 const quantity = createElement('p', 'quantity') as HTMLParagraphElement;
 const basket = createElement('img', 'basket') as HTMLImageElement;
+logo.style.width = '200px';
+basket.style.width = '30px';
+header.append(logo);
+header.append(quantity);
+header.append(basket);
 
+//------------------ASIDE
 const asideBlock = createElement('aside', 'main__aside') as HTMLElement;
-const contentBlock = createElement('div', 'products') as HTMLDivElement;
-const sortBlock = createElement('div', 'products__header') as HTMLDivElement;
-
-const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
-const sortArrow = createElement('img', 'sort-arrow') as HTMLImageElement;
-const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemCategory = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemSubCategory = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemPrice = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
-
-const sortText = createElement('p', 'sort__text') as HTMLParagraphElement;
-const sortInput = createElement('input', 'sort__input') as HTMLInputElement;
-
-const productsList = createElement('ul', 'products__list') as HTMLUListElement;
-const productsItem = createElement('li', 'products__item') as HTMLLIElement;
-const imageContainer = createElement('div', 'image-container') as HTMLDivElement;
-const productImage = createElement('img', 'products-image') as HTMLImageElement;
-const productTitle = createElement('p', 'products-title') as HTMLLIElement;
-const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
-const productPrice = createElement('p', 'products-price') as HTMLDivElement;
-
-const productDiscount = createElement('p', 'products__discount') as HTMLParagraphElement;
-
 const buttonContainer = createElement('div', 'btn__container') as HTMLDivElement;
 const buttonReset = createElement('button', 'btn__reset') as HTMLButtonElement;
 const buttonCopy = createElement('button', 'btn__copy') as HTMLButtonElement;
-const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
-const buttonAdd = createElement('button', 'btn__add') as HTMLButtonElement;
-const buttonDetails = createElement('button', 'btn__details') as HTMLButtonElement;
-
 const filterCategory = createElement('div', 'filter__category') as HTMLDivElement;
 const filterSubcategory = createElement('div', 'filter__subcategory') as HTMLDivElement;
 const filterPrice = createElement('div', 'filter__price') as HTMLDivElement;
@@ -141,7 +122,6 @@ const filterSubcategoryHeader = createElement('h3', 'filter-subcategory-title') 
 const filterPriceHeader = createElement('h3', 'filter-price-title') as HTMLHeadingElement;
 const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
 const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;
-
 const categoryFormLabelSport = createElement('label', 'category-label') as HTMLInputElement;
 const categoryFormLabelClothes = createElement('label', 'category-label') as HTMLInputElement;
 const categoryFormLabelMagicItems = createElement('label', 'category-label') as HTMLInputElement;
@@ -160,7 +140,6 @@ const subcategoryFormLabelGoodPotions = createElement('label', 'subcategory-labe
 const subcategoryFormLabelPositiveBeings = createElement('label', 'subcategory-label') as HTMLInputElement;
 const subcategoryFormLabelNegativeBeings = createElement('label', 'subcategory-label') as HTMLInputElement;
 const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
-
 const categoryFormInputSport = createElement('input', 'category-input') as HTMLInputElement;
 const categoryFormInputClothes = createElement('input', 'category-input') as HTMLInputElement;
 const categoryFormInputMagicItems = createElement('input', 'category-input') as HTMLInputElement;
@@ -178,7 +157,6 @@ const subcategoryFormInputFlyingObjects = createElement('input', 'subcategory-in
 const subcategoryFormInputGoodPotions = createElement('input', 'subcategory-input') as HTMLInputElement;
 const subcategoryFormInputPositiveBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
 const subcategoryFormInputNegativeBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
-
 const rangeContainer = createElement('div', 'range-container') as HTMLDivElement;
 const sliderControl = createElement('div', 'slider-control') as HTMLDivElement;
 const formControl = createElement('div', 'form-control') as HTMLDivElement;
@@ -190,34 +168,9 @@ const sliderInputFrom = createElement('input', 'from-slider') as HTMLInputElemen
 const sliderInputTo = createElement('input', 'to-slider') as HTMLInputElement;
 const formControlTimeInputMin = createElement('input', 'form_control_container__time__input_min') as HTMLInputElement;
 const formControlTimeInputMax = createElement('input', 'form_control_container__time__input_max') as HTMLInputElement;
-
-const footerRsSchoolLogo = createElement('a', 'rs-logo') as HTMLLinkElement;
-const gitHubLogoAnneli = createElement('a', 'anneli-github-logo') as HTMLLinkElement;
-const gitHubLogoAlex = createElement('a', 'alex-github-logo') as HTMLLinkElement;
-
-// body.style.backgroundImage = `url(${background})`;
-// header.style.backgroundImage = `url(${backgroundHeader})`;
-// footer.style.backgroundImage = `url(${backgroundHeader})`;
-
-// logo.src = logoImage;
-// basket.src = basketLogo;
-logo.style.width = '200px';
-basket.style.width = '30px';
-quantity.textContent = 'Общая сумма: 0';
-sortText.textContent = 'Найдено товаров: 0';
-sortList.textContent = 'Сортировка по:';
-sortInput.placeholder = 'Найти товар';
-sortItemAlphabetAZ.textContent = 'Сортировка по алфавиту A-Я';
-sortItemAlphabetZA.textContent = 'Сортировка по алфавиту Я-А';
-sortItemCategory.textContent = 'Сортировка по категории';
-sortItemSubCategory.textContent = 'Сортировка по подкатегории';
-sortItemPrice.textContent = 'Сортировка по цене';
-sortItemDiscount.textContent = 'Сортировка по скидке';
-// sortArrow.src = arrow;
 buttonReset.textContent = 'сбросить';
 buttonCopy.textContent = 'скопировать';
-buttonAdd.textContent = 'в корзину';
-buttonDetails.textContent = 'детали';
+
 filterCategoryHeader.textContent = 'Категории';
 filterSubcategoryHeader.textContent = 'Подкатегории';
 filterPriceHeader.textContent = 'Цена';
@@ -238,12 +191,6 @@ subcategoryFormLabelStones.textContent = 'Камни';
 subcategoryFormLabelWeapon.textContent = 'Оружие';
 subcategoryFormLabelPositiveBeings.textContent = 'Положительные существа';
 subcategoryFormLabelNegativeBeings.textContent = 'Отрицательные существа';
-footerRsSchoolLogo.href = 'https://rs.school/js/';
-gitHubLogoAnneli.href = 'https://github.com/anneli-sf';
-gitHubLogoAlex.href = 'https://github.com/MaestroFront';
-footerRsSchoolLogo.target = '_blank';
-gitHubLogoAnneli.target = '_blank';
-gitHubLogoAlex.target = '_blank';
 
 sliderInputFrom.type = 'range';
 sliderInputTo.type = 'range';
@@ -261,9 +208,6 @@ formControlTimeInputMax.value = '100';
 formControlContainerMinTime.textContent = 'Min';
 formControlContainerMaxTime.textContent = 'Max';
 
-productImage.style.width = '100%';
-productImage.style.height = '100%';
-
 formControlContainerMin.append(formControlContainerMinTime);
 formControlContainerMin.append(formControlTimeInputMin);
 formControlContainerMax.append(formControlContainerMaxTime);
@@ -274,27 +218,6 @@ sliderControl.append(sliderInputFrom);
 sliderControl.append(sliderInputTo);
 rangeContainer.append(sliderControl);
 rangeContainer.append(formControl);
-
-header.append(logo);
-header.append(quantity);
-header.append(basket);
-
-main.append(asideBlock);
-main.append(contentBlock);
-contentBlock.append(sortBlock);
-contentBlock.append(productsList);
-
-sortList.append(sortItemAlphabetAZ);
-sortList.append(sortItemAlphabetZA);
-sortList.append(sortItemCategory);
-sortList.append(sortItemSubCategory);
-sortList.append(sortItemPrice);
-sortList.append(sortItemDiscount);
-sortList.append(sortArrow);
-
-sortBlock.append(sortList);
-sortBlock.append(sortText);
-sortBlock.append(sortInput);
 
 categoryFormLabelAuto.append(categoryFormInputAuto);
 categoryFormLabelClothes.append(categoryFormInputClothes);
@@ -344,15 +267,95 @@ subcategoryForm.append(subcategoryFormLabelWeapon);
 subcategoryForm.append(subcategoryFormLabelPositiveBeings);
 subcategoryForm.append(subcategoryFormLabelNegativeBeings);
 
+//----------------------CONTENT
+const contentBlock = createElement('div', 'products') as HTMLDivElement;
+contentBlock.append(sortBlock);
+contentBlock.append(productsList);
+
+//---------------CONTENT HEADER
+const sortBlock = createElement('div', 'products__header') as HTMLDivElement;
+const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
+const sortArrow = createElement('img', 'sort-arrow') as HTMLImageElement;
+const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
+const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
+const sortItemCategory = createElement('li', 'sort__item') as HTMLLIElement;
+const sortItemSubCategory = createElement('li', 'sort__item') as HTMLLIElement;
+const sortItemPrice = createElement('li', 'sort__item') as HTMLLIElement;
+const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
+const sortText = createElement('p', 'sort__text') as HTMLParagraphElement;
+const sortInput = createElement('input', 'sort__input') as HTMLInputElement;
+quantity.textContent = 'Общая сумма: 0';
+sortText.textContent = 'Найдено товаров: 0';
+sortList.textContent = 'Сортировка по:';
+sortInput.placeholder = 'Найти товар';
+sortItemAlphabetAZ.textContent = 'Сортировка по алфавиту A-Я';
+sortItemAlphabetZA.textContent = 'Сортировка по алфавиту Я-А';
+sortItemCategory.textContent = 'Сортировка по категории';
+sortItemSubCategory.textContent = 'Сортировка по подкатегории';
+sortItemPrice.textContent = 'Сортировка по цене';
+sortItemDiscount.textContent = 'Сортировка по скидке';
+
+sortList.append(sortItemAlphabetAZ);
+sortList.append(sortItemAlphabetZA);
+sortList.append(sortItemCategory);
+sortList.append(sortItemSubCategory);
+sortList.append(sortItemPrice);
+sortList.append(sortItemDiscount);
+sortList.append(sortArrow);
+
+sortBlock.append(sortList);
+sortBlock.append(sortText);
+sortBlock.append(sortInput);
+
+//-------------------MAIN CONTENT
+const productsList = createElement('ul', 'products__list') as HTMLUListElement;
+
+//----------------CARD
+const productsItem = createElement('li', 'products__item') as HTMLLIElement;
+const imageContainer = createElement('div', 'image-container') as HTMLDivElement;
+const productImage = createElement('img', 'products-image') as HTMLImageElement;
+const productTitle = createElement('p', 'products-title') as HTMLLIElement;
+const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
+const productPrice = createElement('p', 'products-price') as HTMLDivElement;
+const productDiscount = createElement('p', 'products__discount') as HTMLParagraphElement;
+
+const buttonAdd = createElement('button', 'btn__add') as HTMLButtonElement;
+const buttonDetails = createElement('button', 'btn__details') as HTMLButtonElement;
+const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
+buttonAdd.textContent = 'в корзину';
+buttonDetails.textContent = 'детали';
+productImage.style.width = '100%';
+productImage.style.height = '100%';
+
+productAvailable.append(productPrice.cloneNode(true));
+buttonsItemContainer.append(buttonAdd);
+buttonsItemContainer.append(buttonDetails);
+
+//---------------------FOOTER
+const footerRsSchoolLogo = createElement('a', 'rs-logo') as HTMLLinkElement;
+const gitHubLogoAnneli = createElement('a', 'anneli-github-logo') as HTMLLinkElement;
+const gitHubLogoAlex = createElement('a', 'alex-github-logo') as HTMLLinkElement;
+
+footerRsSchoolLogo.href = 'https://rs.school/js/';
+gitHubLogoAnneli.href = 'https://github.com/anneli-sf';
+gitHubLogoAlex.href = 'https://github.com/MaestroFront';
+footerRsSchoolLogo.target = '_blank';
+gitHubLogoAnneli.target = '_blank';
+gitHubLogoAlex.target = '_blank';
+
 footer.append(footerRsSchoolLogo);
 footer.append(logo.cloneNode(true));
 footer.append(gitHubLogoAnneli);
 footer.append(gitHubLogoAlex);
 
-productAvailable.append(productPrice.cloneNode(true));
+// body.style.backgroundImage = `url(${background})`;
+// header.style.backgroundImage = `url(${backgroundHeader})`;
+// footer.style.backgroundImage = `url(${backgroundHeader})`;
 
-buttonsItemContainer.append(buttonAdd);
-buttonsItemContainer.append(buttonDetails);
+// logo.src = logoImage;
+// basket.src = basketLogo;
+
+// sortArrow.src = arrow;
 
 document.querySelectorAll('.category-label').forEach((item) => {
     item.append(checkbox.cloneNode(true));
