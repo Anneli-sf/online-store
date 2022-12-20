@@ -1,9 +1,13 @@
 @import '../../sass/abstracts/mixins';
 
+.details-page {
+    @include flex-column();
+    
 .details-block {
     .details-section {
         @include flex-row();
         gap: 3%;
         padding: 10px 15px;
     }
+}
 }

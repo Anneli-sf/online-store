@@ -6,7 +6,7 @@ import { createNavigation } from './nav-menu/nav-menu';
 
 //------------create full page with product's info and navigation
 export function createDetailsPage(productId: number): HTMLElement {
-    const mainSection = createElement('main', 'main') as HTMLBodyElement;
-    mainSection.append(createNavigation(productId), createDetailsBlock(productId));
-    return mainSection;
+    const detailsPage = createElement('div', 'details-page') as HTMLElement;
+    detailsPage.append(createNavigation(productId), createDetailsBlock(productId));
+    return detailsPage;
 }
