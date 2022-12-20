@@ -33,10 +33,10 @@ export const createInput = (
     return form;
 };
 
-export const createLabel = (inputName: string, inputText: string): HTMLLabelElement => {
-    const label = createElement('label', 'label') as HTMLLabelElement;
-    label.setAttribute('for', inputName);
-    label.innerText = inputText;
+export const createLabel = (labelText: string, labelClass: string, labelName?: string): HTMLLabelElement => {
+    const label = createElement('label', `${labelClass}`) as HTMLLabelElement;
+    labelName ? label.setAttribute('for', labelName) : undefined;
+    label.innerText = labelText;
     return label;
 };
 
@@ -86,7 +86,7 @@ export const createBlockWithText = (
 
     const blockText: HTMLElement = createElement('p', 'block-text');
     pClass ? blockText.classList.add(pClass) : undefined;
-    blockText.textContent = text;
+    text ? blockText.innerText = text : undefined;
 
     blockSection.append(blockText);
     blockHeader.append(title);
@@ -97,7 +97,7 @@ export const createBlockWithText = (
 };
 
 export const createImage = (imgSrc: string, imgAlt: string, imgClass?: string): HTMLImageElement => {
-    const image: HTMLImageElement = createElement('img', 'image');
+    const image = createElement('img', 'image') as HTMLImageElement;
     imgClass ? image.classList.add(imgClass) : undefined;
     image.src = imgSrc;
     image.alt = imgAlt;
@@ -105,7 +105,7 @@ export const createImage = (imgSrc: string, imgAlt: string, imgClass?: string): 
 };
 
 export const createLink = (linkHref: string, linkClass: string, linkText?: string): HTMLLinkElement => {
-    const link: HTMLLinkElement = createElement('a', linkClass);
+    const link = createElement('a', linkClass) as HTMLLinkElement;
     link.href = linkHref;
     link.textContent = linkText;
 

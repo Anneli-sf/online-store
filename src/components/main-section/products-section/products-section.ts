@@ -1,9 +1,6 @@
 import './products-section.scss';
 import { createElement, createImage, createInput, createParagraph } from '../../global-components/global-components';
-import { createProductCard } from '../item-card/item-card';
-
-
-//----------------------CONTENT
+import { createProductCard } from './item-card/item-card';
 
 export function createProductsSection(): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
@@ -11,6 +8,7 @@ export function createProductsSection(): HTMLDivElement {
     return contentBlock;
 }
 
+//----------------------products header
 function createProductsHeader() {
     const sortBlock = createElement('div', 'products__header') as HTMLDivElement;
 
@@ -57,22 +55,42 @@ function createProductsHeader() {
     return sortBlock;
 }
 
+
+
+//----------------------products list
 function createProductsList(): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
     let i = 0;
     while (i < 40) {
-        // productsList.append(productsItem.cloneNode(true));
         productsList.append(createProductCard(i));
         i++;
     }
     return productsList;
 }
 
-// const fillProductsList = () => {
-//     let i = 0;
-//     while (i < 40) {
-//         productsList.append(productsItem.cloneNode(true));
-//         i++;
-//     }
-//     return productsList;
-// };
+
+sortArrow.addEventListener('click', () => {
+    if (sortList.classList.contains('open')) {
+        sortList.classList.remove('open');
+        sortList.style.backgroundColor = 'transparent';
+        sortList.style.color = 'white';
+        sortItemAlphabetAZ.style.transform = 'scale(0)';
+        sortItemAlphabetZA.style.transform = 'scale(0)';
+        sortItemCategory.style.transform = 'scale(0)';
+        sortItemSubCategory.style.transform = 'scale(0)';
+        sortItemPrice.style.transform = 'scale(0)';
+        sortItemDiscount.style.transform = 'scale(0)';
+        sortArrow.style.transform = 'scale(1, 1)';
+    } else {
+        sortList.classList.add('open');
+        sortList.style.backgroundColor = 'white';
+        sortList.style.color = 'black';
+        sortItemAlphabetAZ.style.transform = 'scale(1)';
+        sortItemAlphabetZA.style.transform = 'scale(1)';
+        sortItemCategory.style.transform = 'scale(1)';
+        sortItemSubCategory.style.transform = 'scale(1)';
+        sortItemPrice.style.transform = 'scale(1)';
+        sortItemDiscount.style.transform = 'scale(1)';
+        sortArrow.style.transform = 'scale(1, -1)';
+    }
+});

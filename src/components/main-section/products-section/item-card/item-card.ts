@@ -1,6 +1,6 @@
 import './item-card.scss';
-import { createButton, createElement, createImage, createParagraph } from '../../global-components/global-components';
-import { productsData } from '../../data/data';
+import { createButton, createElement, createImage, createParagraph } from '../../../global-components/global-components';
+import { productsData } from '../../../data/data';
 
 //----------------CARD
 export function createProductCard(productId: number): HTMLElement {
@@ -26,7 +26,6 @@ export function createProductCard(productId: number): HTMLElement {
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
 
     imageContainer.append(productImage);
-    // productAvailable.append(productPrice.cloneNode(true));
     productAvailable.append(productPrice);
     buttonsItemContainer.append(buttonAdd, buttonDetails);
 

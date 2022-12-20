@@ -1,5 +1,5 @@
 import './footer.scss';
-import { createElement, createLink, createImage } from '../../global-components/global-components';
+import { createLink, createImage } from '../../global-components/global-components';
 
 export const footer = document.querySelector('.footer') as HTMLBodyElement;
 
