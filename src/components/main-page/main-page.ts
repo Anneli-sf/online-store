@@ -8,7 +8,6 @@ import { productsData } from '../data/data';
 import { createFooter } from './footer/footer';
 import { createHeader } from './header/header';
 
-
 // import arrow from '../../assets/images/svg/arrow-down.svg';
 // import foto1 from '../../components/products-data/images_storage/mech_Griffindora/grif1.png';
 // import foto2 from '../../components/products-data/images_storage/mantiya_nevidimka/mant1.jpg';
@@ -100,17 +99,6 @@ const main = document.querySelector('.main') as HTMLBodyElement;
 main.append(asideBlock);
 main.append(contentBlock);
 
-
-
-
-
-
-/
-
-
-
-
-
 // body.style.backgroundImage = `url(${background})`;
 // header.style.backgroundImage = `url(${backgroundHeader})`;
 // footer.style.backgroundImage = `url(${backgroundHeader})`;
@@ -146,13 +134,7 @@ const fillProductsList = () => {
 };
 fillProductsList();
 
-document.querySelectorAll('.products__item').forEach((item: Element) => {
-    item.append(productDiscount.cloneNode(true));
-    item.append(imageContainer.cloneNode(true));
-    item.append(productTitle.cloneNode(true));
-    item.append(productAvailable.cloneNode(true));
-    item.append(buttonsItemContainer.cloneNode(true));
-});
+
 
 // document.querySelectorAll('.products__discount').forEach((item, index) => {
 //     item.textContent = productsData[index].discount;

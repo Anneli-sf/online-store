@@ -7,19 +7,26 @@ export const createElement = (elTag: string, elClassName: string): HTMLElement =
 };
 
 export const createButton = (buttonText: string, classButton?: string): HTMLButtonElement => {
-    const button: HTMLButtonElement = createElement('button', 'button');
+    const button = createElement('button', 'button') as HTMLButtonElement;
     classButton ? button.classList.add(classButton) : undefined;
     button.innerText = buttonText;
     return button;
 };
 
-export const createInput = (inputType: string, inputId: string, inputName?: string): HTMLFormElement => {
-    const form: HTMLFormElement = createElement('form', 'form');
+export const createInput = (
+    inputClass: string,
+    inputType: string,
+    inputPlaceHolder?: string,
+    inputId?: string,
+    inputName?: string
+): HTMLFormElement => {
+    const form = createElement('form', 'form') as HTMLFormElement;
 
-    const input: HTMLInputElement = createElement('input', 'input');
+    const input = createElement('input', `${inputClass}`) as HTMLInputElement;
     input.type = inputType;
-    input.id = inputId;
+    inputId ? (input.id = inputId) : undefined;
     inputName ? (input.name = inputName) : undefined;
+    inputPlaceHolder ? (input.placeholder = inputPlaceHolder) : undefined;
 
     form.append(input);
     return form;
