@@ -1,133 +1,14 @@
 @import '../../sass/abstracts/mixins';
 
-// .body {
-//     background-image: url('https://frolicking-pothos-172662.netlify.app/981efe9….jpg');
-//     width: 100%;
-//     height: 100%;
-//     color: white;
-//     background-size: cover;
-//     background-attachment: fixed;
-// }
-
-// .wrapper {
-//     margin: 0 auto;
-//     height: 100%;
-// }
-
-// .main {
-//     // display: flex;
-//     // align-items: flex-start;
-//     @include flex-row(normal, flex-start);
-//     padding: 10px;
-//     top: 110px;
-//     position: relative;
-// }
-
-
-
-
-
 li {
     list-style: none;
 }
 
-.main__aside {
-    flex: 1 0 20%;
-    border: 1px solid white;
-    height: 100%;
-    margin-right: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0px;
-}
 
-.basket {
-    cursor: pointer;
-    transition: all 1s ease-in-out;
-    &:hover {
-        transform: scale(1.2);
-    }
-}
 
-.products {
-    flex: 1 0 80%;
-    &__list {
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        padding: 0px 10px;
-        font-size: 18px;
-    }
-    &__item {
-        flex: 0 1 15%;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        position: relative;
-        padding-bottom: 10px;
-        list-style: none;
-        border: 1px solid white;
-        margin-bottom: 20px;
-        overflow: hidden;
-        text-align: center;
-        &:not(:nth-child(6n)) {
-            margin-right: 2%;
-        }
-    }
-    &__header {
-        height: 50px;
-        border: 1px solid white;
-        margin-bottom: 20px;
-        padding: 10px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-    }
 
-    &__discount {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        z-index: 2;
-        background-color: yellow;
-        color: black;
-        padding: 8px;
-        border-radius: 50%;
-    }
-}
 
-.products-available {
-    position: absolute;
-    top: 60%;
-    width: 100%;
-    text-align: center;
-    background-color: oldlace;
-    color: black;
-}
 
-.products-price {
-    position: relative;
-    &::after {
-        position: absolute;
-        content: '$';
-    }
-}
-
-.products-image {
-    transition: all 1s ease-in-out;
-    cursor: pointer;
-    &:hover {
-        transform: scale(1.2);
-    }
-}
-
-.product-buttons-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-}
 
 .sort {
     &__list {
@@ -379,53 +260,8 @@ input[type='range'] {
     pointer-events: none;
 }
 
-.rs-logo {
-    cursor: pointer;
-    position: relative;
-    filter: invert(1);
-    width: 100px;
-    height: 43px;
-    &::after {
-        position: absolute;
-        content: url(../../assets/images/svg/rsschool.svg);
-        width: 100px;
-    }
-}
 
-.anneli-github-logo {
-    cursor: pointer;
-    position: relative;
-    &::before {
-        color: white;
-        position: absolute;
-        content: 'Anneli';
-        top: 30px;
-        left: 8px;
-        font-size: 18px;
-    }
-    &::after {
-        position: absolute;
-        content: url(../../assets/images/svg/github.svg);
-        top: -20px;
-        width: 50px;
-    }
-}
 
-.alex-github-logo {
-    cursor: pointer;
-    position: relative;
-    &::before {
-        color: white;
-        position: absolute;
-        content: 'Alex';
-        top: 30px;
-        left: 8px;
-        font-size: 18px;
-    }
-    &::after {
-        position: absolute;
-        content: url(../../assets/images/svg/github.svg);
-        top: -20px;
-        width: 50px;
-    }
-}
+
+
+

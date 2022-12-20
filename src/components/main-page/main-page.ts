@@ -5,6 +5,9 @@
 import './main-page.scss';
 import { createElement } from '../global-components/global-components';
 import { productsData } from '../data/data';
+import { createFooter } from './footer/footer';
+import { createHeader } from './header/header';
+
 
 // import arrow from '../../assets/images/svg/arrow-down.svg';
 // import foto1 from '../../components/products-data/images_storage/mech_Griffindora/grif1.png';
@@ -96,257 +99,17 @@ import { productsData } from '../data/data';
 const main = document.querySelector('.main') as HTMLBodyElement;
 main.append(asideBlock);
 main.append(contentBlock);
-const footer = document.querySelector('.footer') as HTMLBodyElement;
 
-//-------------------HEADER
-const header = document.querySelector('.header') as HTMLBodyElement;
-const logo = createElement('img', 'logo') as HTMLImageElement;
-const quantity = createElement('p', 'quantity') as HTMLParagraphElement;
-const basket = createElement('img', 'basket') as HTMLImageElement;
-logo.style.width = '200px';
-basket.style.width = '30px';
-header.append(logo);
-header.append(quantity);
-header.append(basket);
 
-//------------------ASIDE
-const asideBlock = createElement('aside', 'main__aside') as HTMLElement;
-const buttonContainer = createElement('div', 'btn__container') as HTMLDivElement;
-const buttonReset = createElement('button', 'btn__reset') as HTMLButtonElement;
-const buttonCopy = createElement('button', 'btn__copy') as HTMLButtonElement;
-const filterCategory = createElement('div', 'filter__category') as HTMLDivElement;
-const filterSubcategory = createElement('div', 'filter__subcategory') as HTMLDivElement;
-const filterPrice = createElement('div', 'filter__price') as HTMLDivElement;
-const filterCategoryHeader = createElement('h3', 'filter-category-title') as HTMLHeadingElement;
-const filterSubcategoryHeader = createElement('h3', 'filter-subcategory-title') as HTMLHeadingElement;
-const filterPriceHeader = createElement('h3', 'filter-price-title') as HTMLHeadingElement;
-const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
-const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;
-const categoryFormLabelSport = createElement('label', 'category-label') as HTMLInputElement;
-const categoryFormLabelClothes = createElement('label', 'category-label') as HTMLInputElement;
-const categoryFormLabelMagicItems = createElement('label', 'category-label') as HTMLInputElement;
-const categoryFormLabelPotions = createElement('label', 'category-label') as HTMLInputElement;
-const categoryFormLabelAuto = createElement('label', 'category-label') as HTMLInputElement;
-const categoryFormLabelMagicalCreatures = createElement('label', 'category-label') as HTMLInputElement;
-const subcategoryFormLabelSticks = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelStones = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelInteriorItems = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelBooks = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelWeapon = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelCLothes = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelAccessories = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelFlyingObjects = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelGoodPotions = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelPositiveBeings = createElement('label', 'subcategory-label') as HTMLInputElement;
-const subcategoryFormLabelNegativeBeings = createElement('label', 'subcategory-label') as HTMLInputElement;
-const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
-const categoryFormInputSport = createElement('input', 'category-input') as HTMLInputElement;
-const categoryFormInputClothes = createElement('input', 'category-input') as HTMLInputElement;
-const categoryFormInputMagicItems = createElement('input', 'category-input') as HTMLInputElement;
-const categoryFormInputPotions = createElement('input', 'category-input') as HTMLInputElement;
-const categoryFormInputAuto = createElement('input', 'category-input') as HTMLInputElement;
-const categoryFormInputMagicalCreatures = createElement('input', 'category-input') as HTMLInputElement;
-const subcategoryFormInputSticks = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputStones = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputInteriorItems = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputBooks = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputWeapon = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputCLothes = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputAccessories = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputFlyingObjects = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputGoodPotions = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputPositiveBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
-const subcategoryFormInputNegativeBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
-const rangeContainer = createElement('div', 'range-container') as HTMLDivElement;
-const sliderControl = createElement('div', 'slider-control') as HTMLDivElement;
-const formControl = createElement('div', 'form-control') as HTMLDivElement;
-const formControlContainerMin = createElement('div', 'form-control-container') as HTMLDivElement;
-const formControlContainerMax = createElement('div', 'form-control-container') as HTMLDivElement;
-const formControlContainerMinTime = createElement('div', 'form-control-container__time') as HTMLDivElement;
-const formControlContainerMaxTime = createElement('div', 'form-control-container__time') as HTMLDivElement;
-const sliderInputFrom = createElement('input', 'from-slider') as HTMLInputElement;
-const sliderInputTo = createElement('input', 'to-slider') as HTMLInputElement;
-const formControlTimeInputMin = createElement('input', 'form_control_container__time__input_min') as HTMLInputElement;
-const formControlTimeInputMax = createElement('input', 'form_control_container__time__input_max') as HTMLInputElement;
-buttonReset.textContent = 'сбросить';
-buttonCopy.textContent = 'скопировать';
 
-filterCategoryHeader.textContent = 'Категории';
-filterSubcategoryHeader.textContent = 'Подкатегории';
-filterPriceHeader.textContent = 'Цена';
-categoryFormLabelAuto.textContent = 'Транспорт';
-categoryFormLabelClothes.textContent = 'Одежда и аксессуары';
-categoryFormLabelMagicItems.textContent = 'Магические предметы';
-categoryFormLabelPotions.textContent = 'Зелья';
-categoryFormLabelSport.textContent = 'Спорт';
-categoryFormLabelMagicalCreatures.textContent = 'Магические существа';
-subcategoryFormLabelAccessories.textContent = 'Аксессуары';
-subcategoryFormLabelBooks.textContent = 'Книжные товары';
-subcategoryFormLabelCLothes.textContent = 'Одежда';
-subcategoryFormLabelFlyingObjects.textContent = 'Летающие объекты';
-subcategoryFormLabelGoodPotions.textContent = 'Добрые зелья';
-subcategoryFormLabelInteriorItems.textContent = 'Предметы интерьера';
-subcategoryFormLabelSticks.textContent = 'Волшебные палочки';
-subcategoryFormLabelStones.textContent = 'Камни';
-subcategoryFormLabelWeapon.textContent = 'Оружие';
-subcategoryFormLabelPositiveBeings.textContent = 'Положительные существа';
-subcategoryFormLabelNegativeBeings.textContent = 'Отрицательные существа';
 
-sliderInputFrom.type = 'range';
-sliderInputTo.type = 'range';
-sliderInputFrom.value = '0';
-sliderInputFrom.min = '0';
-sliderInputFrom.max = '100';
-sliderInputTo.value = '100';
-sliderInputTo.min = '0';
-sliderInputTo.max = '100';
 
-formControlTimeInputMin.type = 'number';
-formControlTimeInputMax.type = 'number';
-formControlTimeInputMin.value = '0';
-formControlTimeInputMax.value = '100';
-formControlContainerMinTime.textContent = 'Min';
-formControlContainerMaxTime.textContent = 'Max';
 
-formControlContainerMin.append(formControlContainerMinTime);
-formControlContainerMin.append(formControlTimeInputMin);
-formControlContainerMax.append(formControlContainerMaxTime);
-formControlContainerMax.append(formControlTimeInputMax);
-formControl.append(formControlContainerMin);
-formControl.append(formControlContainerMax);
-sliderControl.append(sliderInputFrom);
-sliderControl.append(sliderInputTo);
-rangeContainer.append(sliderControl);
-rangeContainer.append(formControl);
+/
 
-categoryFormLabelAuto.append(categoryFormInputAuto);
-categoryFormLabelClothes.append(categoryFormInputClothes);
-categoryFormLabelMagicItems.append(categoryFormInputMagicItems);
-categoryFormLabelPotions.append(categoryFormInputPotions);
-categoryFormLabelSport.append(categoryFormInputSport);
-categoryFormLabelMagicalCreatures.append(categoryFormInputMagicalCreatures);
-subcategoryFormLabelAccessories.append(subcategoryFormInputAccessories);
-subcategoryFormLabelBooks.append(subcategoryFormInputBooks);
-subcategoryFormLabelCLothes.append(subcategoryFormInputCLothes);
-subcategoryFormLabelFlyingObjects.append(subcategoryFormInputFlyingObjects);
-subcategoryFormLabelGoodPotions.append(subcategoryFormInputGoodPotions);
-subcategoryFormLabelInteriorItems.append(subcategoryFormInputInteriorItems);
-subcategoryFormLabelSticks.append(subcategoryFormInputSticks);
-subcategoryFormLabelStones.append(subcategoryFormInputStones);
-subcategoryFormLabelWeapon.append(subcategoryFormInputWeapon);
-subcategoryFormLabelPositiveBeings.append(subcategoryFormInputPositiveBeings);
-subcategoryFormLabelNegativeBeings.append(subcategoryFormInputNegativeBeings);
 
-asideBlock.append(buttonContainer);
-buttonContainer.append(buttonReset);
-buttonContainer.append(buttonCopy);
-asideBlock.append(filterCategory);
-asideBlock.append(filterSubcategory);
-asideBlock.append(filterPrice);
-filterCategory.append(filterCategoryHeader);
-filterSubcategory.append(filterSubcategoryHeader);
-filterPrice.append(filterPriceHeader);
-filterPrice.append(rangeContainer);
-filterCategory.append(categoryForm);
-filterSubcategory.append(subcategoryForm);
-categoryForm.append(categoryFormLabelAuto);
-categoryForm.append(categoryFormLabelClothes);
-categoryForm.append(categoryFormLabelMagicItems);
-categoryForm.append(categoryFormLabelPotions);
-categoryForm.append(categoryFormLabelSport);
-categoryForm.append(categoryFormLabelMagicalCreatures);
-subcategoryForm.append(subcategoryFormLabelAccessories);
-subcategoryForm.append(subcategoryFormLabelBooks);
-subcategoryForm.append(subcategoryFormLabelCLothes);
-subcategoryForm.append(subcategoryFormLabelFlyingObjects);
-subcategoryForm.append(subcategoryFormLabelGoodPotions);
-subcategoryForm.append(subcategoryFormLabelInteriorItems);
-subcategoryForm.append(subcategoryFormLabelSticks);
-subcategoryForm.append(subcategoryFormLabelStones);
-subcategoryForm.append(subcategoryFormLabelWeapon);
-subcategoryForm.append(subcategoryFormLabelPositiveBeings);
-subcategoryForm.append(subcategoryFormLabelNegativeBeings);
 
-//----------------------CONTENT
-const contentBlock = createElement('div', 'products') as HTMLDivElement;
-contentBlock.append(sortBlock);
-contentBlock.append(productsList);
 
-//---------------CONTENT HEADER
-const sortBlock = createElement('div', 'products__header') as HTMLDivElement;
-const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
-const sortArrow = createElement('img', 'sort-arrow') as HTMLImageElement;
-const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemCategory = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemSubCategory = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemPrice = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
-const sortText = createElement('p', 'sort__text') as HTMLParagraphElement;
-const sortInput = createElement('input', 'sort__input') as HTMLInputElement;
-quantity.textContent = 'Общая сумма: 0';
-sortText.textContent = 'Найдено товаров: 0';
-sortList.textContent = 'Сортировка по:';
-sortInput.placeholder = 'Найти товар';
-sortItemAlphabetAZ.textContent = 'Сортировка по алфавиту A-Я';
-sortItemAlphabetZA.textContent = 'Сортировка по алфавиту Я-А';
-sortItemCategory.textContent = 'Сортировка по категории';
-sortItemSubCategory.textContent = 'Сортировка по подкатегории';
-sortItemPrice.textContent = 'Сортировка по цене';
-sortItemDiscount.textContent = 'Сортировка по скидке';
-
-sortList.append(sortItemAlphabetAZ);
-sortList.append(sortItemAlphabetZA);
-sortList.append(sortItemCategory);
-sortList.append(sortItemSubCategory);
-sortList.append(sortItemPrice);
-sortList.append(sortItemDiscount);
-sortList.append(sortArrow);
-
-sortBlock.append(sortList);
-sortBlock.append(sortText);
-sortBlock.append(sortInput);
-
-//-------------------MAIN CONTENT
-const productsList = createElement('ul', 'products__list') as HTMLUListElement;
-
-//----------------CARD
-const productsItem = createElement('li', 'products__item') as HTMLLIElement;
-const imageContainer = createElement('div', 'image-container') as HTMLDivElement;
-const productImage = createElement('img', 'products-image') as HTMLImageElement;
-const productTitle = createElement('p', 'products-title') as HTMLLIElement;
-const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
-const productPrice = createElement('p', 'products-price') as HTMLDivElement;
-const productDiscount = createElement('p', 'products__discount') as HTMLParagraphElement;
-
-const buttonAdd = createElement('button', 'btn__add') as HTMLButtonElement;
-const buttonDetails = createElement('button', 'btn__details') as HTMLButtonElement;
-const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
-buttonAdd.textContent = 'в корзину';
-buttonDetails.textContent = 'детали';
-productImage.style.width = '100%';
-productImage.style.height = '100%';
-
-productAvailable.append(productPrice.cloneNode(true));
-buttonsItemContainer.append(buttonAdd);
-buttonsItemContainer.append(buttonDetails);
-
-//---------------------FOOTER
-const footerRsSchoolLogo = createElement('a', 'rs-logo') as HTMLLinkElement;
-const gitHubLogoAnneli = createElement('a', 'anneli-github-logo') as HTMLLinkElement;
-const gitHubLogoAlex = createElement('a', 'alex-github-logo') as HTMLLinkElement;
-
-footerRsSchoolLogo.href = 'https://rs.school/js/';
-gitHubLogoAnneli.href = 'https://github.com/anneli-sf';
-gitHubLogoAlex.href = 'https://github.com/MaestroFront';
-footerRsSchoolLogo.target = '_blank';
-gitHubLogoAnneli.target = '_blank';
-gitHubLogoAlex.target = '_blank';
-
-footer.append(footerRsSchoolLogo);
-footer.append(logo.cloneNode(true));
-footer.append(gitHubLogoAnneli);
-footer.append(gitHubLogoAlex);
 
 // body.style.backgroundImage = `url(${background})`;
 // header.style.backgroundImage = `url(${backgroundHeader})`;

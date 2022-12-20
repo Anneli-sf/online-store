@@ -1,18 +1,14 @@
 @import '../../../sass/abstracts/mixins';
 
+.logo {
+    width: 200px;
+}
 
-// .header {
-//     background-image: url('https://frolicking-pothos-172662.netlify.app/404de48….gif');
-//     position: relative;
-//     border: 1px solid white;
-//     margin-bottom: 10px;
-//     // display: flex;
-//     // justify-content: space-between;
-//     // align-items: center;
-//     @include flex-row();
-//     padding: 10px 100px;
-//     width: 100%;
-//     position: fixed;
-//     overflow: hidden;
-//     z-index: 4;
-// }
+.basket {
+    width: 30px;
+    cursor: pointer;
+    transition: all 1s ease-in-out;
+    &:hover {
+        transform: scale(1.2);
+    }
+}

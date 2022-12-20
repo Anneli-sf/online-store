@@ -1,14 +1,52 @@
 @import '../../../sass/abstracts/mixins';
 
-// .footer {
-//     background-image: url('https://frolicking-pothos-172662.netlify.app/404de48….gif');
-//     padding: 20px 100px;
-//     color: white;
-//     width: 100%;
-//     position: relative;
-//     top: 110px;
-//     // display: flex;
-//     // justify-content: space-around;
-//     // align-items: center;
-//     @include flex-row(space-around, center);
-// }
+.rs-logo {
+    cursor: pointer;
+    position: relative;
+    filter: invert(1);
+    width: 100px;
+    height: 43px;
+    &::after {
+        position: absolute;
+        content: url(../../assets/images/svg/rsschool.svg);
+        width: 100px;
+    }
+}
+
+.anneli-github-logo {
+    cursor: pointer;
+    position: relative;
+    &::before {
+        color: white;
+        position: absolute;
+        content: 'Anneli';
+        top: 30px;
+        left: 8px;
+        font-size: 18px;
+    }
+    &::after {
+        position: absolute;
+        content: url(../../assets/images/svg/github.svg);
+        top: -20px;
+        width: 50px;
+    }
+}
+
+.alex-github-logo {
+    cursor: pointer;
+    position: relative;
+    &::before {
+        color: white;
+        position: absolute;
+        content: 'Alex';
+        top: 30px;
+        left: 8px;
+        font-size: 18px;
+    }
+    &::after {
+        position: absolute;
+        content: url(../../assets/images/svg/github.svg);
+        top: -20px;
+        width: 50px;
+    }
+}

@@ -70,7 +70,7 @@ export const createBlockWithText = (
 
     const blockHeader: HTMLElement = createElement('div', 'block-header');
     headerClass ? blockHeader.classList.add(headerClass) : undefined;
-    const title = createElement('p', 'block-title');
+    const title: HTMLElement = createElement('p', 'block-title');
     if (titleText) title.innerHTML = `${titleText}`;
 
     const blockSection: HTMLElement = createElement('div', 'block-section');
@@ -102,4 +102,10 @@ export const createLink = (linkHref: string, linkClass: string, linkText?: strin
     link.textContent = linkText;
 
     return link;
+};
+
+export const createParagraph = (parText: string | number, parClass: string): HTMLParagraphElement => {
+    const text = createElement('p', parClass) as HTMLParagraphElement;
+    text.innerHTML = `${parText}`;
+    return text;
 };
