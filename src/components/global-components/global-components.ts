@@ -96,7 +96,7 @@ export const createImage = (imgSrc: string, imgAlt: string, imgClass?: string): 
     return image;
 };
 
-export const createLink = (linkText: string, linkClass: string, linkHref: string): HTMLLinkElement => {
+export const createLink = (linkHref: string, linkClass: string, linkText?: string): HTMLLinkElement => {
     const link: HTMLLinkElement = createElement('a', linkClass);
     link.href = linkHref;
     link.textContent = linkText;
