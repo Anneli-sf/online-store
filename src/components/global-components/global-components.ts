@@ -19,7 +19,10 @@ export const createInput = (
     inputType: string,
     inputPlaceHolder?: string,
     inputId?: string,
-    inputName?: string
+    inputName?: string,
+    inputValue?: string,
+    minValue?: string,
+    maxValue?: string
 ): HTMLFormElement => {
     const form = createElement('form', 'form') as HTMLFormElement;
 
@@ -28,6 +31,9 @@ export const createInput = (
     inputId ? (input.id = inputId) : undefined;
     inputName ? (input.name = inputName) : undefined;
     inputPlaceHolder ? (input.placeholder = inputPlaceHolder) : undefined;
+    inputValue ? (input.value = inputValue) : undefined;
+    minValue ? (input.min = minValue) : undefined;
+    maxValue ? (input.max = maxValue) : undefined;
 
     form.append(input);
     return form;
@@ -86,7 +92,7 @@ export const createBlockWithText = (
 
     const blockText: HTMLElement = createElement('p', 'block-text');
     pClass ? blockText.classList.add(pClass) : undefined;
-    text ? blockText.innerText = text : undefined;
+    text ? (blockText.innerText = text) : undefined;
 
     blockSection.append(blockText);
     blockHeader.append(title);

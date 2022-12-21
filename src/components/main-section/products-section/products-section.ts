@@ -33,11 +33,7 @@ function createProductsHeader() {
     const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
     sortItemDiscount.textContent = 'Сортировка по скидке';
 
-    const sortArrow = createImage(
-        '../../../public/icons/arrow-down.svg',
-        'sort-arrow',
-        'sort-arrow'
-    ) as HTMLImageElement;
+    const sortArrow = createImage('./assets/icons/arrow-down.svg', 'sort-arrow', 'sort-arrow') as HTMLImageElement;
     const sortText = createParagraph('Найдено товаров: 0', 'sort__text') as HTMLParagraphElement;
     const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement; //HTMLInputElement;
 
@@ -55,8 +51,6 @@ function createProductsHeader() {
     return sortBlock;
 }
 
-
-
 //----------------------products list
 function createProductsList(): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
@@ -68,29 +62,28 @@ function createProductsList(): HTMLUListElement {
     return productsList;
 }
 
-
-sortArrow.addEventListener('click', () => {
-    if (sortList.classList.contains('open')) {
-        sortList.classList.remove('open');
-        sortList.style.backgroundColor = 'transparent';
-        sortList.style.color = 'white';
-        sortItemAlphabetAZ.style.transform = 'scale(0)';
-        sortItemAlphabetZA.style.transform = 'scale(0)';
-        sortItemCategory.style.transform = 'scale(0)';
-        sortItemSubCategory.style.transform = 'scale(0)';
-        sortItemPrice.style.transform = 'scale(0)';
-        sortItemDiscount.style.transform = 'scale(0)';
-        sortArrow.style.transform = 'scale(1, 1)';
-    } else {
-        sortList.classList.add('open');
-        sortList.style.backgroundColor = 'white';
-        sortList.style.color = 'black';
-        sortItemAlphabetAZ.style.transform = 'scale(1)';
-        sortItemAlphabetZA.style.transform = 'scale(1)';
-        sortItemCategory.style.transform = 'scale(1)';
-        sortItemSubCategory.style.transform = 'scale(1)';
-        sortItemPrice.style.transform = 'scale(1)';
-        sortItemDiscount.style.transform = 'scale(1)';
-        sortArrow.style.transform = 'scale(1, -1)';
-    }
-});
+// sortArrow.addEventListener('click', () => {
+//     if (sortList.classList.contains('open')) {
+//         sortList.classList.remove('open');
+//         sortList.style.backgroundColor = 'transparent';
+//         sortList.style.color = 'white';
+//         sortItemAlphabetAZ.style.transform = 'scale(0)';
+//         sortItemAlphabetZA.style.transform = 'scale(0)';
+//         sortItemCategory.style.transform = 'scale(0)';
+//         sortItemSubCategory.style.transform = 'scale(0)';
+//         sortItemPrice.style.transform = 'scale(0)';
+//         sortItemDiscount.style.transform = 'scale(0)';
+//         sortArrow.style.transform = 'scale(1, 1)';
+//     } else {
+//         sortList.classList.add('open');
+//         sortList.style.backgroundColor = 'white';
+//         sortList.style.color = 'black';
+//         sortItemAlphabetAZ.style.transform = 'scale(1)';
+//         sortItemAlphabetZA.style.transform = 'scale(1)';
+//         sortItemCategory.style.transform = 'scale(1)';
+//         sortItemSubCategory.style.transform = 'scale(1)';
+//         sortItemPrice.style.transform = 'scale(1)';
+//         sortItemDiscount.style.transform = 'scale(1)';
+//         sortArrow.style.transform = 'scale(1, -1)';
+//     }
+// });

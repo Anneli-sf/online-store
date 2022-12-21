@@ -1,5 +1,10 @@
 import './item-card.scss';
-import { createButton, createElement, createImage, createParagraph } from '../../../global-components/global-components';
+import {
+    createButton,
+    createElement,
+    createImage,
+    createParagraph,
+} from '../../../global-components/global-components';
 import { productsData } from '../../../data/data';
 
 //----------------CARD
@@ -17,10 +22,13 @@ export function createProductCard(productId: number): HTMLElement {
     const productTitle = createParagraph(productsData[productId].title, 'products-title') as HTMLParagraphElement; //as HTMLLIElement;
     const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
     const productPrice = createParagraph(productsData[productId].price, 'products-price') as HTMLParagraphElement; //HTMLDivElement;
+
     const productDiscount = createParagraph(
-        productsData[productId].discount,
+        `-${productsData[productId].discount}%`,
         'products__discount'
     ) as HTMLParagraphElement;
+    if (!productsData[productId].discount) productDiscount.style.display = 'none';
+
     const buttonAdd = createButton('в корзину', 'btn__add') as HTMLButtonElement;
     const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
