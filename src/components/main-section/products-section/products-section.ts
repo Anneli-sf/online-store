@@ -14,6 +14,7 @@ const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
 export function createProductsSection(): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
     contentBlock.append(createProductsHeader(), createProductsList());
+    document.querySelector('.main')?.append(contentBlock);
     return contentBlock;
 }
 
@@ -74,28 +75,11 @@ function createProductsList(): HTMLUListElement {
 sortArrow.addEventListener('click', () => {
     if (sortList.classList.contains('open')) {
         sortList.classList.remove('open');
-        sortList.forEach((el) => el.remove('open'));
+        sortList.querySelectorAll('.sort__item').forEach((el) => el.classList.remove('open'));
         sortArrow.classList.remove('open');
-        // sortList.style.backgroundColor = 'transparent';
-        // sortList.style.color = 'white';
-        // sortItemAlphabetAZ.style.transform = 'scale(0)';
-        // sortItemAlphabetZA.style.transform = 'scale(0)';
-        // sortItemCategory.style.transform = 'scale(0)';
-        // sortItemSubCategory.style.transform = 'scale(0)';
-        // sortItemPrice.style.transform = 'scale(0)';
-        // sortItemDiscount.style.transform = 'scale(0)';
     } else {
         sortList.classList.add('open');
-        sortList.forEach((el) => el.add('open'));
+        sortList.querySelectorAll('.sort__item').forEach((el) => el.classList.add('open'));
         sortArrow.classList.add('open');
-        // // sortList.style.backgroundColor = 'white';
-        // // sortList.style.color = 'black';
-        // sortItemAlphabetAZ.style.transform = 'scale(1)';
-        // sortItemAlphabetZA.style.transform = 'scale(1)';
-        // sortItemCategory.style.transform = 'scale(1)';
-        // sortItemSubCategory.style.transform = 'scale(1)';
-        // sortItemPrice.style.transform = 'scale(1)';
-        // sortItemDiscount.style.transform = 'scale(1)';
-        // sortArrow.style.transform = 'scale(1, -1)';
     }
 });

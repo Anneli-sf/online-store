@@ -3,8 +3,9 @@ import { createElement, createInput, createSimpleInput } from '../../../global-c
 
 // const sliderInputFrom = createInput('from-slider', 'range', '', '', '', '0', '0', '10000') as HTMLFormElement;
 // const sliderInputTo = createInput('to-slider', 'range', '', '', '', '10000', '0', '10000') as HTMLFormElement;
-const sliderInputFrom = createSimpleInput('from-slider', 'range', '', '0', '0', '10000') as HTMLInputElement;
-const sliderInputTo = createSimpleInput('to-slider', 'range', '', '10000', '0', '10000') as HTMLInputElement;
+const sliderInputFrom = createSimpleInput('from-slider', 'range', '', '0', '0', '100') as HTMLInputElement;
+const sliderInputTo = createSimpleInput('to-slider', 'range', '', '100', '0', '100') as HTMLInputElement;
+console.log('sliderInputTo', sliderInputTo);
 // const formControlTimeInputMin = createInput(
 //     'form_control_container__time__input_min',
 //     'number',
@@ -32,7 +33,7 @@ const formControlTimeInputMax = createSimpleInput(
     'form_control_container__time__input_max',
     'number',
     '',
-    '10000'
+    '100'
 ) as HTMLInputElement;
 
 export function createPriceDualSlider(): HTMLDivElement {
@@ -83,17 +84,38 @@ export function createPriceDualSlider(): HTMLDivElement {
     return filterPrice;
 }
 
-const fromSlider = document.querySelector('.from-slider') as HTMLInputElement;
-const toSlider = document.querySelector('.to-slider') as HTMLInputElement;
-const fromInput = document.querySelector('.form_control_container__time__input_min') as HTMLInputElement;
-const toInput = document.querySelector('.form_control_container__time__input_max') as HTMLInputElement;
-fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
-setToggleAccessible(toSlider);
+function controlFromInput(
+    fromSlider: { value: string | number },
+    fromInput: { value: number | string },
+    toInput: { value: string; min: string | number; max: string | number },
+    controlSlider: { value: string | number; style: { background: string } }
+) {
+    const [from, to] = getParsed(fromInput, toInput);
+    fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
+    if (from > to) {
+        fromSlider.value = to;
+        fromInput.value = to;
+    } else {
+        fromSlider.value = from;
+    }
+}
 
-fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider, fromInput);
-toSlider.oninput = () => controlToSlider(fromSlider, toSlider, toInput);
-fromInput.oninput = () => controlFromInput(fromSlider, fromInput, toInput, toSlider);
-toInput.oninput = () => controlToInput(toSlider, fromInput, toInput, toSlider);
+function controlToInput(
+    toSlider: { value: string | number },
+    fromInput: { value: string },
+    toInput: { value: number | string; min: string | number; max: string | number },
+    controlSlider: HTMLInputElement
+) {
+    const [from, to] = getParsed(fromInput, toInput);
+    fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
+    setToggleAccessible(toInput);
+    if (from <= to) {
+        toSlider.value = to;
+        toInput.value = to;
+    } else {
+        toInput.value = from;
+    }
+}
 
 function controlFromSlider(
     fromSlider: { value: number | string },
@@ -149,8 +171,8 @@ function fillSlider(
       ${sliderColor} 0%,
       ${sliderColor} ${(fromPosition / rangeDistance) * 100}%,
       ${rangeColor} ${(fromPosition / rangeDistance) * 100}%,
-      ${rangeColor} ${(toPosition / rangeDistance) * 100}%,
-      ${sliderColor} ${(toPosition / rangeDistance) * 100}%,
+      ${rangeColor} ${(toPosition / rangeDistance) * 100}%, 
+      ${sliderColor} ${(toPosition / rangeDistance) * 100}%, 
       ${sliderColor} 100%)`;
 }
 
@@ -163,35 +185,15 @@ function setToggleAccessible(currentTarget: { value: string | number }) {
     }
 }
 
-function controlFromInput(
-    fromSlider: { value: string | number },
-    fromInput: { value: number | string },
-    toInput: { value: string; min: string | number; max: string | number },
-    controlSlider: { value: string | number; style: { background: string } }
-) {
-    const [from, to] = getParsed(fromInput, toInput);
-    fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
-    if (from > to) {
-        fromSlider.value = to;
-        fromInput.value = to;
-    } else {
-        fromSlider.value = from;
-    }
-}
+const fromSlider = document.querySelector('.from-slider') as HTMLInputElement;
+const toSlider = document.querySelector('.to-slider') as HTMLInputElement;
+console.log('toSlider', toSlider);
+const fromInput = document.querySelector('.form_control_container__time__input_min') as HTMLInputElement;
+const toInput = document.querySelector('.form_control_container__time__input_max') as HTMLInputElement;
+fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+setToggleAccessible(toSlider);
 
-function controlToInput(
-    toSlider: { value: string | number },
-    fromInput: { value: string },
-    toInput: { value: number | string; min: string | number; max: string | number },
-    controlSlider: HTMLInputElement
-) {
-    const [from, to] = getParsed(fromInput, toInput);
-    fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
-    setToggleAccessible(toInput);
-    if (from <= to) {
-        toSlider.value = to;
-        toInput.value = to;
-    } else {
-        toInput.value = from;
-    }
-}
+fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider, fromInput);
+toSlider.oninput = () => controlToSlider(fromSlider, toSlider, toInput);
+fromInput.oninput = () => controlFromInput(fromSlider, fromInput, toInput, toSlider);
+toInput.oninput = () => controlToInput(toSlider, fromInput, toInput, toSlider);

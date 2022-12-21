@@ -24,4 +24,5 @@ createFooter(footer);
 // mainSection.append(createFilterSubСategories());
 // mainSection.append(createFilterСategories());
 mainSection.append(createAside(), createProductsSection());
+// createProductsSection();
 

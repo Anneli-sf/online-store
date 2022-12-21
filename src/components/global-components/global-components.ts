@@ -1,8 +1,9 @@
 import './global-components.scss';
 
 // T extends keyof HTMLElementTagNameMap
+
 export const createElement = (elTag: string, elClassName: string): HTMLElement => {
-    const element = document.createElement(elTag);
+    const element = document.createElement(`${elTag}`);
     element.classList.add(elClassName);
     return element;
 };

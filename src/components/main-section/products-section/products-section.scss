@@ -7,12 +7,12 @@
         cursor: pointer;
 
         background-color: transparent;
-        color: 'black';
-        color: 'white';
+        color: black;
+        color: white;
 
         &.open {
-            background-color: 'white';
-            color: 'black';
+            background-color: white;
+            color: black;
         }
     }
     &__item {
