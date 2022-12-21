@@ -1,8 +1,8 @@
-// import { createElement } from '../global-components/global-components'
-// import { createBlock } from '../global-components/global-components';
-// import { createButton } from '../global-components/global-components';
-// import { createLabel } from '../global-components/global-components';
-// import { productsData } from '../products-data/products-data';
+import { createElement } from '../global-components/global-components'
+import { createBlock } from '../global-components/global-components';
+import { createButton } from '../global-components/global-components';
+import { createLabel } from '../global-components/global-components';
+import { productsData } from '../data/data';
 // import imageDefault from '../products-data/images_storage/kubok_ognya/kubok1.jpg';
 
 const numberOfProductBlock = () => {
