@@ -103,8 +103,8 @@ export function createPriceDualSlider(): HTMLDivElement {
 //       ${sliderColor} 0%,
 //       ${sliderColor} ${(fromPosition / rangeDistance) * 100}%,
 //       ${rangeColor} ${(fromPosition / rangeDistance) * 100}%,
-//       ${rangeColor} ${(toPosition / rangeDistance) * 100}%, 
-//       ${sliderColor} ${(toPosition / rangeDistance) * 100}%, 
+//       ${rangeColor} ${(toPosition / rangeDistance) * 100}%,
+//       ${sliderColor} ${(toPosition / rangeDistance) * 100}%,
 //       ${sliderColor} 100%)`;
 // }
 

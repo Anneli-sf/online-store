@@ -1,7 +1,6 @@
 import './filter.scss';
 import { createElement, createLabel } from '../../../global-components/global-components';
 
-const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
 export const categoriesList: string[] = [
     'Спорт',
     'Одежда и аксессуары',
@@ -25,12 +24,17 @@ export const subCategoriesList: string[] = [
     'Отрицательные существа',
 ];
 
+const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
+const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
+const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;
+
+//------------------categories
 export function createFilterСategories(): HTMLDivElement {
     const filterCategory = createElement('div', 'filter__category') as HTMLDivElement;
     const filterCategoryHeader = createElement('h3', 'filter-category-title') as HTMLHeadingElement;
     filterCategoryHeader.textContent = 'Категории';
 
-    const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
+    // const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
 
     const categoryFormLabelSport = createLabel(categoriesList[0], 'category-label') as HTMLLabelElement;
     const categoryFormLabelClothes = createLabel(categoriesList[1], 'category-label') as HTMLLabelElement;
@@ -48,12 +52,6 @@ export function createFilterСategories(): HTMLDivElement {
 
     appendCheckBox('.category-label', checkbox);
     setTypeCheckBox('.category-input');
-
-    Array.from(categoryForm).forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.checkbox')[index].classList.toggle('checked');
-        });
-    });
 
     categoryFormLabelAuto.append(categoryFormInputAuto);
     categoryFormLabelClothes.append(categoryFormInputClothes);
@@ -75,12 +73,20 @@ export function createFilterСategories(): HTMLDivElement {
     return filterCategory;
 }
 
+categoryForm.addEventListener('click', (e) => {
+    if (e.target instanceof Element && e.target.closest('.category-input')) {
+        const currCheckBox = e.target.nextSibling as HTMLElement;
+        currCheckBox.classList.toggle('checked');
+    }
+});
+
+//------------------subcategories
 export function createFilterSubСategories(): HTMLDivElement {
     const filterSubcategory = createElement('div', 'filter__subcategory') as HTMLDivElement;
     const filterSubcategoryHeader = createElement('h3', 'filter-subcategory-title') as HTMLHeadingElement;
     filterSubcategoryHeader.textContent = 'Подкатегории';
 
-    const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;
+    // const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;
 
     const subcategoryFormLabelSticks = createLabel(subCategoriesList[0], 'subcategory-label') as HTMLLabelElement;
     const subcategoryFormLabelStones = createLabel(subCategoriesList[1], 'subcategory-label') as HTMLLabelElement;
@@ -157,6 +163,14 @@ export function createFilterSubСategories(): HTMLDivElement {
     return filterSubcategory;
 }
 
+subcategoryForm.addEventListener('click', (e) => {
+    if (e.target instanceof Element && e.target.closest('.subcategory-input')) {
+        const currCheckBox = e.target.nextSibling as HTMLElement;
+        currCheckBox.classList.toggle('checked');
+    }
+});
+
+//----------------HELPERS
 const appendCheckBox = (elClass: string, checkbox: HTMLDivElement): void => {
     document.querySelectorAll(elClass).forEach((item) => {
         item.append(checkbox.cloneNode(true));
@@ -168,3 +182,5 @@ const setTypeCheckBox = (elClass: string): void => {
         item.setAttribute('type', 'checkbox');
     });
 };
+
+export { categoryForm };

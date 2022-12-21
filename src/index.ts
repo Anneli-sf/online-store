@@ -6,6 +6,7 @@ import { createProductsSection } from './components/main-section/products-sectio
 import { createPriceDualSlider } from './components/main-section/aside/dual-slider/dual-slider';
 import { createFilterSubСategories, createFilterСategories } from './components/main-section/aside/filter/filter';
 import { createAside } from './components/main-section/aside/aside';
+import './components/main-section/aside/filter/filter';
 
 const BODY = document.querySelector('.wrapper') as HTMLBodyElement;
 const mainSection = document.querySelector('.main') as HTMLBodyElement;

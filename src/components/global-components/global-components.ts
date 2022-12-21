@@ -92,7 +92,7 @@ export const createBlockWithText = (
 
     const blockText: HTMLElement = createElement('p', 'block-text');
     pClass ? blockText.classList.add(pClass) : undefined;
-    text ? (blockText.innerText = text) : undefined;
+    text ? (blockText.textContent = '' + text) : undefined; //передается число или строка
 
     blockSection.append(blockText);
     blockHeader.append(title);
@@ -113,7 +113,7 @@ export const createImage = (imgSrc: string, imgAlt: string, imgClass?: string): 
 export const createLink = (linkHref: string, linkClass: string, linkText?: string): HTMLLinkElement => {
     const link = createElement('a', linkClass) as HTMLLinkElement;
     link.href = linkHref;
-    link.textContent = linkText;
+    linkText ? (link.textContent = linkText) : undefined;
 
     return link;
 };
