@@ -1,0 +1,17 @@
+.header {
+    background-image: url('../public/img/header-background.gif');
+    background-color: black;
+    position: relative;
+    border: 1px solid white;
+    margin-bottom: 10px;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    @include flex-row();
+    padding: 10px 100px;
+    width: 100%;
+    position: fixed;
+    overflow: hidden;
+    z-index: 4;
+}
+

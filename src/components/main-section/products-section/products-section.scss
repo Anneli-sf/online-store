@@ -1,0 +1,130 @@
+.sort {
+    &__list {
+        position: relative;
+        z-index: 3;
+        top: 72px;
+        padding: 5px;
+        cursor: pointer;
+
+        background-color: transparent;
+        color: black;
+        color: white;
+
+        &.open {
+            background-color: white;
+            color: black;
+        }
+    }
+    &__item {
+        transform: scale(0);
+        width: 100%;
+
+        &.open {
+            transform: scale(1);
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    }
+    &__input {
+        background-color: transparent;
+        outline: none;
+        border: 1px solid white;
+        padding: 5px 10px;
+        color: white;
+    }
+}
+
+.sort-arrow {
+    width: 15px;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    z-index: 3;
+    cursor: pointer;
+    transform: scale(1, 1);
+
+    &.open {
+        transform: scale(1, -1);
+    }
+}
+
+.image-container {
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.product-buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn {
+    &__add,
+    &__details {
+        padding: 5px 10px;
+        background-color: transparent;
+        border: 1px solid white;
+        color: white;
+        cursor: pointer;
+        &:hover {
+            background-color: white;
+            color: black;
+        }
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+}
+
+.products {
+    flex: 1 0 80%;
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0px 10px;
+        font-size: 18px;
+    }
+    &__item {
+        flex: 0 1 15%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        position: relative;
+        padding-bottom: 10px;
+        list-style: none;
+        border: 1px solid white;
+        margin-bottom: 20px;
+        overflow: hidden;
+        text-align: center;
+        &:not(:nth-child(6n)) {
+            margin-right: 2%;
+        }
+    }
+    &__header {
+        height: 50px;
+        border: 1px solid white;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    &__discount {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 2;
+        background-color: yellow;
+        color: black;
+        padding: 8px;
+        border-radius: 50%;
+    }
+}

@@ -1,0 +1,32 @@
+
+
+.products-available {
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    text-align: center;
+    background-color: oldlace;
+    color: black;
+}
+
+.products-price {
+    position: relative;
+    &::after {
+        position: absolute;
+        content: '$';
+    }
+}
+
+.products-image {
+    transition: all 1s ease-in-out;
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+.product-buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}

@@ -1,0 +1,14 @@
+@import '../../../sass/abstracts/mixins';
+
+.logo {
+    width: 200px;
+}
+
+.basket {
+    width: 30px;
+    cursor: pointer;
+    transition: all 1s ease-in-out;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
