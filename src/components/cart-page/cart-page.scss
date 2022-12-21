@@ -1,0 +1,287 @@
+.cart-products {
+    width: 60%;
+    border: 1px solid black;
+}
+
+.cart-products {
+    .block-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+    }
+    .block-title,
+    .label {
+        flex: 1 0 30%;
+    }
+    .quantity,
+    .current-page {
+        background-color: transparent;
+        color: white;
+        pointer-events: none;
+    }
+
+    .label,
+    .btns-container-switch-pages {
+        flex: 1 0 20%;
+        display: flex;
+        align-items: center;
+    }
+
+    .title-of-container-switch-btns {
+        margin-right: 10px;
+    }
+
+    .description-content {
+        padding: 10px;
+    }
+
+    .btn-switch-page-left,
+    .btn-switch-page-right {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+        border: none;
+        &:hover {
+            filter: invert(1);
+            transform: scale(0.95);
+        }
+    }
+
+    .btn-switch-page-left::after,
+    .btn-switch-page-right::after {
+        position: absolute;
+        content: url(../../assets/images/svg/arrow-down.svg);
+        top: 0px;
+        right: 0px;
+        width: 20px;
+        height: 20px;
+        transform: rotate(90deg);
+    }
+
+    .btn-switch-page-right::after {
+        transform: rotate(-90deg);
+        margin-left: 10px;
+    }
+}
+
+.block-section {
+    padding: 10px;
+    .block-header,
+    .description-header {
+        padding: 5px 0px;
+        position: relative;
+        background-color: transparent;
+        color: black;
+        &::after {
+            position: absolute;
+            content: '';
+            bottom: 0px;
+            width: 105%;
+            height: 1px;
+            background-color: black;
+        }
+    }
+    .cart-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        width: 100%;
+        border: 1px solid green;
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+
+    .cart-item-image {
+        transform: scale(0.8);
+    }
+
+    .number-product {
+        flex: 1 0 2%;
+        margin-right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cart-item-image {
+        flex: 0 1 20%;
+        margin-right: 10px;
+    }
+
+    .description-cart-item {
+        flex: 1 0 50%;
+        border: 1px solid black;
+        margin-right: 10px;
+        max-width: 60%;
+        overflow: hidden;
+    }
+
+    .mini-description-item {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 70%;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+
+    .block-title {
+        text-align: center;
+    }
+
+    .values-cart-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        flex: 0 1 25%;
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    .raiting-discount-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .raiting,
+    .discount {
+        text-decoration: underline;
+    }
+
+    .add-del-btns-container {
+        display: flex;
+        justify-content: space-between;
+        width: 40%;
+    }
+
+    .add-item {
+        background-color: transparent;
+        border: none;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        &:hover {
+            transform: scale(0.9);
+        }
+        &::after {
+            position: absolute;
+            content: url(../../assets/images/svg/minus.svg);
+            width: 20px;
+            top: 0px;
+            left: 0px;
+        }
+    }
+
+    .delete-item {
+        background-color: transparent;
+        border: none;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        &:hover {
+            transform: scale(0.9);
+        }
+        &::before {
+            position: absolute;
+            content: url(../../assets/images/svg/plus.svg);
+            width: 20px;
+            top: 0px;
+            left: 0px;
+        }
+    }
+    .total-price {
+        position: relative;
+        &::after {
+            position: absolute;
+            content: '$';
+        }
+    }
+}
+
+.summary {
+    border: 1px solid black;
+    width: 25%;
+
+    .block-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+    }
+    .block-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+    }
+    .block-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .quantity-products,
+    .total-sum,
+    .promecode-input,
+    .promo-test {
+        margin-bottom: 10px;
+    }
+
+    .total-sum-value {
+        position: relative;
+        &::after {
+            position: absolute;
+            content: '$';
+        }
+    }
+
+    .promecode-input {
+        background-color: transparent;
+        padding: 5px 20px;
+        &:focus {
+            -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+            -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+        }
+    }
+
+    .form-buy {
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    .promo-test {
+        font-size: 16px;
+        opacity: 0.1;
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .btn-buy-now {
+        background-color: transparent;
+        padding: 5px 20px;
+        &:hover {
+            -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+            -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+        }
+    }
+}
