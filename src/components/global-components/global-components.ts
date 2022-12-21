@@ -39,6 +39,24 @@ export const createInput = (
     return form;
 };
 
+export const createSimpleInput = (
+    inputClass: string,
+    inputType: string,
+    inputPlaceHolder?: string,
+    inputValue?: string,
+    minValue?: string,
+    maxValue?: string
+): HTMLInputElement => {
+    const input = createElement('input', `${inputClass}`) as HTMLInputElement;
+    input.type = inputType;
+    inputPlaceHolder ? (input.placeholder = inputPlaceHolder) : undefined;
+    inputValue ? (input.value = inputValue) : undefined;
+    minValue ? (input.min = minValue) : undefined;
+    maxValue ? (input.max = maxValue) : undefined;
+
+    return input;
+};
+
 export const createLabel = (labelText: string, labelClass: string, labelName?: string): HTMLLabelElement => {
     const label = createElement('label', `${labelClass}`) as HTMLLabelElement;
     labelName ? label.setAttribute('for', labelName) : undefined;

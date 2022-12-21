@@ -5,10 +5,24 @@
         top: 72px;
         padding: 5px;
         cursor: pointer;
+
+        background-color: transparent;
+        color: 'black';
+        color: 'white';
+
+        &.open {
+            background-color: 'white';
+            color: 'black';
+        }
     }
     &__item {
         transform: scale(0);
         width: 100%;
+
+        &.open {
+            transform: scale(1);
+        }
+
         &:hover {
             background-color: rgba(0, 0, 0, 0.2);
         }
@@ -29,6 +43,11 @@
     right: 5%;
     z-index: 3;
     cursor: pointer;
+    transform: scale(1, 1);
+
+    &.open {
+        transform: scale(1, -1);
+    }
 }
 
 .image-container {
