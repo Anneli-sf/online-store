@@ -225,7 +225,6 @@ function fillSlider(
 
 // function setToggleAccessible(currentTarget: { value: string | number }) {
 function setToggleAccessible(current: { value: string | number }) {
-    console.log(current);
     if (Number(current.value) <= 0) {
         toSliderPrice.setAttribute('zIndex', '2');
     } else {

@@ -1,3 +1,5 @@
+@import '../../../../sass/abstracts/mixins';
+
 .filter {
     &__category {
         border: 1px solid white;
@@ -51,6 +53,8 @@
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    padding-left: 25px;//
+
     &:hover {
         background-color: rgba(255, 255, 255, 0.8);
         color: black;
@@ -68,11 +72,34 @@
     opacity: 0;
 }
 
+.amount-block {
+    position: relative;
+    // right: 10%;
+    right: 0px;
+    @include flex-row(center,center);
+    flex-wrap: nowrap;
+    
+
+    .amount-input {
+        width: 15px;
+        height: 15px;
+        border: 1px solid white;
+        font-size: inherit;
+        font-family: inherit;
+        background-color: transparent;
+        color: white;
+        border: none;
+        vertical-align: middle;
+    }
+}
+
 .checkbox {
     position: absolute;
     z-index: 1;
-    top: 20%;
-    right: 0px;
+    // top: 20%;
+    top: 15%;
+    // right: 0px;
+    left: 0px;
     width: 15px;
     height: 15px;
     border: 1px solid white;
@@ -85,8 +112,5 @@
             top: -8px;
             right: 7px;
         }
-        
     }
-    
 }
-

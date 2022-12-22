@@ -12,7 +12,7 @@ import { footer, createFooter } from './components/main-page/footer/footer';
 import { createProductsSection } from './components/main-section/products-section/products-section';
 // import { createPriceDualSlider } from './components/main-section/aside/dual-slider/dual-slider';
 // import { createFilterSubСategories, createFilterСategories } from './components/main-section/aside/filter/filter';
-import { createAside } from './components/main-section/aside/aside';
+import { createAside } from './components/main-section/aside/aside'; 
 import { productsCartBlock, summaryCartBlock } from './components/cart-page/cart-page';
 
 const BODY = document.querySelector('.wrapper') as HTMLBodyElement;
@@ -26,6 +26,6 @@ createFooter(footer);
 // mainSection.append(createPriceDualSlider());
 // mainSection.append(createFilterSubСategories());
 // mainSection.append(createFilterСategories());
-mainSection.append(createAside(), createProductsSection());
+// mainSection.append(createAside(), createProductsSection());
 // createProductsSection();
-// mainSection.append(productsCartBlock(), summaryCartBlock());
+mainSection.append(productsCartBlock(), summaryCartBlock());
