@@ -1,3 +1,22 @@
+.sliders {
+    width: 80%;
+    .filter {
+        &__price,
+        &__amount {
+            border: 1px solid white;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.filter-amount-title,
+.filter-price-title {
+    background-color: white;
+    color: black;
+    padding: 5px;
+}
+
 .checkbox {
     position: absolute;
     z-index: 1;
@@ -8,18 +27,21 @@
     border: 1px solid white;
 }
 
-.range-container {
+.range-container-price,
+.range-container-amount {
     display: flex;
     flex-direction: column;
     padding: 15px;
 }
 
-.slider-control {
+.slider-control-price,
+.slider-control-amount {
     position: relative;
     min-height: 50px;
 }
 
-.form-control {
+.form-control-price,
+.form-control-amount {
     position: relative;
     display: flex;
     justify-content: space-around;

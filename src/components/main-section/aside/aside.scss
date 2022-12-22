@@ -1,6 +1,6 @@
 @import '../../../sass/abstracts/mixins';
 
-.main__aside {
+.main-aside {
     flex: 1 0 20%;
     border: 1px solid white;
     height: 100%;
@@ -12,7 +12,7 @@
 }
 
 .btn {
-    &__container {
+    &-container {
         width: 100%;
         display: flex;
         justify-content: space-around;
@@ -20,8 +20,8 @@
         margin-bottom: 20px;
     }
 
-    &__reset,
-    &__copy {
+    &-reset,
+    &-copy {
         padding: 5px 10px;
         background-color: transparent;
         border: 1px solid white;

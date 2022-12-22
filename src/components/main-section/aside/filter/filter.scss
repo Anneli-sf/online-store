@@ -9,15 +9,10 @@
         width: 80%;
         margin-bottom: 20px;
     }
-    &__price {
-        border: 1px solid white;
-        width: 80%;
-    }
 }
 
 .filter-category-title,
-.filter-subcategory-title,
-.filter-price-title {
+.filter-subcategory-title {
     background-color: white;
     color: black;
     padding: 5px;
