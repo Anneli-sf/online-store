@@ -1,0 +1,343 @@
+import './modal-window-page.scss';
+import { createElement, createSimpleInput, createButton } from '../global-components/global-components';
+
+// --------------------------------------BOX-----------------------------------//
+const createBoxBlock = (spanText: string, divText: string, divClassName: string, imgSrc?: string | undefined) => {
+    const boxBlock = createElement('div', 'box') as HTMLDivElement;
+    const span = createElement('span', 'span') as HTMLSpanElement;
+    span.textContent = spanText;
+    const div = createElement('div', divClassName) as HTMLDivElement;
+    div.textContent = divText;
+
+    boxBlock.append(span, div);
+
+    if (divClassName === 'expiration') {
+        const monthSpan = createElement('span', 'exp-month') as HTMLSpanElement;
+        monthSpan.textContent = 'мм';
+        const yearSpan = createElement('span', 'exp-year') as HTMLSpanElement;
+        yearSpan.textContent = 'гг';
+        div.append(monthSpan, yearSpan);
+    }
+    if (imgSrc) {
+        const image = createElement('img', 'card') as HTMLImageElement;
+        image.src = imgSrc;
+        boxBlock.append(image);
+    }
+
+    return boxBlock;
+};
+// -------------------------------------------------------------------------//
+
+// -------------------------------------FRONT------------------------------------//
+const createFrontBlock = () => {
+    const frontBlock = createElement('div', 'front');
+    const imagesBlock = createElement('div', 'image');
+    const chipImage = createElement('img', 'chip') as HTMLImageElement;
+    chipImage.src = '../../assets/icons/chip.png';
+    const visaImage = createElement('img', 'card') as HTMLImageElement;
+    visaImage.src = '../../assets/icons/default.png';
+    imagesBlock.append(chipImage, visaImage);
+
+    const cardNumberBlock = createElement('div', 'card-number-box');
+    cardNumberBlock.textContent = '################';
+
+    const flexboxBlock = createElement('div', 'flexbox');
+    flexboxBlock.append(
+        createBoxBlock('владелец карты', 'полное имя', 'card-holder-name'),
+        createBoxBlock('срок карты', '', 'expiration')
+    );
+
+    frontBlock.append(imagesBlock, cardNumberBlock, flexboxBlock);
+
+    return frontBlock;
+};
+// -------------------------------------------------------------------------//
+
+// ------------------------------------BACK-------------------------------------//
+const createBackBlock = () => {
+    const backBlock = createElement('div', 'back');
+    const stripeBlock = createElement('div', 'stripe');
+
+    backBlock.append(stripeBlock, createBoxBlock('CVV', '', 'cvv-box', '../../assets/icons/default.png'));
+
+    return backBlock;
+};
+// -------------------------------------------------------------------------//
+
+// ------------------------------------CARD CONTAINER-------------------------------------//
+const cardContainer = () => {
+    const cardContainer = createElement('div', 'card-container');
+    cardContainer.append(createFrontBlock(), createBackBlock());
+
+    return cardContainer;
+};
+// -------------------------------------------------------------------------//
+
+// -------------------------------------------------------------------------//
+const setCardImage = (input: HTMLInputElement) => {
+    input.value = input.value.replace(/[^\d]/g, '');
+    if (input.value[0] === '0' || input.value[0] === '1' || input.value[0] === '2' || input.value[0] === '3') {
+        document.querySelectorAll('.card').forEach((item) => {
+            item.setAttribute('src', '../../assets/icons/default.png');
+        });
+    }
+    if (input.value[0] === '4') {
+        document.querySelectorAll('.card').forEach((item) => {
+            item.setAttribute('src', '../../assets/icons/visa.png');
+        });
+    }
+    if (input.value[0] === '5') {
+        document.querySelectorAll('.card').forEach((item) => {
+            item.setAttribute('src', '../../assets/icons/master-card.png');
+        });
+    }
+    if (input.value[0] === '6') {
+        document.querySelectorAll('.card').forEach((item) => {
+            item.setAttribute('src', '../../assets/icons/maestro.png');
+        });
+    }
+    if (input.value[0] === '7') {
+        document.querySelectorAll('.card').forEach((item) => {
+            item.setAttribute('src', '../../assets/icons/slytherin.png');
+        });
+    }
+    if (input.value[0] === '8') {
+        document.querySelectorAll('.card').forEach((item) => {
+            item.setAttribute('src', '../../assets/icons/griffindor.png');
+        });
+    }
+    if (input.value[0] === '9') {
+        document.querySelectorAll('.card').forEach((item) => {
+            item.setAttribute('src', '../../assets/icons/hufflepuff.png');
+        });
+    }
+};
+// -------------------------------------------------------------------------//
+
+// ------------------------------------CHARACTERISTIC INPUTS-------------------------------------//
+const createCharacteristicInput = (input: HTMLInputElement, spanText: string): void => {
+    if (spanText === 'Номер карты') {
+        input.pattern = '[0-9]{16}';
+        input.addEventListener('keyup', () => setCardImage(input));
+        input.placeholder = '#### #### #### ####';
+    }
+
+    if (spanText === 'Владелец карты') {
+        input.onkeypress = function (event: KeyboardEvent) {
+            if ('1234567890+./=-_'.indexOf(event.key) != -1) event.preventDefault();
+        };
+        input.pattern = '[A-Za-zА-Яа-яЁё]{3,}[ ]{1}[A-Za-zА-Яа-яЁё]{3,}';
+        input.placeholder = 'Имя Фамилия';
+    }
+
+    if (spanText === 'CVV') {
+        input.pattern = '[0-9]{,3}';
+        input.addEventListener('keyup', function () {
+            input.value = input.value.replace(/[^\d]/g, '');
+        });
+        input.placeholder = '###';
+    }
+
+    if (spanText === 'Адрес доставки') {
+        input.pattern =
+            '[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}';
+        input.placeholder = 'страна область город микрорайон улица';
+    }
+
+    if (spanText === 'Номер телефона') {
+        input.pattern = '[+]{1}[0-9]{11,}';
+        input.oninput = function () {
+            input.value = input.value.replace(/[^0-9,+]/g, '');
+        };
+        input.placeholder = '+# ### ### ## ##';
+    }
+
+    if (spanText === 'Email') {
+        input.type = 'email';
+        input.placeholder = 'электронная почта';
+    }
+};
+// -------------------------------------------------------------------------//
+
+// -----------------------------------INPUTSBOXES--------------------------------------//
+const createInputBox = (spanText: string, inputClass: string, inputMaxLength?: number) => {
+    const inputBoxBlock = createElement('div', 'inputBox');
+
+    const span = createElement('span', 'span');
+    span.textContent = spanText;
+
+    const input = createSimpleInput(inputClass, 'text') as HTMLInputElement;
+    if (inputMaxLength) input.maxLength = inputMaxLength;
+
+    createCharacteristicInput(input, spanText);
+
+    inputBoxBlock.append(span, input);
+    return inputBoxBlock;
+};
+
+const createSelectBox = (text: string, selectClass: string, startCalcNumber: number, quantityOptions: number) => {
+    const inputBoxBlock = createElement('div', 'inputBox');
+    const span = createElement('span', 'span');
+    span.textContent = text;
+
+    const select = createElement('select', selectClass) as HTMLSelectElement;
+    const optionFirst = createElement('option', 'option-first') as HTMLOptionElement;
+    optionFirst.disabled = true;
+    optionFirst.textContent = text;
+    select.append(optionFirst);
+
+    for (let i = startCalcNumber; i < quantityOptions; i++) {
+        const option = createElement('option', `option_${i}`) as HTMLOptionElement;
+        option.value = `${i}`;
+        option.textContent = `${i}`;
+        select.append(option);
+    }
+
+    select.value = ' ';
+
+    inputBoxBlock.append(span, select);
+
+    return inputBoxBlock;
+};
+// -------------------------------------------------------------------------//
+
+// --------------------------------CONSTANTS INPUTS AND SELECTS-----------------------------------------//
+const inputNumberCard = createInputBox('Номер карты', 'card-number-input', 16);
+const inputHolder = createInputBox('Владелец карты', 'card-holder-input');
+const inputAddress = createInputBox('Адрес доставки', 'card-address-input');
+const inputTel = createInputBox('Номер телефона', 'card-tel-input');
+const inputMail = createInputBox('Email', 'card-email-input');
+const inputCVV = createInputBox('CVV', 'cvv-input', 3);
+const selectMonth = createSelectBox('Месяц', 'month-input', 1, 13);
+const selectYear = createSelectBox('Год', 'year-input', 2023, 2035);
+// -------------------------------------------------------------------------//
+
+// ------------------------------------FORM-------------------------------------//
+const createForm = () => {
+    const form = createElement('form', 'form') as HTMLFormElement;
+
+    const flexboxBlock = createElement('div', 'flexbox');
+    const buttonSubmit = createButton('отправить', 'submit-btn');
+    buttonSubmit.type = 'submit';
+
+    flexboxBlock.append(selectMonth, selectYear, inputCVV);
+    form.append(inputNumberCard, inputHolder, inputAddress, inputTel, inputMail, flexboxBlock, buttonSubmit);
+
+    return form;
+};
+// -------------------------------------------------------------------------//
+
+// -----------------------------------CONTAINER--------------------------------------//
+const createContainerCard = () => {
+    const container = createElement('div', 'container');
+
+    container.append(cardContainer(), createForm());
+
+    return container;
+};
+// -------------------------------------------------------------------------//
+
+document.querySelector('.main')?.append(createContainerCard());
+
+// ------------------------------------ANIMATION-------------------------------------//
+// -----------------------------------SHOW INPUT VALUE ON CARD--------------------------------------//
+const showInputValueOnCard = (inputClassName: string, parentInputClassName: string) => {
+    (document.querySelector(inputClassName) as HTMLInputElement).oninput = () => {
+        (document.querySelector(parentInputClassName) as HTMLDivElement).innerText = (document.querySelector(
+            inputClassName
+        ) as HTMLInputElement).value;
+    };
+};
+// -------------------------------------------------------------------------//
+// --------------------------------ROTATE CARD WHEN MOUSE ENTERED-----------------------------------------//
+const rotateCard = () => {
+    (document.querySelector('.cvv-input') as HTMLInputElement).onmouseenter = () => {
+        (document.querySelector('.front') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(-180deg)';
+        (document.querySelector('.back') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(0deg)';
+    };
+
+    (document.querySelector('.cvv-input') as HTMLInputElement).onmouseleave = () => {
+        (document.querySelector('.front') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(0deg)';
+        (document.querySelector('.back') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(180deg)';
+    };
+};
+// -------------------------------------------------------------------------//
+showInputValueOnCard('.card-number-input', '.card-number-box');
+showInputValueOnCard('.card-holder-input', '.card-holder-name');
+showInputValueOnCard('.month-input', '.exp-month');
+showInputValueOnCard('.year-input', '.exp-year');
+showInputValueOnCard('.cvv-input', '.cvv-box');
+rotateCard();
+// -------------------------------------------------------------------------//
+
+// -----------------------------------FORM VALIDATE--------------------------------------//
+function validation(form: HTMLFormElement) {
+    function removeError(element: HTMLElement) {
+        const parent = <Element>element.parentNode;
+
+        if (parent.classList.contains('error')) {
+            (parent.querySelector('.error-label') as HTMLLabelElement).remove();
+            parent.classList.remove('error');
+        }
+    }
+    function createInputError(input: HTMLInputElement, text: string) {
+        const parent = <Element>input.parentNode;
+        const errorLabel = document.createElement('label');
+
+        errorLabel.classList.add('error-label');
+        errorLabel.textContent = text;
+
+        parent.classList.add('error');
+
+        parent.append(errorLabel);
+    }
+    function createSelectError(select: HTMLSelectElement, text: string) {
+        const parent = <Element>select.parentNode;
+        const errorLabel = document.createElement('label');
+
+        errorLabel.classList.add('error-label');
+        errorLabel.textContent = text;
+
+        parent.classList.add('error');
+
+        parent.append(errorLabel);
+    }
+
+    let result = true;
+
+    const allInputs = form.querySelectorAll('input');
+    const allSelects = form.querySelectorAll('select');
+
+    for (const input of allInputs) {
+        removeError(input);
+        if (input.value == '') {
+            createInputError(input, 'error');
+            result = false;
+        }
+    }
+    for (const select of allSelects) {
+        removeError(select);
+        if (select.value == '') {
+            createSelectError(select, 'error');
+            result = false;
+        }
+    }
+
+    return result;
+}
+// -------------------------------------------------------------------------//
+
+// ---------------------------------IS FORM VALIDITY----------------------------------------//
+const isFormValidity = () => {
+    (document.querySelector('.form') as HTMLFormElement).addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (validation(this) == true) {
+            alert('Форма заполнена успешно!');
+        } else {
+            alert('Поля не заполнены, либо заполнены неправильно!');
+        }
+    });
+};
+isFormValidity();
+// -------------------------------------------------------------------------//
