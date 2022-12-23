@@ -82,18 +82,18 @@
 }
 
 .products {
-    flex: 1 0 80%;
+    flex: 1 0 75%;
     height: 100%;
     
     &__list {
         display: flex;
         flex-wrap: wrap;
         width: 100%;
-        padding: 0px 10px;
+        padding: 0px 10px 50px 10px;
         font-size: 18px;
     }
     &__item {
-        flex: 0 1 15%;
+        flex: 0 1 18%;
         display: flex;
         justify-content: space-between;
         flex-direction: column;
@@ -104,7 +104,7 @@
         margin-bottom: 20px;
         overflow: hidden;
         text-align: center;
-        &:not(:nth-child(6n)) {
+        &:not(:nth-child(5n)) {
             margin-right: 2%;
         }
     }
