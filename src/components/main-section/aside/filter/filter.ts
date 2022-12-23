@@ -50,16 +50,22 @@ export function createFilterСategories(): HTMLDivElement {
     const categoryFormInputAuto = createElement('input', 'category-input') as HTMLInputElement;
     const categoryFormInputMagicalCreatures = createElement('input', 'category-input') as HTMLInputElement;
 
-    appendCheckBoxandsetamountBox('.category-label', checkbox);
-    setTypeCheckBox('.category-input');
-
     checkbox.classList.add('category-checkbox');
-    categoryFormLabelAuto.append(categoryFormInputAuto);
-    categoryFormLabelClothes.append(categoryFormInputClothes);
-    categoryFormLabelMagicItems.append(categoryFormInputMagicItems);
-    categoryFormLabelPotions.append(categoryFormInputPotions);
-    categoryFormLabelSport.append(categoryFormInputSport);
-    categoryFormLabelMagicalCreatures.append(categoryFormInputMagicalCreatures);
+    categoryFormLabelAuto.append(categoryFormInputAuto, createAmountBox());
+    categoryFormLabelClothes.append(categoryFormInputClothes, createAmountBox());
+    categoryFormLabelMagicItems.append(categoryFormInputMagicItems, createAmountBox());
+    categoryFormLabelPotions.append(categoryFormInputPotions, createAmountBox());
+    categoryFormLabelSport.append(categoryFormInputSport, createAmountBox());
+    categoryFormLabelMagicalCreatures.append(categoryFormInputMagicalCreatures, createAmountBox());
+
+    categoryFormLabelAuto.prepend(checkbox.cloneNode(true));
+    categoryFormLabelClothes.prepend(checkbox.cloneNode(true));
+    categoryFormLabelMagicItems.prepend(checkbox.cloneNode(true));
+    categoryFormLabelPotions.prepend(checkbox.cloneNode(true));
+    categoryFormLabelSport.prepend(checkbox.cloneNode(true));
+    categoryFormLabelMagicalCreatures.prepend(checkbox.cloneNode(true));
+
+    setTypeCheckBox('.category-input');
 
     categoryForm.append(
         categoryFormLabelAuto,
@@ -75,7 +81,7 @@ export function createFilterСategories(): HTMLDivElement {
 }
 
 categoryForm.addEventListener('click', (e) => {
-    if (e.target instanceof Element && e.target.closest('.category-checkbox')) {
+    if (e.target instanceof Element && e.target.className === 'category-checkbox') {
         const currCheckBox = e.target as HTMLElement;
         currCheckBox.classList.toggle('checked');
     } else if (e.target instanceof Element && e.target.closest('.category-input')) {
@@ -128,21 +134,32 @@ export function createFilterSubСategories(): HTMLDivElement {
     const subcategoryFormInputPositiveBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
     const subcategoryFormInputNegativeBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
 
-    appendCheckBoxandsetamountBox('.subcategory-label', checkbox);
-    setTypeCheckBox('.subcategory-input');
-
     checkbox.classList.add('subcategory-checkbox');
-    subcategoryFormLabelAccessories.append(subcategoryFormInputAccessories);
-    subcategoryFormLabelBooks.append(subcategoryFormInputBooks);
-    subcategoryFormLabelCLothes.append(subcategoryFormInputCLothes);
-    subcategoryFormLabelFlyingObjects.append(subcategoryFormInputFlyingObjects);
-    subcategoryFormLabelGoodPotions.append(subcategoryFormInputGoodPotions);
-    subcategoryFormLabelInteriorItems.append(subcategoryFormInputInteriorItems);
-    subcategoryFormLabelSticks.append(subcategoryFormInputSticks);
-    subcategoryFormLabelStones.append(subcategoryFormInputStones);
-    subcategoryFormLabelWeapon.append(subcategoryFormInputWeapon);
-    subcategoryFormLabelPositiveBeings.append(subcategoryFormInputPositiveBeings);
-    subcategoryFormLabelNegativeBeings.append(subcategoryFormInputNegativeBeings);
+    subcategoryFormLabelAccessories.append(subcategoryFormInputAccessories, createAmountBox());
+    subcategoryFormLabelBooks.append(subcategoryFormInputBooks, createAmountBox());
+    subcategoryFormLabelCLothes.append(subcategoryFormInputCLothes, createAmountBox());
+    subcategoryFormLabelFlyingObjects.append(subcategoryFormInputFlyingObjects, createAmountBox());
+    subcategoryFormLabelGoodPotions.append(subcategoryFormInputGoodPotions, createAmountBox());
+    subcategoryFormLabelInteriorItems.append(subcategoryFormInputInteriorItems, createAmountBox());
+    subcategoryFormLabelSticks.append(subcategoryFormInputSticks, createAmountBox());
+    subcategoryFormLabelStones.append(subcategoryFormInputStones, createAmountBox());
+    subcategoryFormLabelWeapon.append(subcategoryFormInputWeapon, createAmountBox());
+    subcategoryFormLabelPositiveBeings.append(subcategoryFormInputPositiveBeings, createAmountBox());
+    subcategoryFormLabelNegativeBeings.append(subcategoryFormInputNegativeBeings, createAmountBox());
+
+    subcategoryFormLabelAccessories.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelBooks.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelCLothes.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelFlyingObjects.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelGoodPotions.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelInteriorItems.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelSticks.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelStones.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelWeapon.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelPositiveBeings.prepend(checkbox.cloneNode(true));
+    subcategoryFormLabelNegativeBeings.prepend(checkbox.cloneNode(true));
+
+    setTypeCheckBox('.subcategory-input');
 
     subcategoryForm.append(
         subcategoryFormLabelAccessories,
@@ -163,7 +180,7 @@ export function createFilterSubСategories(): HTMLDivElement {
 }
 
 subcategoryForm.addEventListener('click', (e) => {
-    if (e.target instanceof Element && e.target.closest('.subcategory-checkbox')) {
+    if (e.target instanceof Element && e.target.className === 'subcategory-checkbox') {
         const currCheckBox = e.target as HTMLElement;
         currCheckBox.classList.toggle('checked');
     } else if (e.target instanceof Element && e.target.closest('.subcategory-input')) {
@@ -173,12 +190,12 @@ subcategoryForm.addEventListener('click', (e) => {
 });
 
 //----------------HELPERS
-const appendCheckBoxandsetamountBox = (elClass: string, checkbox: HTMLDivElement): void => {
-    document.querySelectorAll(elClass).forEach((item) => {
-        item.prepend(checkbox.cloneNode(true));
-        item.append(createAmountBox());
-    });
-};
+// const appendCheckBoxandsetamountBox = (elClass: string, checkbox: HTMLDivElement): void => {
+//     document.querySelectorAll(elClass).forEach((item) => {
+//         item.prepend(checkbox.cloneNode(true));
+//         item.append(createAmountBox());
+//     });
+// };
 
 const setTypeCheckBox = (elClass: string): void => {
     document.querySelectorAll(elClass).forEach((item) => {
@@ -193,6 +210,7 @@ const createAmountBox = (): HTMLDivElement => {
     totalAmount.readOnly = true;
     const amountBlock = createElement('div', 'amount-block') as HTMLDivElement;
     amountBlock.append(currentAmount, '/', totalAmount);
+
     return amountBlock;
 };
 
