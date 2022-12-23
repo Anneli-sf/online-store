@@ -83,6 +83,8 @@
 
 .products {
     flex: 1 0 80%;
+    height: 100%;
+    
     &__list {
         display: flex;
         flex-wrap: wrap;

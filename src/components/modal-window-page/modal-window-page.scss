@@ -8,10 +8,10 @@
 }
 
 .container {
-    position: fixed;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    // top: 60%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,7 +76,8 @@
     }
 
     .card-container {
-        position: fixed;
+        // position: fixed;
+        position: absolute;
         height: 215px;
         width: 350px;
         transform: scale(0.7) translateY(-205%);
