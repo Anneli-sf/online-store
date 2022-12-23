@@ -1,5 +1,5 @@
 import './filter.scss';
-import { createElement, createLabel } from '../../../global-components/global-components';
+import { createElement, createLabel, createSimpleInput } from '../../../global-components/global-components';
 
 export const categoriesList: string[] = [
     'Спорт',
@@ -28,6 +28,13 @@ const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
 const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
 const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;
 
+const categoryFormLabelSport = createLabel(categoriesList[0], 'category-label') as HTMLLabelElement;
+const categoryFormLabelClothes = createLabel(categoriesList[1], 'category-label') as HTMLLabelElement;
+const categoryFormLabelMagicItems = createLabel(categoriesList[2], 'category-label') as HTMLLabelElement;
+const categoryFormLabelPotions = createLabel(categoriesList[3], 'category-label') as HTMLLabelElement;
+const categoryFormLabelAuto = createLabel(categoriesList[4], 'category-label') as HTMLLabelElement;
+const categoryFormLabelMagicalCreatures = createLabel(categoriesList[5], 'category-label') as HTMLLabelElement;
+
 //------------------categories
 export function createFilterСategories(): HTMLDivElement {
     const filterCategory = createElement('div', 'filter__category') as HTMLDivElement;
@@ -36,13 +43,6 @@ export function createFilterСategories(): HTMLDivElement {
 
     // const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
 
-    const categoryFormLabelSport = createLabel(categoriesList[0], 'category-label') as HTMLLabelElement;
-    const categoryFormLabelClothes = createLabel(categoriesList[1], 'category-label') as HTMLLabelElement;
-    const categoryFormLabelMagicItems = createLabel(categoriesList[2], 'category-label') as HTMLLabelElement;
-    const categoryFormLabelPotions = createLabel(categoriesList[3], 'category-label') as HTMLLabelElement;
-    const categoryFormLabelAuto = createLabel(categoriesList[4], 'category-label') as HTMLLabelElement;
-    const categoryFormLabelMagicalCreatures = createLabel(categoriesList[5], 'category-label') as HTMLLabelElement;
-
     const categoryFormInputSport = createElement('input', 'category-input') as HTMLInputElement;
     const categoryFormInputClothes = createElement('input', 'category-input') as HTMLInputElement;
     const categoryFormInputMagicItems = createElement('input', 'category-input') as HTMLInputElement;
@@ -50,9 +50,10 @@ export function createFilterСategories(): HTMLDivElement {
     const categoryFormInputAuto = createElement('input', 'category-input') as HTMLInputElement;
     const categoryFormInputMagicalCreatures = createElement('input', 'category-input') as HTMLInputElement;
 
-    appendCheckBox('.category-label', checkbox);
+    appendCheckBoxandsetamountBox('.category-label', checkbox);
     setTypeCheckBox('.category-input');
 
+    checkbox.classList.add('category-checkbox');
     categoryFormLabelAuto.append(categoryFormInputAuto);
     categoryFormLabelClothes.append(categoryFormInputClothes);
     categoryFormLabelMagicItems.append(categoryFormInputMagicItems);
@@ -74,8 +75,11 @@ export function createFilterСategories(): HTMLDivElement {
 }
 
 categoryForm.addEventListener('click', (e) => {
-    if (e.target instanceof Element && e.target.closest('.category-input')) {
-        const currCheckBox = e.target.nextSibling as HTMLElement;
+    if (e.target instanceof Element && e.target.closest('.category-checkbox')) {
+        const currCheckBox = e.target as HTMLElement;
+        currCheckBox.classList.toggle('checked');
+    } else if (e.target instanceof Element && e.target.closest('.category-input')) {
+        const currCheckBox = e.target.previousElementSibling as HTMLElement;
         currCheckBox.classList.toggle('checked');
     }
 });
@@ -124,15 +128,10 @@ export function createFilterSubСategories(): HTMLDivElement {
     const subcategoryFormInputPositiveBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
     const subcategoryFormInputNegativeBeings = createElement('input', 'subcategory-input') as HTMLInputElement;
 
-    appendCheckBox('.subcategory-label', checkbox);
+    appendCheckBoxandsetamountBox('.subcategory-label', checkbox);
     setTypeCheckBox('.subcategory-input');
 
-    Array.from(subcategoryForm).forEach((item, index) => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.checkbox')[index + 6].classList.toggle('checked');
-        });
-    });
-
+    checkbox.classList.add('subcategory-checkbox');
     subcategoryFormLabelAccessories.append(subcategoryFormInputAccessories);
     subcategoryFormLabelBooks.append(subcategoryFormInputBooks);
     subcategoryFormLabelCLothes.append(subcategoryFormInputCLothes);
@@ -164,16 +163,20 @@ export function createFilterSubСategories(): HTMLDivElement {
 }
 
 subcategoryForm.addEventListener('click', (e) => {
-    if (e.target instanceof Element && e.target.closest('.subcategory-input')) {
-        const currCheckBox = e.target.nextSibling as HTMLElement;
+    if (e.target instanceof Element && e.target.closest('.subcategory-checkbox')) {
+        const currCheckBox = e.target as HTMLElement;
+        currCheckBox.classList.toggle('checked');
+    } else if (e.target instanceof Element && e.target.closest('.subcategory-input')) {
+        const currCheckBox = e.target.previousElementSibling as HTMLElement;
         currCheckBox.classList.toggle('checked');
     }
 });
 
 //----------------HELPERS
-const appendCheckBox = (elClass: string, checkbox: HTMLDivElement): void => {
+const appendCheckBoxandsetamountBox = (elClass: string, checkbox: HTMLDivElement): void => {
     document.querySelectorAll(elClass).forEach((item) => {
-        item.append(checkbox.cloneNode(true));
+        item.prepend(checkbox.cloneNode(true));
+        item.append(createAmountBox());
     });
 };
 
@@ -181,6 +184,16 @@ const setTypeCheckBox = (elClass: string): void => {
     document.querySelectorAll(elClass).forEach((item) => {
         item.setAttribute('type', 'checkbox');
     });
+};
+
+const createAmountBox = (): HTMLDivElement => {
+    const currentAmount = createSimpleInput('amount-input', 'number', '', '0') as HTMLInputElement;
+    const totalAmount = createSimpleInput('amount-input', 'number', '', '0') as HTMLInputElement;
+    currentAmount.readOnly = true;
+    totalAmount.readOnly = true;
+    const amountBlock = createElement('div', 'amount-block') as HTMLDivElement;
+    amountBlock.append(currentAmount, '/', totalAmount);
+    return amountBlock;
 };
 
 export { categoryForm };

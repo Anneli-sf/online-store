@@ -9,6 +9,7 @@ export const productsData = [
         price: 905,
         discount: 10,
         stock: 5,
+        raiting: 4.95,
         images: ['assets/images-storage/vasilisk/vasil1.jpg', 'assets/images-storage/vasilisk/vasil2.jpg'],
     },
     {
@@ -21,6 +22,7 @@ export const productsData = [
         price: 10,
         discount: 10,
         stock: 53,
+        raiting: 4.05,
         images: [
             'assets/images-storage/mech_Griffindora/grif1.png',
             'assets/images-storage/mech_Griffindora/grif2.jpg',
@@ -36,6 +38,7 @@ export const productsData = [
         price: 15,
         discount: 9,
         stock: 84,
+        raiting: 3.98,
         images: [
             'assets/images-storage/mantiya_nevidimka/mant1.jpg',
             'assets/images-storage/mantiya_nevidimka/mant2.png',
@@ -51,6 +54,7 @@ export const productsData = [
         price: 21,
         discount: 3,
         stock: 32,
+        raiting: 4.0,
         images: [
             'assets/images-storage/kulon_Dari_smerti/kulon1.jpg',
             'assets/images-storage/kulon_Dari_smerti/kulon2.jpg',
@@ -66,6 +70,7 @@ export const productsData = [
         price: 13,
         discount: 5,
         stock: 28,
+        raiting: 3.71,
         images: ['assets/images-storage/mahovic_vremeni/mah1.jpg', 'assets/images-storage/mahovic_vremeni/mah2.jpeg'],
     },
     {
@@ -78,6 +83,7 @@ export const productsData = [
         price: 34,
         discount: 10,
         stock: 14,
+        raiting: 5.0,
         images: ['assets/images-storage/snitch/snitch1.jpg', 'assets/images-storage/snitch/snitch2.jpg'],
     },
     {
@@ -90,6 +96,7 @@ export const productsData = [
         price: 5,
         discount: 0,
         stock: 8,
+        raiting: 2.65,
         images: [
             'assets/images-storage/filosofskii_kamen/stone1.png',
             'assets/images-storage/filosofskii_kamen/stone2.png',
@@ -105,6 +112,7 @@ export const productsData = [
         price: 12,
         discount: 2,
         stock: 16,
+        raiting: 4.36,
         images: [
             'assets/images-storage/raspredelyaushaya_shlyapa/shlyapa1.jpg',
             'assets/images-storage/raspredelyaushaya_shlyapa/shlyapa2.jpg',
@@ -120,6 +128,7 @@ export const productsData = [
         price: 28,
         discount: 5,
         stock: 20,
+        raiting: 4.95,
         images: ['assets/images-storage/kubok_ognya/kubok1.jpg', 'assets/images-storage/kubok_ognya/kubok2.png'],
     },
     {
@@ -132,6 +141,7 @@ export const productsData = [
         price: 10,
         discount: 5,
         stock: 36,
+        raiting: 4.8,
         images: [
             'assets/images-storage/medalion_Slizerina/sliz1.jpg',
             'assets/images-storage/medalion_Slizerina/sliz2.jpg',
@@ -147,6 +157,7 @@ export const productsData = [
         price: 19,
         discount: 5,
         stock: 38,
+        raiting: 4.76,
         images: [
             'assets/images-storage/palochka_Volan-de-Morta/palochka1.jpg',
             'assets/images-storage/palochka_Volan-de-Morta/palochka2.png',
@@ -162,6 +173,7 @@ export const productsData = [
         price: 23,
         discount: 15,
         stock: 39,
+        raiting: 5.0,
         images: [
             'assets/images-storage/syvorotka_pravdi/syvorotka1.jpg',
             'assets/images-storage/syvorotka_pravdi/syvorotka2.png',
@@ -177,6 +189,7 @@ export const productsData = [
         price: 44,
         discount: 10,
         stock: 19,
+        raiting: 4.99,
         images: ['assets/images-storage/zerkalo/zerkalo1.jpg', 'assets/images-storage/zerkalo/zerkalo2.jpg'],
     },
     {
@@ -189,6 +202,7 @@ export const productsData = [
         price: 15,
         discount: 3,
         stock: 145,
+        raiting: 4.99,
         images: [
             'assets/images-storage/buzinnaya_palochka/buz1.png',
             'assets/images-storage/buzinnaya_palochka/buz2.png',
@@ -204,6 +218,7 @@ export const productsData = [
         price: 67,
         discount: 15,
         stock: 48,
+        raiting: 4.98,
         images: [
             'assets/images-storage/volshebnuie_shahmati/shah1.jpg',
             'assets/images-storage/volshebnuie_shahmati/shah2.png',
@@ -219,6 +234,7 @@ export const productsData = [
         price: 6,
         discount: 0,
         stock: 21,
+        raiting: 4.91,
         images: [
             'assets/images-storage/voskreshaiushii_kamen/voskr1.png',
             'assets/images-storage/voskreshaiushii_kamen/voskr2.jpg',
@@ -234,6 +250,7 @@ export const productsData = [
         price: 17,
         discount: 3,
         stock: 18,
+        raiting: 3.95,
         images: [
             'assets/images-storage/dnevnik_Redla/dnevnik1.jpg',
             'assets/images-storage/dnevnik_Redla/dnevnik2.jpg',
@@ -249,6 +266,7 @@ export const productsData = [
         price: 40,
         discount: 0,
         stock: 74,
+        raiting: 4.73,
         images: ['assets/images-storage/chasi_Uizly/clock1.jpg', 'assets/images-storage/chasi_Uizly/clock2.jpg'],
     },
     {
@@ -261,6 +279,7 @@ export const productsData = [
         price: 11,
         discount: 3,
         stock: 12,
+        raiting: 4.18,
         images: ['assets/images-storage/deluminator/delum1.png', 'assets/images-storage/deluminator/delum2.png'],
     },
     {
@@ -273,6 +292,7 @@ export const productsData = [
         price: 100,
         discount: 10,
         stock: 42,
+        raiting: 4.25,
         images: ['assets/images-storage/nimbus2000/nimb1.png', 'assets/images-storage/nimbus2000/nimb2.png'],
     },
     {
@@ -284,6 +304,7 @@ export const productsData = [
         price: 5000,
         discount: 5,
         stock: 53,
+        raiting: 4.95,
         images: ['assets/images-storage/automobile/auto1.png', 'assets/images-storage/automobile/auto2.png'],
     },
     {
@@ -296,6 +317,7 @@ export const productsData = [
         price: 14,
         discount: 0,
         stock: 57,
+        raiting: 4.05,
         images: ['assets/images-storage/carta_maradera/carta1.jpg', 'assets/images-storage/carta_maradera/carta2.jpg'],
     },
     {
@@ -308,6 +330,7 @@ export const productsData = [
         price: 25,
         discount: 15,
         stock: 85,
+        raiting: 2.95,
         images: ['assets/images-storage/amortecia/amor1.jpg', 'assets/images-storage/amortecia/amor2.jpg'],
     },
     {
@@ -320,6 +343,7 @@ export const productsData = [
         price: 300,
         discount: 5,
         stock: 10,
+        raiting: 4.98,
         images: ['assets/images-storage/chupakabra/chup1.png', 'assets/images-storage/chupakabra/chup2.jpg'],
     },
     {
@@ -331,6 +355,7 @@ export const productsData = [
         price: 400,
         discount: 0,
         stock: 102,
+        raiting: 3.77,
         images: ['assets/images-storage/dementor/demen1.jpg', 'assets/images-storage/dementor/demen2.jpg'],
     },
     {
@@ -343,6 +368,7 @@ export const productsData = [
         price: 350,
         discount: 3,
         stock: 67,
+        raiting: 4.99,
         images: ['assets/images-storage/dobbi/dob1.jpg', 'assets/images-storage/dobbi/dob2.jpg'],
     },
     {
@@ -354,6 +380,7 @@ export const productsData = [
         price: 23,
         discount: 5,
         stock: 167,
+        raiting: 4.95,
         images: [
             'assets/images-storage/eliksir_is_mandragori/mandr1.jpg',
             'assets/images-storage/eliksir_is_mandragori/mandr2.jpg',
@@ -369,6 +396,7 @@ export const productsData = [
         price: 21,
         discount: 0,
         stock: 77,
+        raiting: 4.75,
         images: ['assets/images-storage/eliksir_sgizni/sgizn1.jpg', 'assets/images-storage/eliksir_sgizni/sgizn2.jpg'],
     },
     {
@@ -381,6 +409,7 @@ export const productsData = [
         price: 10000,
         discount: 5,
         stock: 5,
+        raiting: 4.74,
         images: ['assets/images-storage/express/exp1.jpg', 'assets/images-storage/express/exp2.jpg'],
     },
     {
@@ -393,6 +422,7 @@ export const productsData = [
         price: 600,
         discount: 0,
         stock: 5,
+        raiting: 4.05,
         images: ['assets/images-storage/fenix/fenix1.jpg', 'assets/images-storage/fenix/fenix2.jpg'],
     },
     {
@@ -405,6 +435,7 @@ export const productsData = [
         price: 22,
         discount: 3,
         stock: 78,
+        raiting: 4.36,
         images: ['assets/images-storage/gerbicid/gerb1.jpg', 'assets/images-storage/gerbicid/gerb2.jpg'],
     },
     {
@@ -417,6 +448,7 @@ export const productsData = [
         price: 20,
         discount: 3,
         stock: 105,
+        raiting: 4.95,
         images: ['assets/images-storage/kosterost/kost1.jpg', 'assets/images-storage/kosterost/kost1.jpg'],
     },
     {
@@ -429,6 +461,7 @@ export const productsData = [
         price: 240,
         discount: 5,
         stock: 35,
+        raiting: 4.99,
         images: ['assets/images-storage/manticora/mantic1.jpg', 'assets/images-storage/manticora/mantic2.jpg'],
     },
     {
@@ -441,6 +474,7 @@ export const productsData = [
         price: 16,
         discount: 0,
         stock: 11,
+        raiting: 3.99,
         images: [
             'assets/images-storage/palochka_Wuizli/wuizli1.jpg',
             'assets/images-storage/palochka_Wuizli/wuizli2.jpg',
@@ -456,6 +490,7 @@ export const productsData = [
         price: 11,
         discount: 10,
         stock: 103,
+        raiting: 4.97,
         images: [
             'assets/images-storage/palocka_Draco-Malfoya/malfoi1.jpg',
             'assets/images-storage/palocka_Draco-Malfoya/malfoi2.jpg',
@@ -471,6 +506,7 @@ export const productsData = [
         price: 100,
         discount: 5,
         stock: 50,
+        raiting: 4.98,
         images: ['assets/images-storage/pushistik/push1.jpg', 'assets/images-storage/pushistik/push2.jpg'],
     },
     {
@@ -483,6 +519,7 @@ export const productsData = [
         price: 105,
         discount: 3,
         stock: 100,
+        raiting: 4.95,
         images: ['assets/images-storage/salamandra/sal1.png', 'assets/images-storage/salamandra/sal2.jpg'],
     },
     {
@@ -495,6 +532,7 @@ export const productsData = [
         price: 70,
         discount: 10,
         stock: 28,
+        raiting: 4.99,
         images: ['assets/images-storage/shkaf/shkaf1.jpg', 'assets/images-storage/shkaf/shkaf2.jpg'],
     },
     {
@@ -507,6 +545,7 @@ export const productsData = [
         price: 23,
         discount: 3,
         stock: 10,
+        raiting: 2.95,
         images: ['assets/images-storage/uidosoros/uido1.jpg', 'assets/images-storage/uidosoros/uido2.jpg'],
     },
     {
@@ -519,6 +558,7 @@ export const productsData = [
         price: 20,
         discount: 3,
         stock: 40,
+        raiting: 1.95,
         images: [
             'assets/images-storage/umenishaiushee_zelie/umen1.jpg',
             'assets/images-storage/umenishaiushee_zelie/umen2.jpg',

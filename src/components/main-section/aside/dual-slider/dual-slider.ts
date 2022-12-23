@@ -1,89 +1,137 @@
 import './dual-slider.scss';
 import { createElement, createInput, createSimpleInput } from '../../../global-components/global-components';
 
-// const sliderInputFrom = createInput('from-slider', 'range', '', '', '', '0', '0', '10000') as HTMLFormElement;
-// const sliderInputTo = createInput('to-slider', 'range', '', '', '', '10000', '0', '10000') as HTMLFormElement;
-const sliderInputFrom = createSimpleInput('from-slider', 'range', '', '0', '0', '100') as HTMLInputElement;
-const sliderInputTo = createSimpleInput('to-slider', 'range', '', '100', '0', '100') as HTMLInputElement;
-console.log('sliderInputTo', sliderInputTo);
-// const formControlTimeInputMin = createInput(
-//     'form_control_container__time__input_min',
-//     'number',
-//     '',
-//     '',
-//     '',
-//     '0'
-// ) as HTMLFormElement;
-// const formControlTimeInputMax = createInput(
-//     'form_control_container__time__input_max',
-//     'number',
-//     '',
-//     '',
-//     '',
-//     '10000'
-// ) as HTMLFormElement;
-const formControlTimeInputMin = createSimpleInput(
-    'form_control_container__time__input_min',
-    'number',
-    '',
-    '0'
-) as HTMLInputElement;
+const sliders = createElement('div', 'sliders') as HTMLDivElement;
+export function createSliders(): HTMLDivElement {
+    sliders.append(createPriceDualSlider(), createAmountDualSlider());
+    return sliders;
+}
 
-const formControlTimeInputMax = createSimpleInput(
-    'form_control_container__time__input_max',
+const fromSliderPrice = createSimpleInput('from-slider-price', 'range', '', '10', '0', '100') as HTMLInputElement; //sliderInputFrom
+const toSliderPrice = createSimpleInput('to-slider-price', 'range', '', '30', '0', '100') as HTMLInputElement; //sliderInputTo
+const fromInputPrice = createSimpleInput(
+    'form_control_container__time__input_min-price',
     'number',
     '',
+    '10',
+    '0',
     '100'
-) as HTMLInputElement;
+) as HTMLInputElement; //formControlTimeInputMin
 
-export function createPriceDualSlider(): HTMLDivElement {
+const toInputPrice = createSimpleInput(
+    'form_control_container__time__input_max-price',
+    'number',
+    '',
+    '30',
+    '0',
+    '100'
+) as HTMLInputElement; //formControlTimeInputMax
+
+function createPriceDualSlider(): HTMLDivElement {
     const filterPrice = createElement('div', 'filter__price') as HTMLDivElement;
+    const sliderControlPrice = createElement('div', 'slider-control-price') as HTMLDivElement;
     const filterPriceHeader = createElement('h3', 'filter-price-title') as HTMLHeadingElement;
     filterPriceHeader.textContent = 'Цена';
+    const formControlPrice = createElement('div', 'form-control-price') as HTMLDivElement;
+    const formControlPriceContainerMin = createElement('div', 'form-control-container-price') as HTMLDivElement;
+    const formControlPriceContainerMinTime = createElement(
+        'div',
+        'form-control-container__time-price'
+    ) as HTMLDivElement;
+    const formControlPriceContainerMax = createElement('div', 'form-control-container-price') as HTMLDivElement;
+    const formControlPriceContainerMaxTime = createElement(
+        'div',
+        'form-control-container__time-price'
+    ) as HTMLDivElement;
+    const rangeContainerPrice = createElement('div', 'range-container-price') as HTMLDivElement;
 
-    const rangeContainer = createElement('div', 'range-container') as HTMLDivElement;
+    formControlPriceContainerMinTime.textContent = 'Min';
+    formControlPriceContainerMaxTime.textContent = 'Max';
 
-    const sliderControl = createElement('div', 'slider-control') as HTMLDivElement;
-    // const sliderInputFrom = createInput('from-slider', 'range', '', '', '', '0', '0', '10000') as HTMLFormElement; //HTMLInputElement;
-    // const sliderInputTo = createInput('to-slider', 'range', '', '', '', '10000', '0', '10000') as HTMLFormElement;
-    const formControl = createElement('div', 'form-control') as HTMLDivElement;
-    const formControlContainerMin = createElement('div', 'form-control-container') as HTMLDivElement;
-    const formControlContainerMinTime = createElement('div', 'form-control-container__time') as HTMLDivElement;
-    formControlContainerMinTime.textContent = 'Min';
-    // const formControlTimeInputMin = createInput(
-    //     'form_control_container__time__input_min',
-    //     'number',
-    //     '',
-    //     '',
-    //     '',
-    //     '0'
-    // ) as HTMLFormElement;
+    formControlPriceContainerMin.append(formControlPriceContainerMinTime, fromInputPrice); //formControlTimeInputMin
+    formControlPriceContainerMax.append(formControlPriceContainerMaxTime, toInputPrice); //formControlTimeInputMax
 
-    const formControlContainerMax = createElement('div', 'form-control-container') as HTMLDivElement;
-    const formControlContainerMaxTime = createElement('div', 'form-control-container__time') as HTMLDivElement;
-    formControlContainerMaxTime.textContent = 'Max';
-    // const formControlTimeInputMax = createInput(
-    //     'form_control_container__time__input_max',
-    //     'number',
-    //     '',
-    //     '',
-    //     '',
-    //     '10000'
-    // ) as HTMLFormElement;
+    formControlPrice.append(formControlPriceContainerMin, formControlPriceContainerMax);
 
-    formControlContainerMin.append(formControlContainerMinTime, formControlTimeInputMin);
-    formControlContainerMax.append(formControlContainerMaxTime, formControlTimeInputMax);
+    sliderControlPrice.append(fromSliderPrice, toSliderPrice); //sliderInputFrom    sliderInputTo
 
-    formControl.append(formControlContainerMin, formControlContainerMax);
+    rangeContainerPrice.append(sliderControlPrice, formControlPrice);
 
-    sliderControl.append(sliderInputFrom, sliderInputTo);
-
-    rangeContainer.append(sliderControl, formControl);
-
-    filterPrice.append(filterPriceHeader, rangeContainer);
+    filterPrice.append(filterPriceHeader, rangeContainerPrice);
     return filterPrice;
 }
 
+fillSlider(fromSliderPrice, toSliderPrice, '#C6C6C6', '#25daa5', toSliderPrice);
+setToggleAccessible(toSliderPrice);
+
+fromSliderPrice.oninput = () => controlFromSlider(fromSliderPrice, toSliderPrice, fromInputPrice);
+toSliderPrice.oninput = () => controlToSlider(fromSliderPrice, toSliderPrice, toInputPrice);
+fromInputPrice.oninput = () => controlFromInput(fromSliderPrice, fromInputPrice, toInputPrice, toSliderPrice);
+toInputPrice.oninput = () => controlToInput(toSliderPrice, fromInputPrice, toInputPrice, toSliderPrice);
+
+const fromSliderAmount = createSimpleInput('from-slider-amount', 'range', '', '10', '0', '100') as HTMLInputElement; //sliderInputFrom
+const toSliderAmount = createSimpleInput('to-slider-amount', 'range', '', '30', '0', '100') as HTMLInputElement; //sliderInputTo
+const fromInputAmount = createSimpleInput(
+    'form_control_container__time__input_min-amount',
+    'number',
+    '',
+    '10',
+    '0',
+    '100'
+) as HTMLInputElement; //formControlTimeInputMin
+
+const toInputAmount = createSimpleInput(
+    'form_control_container__time__input_max-amount',
+    'number',
+    '',
+    '30',
+    '0',
+    '100'
+) as HTMLInputElement; //formControlTimeInputMax
+
+function createAmountDualSlider(): HTMLDivElement {
+    const filterAmount = createElement('div', 'filter__amount') as HTMLDivElement;
+    const sliderControlAmount = createElement('div', 'slider-control-amount') as HTMLDivElement;
+    const filterAmountHeader = createElement('h3', 'filter-amount-title') as HTMLHeadingElement;
+    filterAmountHeader.textContent = 'Количество';
+    const formControlAmount = createElement('div', 'form-control-amount') as HTMLDivElement;
+    const formControlAmountContainerMin = createElement('div', 'form-control-container-amount') as HTMLDivElement;
+    const formControlAmountContainerMinTime = createElement(
+        'div',
+        'form-control-container__time-amount'
+    ) as HTMLDivElement;
+    const formControlAmountContainerMax = createElement('div', 'form-control-container-amount') as HTMLDivElement;
+    const formControlAmountContainerMaxTime = createElement(
+        'div',
+        'form-control-container__time-amount'
+    ) as HTMLDivElement;
+    const rangeContainerAmount = createElement('div', 'range-container-amount') as HTMLDivElement;
+
+    formControlAmountContainerMinTime.textContent = 'Min';
+    formControlAmountContainerMaxTime.textContent = 'Max';
+
+    formControlAmountContainerMin.append(formControlAmountContainerMinTime, fromInputAmount); //formControlTimeInputMin
+    formControlAmountContainerMax.append(formControlAmountContainerMaxTime, toInputAmount); //formControlTimeInputMax
+
+    formControlAmount.append(formControlAmountContainerMin, formControlAmountContainerMax);
+
+    sliderControlAmount.append(fromSliderAmount, toSliderAmount); //sliderInputFrom    sliderInputTo
+
+    rangeContainerAmount.append(sliderControlAmount, formControlAmount);
+
+    filterAmount.append(filterAmountHeader, rangeContainerAmount);
+    return filterAmount;
+}
+
+fillSlider(fromSliderAmount, toSliderAmount, '#C6C6C6', '#25daa5', toSliderAmount);
+// setToggleAccessible(toSliderAmount);
+
+fromSliderAmount.oninput = () => controlFromSlider(fromSliderAmount, toSliderAmount, fromInputAmount);
+toSliderAmount.oninput = () => controlToSlider(fromSliderAmount, toSliderAmount, toInputAmount);
+fromInputAmount.oninput = () => controlFromInput(fromSliderAmount, fromInputAmount, toInputAmount, toSliderAmount);
+toInputAmount.oninput = () => controlToInput(toSliderAmount, fromInputAmount, toInputAmount, toSliderAmount);
+
+//----------------------------------------------------------------------------------------------------------------------------
 function controlFromInput(
     fromSlider: { value: string | number },
     fromInput: { value: number | string },
@@ -162,7 +210,6 @@ function fillSlider(
     rangeColor: string,
     controlSlider: { value: string | number; style: { background: string } }
 ) {
-    console.log(to);
     const rangeDistance = +to.max - +to.min;
     const fromPosition = +from.value - +to.min;
     const toPosition = +to.value - +to.min;
@@ -176,24 +223,11 @@ function fillSlider(
       ${sliderColor} 100%)`;
 }
 
-function setToggleAccessible(currentTarget: { value: string | number }) {
-    const toSlider = document.querySelector('.to-slider') as HTMLInputElement;
-    if (Number(currentTarget.value) <= 0) {
-        toSlider.setAttribute('zIndex', '2');
+// function setToggleAccessible(currentTarget: { value: string | number }) {
+function setToggleAccessible(current: { value: string | number }) {
+    if (Number(current.value) <= 0) {
+        toSliderPrice.setAttribute('zIndex', '2');
     } else {
-        toSlider.setAttribute('zIndex', '0');
+        toSliderPrice.setAttribute('zIndex', '0');
     }
 }
-
-const fromSlider = document.querySelector('.from-slider') as HTMLInputElement;
-const toSlider = document.querySelector('.to-slider') as HTMLInputElement;
-console.log('toSlider', toSlider);
-const fromInput = document.querySelector('.form_control_container__time__input_min') as HTMLInputElement;
-const toInput = document.querySelector('.form_control_container__time__input_max') as HTMLInputElement;
-fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
-setToggleAccessible(toSlider);
-
-fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider, fromInput);
-toSlider.oninput = () => controlToSlider(fromSlider, toSlider, toInput);
-fromInput.oninput = () => controlFromInput(fromSlider, fromInput, toInput, toSlider);
-toInput.oninput = () => controlToInput(toSlider, fromInput, toInput, toSlider);
