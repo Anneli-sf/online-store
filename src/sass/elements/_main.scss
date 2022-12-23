@@ -24,14 +24,20 @@ html {
     .wrapper {
         margin: 0 auto;
         height: 100%;
+        width: 100%;
+        display: flex;
+    flex-direction: column;
 
         .main {
             // display: flex;
             // align-items: flex-start;
-            @include flex-row(normal, flex-start);
+            // @include flex-row(normal, flex-start);
+            @include flex-row(center, center);
             padding: 10px;
             top: 110px;
             position: relative;
+            flex: 1 0 auto;
+            // height: 100%;
         }
     }
 }
