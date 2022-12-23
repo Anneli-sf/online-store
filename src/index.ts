@@ -14,12 +14,8 @@ import { createProductsSection } from './components/main-section/products-sectio
 // import { createFilterSubСategories, createFilterСategories } from './components/main-section/aside/filter/filter';
 import { createAside } from './components/main-section/aside/aside'; 
 import { productsCartBlock, summaryCartBlock } from './components/cart-page/cart-page';
-
-const BODY = document.querySelector('.wrapper') as HTMLBodyElement;
-const mainSection = document.querySelector('.main') as HTMLBodyElement;
-
-createHeader(header);
-createFooter(footer);
+// createHeader(header);
+// createFooter(footer);
 
 // mainSection?.append(createDetailsPage(3));
 // mainSection.append(createProductsSection());
@@ -28,4 +24,6 @@ createFooter(footer);
 // mainSection.append(createFilterСategories());
 // mainSection.append(createAside(), createProductsSection());
 // createProductsSection();
-mainSection.append(productsCartBlock(), summaryCartBlock());
+//-----------------------MODULE WINDOW--------------------------------//
+import './components/modal-window-page/modal-window-page';
+//--------------------------------------------------------------------//
