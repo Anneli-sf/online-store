@@ -16,7 +16,7 @@ export function createDetailsBlock(productId: number): HTMLElement {
         'details-header',
         'details-section'
     );
-    const sectionDetails = document.querySelector('.details-section') as HTMLElement;
+    const sectionDetails = blockDetails.querySelector('.details-section') as HTMLElement;
 
     sectionDetails?.append(
         createMiniPhotosSection(productId),
