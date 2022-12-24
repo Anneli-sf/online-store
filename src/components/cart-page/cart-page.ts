@@ -17,7 +17,8 @@ export const createCartPage = (): HTMLDivElement => {
     const cartPage = createElement('div', 'cart-wrapper') as HTMLDivElement;
     cartPage.append(createProductsCartBlock(), createSummaryCartBlock());
     return cartPage;
-}
+};
+
 const createProductsCartBlock = () => {
     const cartBlock = createBlock('cart-products', 'Товары в корзине');
     // const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;

@@ -3,6 +3,7 @@ import {
     createButton,
     createElement,
     createImage,
+    createLink,
     createParagraph,
 } from '../../../global-components/global-components';
 import { productsData } from '../../../data/data';
@@ -31,8 +32,10 @@ export function createProductCard(productId: number): HTMLElement {
 
     const buttonAdd = createButton('в корзину', 'btn__add') as HTMLButtonElement;
     const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
+    const detailsLink = createLink(`#/product${productsData[productId].id}`, 'btn__details-link') as HTMLLinkElement;
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
 
+    buttonDetails.append(detailsLink);
     imageContainer.append(productImage);
     productAvailable.append(productPrice);
     buttonsItemContainer.append(buttonAdd, buttonDetails);

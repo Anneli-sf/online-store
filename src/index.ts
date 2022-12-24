@@ -58,7 +58,8 @@ const DetailsPage = {
 const routes = [
     { path: '/', component: HomePage },
     { path: '/cart', component: CartPage },
-    { path: '/details', component: DetailsPage },
+    { path: `/product${id}`, component: DetailsPage }, ///-------закомменть
+    // { path: `/details`, component: DetailsPage },
 ];
 
 const ErrorComponent = {
