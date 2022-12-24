@@ -14,13 +14,14 @@ import { createDetailsPage } from './components/details-page/details';
 import { createPriceDualSlider } from './components/main-section/aside/dual-slider/dual-slider';
 import { createFilterSubСategories, createFilterСategories } from './components/main-section/aside/filter/filter';
 // import { createAside } from './components/main-section/aside/aside';
-import { productsCartBlock, summaryCartBlock } from './components/cart-page/cart-page';
+import { createCartPage } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { createContainerCard } from './components/modal-window-page/modal-window-page';
 import { createDetailsBlock } from './components/details-page/product-details/product-details';
 
 createHeader(header);
 createFooter(footer);
+// createProducstPage();
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
@@ -40,6 +41,13 @@ const HomePage = {
     },
 };
 
+const CartPage = {
+    render: () => {
+        mainSection.innerHTML = ``;
+        return createCartPage();
+    },
+};
+
 const DetailsPage = {
     render: () => {
         mainSection.innerHTML = ``;
@@ -47,12 +55,11 @@ const DetailsPage = {
     },
 };
 
-const CartPage = {
-    render: () => {
-        mainSection.innerHTML = ``;
-        return createContainerCard();
-    },
-};
+const routes = [
+    { path: '/', component: HomePage },
+    { path: '/cart', component: CartPage },
+    { path: '/details', component: DetailsPage },
+];
 
 const ErrorComponent = {
     render: () => {
@@ -65,24 +72,20 @@ const ErrorComponent = {
     },
 };
 
-const routes = [
-    { path: '/', component: HomePage },
-    { path: '/cart', component: CartPage },
-    { path: '/details', component: DetailsPage },
-];
-
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
+
 const findComponentByPath = (path, routes) =>
     routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gm'))) || undefined;
 
 const router = () => {
-    //     TODO: Get the current path
+    //Get the current path
     const path = parseLocation();
-    //     TODO: If there's no matching route, get the "Error" component
+    //If there's no matching route, get the "Error" component
     const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
-    //     TODO: Render the component in the "app" placeholder
+    //Render the component in the "app" placeholder
     mainSection.append(component.render());
 };
 
 window.addEventListener('hashchange', router);
 window.addEventListener('load', router);
+window.addEventListener('click', (e) => console.log(e.target));

@@ -13,7 +13,12 @@ import { productsData } from '../data/data';
 
 const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
-export const productsCartBlock = () => {
+export const createCartPage = (): HTMLDivElement => {
+    const cartPage = createElement('div', 'cart-wrapper') as HTMLDivElement;
+    cartPage.append(createProductsCartBlock(), createSummaryCartBlock());
+    return cartPage;
+}
+const createProductsCartBlock = () => {
     const cartBlock = createBlock('cart-products', 'Товары в корзине');
     // const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
@@ -165,7 +170,7 @@ const productsValuesBlock = (productId: number, itemQuantity = '1') => {
 //-----------------------------------------------------
 
 //------------------STOCK and QUANTITY------------------
-export const summaryCartBlock = () => {
+export const createSummaryCartBlock = () => {
     const summaryBlock = createBlock('summary', 'Итого') as HTMLElement;
 
     const summarySectionBlock = summaryBlock.querySelector('.block-section') as HTMLElement;
