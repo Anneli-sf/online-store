@@ -17,13 +17,13 @@ export const productsCartBlock = () => {
     const cartBlock = createBlock('cart-products', 'Товары в корзине');
     // const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
-    const blockHeader = document.querySelector('.block-header') as HTMLElement;
+    const blockHeader = cartBlock.querySelector('.block-header') as HTMLElement;
     blockHeader?.append(quantityProductsOnCart(), switchPagesBlock());
     createProductsList(5);
 
-    document.querySelector('.block-section')?.append(listBlock);
+    cartBlock.querySelector('.block-section')?.append(listBlock);
 
-    document.querySelectorAll('.number-product').forEach((item, index) => {
+    cartBlock.querySelectorAll('.number-product').forEach((item, index) => {
         item.textContent = `${index + 1}`;
     });
     // document.querySelector('.main')?.append(cartBlock);
