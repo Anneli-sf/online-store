@@ -34,59 +34,115 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 // createProductsSection();
 // mainSection.append(createContainerCard());
 
-const HomePage = {
-    render: () => {
+//------------------------------------------------
+class Router {
+    routes = [];
+
+    mode = null;
+
+    root = '/';
+
+    constructor(options) {
+        this.mode = window.history.pushState ? 'history' : 'hash';
+        if (options.mode) this.mode = options.mode;
+        if (options.root) this.root = options.root;
+        this.listen();
+    }
+
+    add = (path, cb) => {
+        this.routes.push({ path, cb });
+        return this;
+    };
+
+    remove = (path) => {
+        for (let i = 0; i < this.routes.length; i += 1) {
+            if (this.routes[i].path === path) {
+                this.routes.slice(i, 1);
+                return this;
+            }
+        }
+        return this;
+    };
+
+    flush = () => {
+        this.routes = [];
+        return this;
+    };
+
+    clearSlashes = (path) => path.toString().replace(/\/$/, '').replace(/^\//, '');
+
+    getFragment = () => {
+        let fragment = '';
+        if (this.mode === 'history') {
+            fragment = this.clearSlashes(decodeURI(window.location.pathname + window.location.search));
+            fragment = fragment.replace(/\?(.*)$/, '');
+            fragment = this.root !== '/' ? fragment.replace(this.root, '') : fragment;
+        } else {
+            const match = window.location.href.match(/#(.*)$/);
+            fragment = match ? match[1] : '';
+        }
+        return this.clearSlashes(fragment);
+    };
+
+    navigate = (path = '') => {
+        if (this.mode === 'history') {
+            window.history.pushState(null, null, this.root + this.clearSlashes(path));
+        } else {
+            window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${path}`;
+        }
+        return this;
+    };
+
+    listen = () => {
+        clearInterval(this.interval);
+        this.interval = setInterval(this.interval, 50);
+    };
+
+    interval = () => {
+        if (this.current === this.getFragment()) return;
+        this.current = this.getFragment();
+
+        this.routes.some((route) => {
+            const match = this.current.match(route.path);
+            if (match) {
+                match.shift();
+                route.cb.apply({}, match);
+                return match;
+            }
+            return false;
+        });
+    };
+}
+
+const router = new Router({
+    mode: 'hash',
+    root: '/',
+});
+
+router
+    .add(/home/, () => {
+        // alert('welcome in about page');
         mainSection.innerHTML = ``;
-        return mainSection.append(createProducstPage());
-    },
-};
-
-const CartPage = {
-    render: () => {
+        mainSection.append(createProducstPage());
+    })
+    .add(/cart/, () => {
+        // alert('welcome in about page');
         mainSection.innerHTML = ``;
-        return createCartPage();
-    },
-};
-
-const DetailsPage = {
-    render: () => {
+        mainSection.append(createCartPage());
+    })
+    // .add(/products\/(.*)\/specification\/(.*)/, (id, specification) => {
+    //     alert(`products: ${id} specification: ${specification}`);
+    // })
+    .add(/product\/(.*)/, (id) => {
         mainSection.innerHTML = ``;
-        return createDetailsPage(2);
-    },
-};
+        mainSection.append(createDetailsPage(id));
+    })
+    .add('', () => {
+        // general controller
+        console.log('welcome in catch all controller');
+    });
 
-const routes = [
-    { path: '/', component: HomePage },
-    { path: '/cart', component: CartPage },
-    { path: `/product${id}`, component: DetailsPage }, ///-------закомменть
-    // { path: `/details`, component: DetailsPage },
-];
+// window.addEventListener('click', (e) => {
+//     console.log(e.target);
+// });
 
-const ErrorComponent = {
-    render: () => {
-        mainSection.innerHTML = ``;
-        return `
-        <section>
-          <h1>Error</h1>
-        </section>
-      `;
-    },
-};
-
-const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
-
-const findComponentByPath = (path, routes) =>
-    routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gm'))) || undefined;
-
-const router = () => {
-    //Get the current path
-    const path = parseLocation();
-    //If there's no matching route, get the "Error" component
-    const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
-    //Render the component in the "app" placeholder
-    mainSection.append(component.render());
-};
-
-window.addEventListener('hashchange', router);
-window.addEventListener('load', router);
-window.addEventListener('click', (e) => console.log(e.target));
