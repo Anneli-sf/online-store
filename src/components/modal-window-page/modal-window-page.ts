@@ -76,85 +76,84 @@ const cardContainer = () => {
 // -------------------------------------------------------------------------//
 const setCardImage = (input: HTMLInputElement) => {
     input.value = input.value.replace(/[^\d]/g, '');
-    if (input.value[0] === '0' || input.value[0] === '1' || input.value[0] === '2' || input.value[0] === '3') {
-        document.querySelectorAll('.card').forEach((item) => {
-            item.setAttribute('src', '../../assets/icons/default.png');
-        });
-    }
-    if (input.value[0] === '4') {
-        document.querySelectorAll('.card').forEach((item) => {
-            item.setAttribute('src', '../../assets/icons/visa.png');
-        });
-    }
-    if (input.value[0] === '5') {
-        document.querySelectorAll('.card').forEach((item) => {
-            item.setAttribute('src', '../../assets/icons/master-card.png');
-        });
-    }
-    if (input.value[0] === '6') {
-        document.querySelectorAll('.card').forEach((item) => {
-            item.setAttribute('src', '../../assets/icons/maestro.png');
-        });
-    }
-    if (input.value[0] === '7') {
-        document.querySelectorAll('.card').forEach((item) => {
-            item.setAttribute('src', '../../assets/icons/slytherin.png');
-        });
-    }
-    if (input.value[0] === '8') {
-        document.querySelectorAll('.card').forEach((item) => {
-            item.setAttribute('src', '../../assets/icons/griffindor.png');
-        });
-    }
-    if (input.value[0] === '9') {
-        document.querySelectorAll('.card').forEach((item) => {
-            item.setAttribute('src', '../../assets/icons/hufflepuff.png');
-        });
+    switch (input.value[0]) {
+        case '4':
+            document.querySelectorAll('.card').forEach((item) => {
+                item.setAttribute('src', '../../assets/icons/visa.png');
+            });
+            break;
+        case '5':
+            document.querySelectorAll('.card').forEach((item) => {
+                item.setAttribute('src', '../../assets/icons/master-card.png');
+            });
+            break;
+        case '6':
+            document.querySelectorAll('.card').forEach((item) => {
+                item.setAttribute('src', '../../assets/icons/maestro.png');
+            });
+            break;
+        case '7':
+            document.querySelectorAll('.card').forEach((item) => {
+                item.setAttribute('src', '../../assets/icons/slytherin.png');
+            });
+            break;
+        case '8':
+            document.querySelectorAll('.card').forEach((item) => {
+                item.setAttribute('src', '../../assets/icons/griffindor.png');
+            });
+            break;
+        case '9':
+            document.querySelectorAll('.card').forEach((item) => {
+                item.setAttribute('src', '../../assets/icons/hufflepuff.png');
+            });
+            break;
+        default:
+            document.querySelectorAll('.card').forEach((item) => {
+                item.setAttribute('src', '../../assets/icons/default.png');
+            });
+            break;
     }
 };
 // -------------------------------------------------------------------------//
 
 // ------------------------------------CHARACTERISTIC INPUTS-------------------------------------//
 const createCharacteristicInput = (input: HTMLInputElement, spanText: string): void => {
-    if (spanText === 'Номер карты') {
-        input.pattern = '[0-9]{16}';
-        input.addEventListener('keyup', () => setCardImage(input));
-        input.placeholder = '#### #### #### ####';
-    }
-
-    if (spanText === 'Владелец карты') {
-        input.onkeypress = function (event: KeyboardEvent) {
-            if ('1234567890+./=-_'.indexOf(event.key) != -1) event.preventDefault();
-        };
-        input.pattern = '[A-Za-zА-Яа-яЁё]{3,}[ ]{1}[A-Za-zА-Яа-яЁё]{3,}';
-        input.placeholder = 'Имя Фамилия';
-    }
-
-    if (spanText === 'CVV') {
-        input.pattern = '[0-9]{,3}';
-        input.addEventListener('keyup', function () {
-            input.value = input.value.replace(/[^\d]/g, '');
-        });
-        input.placeholder = '###';
-    }
-
-    if (spanText === 'Адрес доставки') {
-        input.pattern =
-            '[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}';
-        input.placeholder = 'страна область город микрорайон улица';
-    }
-
-    if (spanText === 'Номер телефона') {
-        input.pattern = '[+]{1}[0-9]{11,}';
-        input.oninput = function () {
-            input.value = input.value.replace(/[^0-9,+]/g, '');
-        };
-        input.placeholder = '+# ### ### ## ##';
-    }
-
-    if (spanText === 'Email') {
-        input.type = 'email';
-        input.placeholder = 'электронная почта';
+    switch (spanText) {
+        case 'Номер карты':
+            input.pattern = '[0-9]{16}';
+            input.addEventListener('keyup', () => setCardImage(input));
+            input.placeholder = '#### #### #### ####';
+            break;
+        case 'Владелец карты':
+            input.onkeypress = function (event: KeyboardEvent) {
+                if ('1234567890+./=-_'.indexOf(event.key) != -1) event.preventDefault();
+            };
+            input.pattern = '[A-Za-zА-Яа-яЁё]{3,}[ ]{1}[A-Za-zА-Яа-яЁё]{3,}';
+            input.placeholder = 'Имя Фамилия';
+            break;
+        case 'CVV':
+            input.pattern = '[0-9]{,3}';
+            input.addEventListener('keyup', function () {
+                input.value = input.value.replace(/[^\d]/g, '');
+            });
+            input.placeholder = '###';
+            break;
+        case 'Адрес доставки':
+            input.pattern =
+                '[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}';
+            input.placeholder = 'страна область город микрорайон улица';
+            break;
+        case 'Номер телефона':
+            input.pattern = '[+]{1}[0-9]{11,}';
+            input.oninput = function () {
+                input.value = input.value.replace(/[^0-9,+]/g, '');
+            };
+            input.placeholder = '+# ### ### ## ##';
+            break;
+        case 'Email':
+            input.type = 'email';
+            input.placeholder = 'электронная почта';
+            break;
     }
 };
 // -------------------------------------------------------------------------//
