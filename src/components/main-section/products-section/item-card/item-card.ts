@@ -8,6 +8,9 @@ import {
 } from '../../../global-components/global-components';
 import { productsData } from '../../../data/data';
 
+// const detailsLink = createElement('a', 'btn__details-link') as HTMLLinkElement;
+const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
+
 //----------------CARD
 export function createProductCard(productId: number): HTMLElement {
     const productsItem = createElement('li', 'products__item') as HTMLLIElement;
@@ -31,14 +34,22 @@ export function createProductCard(productId: number): HTMLElement {
     if (!productsData[productId].discount) productDiscount.style.display = 'none';
 
     const buttonAdd = createButton('в корзину', 'btn__add') as HTMLButtonElement;
-    const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
-    const detailsLink = createLink(`#/product${productsData[productId].id}`, 'btn__details-link') as HTMLLinkElement;
+    // const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
+    // const detailsLink = createLink(
+    //     `/#/product/${productsData[productId].id}/specification/${productsData[productId].id}`,
+    //     // `#/product/${productsData[productId].id}`,
+    //     'btn__details-link'
+    // ) as HTMLLinkElement;
+    const detailsLink = createElement('a', 'btn__details-link') as HTMLLinkElement;
+    detailsLink.href = `/#/product/${productsData[productId].id}`;
+
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
 
-    buttonDetails.append(detailsLink);
+    detailsLink.append(buttonDetails.cloneNode(true));
     imageContainer.append(productImage);
     productAvailable.append(productPrice);
-    buttonsItemContainer.append(buttonAdd, buttonDetails);
+    // buttonsItemContainer.append(buttonAdd, buttonDetails);
+    buttonsItemContainer.append(buttonAdd, detailsLink);
 
     productsItem.append(productDiscount, imageContainer, productTitle, productAvailable, buttonsItemContainer);
 
