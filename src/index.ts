@@ -7,8 +7,8 @@ import './components/main-section/main-section';
 import './components/main-page/header/header';
 import './components/modal-window-page/modal-window-page';
 
-import { header, createHeader } from './components/main-page/header/header';
-import { footer, createFooter } from './components/main-page/footer/footer';
+import { createHeader } from './components/main-page/header/header';
+import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 // import { createProductsSection } from './components/main-section/products-section/products-section';
 import { createPriceDualSlider } from './components/main-section/aside/dual-slider/dual-slider';
@@ -19,8 +19,8 @@ import { createProducstPage } from './components/main-section/main-section';
 import { createContainerCard } from './components/modal-window-page/modal-window-page';
 import { createDetailsBlock } from './components/details-page/product-details/product-details';
 
-createHeader(header);
-createFooter(footer);
+createHeader();
+createFooter();
 // createProducstPage();
 
 const mainSection = document.querySelector('.main') as HTMLElement;
@@ -133,7 +133,7 @@ router
     // .add(/products\/(.*)\/specification\/(.*)/, (id, specification) => {
     //     alert(`products: ${id} specification: ${specification}`);
     // })
-    .add(/product\/(.*)/, (id) => {
+    .add(/product-details\/(.*)/, (id) => {
         mainSection.innerHTML = ``;
         mainSection.append(createDetailsPage(id));
     })
