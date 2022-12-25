@@ -1,9 +1,8 @@
 import './footer.scss';
 import { createLink, createImage } from '../../global-components/global-components';
 
-export const footer = document.querySelector('.footer') as HTMLBodyElement;
-
-export function createFooter(footer: HTMLBodyElement): HTMLBodyElement {
+export function createFooter(): HTMLBodyElement {
+    const footer = document.querySelector('.footer') as HTMLBodyElement;
     const footerRsSchoolLogo = createLink('https://rs.school/js/', 'rs-logo') as HTMLLinkElement;
     const gitHubLogoAnneli = createLink('https://github.com/anneli-sf', 'anneli-github-logo') as HTMLLinkElement;
     const gitHubLogoAlex = createLink('https://github.com/MaestroFront', 'alex-github-logo') as HTMLLinkElement;
