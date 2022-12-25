@@ -16,8 +16,6 @@ export function createProductCard(productId: number): HTMLElement {
         productsData[productId].title,
         'products-image'
     ) as HTMLImageElement;
-    productImage.style.width = '100%';
-    productImage.style.height = '100%';
 
     const productTitle = createParagraph(productsData[productId].title, 'products-title') as HTMLParagraphElement; //as HTMLLIElement;
     const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
