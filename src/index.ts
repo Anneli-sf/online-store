@@ -7,8 +7,8 @@ import './components/main-section/main-section';
 import './components/main-page/header/header';
 // import './components/modal-window-page/modal-window-page';
 
-import { header, createHeader } from './components/main-page/header/header';
-import { footer, createFooter } from './components/main-page/footer/footer';
+import { createHeader } from './components/main-page/header/header';
+import { createFooter } from './components/main-page/footer/footer';
 // import { createDetailsPage } from './components/details-page/details';
 // import { createProductsSection } from './components/main-section/products-section/products-section';
 import { createPriceDualSlider } from './components/main-section/aside/dual-slider/dual-slider';
@@ -17,8 +17,8 @@ import { createFilterSubСategories, createFilterСategories } from './component
 // import { productsCartBlock, summaryCartBlock } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 
-createHeader(header);
-createFooter(footer);
+createHeader();
+createFooter();
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
