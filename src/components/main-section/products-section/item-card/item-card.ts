@@ -9,7 +9,7 @@ import {
 import { productsData } from '../../../data/data';
 
 // const detailsLink = createElement('a', 'btn__details-link') as HTMLLinkElement;
-const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
+// const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
 
 //----------------CARD
 export function createProductCard(productId: number): HTMLElement {
@@ -38,7 +38,7 @@ export function createProductCard(productId: number): HTMLElement {
 
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
     const cardLink = createElement('a', 'card-link') as HTMLLinkElement;
-    cardLink.href = `#/details${productImage.id}`;
+    // cardLink.href = `#/details${productImage.id}`;
     cardLink.append(buttonDetails);
 
     imageContainer.append(productImage);
