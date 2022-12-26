@@ -16,6 +16,7 @@ export function createProductCard(productId: number): HTMLElement {
         productsData[productId].title,
         'products-image'
     ) as HTMLImageElement;
+    productImage.id = String(productsData[productId].id);
 
     const productTitle = createParagraph(productsData[productId].title, 'products-title') as HTMLParagraphElement; //as HTMLLIElement;
     const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
@@ -29,11 +30,16 @@ export function createProductCard(productId: number): HTMLElement {
 
     const buttonAdd = createButton('в корзину', 'btn__add') as HTMLButtonElement;
     const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
+    buttonDetails.id = productImage.id;
+
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
+    const cardLink = createElement('a', 'card-link') as HTMLLinkElement;
+    cardLink.href = `#/details${productImage.id}`;
+    cardLink.append(buttonDetails);
 
     imageContainer.append(productImage);
     productAvailable.append(productPrice);
-    buttonsItemContainer.append(buttonAdd, buttonDetails);
+    buttonsItemContainer.append(buttonAdd, cardLink);
 
     productsItem.append(productDiscount, imageContainer, productTitle, productAvailable, buttonsItemContainer);
 
