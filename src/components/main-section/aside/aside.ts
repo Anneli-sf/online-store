@@ -1,6 +1,6 @@
 import './aside.scss';
 import { createElement, createButton } from '../../global-components/global-components';
-import { createFilterСategories, createFilterSubСategories } from './filter/filter';
+import { createFilters } from './filter/filter';
 import { createSliders } from './dual-slider/dual-slider';
 
 //------------------ASIDE
@@ -13,6 +13,6 @@ export function createAside(): HTMLElement {
     const buttonCopy = createButton('скопировать ссылку', 'btn-copy') as HTMLButtonElement;
 
     buttonContainer.append(buttonReset, buttonCopy);
-    asideBlock.append(buttonContainer, createFilterСategories(), createFilterSubСategories(), createSliders());
+    asideBlock.append(buttonContainer, createFilters(), createSliders());
     return asideBlock;
 }
