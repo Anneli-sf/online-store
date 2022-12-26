@@ -9,7 +9,11 @@ import './components/modal-window-page/modal-window-page';
 
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
+<<<<<<< HEAD
 import { createDetailsPage } from './components/details-page/details';
+=======
+// import { createDetailsPage } from './components/details-page/details';
+>>>>>>> develop
 // import { createProductsSection } from './components/main-section/products-section/products-section';
 import { createPriceDualSlider } from './components/main-section/aside/dual-slider/dual-slider';
 import { createFilterSubСategories, createFilterСategories } from './components/main-section/aside/filter/filter';
@@ -21,7 +25,10 @@ import { createDetailsBlock } from './components/details-page/product-details/pr
 
 createHeader();
 createFooter();
+<<<<<<< HEAD
 // createProducstPage();
+=======
+>>>>>>> develop
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
