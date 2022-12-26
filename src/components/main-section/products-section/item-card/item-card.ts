@@ -20,6 +20,7 @@ export function createProductCard(productId: number): HTMLElement {
         productsData[productId].title,
         'products-image'
     ) as HTMLImageElement;
+    productImage.id = String(productsData[productId].id);
 
     const productTitle = createParagraph(productsData[productId].title, 'products-title') as HTMLParagraphElement; //as HTMLLIElement;
     const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
@@ -32,22 +33,17 @@ export function createProductCard(productId: number): HTMLElement {
     if (!productsData[productId].discount) productDiscount.style.display = 'none';
 
     const buttonAdd = createButton('в корзину', 'btn__add') as HTMLButtonElement;
-    // const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
-    // const detailsLink = createLink(
-    //     `/#/product/${productsData[productId].id}/specification/${productsData[productId].id}`,
-    //     // `#/product/${productsData[productId].id}`,
-    //     'btn__details-link'
-    // ) as HTMLLinkElement;
-    const detailsLink = createElement('a', 'btn__details-link') as HTMLLinkElement;
-    detailsLink.href = `/#/product/${productsData[productId].id}`;
+    const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
+    buttonDetails.id = productImage.id;
 
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
+    const cardLink = createElement('a', 'card-link') as HTMLLinkElement;
+    cardLink.href = `#/details${productImage.id}`;
+    cardLink.append(buttonDetails);
 
-    detailsLink.append(buttonDetails.cloneNode(true));
     imageContainer.append(productImage);
     productAvailable.append(productPrice);
-    // buttonsItemContainer.append(buttonAdd, buttonDetails);
-    buttonsItemContainer.append(buttonAdd, detailsLink);
+    buttonsItemContainer.append(buttonAdd, cardLink);
 
     productsItem.append(productDiscount, imageContainer, productTitle, productAvailable, buttonsItemContainer);
 

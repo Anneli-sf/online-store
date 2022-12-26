@@ -9,26 +9,19 @@ import './components/modal-window-page/modal-window-page';
 
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
-<<<<<<< HEAD
 import { createDetailsPage } from './components/details-page/details';
-=======
-// import { createDetailsPage } from './components/details-page/details';
->>>>>>> develop
 // import { createProductsSection } from './components/main-section/products-section/products-section';
 import { createPriceDualSlider } from './components/main-section/aside/dual-slider/dual-slider';
 import { createFilterSubСategories, createFilterСategories } from './components/main-section/aside/filter/filter';
 // import { createAside } from './components/main-section/aside/aside';
 import { createCartPage } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
-import { createContainerCard } from './components/modal-window-page/modal-window-page';
-import { createDetailsBlock } from './components/details-page/product-details/product-details';
+import { productsCartBlock } from './components/cart-page/cart-page';
+
+import { productsData } from './components/data/data';
 
 createHeader();
 createFooter();
-<<<<<<< HEAD
-// createProducstPage();
-=======
->>>>>>> develop
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
@@ -39,117 +32,67 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 // mainSection.append(createFilterСategories());
 // mainSection.append(createProducstPage());
 // createProductsSection();
-// mainSection.append(createContainerCard());
 
-//------------------------------------------------
-class Router {
-    routes = [];
+//-----------------------------IDs-------------------------//
+const idArray = productsData.map((item) => item.id);
+//---------------------------------------------------------//
 
-    mode = null;
+//---------------------------ROUTE------------------------//
 
-    root = '/';
+const MainPage = {
+    render: () => {
+        mainSection.innerHTML = '';
+        mainSection.append(createProducstPage());
+    },
+};
 
-    constructor(options) {
-        this.mode = window.history.pushState ? 'history' : 'hash';
-        if (options.mode) this.mode = options.mode;
-        if (options.root) this.root = options.root;
-        this.listen();
-    }
+const Cart = {
+    render: () => {
+        mainSection.innerHTML = '';
+        mainSection.append(productsCartBlock());
+    },
+};
 
-    add = (path, cb) => {
-        this.routes.push({ path, cb });
-        return this;
-    };
-
-    remove = (path) => {
-        for (let i = 0; i < this.routes.length; i += 1) {
-            if (this.routes[i].path === path) {
-                this.routes.slice(i, 1);
-                return this;
+const Details = {
+    render: () => {
+        mainSection.addEventListener('click', (e: Event) => {
+            if (e.target.closest('.btn__details')) {
+                const id = +e.target.id;
+                mainSection.innerHTML = '';
+                mainSection.append(createDetailsPage(id));
             }
-        }
-        return this;
-    };
-
-    flush = () => {
-        this.routes = [];
-        return this;
-    };
-
-    clearSlashes = (path) => path.toString().replace(/\/$/, '').replace(/^\//, '');
-
-    getFragment = () => {
-        let fragment = '';
-        if (this.mode === 'history') {
-            fragment = this.clearSlashes(decodeURI(window.location.pathname + window.location.search));
-            fragment = fragment.replace(/\?(.*)$/, '');
-            fragment = this.root !== '/' ? fragment.replace(this.root, '') : fragment;
-        } else {
-            const match = window.location.href.match(/#(.*)$/);
-            fragment = match ? match[1] : '';
-        }
-        return this.clearSlashes(fragment);
-    };
-
-    navigate = (path = '') => {
-        if (this.mode === 'history') {
-            window.history.pushState(null, null, this.root + this.clearSlashes(path));
-        } else {
-            window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${path}`;
-        }
-        return this;
-    };
-
-    listen = () => {
-        clearInterval(this.interval);
-        this.interval = setInterval(this.interval, 50);
-    };
-
-    interval = () => {
-        if (this.current === this.getFragment()) return;
-        this.current = this.getFragment();
-
-        this.routes.some((route) => {
-            const match = this.current.match(route.path);
-            if (match) {
-                match.shift();
-                route.cb.apply({}, match);
-                return match;
-            }
-            return false;
         });
-    };
+    },
+};
+
+const ErrorComponent = {
+    render: () => {
+        mainSection.innerHTML = '';
+        mainSection.innerHTML = 'Error';
+    },
+};
+
+const routes = [
+    { path: '/', component: MainPage },
+    { path: '/cart', component: Cart },
+];
+
+for (let i = 0; i < 40; i++) {
+    routes.push({ path: `/details${i}`, component: Details });
 }
 
-const router = new Router({
-    mode: 'hash',
-    root: '/',
-});
+const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
+const findComponentByPath = (path, routes) =>
+    routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 
-router
-    .add(/home/, () => {
-        // alert('welcome in about page');
-        mainSection.innerHTML = ``;
-        mainSection.append(createProducstPage());
-    })
-    .add(/cart/, () => {
-        // alert('welcome in about page');
-        mainSection.innerHTML = ``;
-        mainSection.append(createCartPage());
-    })
-    // .add(/products\/(.*)\/specification\/(.*)/, (id, specification) => {
-    //     alert(`products: ${id} specification: ${specification}`);
-    // })
-    .add(/product-details\/(.*)/, (id) => {
-        mainSection.innerHTML = ``;
-        mainSection.append(createDetailsPage(id));
-    })
-    .add('', () => {
-        // general controller
-        console.log('welcome in catch all controller');
-    });
+const router = () => {
+    const path = parseLocation();
+    const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
 
-// window.addEventListener('click', (e) => {
-//     console.log(e.target);
-// });
+    component.render();
+};
 
+window.addEventListener('hashchange', router);
+window.addEventListener('load', router);
+
+//--------------------------------------------------------//
