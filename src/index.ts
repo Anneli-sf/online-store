@@ -18,6 +18,8 @@ import { createFilterSubСategories, createFilterСategories } from './component
 import { createProducstPage } from './components/main-section/main-section';
 import { productsCartBlock } from './components/cart-page/cart-page';
 
+import { productsData } from './components/data/data';
+
 createHeader();
 createFooter();
 
@@ -30,6 +32,10 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 // mainSection.append(createFilterСategories());
 // mainSection.append(createProducstPage());
 // createProductsSection();
+
+//-----------------------------IDs-------------------------//
+const idArray = productsData.map((item) => item.id);
+//---------------------------------------------------------//
 
 //---------------------------ROUTE------------------------//
 
