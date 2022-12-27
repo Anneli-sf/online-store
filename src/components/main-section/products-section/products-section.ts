@@ -55,7 +55,6 @@ function createProductsList(arr: IProductsData[]): HTMLUListElement {
     console.log('arr', arr);
     arr.forEach((item) => {
         productsList.append(createProductCard(item.id));
-        console.log('item.id', item.id);
     });
     return productsList;
 }
