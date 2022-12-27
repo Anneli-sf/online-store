@@ -3,13 +3,13 @@
 .rs-logo {
     cursor: pointer;
     position: relative;
-    filter: invert(1);
     width: 100px;
     height: 43px;
     &::after {
         position: absolute;
         content: url('../../../public/icons/rsschool.svg');
-        width: 100px;
+        width: 80px;
+        top: 10%;
     }
 }
 
@@ -19,18 +19,18 @@
     top: -15px;
     transform: scale(.8);
     &::before {
-        color: white;
+        color: black;
         position: absolute;
         content: 'Anneli';
         top: 30px;
-        left: 8px;
+        left: 2px;
         font-size: 18px;
     }
     &::after {
         position: absolute;
         content: url('../../../public/icons/github.svg');
-        top: -20px;
-        width: 50px;
+        top: -10px;
+        width: 40px;
     }
 }
 
@@ -40,7 +40,7 @@
     top: -15px;
     transform: scale(.8);
     &::before {
-        color: white;
+        color: black;
         position: absolute;
         content: 'Alex';
         top: 30px;
@@ -50,7 +50,13 @@
     &::after {
         position: absolute;
         content: url('../../../public/icons/github.svg');
-        top: -20px;
-        width: 50px;
+        top: -10px;
+        width: 40px;
+    }
+}
+
+.footer {
+    .logo {
+        width: 120px;
     }
 }
