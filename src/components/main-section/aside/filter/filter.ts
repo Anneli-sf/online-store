@@ -1,36 +1,31 @@
 import './filter.scss';
 import { createElement, createLabel, createSimpleInput } from '../../../global-components/global-components';
-import { subCategoriesList, categoriesList, categoriesNames, subCategoriesNames } from './filter.constants';
-import { productsData } from '../../../data/data';
+import { subCategoriesList, categoriesList, categoriesEngNames, subcategoriesEngNames } from './filter.constants';
+import { IProductsData, productsData } from '../../../data/data';
 
-const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
-
-export function createFilters(): HTMLDivElement {
+export function createFilters(currentArr: IProductsData[]): HTMLDivElement {
     const filters = createElement('div', 'filters') as HTMLDivElement;
-    filters.append(createFilterСategories(), createFilterSubСategories());
+    filters.append(createFilterСategories(currentArr), createFilterSubСategories(currentArr));
     return filters;
 }
 
 //------------------categories
-function createFilterСategories(): HTMLDivElement {
+function createFilterСategories(currentArr: IProductsData[]): HTMLDivElement {
     const filterCategory = createElement('div', 'filter__category') as HTMLDivElement;
     const filterCategoryHeader = createElement('h3', 'filter-category-title') as HTMLHeadingElement;
     const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
 
     filterCategoryHeader.textContent = 'Категории';
-    checkbox.classList.add('category-checkbox');
-
-    setTypeCheckBox('.category-input');
 
     filterCategory.append(
         filterCategoryHeader,
         createCategoryFormLabel(
+            currentArr,
             categoryForm,
             categoriesList,
-            categoriesNames,
+            categoriesEngNames,
             'category-label',
-            'category-input',
-            categoriesList
+            'category-input'
         )
     );
 
@@ -39,25 +34,22 @@ function createFilterСategories(): HTMLDivElement {
 }
 
 //------------------subcategories
-function createFilterSubСategories(): HTMLDivElement {
+function createFilterSubСategories(currentArr: IProductsData[]): HTMLDivElement {
     const filterSubcategory = createElement('div', 'filter__subcategory') as HTMLDivElement;
     const filterSubcategoryHeader = createElement('h3', 'filter-subcategory-title') as HTMLHeadingElement;
     const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;
 
     filterSubcategoryHeader.textContent = 'Подкатегории';
-    checkbox.classList.add('subcategory-checkbox');
-
-    setTypeCheckBox('.subcategory-input');
 
     filterSubcategory.append(
         filterSubcategoryHeader,
         createCategoryFormLabel(
+            currentArr,
             subcategoryForm,
             subCategoriesList,
-            subCategoriesNames,
+            subcategoriesEngNames,
             'subcategory-label',
-            'subcategory-input',
-            subCategoriesList
+            'subcategory-input'
         )
     );
 
@@ -71,45 +63,44 @@ function createFilterSubСategories(): HTMLDivElement {
 //----------------------------------------HELPERS
 //---------------------------------------create FORM
 function createCategoryFormLabel(
+    currentArr: IProductsData[],
     formEl: HTMLFormElement,
-    arr: string[],
-    arrId: string,
+    arrCategoriesNames: string[],
+    arrEngNames: string[],
     labelClass: string,
-    inputClass: string,
-    list: Array<string>
+    inputClass: string
 ): HTMLFormElement {
-    for (let i = 0; i < arr.length; i++) {
-        const categoryFormLabel = createLabel(arr[i], labelClass) as HTMLLabelElement;
-        const categoryFormInput = createElement('input', inputClass) as HTMLInputElement;
-        categoryFormLabel.innerText = arr[i];
-        categoryFormInput.id = arrId[i];
+    for (let i = 0; i < arrCategoriesNames.length; i++) {
+        const categoryFormLabel = createLabel(arrCategoriesNames[i], labelClass) as HTMLLabelElement;
+        const categoryFormInput = createSimpleInput(inputClass, 'checkbox') as HTMLInputElement;
+        categoryFormInput.id = arrEngNames[i];
 
         const currentAmount = createSimpleInput('amount-input-current', 'number', '', '') as HTMLInputElement;
         currentAmount.readOnly = true;
-        switch (list) {
+        switch (arrCategoriesNames) {
             case categoriesList:
-                currentAmount.value = productsData
-                    .filter((item) => item.category === list[i])
+                currentAmount.value = currentArr //productsData
+                    .filter((item) => item.category === arrCategoriesNames[i])
                     .reduce((acc, curr) => acc + curr.stock, 0);
                 break;
             case subCategoriesList:
-                currentAmount.value = productsData
-                    .filter((item) => item.subcategory === list[i])
+                currentAmount.value = currentArr //productsData
+                    .filter((item) => item.subcategory === arrCategoriesNames[i])
                     .reduce((acc, curr) => acc + curr.stock, 0);
                 break;
         }
 
         const totalAmount = createSimpleInput('amount-input-total', 'number', '', '') as HTMLInputElement;
         totalAmount.readOnly = true;
-        switch (list) {
+        switch (arrCategoriesNames) {
             case categoriesList:
                 totalAmount.value = productsData
-                    .filter((item) => item.category === list[i])
+                    .filter((item) => item.category === arrCategoriesNames[i])
                     .reduce((acc, curr) => acc + curr.stock, 0);
                 break;
             case subCategoriesList:
                 totalAmount.value = productsData
-                    .filter((item) => item.subcategory === list[i])
+                    .filter((item) => item.subcategory === arrCategoriesNames[i])
                     .reduce((acc, curr) => acc + curr.stock, 0);
                 break;
         }
@@ -117,9 +108,8 @@ function createCategoryFormLabel(
         const amountBlock = createElement('div', 'amount-block') as HTMLDivElement;
         amountBlock.append(currentAmount, '/', totalAmount);
 
-        checkbox.id = `${arrId[i]}-input`;
-        categoryFormLabel.append(categoryFormInput, amountBlock); //
-        categoryFormLabel.prepend(checkbox.cloneNode(true));
+        categoryFormLabel.append(amountBlock);
+        categoryFormLabel.prepend(categoryFormInput);
 
         formEl.append(categoryFormLabel);
     }
@@ -128,18 +118,12 @@ function createCategoryFormLabel(
 
 //-------------------------------toggle inputs at filters
 
-const toggleFilterInput = (e: Event, checkboxClass: string, inputClass: string) => {
-    if (e.target instanceof Element && e.target.className === checkboxClass) {
-        const currCheckBox = e.target as HTMLElement;
-        currCheckBox.classList.toggle('checked');
-    } else if (e.target instanceof Element && e.target.closest(inputClass)) {
-        const currCheckBox = e.target.previousElementSibling as HTMLElement;
-        currCheckBox.classList.toggle('checked');
-    }
-};
-
-const setTypeCheckBox = (elClass: string): void => {
-    document.querySelectorAll(elClass).forEach((item) => {
-        item.setAttribute('type', 'checkbox');
-    });
-};
+// const toggleFilterInput = (e: Event, checkboxClass: string, inputClass: string) => {
+//     if (e.target instanceof Element && e.target.className === checkboxClass) {
+//         const currCheckBox = e.target as HTMLElement;
+//         currCheckBox.classList.toggle('checked');
+//     } else if (e.target instanceof Element && e.target.closest(inputClass)) {
+//         const currCheckBox = e.target.previousElementSibling as HTMLElement;
+//         currCheckBox.classList.toggle('checked');
+//     }
+// };

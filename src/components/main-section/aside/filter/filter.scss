@@ -12,11 +12,6 @@
     }
 }
 
-.category-input,
-.subcategory-input {
-    width: 0px;
-}
-
 .filter-category-title,
 .filter-subcategory-title {
     background-color: transparent;
@@ -74,8 +69,10 @@
 .subcategory-input {
     cursor: pointer;
     position: relative;
-    z-index: 2;
-    opacity: 0;
+    // z-index: 2;
+    // opacity: 0;
+    // width: 0px;
+    
 }
 
 .amount-block {
@@ -108,8 +105,8 @@
     left: 0px;
     width: 15px;
     height: 15px;
-
-    &.checked {
+    
+    &:checked {
         &::after {
             position: absolute;
             content: url('../../../../public/icons/check.svg');
@@ -118,4 +115,5 @@
             right: 7px;
         }
     }
+    
 }
