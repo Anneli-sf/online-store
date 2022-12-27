@@ -1,6 +1,7 @@
 import './filter.scss';
 import { createElement, createLabel, createSimpleInput } from '../../../global-components/global-components';
 import { subCategoriesList, categoriesList } from './filter.constants';
+import { productsData } from '../../../data/data';
 
 const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
 
@@ -23,7 +24,7 @@ function createFilterСategories(): HTMLDivElement {
 
     filterCategory.append(
         filterCategoryHeader,
-        createCategoryFormLabel(categoryForm, categoriesList, 'category-label', 'category-input')
+        createCategoryFormLabel(categoryForm, categoriesList, 'category-label', 'category-input', categoriesList)
     );
 
     categoryForm.addEventListener('click', (e) => toggleFilterInput(e, 'category-checkbox', '.category-input'));
@@ -43,7 +44,13 @@ function createFilterSubСategories(): HTMLDivElement {
 
     filterSubcategory.append(
         filterSubcategoryHeader,
-        createCategoryFormLabel(subcategoryForm, subCategoriesList, 'subcategory-label', 'subcategory-input')
+        createCategoryFormLabel(
+            subcategoryForm,
+            subCategoriesList,
+            'subcategory-label',
+            'subcategory-input',
+            subCategoriesList
+        )
     );
 
     subcategoryForm.addEventListener('click', (e) =>
@@ -59,13 +66,48 @@ function createCategoryFormLabel(
     formEl: HTMLFormElement,
     arr: string[],
     labelClass: string,
-    inputClass: string
+    inputClass: string,
+    list: Array<string>
 ): HTMLFormElement {
     for (let i = 0; i < arr.length; i++) {
         const categoryFormLabel = createLabel(arr[i], labelClass) as HTMLLabelElement;
         const categoryFormInput = createElement('input', inputClass) as HTMLInputElement;
         categoryFormLabel.innerText = arr[i];
-        categoryFormLabel.append(categoryFormInput, createAmountBox());
+
+        const currentAmount = createSimpleInput('amount-input-current', 'number', '', '') as HTMLInputElement;
+        currentAmount.readOnly = true;
+        switch (list) {
+            case categoriesList:
+                currentAmount.value = productsData
+                    .filter((item) => item.category === list[i])
+                    .reduce((acc, curr) => acc + curr.stock, 0);
+                break;
+            case subCategoriesList:
+                currentAmount.value = productsData
+                    .filter((item) => item.subcategory === list[i])
+                    .reduce((acc, curr) => acc + curr.stock, 0);
+                break;
+        }
+
+        const totalAmount = createSimpleInput('amount-input-total', 'number', '', '') as HTMLInputElement;
+        totalAmount.readOnly = true;
+        switch (list) {
+            case categoriesList:
+                totalAmount.value = productsData
+                    .filter((item) => item.category === list[i])
+                    .reduce((acc, curr) => acc + curr.stock, 0);
+                break;
+            case subCategoriesList:
+                totalAmount.value = productsData
+                    .filter((item) => item.subcategory === list[i])
+                    .reduce((acc, curr) => acc + curr.stock, 0);
+                break;
+        }
+
+        const amountBlock = createElement('div', 'amount-block') as HTMLDivElement;
+        amountBlock.append(currentAmount, '/', totalAmount);
+
+        categoryFormLabel.append(categoryFormInput, amountBlock);
         categoryFormLabel.prepend(checkbox.cloneNode(true));
         formEl.append(categoryFormLabel);
     }
@@ -90,13 +132,4 @@ const setTypeCheckBox = (elClass: string): void => {
     });
 };
 
-const createAmountBox = (): HTMLDivElement => {
-    const currentAmount = createSimpleInput('amount-input', 'number', '', '0') as HTMLInputElement;
-    const totalAmount = createSimpleInput('amount-input', 'number', '', '0') as HTMLInputElement;
-    currentAmount.readOnly = true;
-    totalAmount.readOnly = true;
-    const amountBlock = createElement('div', 'amount-block') as HTMLDivElement;
-    amountBlock.append(currentAmount, '/', totalAmount);
-
-    return amountBlock;
-};
+// productsData.filter((item) => item.category === categoriesList[0]).reduce((acc, curr) => acc + curr.stock, 0);

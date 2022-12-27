@@ -13,6 +13,10 @@
     }
 }
 
+.category-input,
+.subcategory-input {
+    width: 0px;
+}
 
 .filter-category-title,
 .filter-subcategory-title {
@@ -81,8 +85,9 @@
     flex-wrap: nowrap;
     
 
-    .amount-input {
-        width: 15px;
+    .amount-input-current,
+    .amount-input-total {
+        width: 25px;
         height: 15px;
         border: 1px solid white;
         font-size: inherit;
