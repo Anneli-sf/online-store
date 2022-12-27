@@ -1,6 +1,7 @@
 import './products-section.scss';
 import { createElement, createImage, createInput, createParagraph } from '../../global-components/global-components';
 import { createProductCard } from './item-card/item-card';
+import { productsData } from '../../data/data';
 
 const sortArrow = createImage('./assets/icons/arrow-down.svg', 'sort-arrow', 'sort-arrow') as HTMLImageElement;
 const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
@@ -51,11 +52,9 @@ function createProductsHeader() {
 //----------------------products list
 function createProductsList(): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
-    let i = 0;
-    while (i < 40) {
-        productsList.append(createProductCard(i));
-        i++;
-    }
+    productsData.forEach((item) => {
+        productsList.append(createProductCard(item.id));
+    });
     return productsList;
 }
 
