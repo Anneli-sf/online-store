@@ -3,18 +3,18 @@
     .filter {
         &__price,
         &__amount {
-            border: 1px solid white;
             width: 100%;
-            margin-bottom: 20px;
         }
     }
 }
 
 .filter-amount-title,
 .filter-price-title {
-    background-color: white;
-    color: black;
+    background-color: transparent;
+    color: white;
+    border-bottom: 1px solid white;
     padding: 5px;
+    text-align: center;
 }
 
 .checkbox {
@@ -24,7 +24,6 @@
     right: 0px;
     width: 15px;
     height: 15px;
-    border: 1px solid white;
 }
 
 .range-container-price,
@@ -38,15 +37,18 @@
 .slider-control-amount {
     position: relative;
     min-height: 50px;
+    display: flex;
+    justify-content: center;
 }
 
 .form-control-price,
 .form-control-amount {
     position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     font-size: 24px;
+    top: -30px;
     color: white;
 }
 
@@ -86,7 +88,7 @@ input[type='range']::-webkit-slider-thumb:active {
 }
 
 input[type='number'] {
-    color: black;
+    color: white;
     text-align: center;
     width: 50px;
     height: 30px;
@@ -103,11 +105,18 @@ input[type='number']::-webkit-outer-spin-button {
 
 input[type='range'] {
     -webkit-appearance: none;
-    width: 100%;
+    width: 80%;
     appearance: none;
     height: 2px;
     position: absolute;
     top: 25%;
     background-color: #c6c6c6;
     pointer-events: none;
+}
+
+.form_control_container__time__input_max-price,
+.form_control_container__time__input_min-amount,
+.form_control_container__time__input_min-price,
+.form_control_container__time__input_max-amount {
+    background-color: transparent;
 }

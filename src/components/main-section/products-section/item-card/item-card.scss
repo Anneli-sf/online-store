@@ -2,7 +2,8 @@
 
 .products-available {
     position: absolute;
-    top: 62%;
+    top: 65%;
+    left: 0px;
     width: 100%;
     text-align: center;
     background-color: oldlace;
@@ -31,4 +32,8 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
+}
+
+.products-title {
+    padding: 20px 0px;
 }

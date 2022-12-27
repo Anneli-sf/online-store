@@ -34,7 +34,8 @@ function createDualSlider(
         '',
         fromSliderValue,
         '0',
-        '100'
+        '100',
+        true
     ) as HTMLInputElement;
 
     const toInput = createSimpleInput(
@@ -43,7 +44,8 @@ function createDualSlider(
         '',
         toSliderValue,
         '0',
-        '100'
+        '100',
+        true
     ) as HTMLInputElement;
 
     const filter = createElement('div', `filter__${classId}`) as HTMLDivElement;
@@ -57,8 +59,6 @@ function createDualSlider(
     const formControlMaxTime = createElement('div', `form-control-container__time-${classId}`) as HTMLDivElement;
     const range = createElement('div', `range-container-${classId}`) as HTMLDivElement;
 
-    formControlMinTime.textContent = 'Min';
-    formControlMaxTime.textContent = 'Max';
     formControlMin.append(formControlMinTime, fromInput);
     formControlMax.append(formControlMaxTime, toInput);
 

@@ -3,6 +3,7 @@ export interface IProductsData {
     category: string;
     categoryEng: string;
     subcategory: string;
+    subcategoryEng: string;
     title: string;
     description: string;
     price: number;
@@ -15,8 +16,9 @@ export const productsData: IProductsData[] = [
     {
         id: 0,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Отрицательные существа',
+        subcategoryEng: 'negative-animals',
         title: 'Василиск',
         description:
             'Огромный змей, известный также как «король змей», живущий не одну сотню лет. Очень сильное магическое животное.',
@@ -29,8 +31,9 @@ export const productsData: IProductsData[] = [
     {
         id: 1,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Оружие',
+        subcategoryEng: 'weapon',
         title: 'Меч Гриффиндора',
         description:
             'Магический предмет исключительной силы. Это одноручный меч (34 дюйма), созданный из чистого серебра, и достаточно лёгкий, чтобы его мог поднять даже подросток. Рукоять меча отделана рубинами, на лезвии клинка видна гравировка «Годрик Гриффиндор».',
@@ -48,6 +51,7 @@ export const productsData: IProductsData[] = [
         category: 'Одежда и аксессуары',
         categoryEng: 'clothes-accessories',
         subcategory: 'Одежда',
+        subcategoryEng: 'clothes',
         title: 'Мантия-невидимка',
         description:
             'Волшебная мантия из очень лёгкой «серебристой» ткани, делающая невидимым того, кто её надевает. Обычные мантии-невидимки служат очень недолго и их производство очень дорогостоящее. У Гарри была особая мантия-невидимка, так как являлась одним из трех Даров Смерти.',
@@ -65,6 +69,7 @@ export const productsData: IProductsData[] = [
         category: 'Одежда и аксессуары',
         categoryEng: 'clothes-accessories',
         subcategory: 'Аксессуары',
+        subcategoryEng: 'accessories',
         title: 'Кулон Дары Смерти',
         description:
             'Символизирует легендарные Дары Смерти. Треугольник означает Мантию-невидимку, круг означает Воскрешающий камень, а линия означает Бузинную палочку. Позже этот знак присвоил себе Геллерт Грин-де-Вальд, сделав этот древний символ знаком своих преступлений.',
@@ -82,6 +87,7 @@ export const productsData: IProductsData[] = [
         category: 'Одежда и аксессуары',
         categoryEng: 'clothes-accessories',
         subcategory: 'Аксессуары',
+        subcategoryEng: 'accessories',
         title: 'Маховик времени',
         description:
             'Волшебный предмет, позволяющий вернуться в недалёкое прошлое. Выглядит как песочные часы, посаженные на ось, которая в свою очередь крепится на длинной золотой цепочке. Маховик времени не может вносить кардинальных изменений в ход событий. Так, например, маховик не может вернуть жизнь убитому человеку.',
@@ -94,8 +100,9 @@ export const productsData: IProductsData[] = [
     {
         id: 5,
         category: 'Спорт',
-        categoryEng: '',
+        categoryEng: 'sport',
         subcategory: 'Летающие предметы',
+        subcategoryEng: 'flying-objects',
         title: 'Золотой снитч',
         description:
             'В современном квиддиче это маленький золотистый шарик с серебряными крылышками, летающий самостоятельно и произвольно над полем. Золотой снитч имеет размер грецкого ореха и заколдован избегать поимки как можно дольше. Из-за малых размеров и невероятной скорости за ним почти невозможно уследить.',
@@ -108,8 +115,9 @@ export const productsData: IProductsData[] = [
     {
         id: 6,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Камни',
+        subcategoryEng: 'stones',
         title: 'Философский камень',
         description:
             'Легендарное вещество, наделённое удивительными силами. По легенде, камень мог превратить любой металл в чистое золото. С его помощью также можно было приготовить эликсир жизни, который делал бессмертным того, кто выпьет этот эликсир.',
@@ -127,6 +135,7 @@ export const productsData: IProductsData[] = [
         category: 'Одежда и аксессуары',
         categoryEng: 'clothes-accessories',
         subcategory: 'Одежда',
+        subcategoryEng: 'clothes',
         title: 'Распределяющая шляпа',
         description:
             'Шляпа, сорванная со своей головы Годриком Гриффиндоромпри основании школы чародейства и волшебства «Хогвартс». Эта шляпа, по замыслу основателей, должна распределять учеников по 4 факультетам в соответствии с их способностями и склонностями.',
@@ -142,8 +151,9 @@ export const productsData: IProductsData[] = [
     {
         id: 8,
         category: 'Спорт',
-        categoryEng: '',
+        categoryEng: 'sport',
         subcategory: 'Предметы интерьера',
+        subcategoryEng: 'interior-items',
         title: 'Кубок огня',
         description:
             'Волшебный артефакт, обладающий особой магической силой. Назначение этого предмета — избирать из претендентов наилучшего представителя школы для участия в Турнире Трёх Волшебников.',
@@ -158,6 +168,7 @@ export const productsData: IProductsData[] = [
         category: 'Одежда и аксессуары',
         categoryEng: 'clothes-accessories',
         subcategory: 'Аксессуары',
+        subcategoryEng: 'accessories',
         title: "Крестраж 'Медальон Слизерина'",
         description:
             'Древняя реликвия, принадлежащая Салазару Слизерину, наделяет хозяина магнетическим обаянием и умением распознавать психологию других людей. Раскрывается. Внутри можно хранить фотографию или собственный талисман.',
@@ -173,8 +184,9 @@ export const productsData: IProductsData[] = [
     {
         id: 10,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Волшебные палочки',
+        subcategoryEng: 'magic-wands',
         title: 'Палочка Волан-де-Морта',
         description:
             'Палочка сделана из бузины, с сердцевиной из волоса хвоста фестрала. Родная сестра тисовой палочки Гарри Поттера.',
@@ -190,8 +202,9 @@ export const productsData: IProductsData[] = [
     {
         id: 11,
         category: 'Зелья',
-        categoryEng: '',
+        categoryEng: 'potions',
         subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Сыворотка правды',
         description:
             'Жидкость без цвета и запаха, заставляющая выпившего отвечать правдиво на все заданные вопросы. Очевидно, выпивший не может даже просто о чём-то умолчать. Но опытные маги могут избежать ее воздействия с помощью антидотов и заклинаний.',
@@ -207,8 +220,9 @@ export const productsData: IProductsData[] = [
     {
         id: 12,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Предметы интерьера',
+        subcategoryEng: 'interior-items',
         title: 'Зеркало Еиналеж',
         description:
             'Магическое зеркало. Главную волшебную особенность зеркала Еиналеж можно отследить, прочитав надпись на раме: зеркало не отражает внешний облик человека, а показывает его самые сокровенные желания. Многие волшебники считают, что счастливый человек в зеркале увидит только свое отражение, так как у него все есть, а значит, ему не о чем мечтать.',
@@ -221,8 +235,9 @@ export const productsData: IProductsData[] = [
     {
         id: 13,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Волшебные палочки',
+        subcategoryEng: 'magic-wands',
         title: 'Бузинная палочка',
         description:
             'Самая могущественная волшебная палочка из всех, принадлежала: Драко Малфою, Гарри Поттеру, Альбусу Дамблдору, Геллерту Грин-де-Вальду',
@@ -238,8 +253,9 @@ export const productsData: IProductsData[] = [
     {
         id: 14,
         category: 'Спорт',
-        categoryEng: '',
+        categoryEng: 'sport',
         subcategory: 'Предметы интерьера',
+        subcategoryEng: 'interior-items',
         title: 'Волшебные шахматы',
         description:
             'Отличаются от обычных магловских тем, что фигурки в них живые. Они не только сами ходят на указанные клетки, не только бьют друг друга в прямом смысле этого слова, но и нередко дают играющему советы.',
@@ -255,8 +271,9 @@ export const productsData: IProductsData[] = [
     {
         id: 15,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-itemsmagic-items',
         subcategory: 'Камни',
+        subcategoryEng: 'stones',
         title: 'Воскрешающий камень',
         description:
             'Легендарный артефакт, который сама Смерть подарила Кадму Певереллу в ответ на его просьбу дать ему средство, способное вернуть жертвы Смерти в мир живых.',
@@ -272,8 +289,9 @@ export const productsData: IProductsData[] = [
     {
         id: 16,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Книжные товары',
+        subcategoryEng: 'books',
         title: 'Дневник Тома Реддла',
         description:
             'Изначально обычный ежедневник на 1943 год, купленный Томом Реддлом в магловском магазине канцтоваров на Воксхолл-Роуд в Лондоне.',
@@ -289,8 +307,9 @@ export const productsData: IProductsData[] = [
     {
         id: 17,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Предметы интерьера',
+        subcategoryEng: 'interior-items',
         title: 'Семейные часы Уизли',
         description:
             'Большие часы семьи Уизли, на которых вместо времени указывается местонахождение каждого члена семьи. Вместо цифр на циферблате расположены указатели «дом», «больница», «работа», «в пути», «школа»...',
@@ -303,8 +322,9 @@ export const productsData: IProductsData[] = [
     {
         id: 18,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Аксессуары',
+        subcategoryEng: 'accessories',
         title: 'Делюминатор',
         description:
             'Изобретённый Альбусом Дамлбдором предмет, уникальный в своем роде. Используется для того, чтобы «вытянуть» свет из помещения или из уличных фонарей.',
@@ -317,8 +337,9 @@ export const productsData: IProductsData[] = [
     {
         id: 19,
         category: 'Спорт',
-        categoryEng: '',
+        categoryEng: 'sport',
         subcategory: 'Летающие предметы',
+        subcategoryEng: 'flying-objects',
         title: 'Нимбус 2000',
         description:
             'Метла компании Скоростные мётлы Нимбус. Выпущена в августе 1991 года, и в то время была самой скоростной метлой в производстве.',
@@ -331,8 +352,9 @@ export const productsData: IProductsData[] = [
     {
         id: 20,
         category: 'Транспорт',
-        categoryEng: '',
+        categoryEng: 'transport',
         subcategory: 'Летающие предметы',
+        subcategoryEng: 'flying-objects',
         title: 'Летающий автомобиль',
         description: 'Летающая машина, которая принадлежала Артуру Уизли.',
         price: 5000,
@@ -344,8 +366,9 @@ export const productsData: IProductsData[] = [
     {
         id: 21,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Книжные товары',
+        subcategoryEng: 'books',
         title: 'Карта мародера',
         description:
             'Особая карта, показывающая весь замок Хогвартс и его ближайшие окрестности, а также местоположение любого человека в Хогвартсе, где бы тот ни находился, даже если он прячется под мантией-невидимкой.',
@@ -357,9 +380,10 @@ export const productsData: IProductsData[] = [
     },
     {
         id: 22,
-        category: 'зелье',
-        categoryEng: '',
+        category: 'зелья',
+        categoryEng: 'potions',
         subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Амортеция',
         description:
             'Очень мощное приворотное зелье. Однако, по словам профессора Слизнорта, создать любовь невозможно, так что Амортенция создаёт лишь безумное, непреодолимое влечение к тому, кто сварил зелье.',
@@ -372,8 +396,9 @@ export const productsData: IProductsData[] = [
     {
         id: 23,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Отрицательные существа',
+        subcategoryEng: 'negative-animals',
         title: 'Чупакабра',
         description:
             'Волшебное существо, наполовину ящерица, наполовину человекоподобное животное, обитающее в обеих Америках. Питается кровью.',
@@ -386,8 +411,9 @@ export const productsData: IProductsData[] = [
     {
         id: 24,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Отрицательные существа',
+        subcategoryEng: 'negative-animals',
         title: 'Дементор',
         description: 'Слепые существа, которые питаются человеческими, преимущественно светлыми, эмоциями.',
         price: 400,
@@ -399,8 +425,9 @@ export const productsData: IProductsData[] = [
     {
         id: 25,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Положительные существа',
+        subcategoryEng: 'positive-animals',
         title: 'Добби',
         description:
             'Домашний эльф, служивший семье Малфоев. Его хозяева были Тёмными магами и жестоко с ним обращались.',
@@ -413,8 +440,9 @@ export const productsData: IProductsData[] = [
     {
         id: 26,
         category: 'Зелья',
-        categoryEng: '',
+        categoryEng: 'potions',
         subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Эликсир из мандрагоры',
         description: 'Зелье, которое, по всей видимости, включает в свой состав растение мандрагору.',
         price: 23,
@@ -429,8 +457,9 @@ export const productsData: IProductsData[] = [
     {
         id: 27,
         category: 'Зелья',
-        categoryEng: '',
+        categoryEng: 'potions',
         subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Эликсир жизни',
         description:
             'Зелье, для приготовления которого нужен уникальный артефакт — философский камень. Камень создал Николас Фламель; он и является единственным, кто сумел сварить этот эликсир. Зелье гарантирует бессмертие.',
@@ -443,8 +472,9 @@ export const productsData: IProductsData[] = [
     {
         id: 28,
         category: 'Транспорт',
-        categoryEng: '',
+        categoryEng: 'transport',
         subcategory: 'Летающие предметы',
+        subcategoryEng: 'flying-objects',
         title: 'Хогвартс-экспресс',
         description:
             'Специальный поезд, влекомый алым паровозом, предназначенный для доставки студентов Хогвартса к месту учёбы и обратно. Иногда «Хогвартс-экспресс» доставляет к месту работы новых преподавателей.',
@@ -457,8 +487,9 @@ export const productsData: IProductsData[] = [
     {
         id: 29,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Положительные существа',
+        subcategoryEng: 'positive-animals',
         title: 'Феникс',
         description:
             'Великолепная алая птица величиной с лебедя, с длинным золотым хвостом, золотыми когтями и клювом. Гнездится на горных скалах, обитает в Египте, Индии и Китае. Феникс живет невероятно долго, поскольку способен регенерировать.',
@@ -471,8 +502,9 @@ export const productsData: IProductsData[] = [
     {
         id: 30,
         category: 'Зелья',
-        categoryEng: '',
+        categoryEng: 'potions',
         subcategory: 'Отрицательные существа',
+        subcategoryEng: 'negative-animals',
         title: 'Гербицид',
         description:
             'Зелье, которое способно уничтожать или повреждать растения. Имеет отвратительный вкус, непригодно для употребления человеком, так как может ухудшить его здоровье.',
@@ -485,8 +517,9 @@ export const productsData: IProductsData[] = [
     {
         id: 31,
         category: 'Зелья',
-        categoryEng: '',
+        categoryEng: 'potions',
         subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Костерост',
         description:
             'Зелье-лекарство, заставляющее расти заново исчезнувшие кости, либо просто ускоряющее рост костей. Возможно, используется для сращивания переломов. Очень неприятно на вкус.',
@@ -499,8 +532,9 @@ export const productsData: IProductsData[] = [
     {
         id: 32,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Отрицательные существа',
+        subcategoryEng: 'negative-animals',
         title: 'Мантикора',
         description:
             'Очень опасное животное с головой человека, телом льва и хвостом скорпиона, обитающее в Греции. Своей свирепостью мантикора не уступает химере и так же редко встречается. Говорят, пожирая свою жертву, она тихо и сладко поет.',
@@ -513,8 +547,9 @@ export const productsData: IProductsData[] = [
     {
         id: 33,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Волшебные палочки',
+        subcategoryEng: 'magic-wands',
         title: 'Палочка Уизли',
         description:
             'Она досталась ему «по наследству» от брата Чарли. Мальчику надо было идти в Хогвартс, а денег у родителей, видимо, было в обрез. Вот и экономили на чём только можно.',
@@ -530,8 +565,9 @@ export const productsData: IProductsData[] = [
     {
         id: 34,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Волшебные палочки',
+        subcategoryEng: 'magic-wands',
         title: 'Палочка Малфоя',
         description:
             'Сделана из боярышника, с волосом единорога внутри и имеет в длину ровно 10 дюймов. Она была куплена в магазине Олливандера 31 июля 1991 года',
@@ -547,8 +583,9 @@ export const productsData: IProductsData[] = [
     {
         id: 35,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Положительные существа',
+        subcategoryEng: 'positive-animals',
         title: 'Карликовый пушистик',
         description:
             'Этот безобидный зверек встречается по всему миру. Туловище его шарообразной формы и покрыто мягким, пушистым мехом кремового цвета. Пушистик неприхотлив, не возражает, если его гладят или подбрасывают; когда особенно доволен, тихонько урчит.',
@@ -561,8 +598,9 @@ export const productsData: IProductsData[] = [
     {
         id: 36,
         category: 'Магические существа',
-        categoryEng: '',
+        categoryEng: 'magical-animals',
         subcategory: 'Положительные существа',
+        subcategoryEng: 'positive-animals',
         title: 'Саламандра',
         description:
             'Небольшая ящерица, живёт в огне и им питается. Шкура саламандры имеет ослепительно-белый цвет, однако может казаться синей или алой в зависимости от температуры пламени, в котором она рождается.',
@@ -575,8 +613,9 @@ export const productsData: IProductsData[] = [
     {
         id: 37,
         category: 'Магические предметы',
-        categoryEng: '',
+        categoryEng: 'magic-items',
         subcategory: 'Предметы интерьера',
+        subcategoryEng: 'interior-items',
         title: 'Исчезательный шкаф',
         description:
             'Исчезательные шкафы всегда делались парами: два шкафа, связанные между собой стояли в двух местах (например, в двух разных домах) и служили своеобразным «чёрным ходом», путём эвакуации. Почувствовав опасность, человек входил в один шкаф и моментально попадал в другой, таким образом отрываясь от преследования. При этом, выйдя из шкафа, человек попадал в другое место.',
@@ -589,8 +628,9 @@ export const productsData: IProductsData[] = [
     {
         id: 38,
         category: 'Зелья',
-        categoryEng: '',
+        categoryEng: 'potions',
         subcategory: 'Злые зелья',
+        subcategoryEng: '',
         title: 'Уидосорос',
         description:
             'Яд. В 1991 году Северус Снегг оставил один флакон с ядом в загадке с зельями — одном из препятствий на пути к философскому камню.',
@@ -603,8 +643,9 @@ export const productsData: IProductsData[] = [
     {
         id: 39,
         category: 'Зелья',
-        categoryEng: '',
+        categoryEng: 'potions',
         subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Уменьшающее зелье',
         description:
             'Эффект уменьшения заключается не только в реальном уменьшении физических размеров живых организмов, но и в их существенном омоложении.',

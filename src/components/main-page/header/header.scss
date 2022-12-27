@@ -8,6 +8,7 @@
     width: 30px;
     cursor: pointer;
     transition: all 1s ease-in-out;
+    filter: invert(1);
     &:hover {
         transform: scale(1.2);
     }

@@ -1,11 +1,11 @@
 .products-wrapper {
     width: 100%;
-    height: 85vh;
     overflow: auto;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding-top: 10px;
+    padding-top: 90px;
+    padding-bottom: 20px;
     &::-webkit-scrollbar {
         width: 0px;
     }

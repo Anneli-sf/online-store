@@ -91,6 +91,16 @@ document.addEventListener('click', (e) => {
         mainSection.innerHTML = ``;
         mainSection.append(createProducstPage(currentDataArr));
     }
+    if (
+        e.target instanceof Element &&
+        (e.target.className === 'category-checkbox' || e.target.className === 'subcategory-input')
+    ) {
+        console.log(e.target.id);
+        const currentDataArr: IProductsData[] = productsData.filter((item) => item.subcategoryEng === e.target.id);
+        console.log(currentDataArr);
+        mainSection.innerHTML = ``;
+        mainSection.append(createProducstPage(currentDataArr));
+    }
 });
 
 // const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
