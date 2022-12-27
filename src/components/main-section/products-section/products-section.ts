@@ -1,7 +1,7 @@
 import './products-section.scss';
 import { createElement, createImage, createInput, createParagraph } from '../../global-components/global-components';
 import { createProductCard } from './item-card/item-card';
-import { productsData } from '../../data/data';
+import { IProductsData, productsData } from '../../data/data';
 
 const sortArrow = createImage('./assets/icons/arrow-down.svg', 'sort-arrow', 'sort-arrow') as HTMLImageElement;
 const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
@@ -12,9 +12,9 @@ const sortItemSubCategory = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPrice = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
 
-export function createProductsSection(): HTMLDivElement {
+export function createProductsSection(arr: IProductsData[]): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
-    contentBlock.append(createProductsHeader(), createProductsList());
+    contentBlock.append(createProductsHeader(), createProductsList(arr));
     document.querySelector('.main')?.append(contentBlock);
     return contentBlock;
 }
@@ -50,10 +50,12 @@ function createProductsHeader() {
 }
 
 //----------------------products list
-function createProductsList(): HTMLUListElement {
+function createProductsList(arr: IProductsData[]): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
-    productsData.forEach((item) => {
+    console.log('arr', arr);
+    arr.forEach((item) => {
         productsList.append(createProductCard(item.id));
+        console.log('item.id', item.id);
     });
     return productsList;
 }

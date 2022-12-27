@@ -1,7 +1,21 @@
-export const productsData = [
+export interface IProductsData {
+    id: number;
+    category: string;
+    categoryEng: string;
+    subcategory: string;
+    title: string;
+    description: string;
+    price: number;
+    discount: number;
+    stock: number;
+    raiting: number;
+    images: string[];
+}
+export const productsData: IProductsData[] = [
     {
         id: 0,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Отрицательные существа',
         title: 'Василиск',
         description:
@@ -15,6 +29,7 @@ export const productsData = [
     {
         id: 1,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Оружие',
         title: 'Меч Гриффиндора',
         description:
@@ -31,6 +46,7 @@ export const productsData = [
     {
         id: 2,
         category: 'Одежда и аксессуары',
+        categoryEng: 'clothes-accessories',
         subcategory: 'Одежда',
         title: 'Мантия-невидимка',
         description:
@@ -47,6 +63,7 @@ export const productsData = [
     {
         id: 3,
         category: 'Одежда и аксессуары',
+        categoryEng: 'clothes-accessories',
         subcategory: 'Аксессуары',
         title: 'Кулон Дары Смерти',
         description:
@@ -63,6 +80,7 @@ export const productsData = [
     {
         id: 4,
         category: 'Одежда и аксессуары',
+        categoryEng: 'clothes-accessories',
         subcategory: 'Аксессуары',
         title: 'Маховик времени',
         description:
@@ -76,6 +94,7 @@ export const productsData = [
     {
         id: 5,
         category: 'Спорт',
+        categoryEng: '',
         subcategory: 'Летающие предметы',
         title: 'Золотой снитч',
         description:
@@ -89,6 +108,7 @@ export const productsData = [
     {
         id: 6,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Камни',
         title: 'Философский камень',
         description:
@@ -105,6 +125,7 @@ export const productsData = [
     {
         id: 7,
         category: 'Одежда и аксессуары',
+        categoryEng: 'clothes-accessories',
         subcategory: 'Одежда',
         title: 'Распределяющая шляпа',
         description:
@@ -121,6 +142,7 @@ export const productsData = [
     {
         id: 8,
         category: 'Спорт',
+        categoryEng: '',
         subcategory: 'Предметы интерьера',
         title: 'Кубок огня',
         description:
@@ -134,6 +156,7 @@ export const productsData = [
     {
         id: 9,
         category: 'Одежда и аксессуары',
+        categoryEng: 'clothes-accessories',
         subcategory: 'Аксессуары',
         title: "Крестраж 'Медальон Слизерина'",
         description:
@@ -150,6 +173,7 @@ export const productsData = [
     {
         id: 10,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Волшебные палочки',
         title: 'Палочка Волан-де-Морта',
         description:
@@ -166,6 +190,7 @@ export const productsData = [
     {
         id: 11,
         category: 'Зелья',
+        categoryEng: '',
         subcategory: 'Добрые зелья',
         title: 'Сыворотка правды',
         description:
@@ -182,6 +207,7 @@ export const productsData = [
     {
         id: 12,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Предметы интерьера',
         title: 'Зеркало Еиналеж',
         description:
@@ -195,6 +221,7 @@ export const productsData = [
     {
         id: 13,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Волшебные палочки',
         title: 'Бузинная палочка',
         description:
@@ -211,6 +238,7 @@ export const productsData = [
     {
         id: 14,
         category: 'Спорт',
+        categoryEng: '',
         subcategory: 'Предметы интерьера',
         title: 'Волшебные шахматы',
         description:
@@ -227,6 +255,7 @@ export const productsData = [
     {
         id: 15,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Камни',
         title: 'Воскрешающий камень',
         description:
@@ -243,6 +272,7 @@ export const productsData = [
     {
         id: 16,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Книжные товары',
         title: 'Дневник Тома Реддла',
         description:
@@ -259,6 +289,7 @@ export const productsData = [
     {
         id: 17,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Предметы интерьера',
         title: 'Семейные часы Уизли',
         description:
@@ -272,6 +303,7 @@ export const productsData = [
     {
         id: 18,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Аксессуары',
         title: 'Делюминатор',
         description:
@@ -285,6 +317,7 @@ export const productsData = [
     {
         id: 19,
         category: 'Спорт',
+        categoryEng: '',
         subcategory: 'Летающие предметы',
         title: 'Нимбус 2000',
         description:
@@ -298,6 +331,7 @@ export const productsData = [
     {
         id: 20,
         category: 'Транспорт',
+        categoryEng: '',
         subcategory: 'Летающие предметы',
         title: 'Летающий автомобиль',
         description: 'Летающая машина, которая принадлежала Артуру Уизли.',
@@ -310,6 +344,7 @@ export const productsData = [
     {
         id: 21,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Книжные товары',
         title: 'Карта мародера',
         description:
@@ -323,6 +358,7 @@ export const productsData = [
     {
         id: 22,
         category: 'зелье',
+        categoryEng: '',
         subcategory: 'Добрые зелья',
         title: 'Амортеция',
         description:
@@ -336,6 +372,7 @@ export const productsData = [
     {
         id: 23,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Отрицательные существа',
         title: 'Чупакабра',
         description:
@@ -349,6 +386,7 @@ export const productsData = [
     {
         id: 24,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Отрицательные существа',
         title: 'Дементор',
         description: 'Слепые существа, которые питаются человеческими, преимущественно светлыми, эмоциями.',
@@ -361,6 +399,7 @@ export const productsData = [
     {
         id: 25,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Положительные существа',
         title: 'Добби',
         description:
@@ -374,6 +413,7 @@ export const productsData = [
     {
         id: 26,
         category: 'Зелья',
+        categoryEng: '',
         subcategory: 'Добрые зелья',
         title: 'Эликсир из мандрагоры',
         description: 'Зелье, которое, по всей видимости, включает в свой состав растение мандрагору.',
@@ -389,6 +429,7 @@ export const productsData = [
     {
         id: 27,
         category: 'Зелья',
+        categoryEng: '',
         subcategory: 'Добрые зелья',
         title: 'Эликсир жизни',
         description:
@@ -402,6 +443,7 @@ export const productsData = [
     {
         id: 28,
         category: 'Транспорт',
+        categoryEng: '',
         subcategory: 'Летающие предметы',
         title: 'Хогвартс-экспресс',
         description:
@@ -415,6 +457,7 @@ export const productsData = [
     {
         id: 29,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Положительные существа',
         title: 'Феникс',
         description:
@@ -428,6 +471,7 @@ export const productsData = [
     {
         id: 30,
         category: 'Зелья',
+        categoryEng: '',
         subcategory: 'Отрицательные существа',
         title: 'Гербицид',
         description:
@@ -441,6 +485,7 @@ export const productsData = [
     {
         id: 31,
         category: 'Зелья',
+        categoryEng: '',
         subcategory: 'Добрые зелья',
         title: 'Костерост',
         description:
@@ -454,6 +499,7 @@ export const productsData = [
     {
         id: 32,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Отрицательные существа',
         title: 'Мантикора',
         description:
@@ -467,6 +513,7 @@ export const productsData = [
     {
         id: 33,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Волшебные палочки',
         title: 'Палочка Уизли',
         description:
@@ -483,6 +530,7 @@ export const productsData = [
     {
         id: 34,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Волшебные палочки',
         title: 'Палочка Малфоя',
         description:
@@ -499,6 +547,7 @@ export const productsData = [
     {
         id: 35,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Положительные существа',
         title: 'Карликовый пушистик',
         description:
@@ -512,6 +561,7 @@ export const productsData = [
     {
         id: 36,
         category: 'Магические существа',
+        categoryEng: '',
         subcategory: 'Положительные существа',
         title: 'Саламандра',
         description:
@@ -525,6 +575,7 @@ export const productsData = [
     {
         id: 37,
         category: 'Магические предметы',
+        categoryEng: '',
         subcategory: 'Предметы интерьера',
         title: 'Исчезательный шкаф',
         description:
@@ -538,6 +589,7 @@ export const productsData = [
     {
         id: 38,
         category: 'Зелья',
+        categoryEng: '',
         subcategory: 'Злые зелья',
         title: 'Уидосорос',
         description:
@@ -551,6 +603,7 @@ export const productsData = [
     {
         id: 39,
         category: 'Зелья',
+        categoryEng: '',
         subcategory: 'Добрые зелья',
         title: 'Уменьшающее зелье',
         description:
