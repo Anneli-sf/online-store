@@ -7,7 +7,7 @@ export const categoriesList: string[] = [
     'Магические существа',
 ];
 
-export const categoriesNames: string[] = [
+export const categoriesEngNames: string[] = [
     'sport',
     'clothes-accessories',
     'magic-items',
@@ -30,7 +30,7 @@ export const subCategoriesList: string[] = [
     'Отрицательные существа',
 ];
 
-export const subCategoriesNames: string[] = [
+export const subcategoriesEngNames: string[] = [
     'magic-wands',
     'stones',
     'interior-items',
