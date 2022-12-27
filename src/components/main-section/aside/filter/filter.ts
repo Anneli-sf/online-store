@@ -4,8 +4,14 @@ import { subCategoriesList, categoriesList } from './filter.constants';
 
 const checkbox = createElement('div', 'checkbox') as HTMLDivElement;
 
+export function createFilters(): HTMLDivElement {
+    const filters = createElement('div', 'filters') as HTMLDivElement;
+    filters.append(createFilterСategories(), createFilterSubСategories());
+    return filters;
+}
+
 //------------------categories
-export function createFilterСategories(): HTMLDivElement {
+function createFilterСategories(): HTMLDivElement {
     const filterCategory = createElement('div', 'filter__category') as HTMLDivElement;
     const filterCategoryHeader = createElement('h3', 'filter-category-title') as HTMLHeadingElement;
     const categoryForm = createElement('form', 'form__category') as HTMLFormElement;
@@ -25,7 +31,7 @@ export function createFilterСategories(): HTMLDivElement {
 }
 
 //------------------subcategories
-export function createFilterSubСategories(): HTMLDivElement {
+function createFilterSubСategories(): HTMLDivElement {
     const filterSubcategory = createElement('div', 'filter__subcategory') as HTMLDivElement;
     const filterSubcategoryHeader = createElement('h3', 'filter-subcategory-title') as HTMLHeadingElement;
     const subcategoryForm = createElement('form', 'form__category') as HTMLFormElement;

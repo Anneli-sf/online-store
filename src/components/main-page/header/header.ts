@@ -1,5 +1,9 @@
 import './header.scss';
-import { createElement, createImage, createParagraph } from '../../global-components/global-components';
+import { createElement, createImage, createLink, createParagraph } from '../../global-components/global-components';
+
+// export const header = document.querySelector('.header') as HTMLBodyElement;
+// const basketLink = createLink('/#/cart', 'basket-link') as HTMLLinkElement;
+// const logoLink = createLink('/#/home', 'home-link') as HTMLLinkElement;
 
 export function createHeader(): HTMLBodyElement {
     const header = document.querySelector('.header') as HTMLBodyElement;

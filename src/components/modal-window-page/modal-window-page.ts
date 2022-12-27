@@ -227,7 +227,7 @@ const createForm = () => {
 // -------------------------------------------------------------------------//
 
 // -----------------------------------CONTAINER--------------------------------------//
-const createContainerCard = () => {
+export const createContainerCard = () => {
     const container = createElement('div', 'container');
 
     container.append(cardContainer(), createForm());
@@ -236,7 +236,7 @@ const createContainerCard = () => {
 };
 // -------------------------------------------------------------------------//
 
-document.querySelector('.main')?.append(createContainerCard());
+// document.querySelector('.main')?.append(createContainerCard());
 
 // ------------------------------------ANIMATION-------------------------------------//
 // -----------------------------------SHOW INPUT VALUE ON CARD--------------------------------------//
@@ -261,12 +261,12 @@ const rotateCard = () => {
     };
 };
 // -------------------------------------------------------------------------//
-showInputValueOnCard('.card-number-input', '.card-number-box');
-showInputValueOnCard('.card-holder-input', '.card-holder-name');
-showInputValueOnCard('.month-input', '.exp-month');
-showInputValueOnCard('.year-input', '.exp-year');
-showInputValueOnCard('.cvv-input', '.cvv-box');
-rotateCard();
+// showInputValueOnCard('.card-number-input', '.card-number-box');
+// showInputValueOnCard('.card-holder-input', '.card-holder-name');
+// showInputValueOnCard('.month-input', '.exp-month');
+// showInputValueOnCard('.year-input', '.exp-year');
+// showInputValueOnCard('.cvv-input', '.cvv-box');
+// rotateCard();
 // -------------------------------------------------------------------------//
 
 // -----------------------------------FORM VALIDATE--------------------------------------//
@@ -338,5 +338,5 @@ const isFormValidity = () => {
         }
     });
 };
-isFormValidity();
+// isFormValidity();
 // -------------------------------------------------------------------------//

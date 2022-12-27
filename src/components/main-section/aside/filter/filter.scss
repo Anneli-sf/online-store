@@ -1,17 +1,18 @@
 @import '../../../../sass/abstracts/mixins';
 
-.filter {
-    &__category {
-        border: 1px solid white;
-        width: 80%;
-        margin-bottom: 20px;
-    }
-    &__subcategory {
-        border: 1px solid white;
-        width: 80%;
-        margin-bottom: 20px;
+.filters {
+    width: 80%;
+
+    .filter {
+        &__category,
+        &__subcategory {
+            border: 1px solid white;
+            width: 100%;
+            margin-bottom: 20px;
+        }
     }
 }
+
 
 .filter-category-title,
 .filter-subcategory-title {
