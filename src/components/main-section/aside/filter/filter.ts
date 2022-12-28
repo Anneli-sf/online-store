@@ -29,7 +29,7 @@ function createFilterСategories(currentArr: IProductsData[]): HTMLDivElement {
         )
     );
 
-    categoryForm.addEventListener('click', (e) => toggleFilterInput(e, 'category-checkbox', '.category-input'));
+    // categoryForm.addEventListener('click', (e) => toggleFilterInput(e, '.category-input'));
     return filterCategory;
 }
 
@@ -53,9 +53,7 @@ function createFilterSubСategories(currentArr: IProductsData[]): HTMLDivElement
         )
     );
 
-    subcategoryForm.addEventListener('click', (e) =>
-        toggleFilterInput(e, 'subcategory-checkbox', '.subcategory-input')
-    );
+    // subcategoryForm.addEventListener('click', (e) => toggleFilterInput(e, '.subcategory-input'));
 
     return filterSubcategory;
 }
@@ -74,6 +72,7 @@ function createCategoryFormLabel(
         const categoryFormLabel = createLabel(arrCategoriesNames[i], labelClass) as HTMLLabelElement;
         const categoryFormInput = createSimpleInput(inputClass, 'checkbox') as HTMLInputElement;
         categoryFormInput.id = arrEngNames[i];
+        // categoryFormInput.checked = false;
 
         const currentAmount = createSimpleInput('amount-input-current', 'number', '', '') as HTMLInputElement;
         currentAmount.readOnly = true;
@@ -118,12 +117,9 @@ function createCategoryFormLabel(
 
 //-------------------------------toggle inputs at filters
 
-// const toggleFilterInput = (e: Event, checkboxClass: string, inputClass: string) => {
-//     if (e.target instanceof Element && e.target.className === checkboxClass) {
-//         const currCheckBox = e.target as HTMLElement;
-//         currCheckBox.classList.toggle('checked');
-//     } else if (e.target instanceof Element && e.target.closest(inputClass)) {
-//         const currCheckBox = e.target.previousElementSibling as HTMLElement;
-//         currCheckBox.classList.toggle('checked');
+// const toggleFilterInput = (e: Event, inputClass: string) => {
+//     if (e.target instanceof Element && e.target.closest(inputClass)) {
+//         const currInput = document.querySelector(inputClass) as HTMLInputElement;
+//         currInput.checked ? (currInput.checked = true) : (currInput.checked = false);
 //     }
 // };

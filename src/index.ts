@@ -13,6 +13,7 @@ import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
+import { deleteChosenCategory, isAlreadyHave } from './components/helpers/helpers';
 
 createHeader();
 createFooter();
@@ -61,10 +62,11 @@ const routes = [
 // idArray.forEach((item) => {
 //     routes.push({ path: `#/product-details/${item}`, component: DetailsPage });
 // });
+let currentDataArr = [];
 
-// // TODO   SAVE THE PAGE when RELOAD
+// TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e) => {
-    console.log(e.target);
+    // console.log(e.target);
 
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
@@ -81,23 +83,22 @@ document.addEventListener('click', (e) => {
     }
 
     //---------if click on FILTERS
-    if (
-        e.target instanceof Element &&
-        (e.target.className === 'category-checkbox' || e.target.className === 'category-input')
-    ) {
-        console.log(e.target.id);
-        const currentDataArr: IProductsData[] = productsData.filter((item) => item.categoryEng === e.target.id);
-        console.log(currentDataArr);
-        mainSection.innerHTML = ``;
-        mainSection.append(createProducstPage(currentDataArr));
-    }
-    if (
-        e.target instanceof Element &&
-        (e.target.className === 'category-checkbox' || e.target.className === 'subcategory-input')
-    ) {
-        console.log(e.target.id);
-        const currentDataArr: IProductsData[] = productsData.filter((item) => item.subcategoryEng === e.target.id);
-        console.log(currentDataArr);
+    if (e.target instanceof Element && e.target.className == 'category-label') {
+        const chosenCategoryArr: IProductsData[] = productsData.filter(
+            (item) => item.categoryEng === e.target.firstChild.id
+        );
+        // console.log('chosenCategory', chosenCategoryArr);
+        if (!isAlreadyHave(currentDataArr, chosenCategoryArr)) {
+            currentDataArr.push(chosenCategoryArr);
+            currentDataArr = currentDataArr.flat();
+        } else {
+            currentDataArr = deleteChosenCategory(currentDataArr, chosenCategoryArr);
+            if (currentDataArr.length === 0) {
+                currentDataArr = productsData;
+            }
+        }
+        // console.log('currentDataArr', currentDataArr);
+
         mainSection.innerHTML = ``;
         mainSection.append(createProducstPage(currentDataArr));
     }
