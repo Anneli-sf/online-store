@@ -50,10 +50,10 @@ function createProductsHeader() {
 }
 
 //----------------------products list
-function createProductsList(arr: IProductsData[]): HTMLUListElement {
+function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
-    console.log('arr', arr);
-    arr.forEach((item) => {
+
+    currentArr.forEach((item) => {
         productsList.append(createProductCard(item.id));
     });
     return productsList;

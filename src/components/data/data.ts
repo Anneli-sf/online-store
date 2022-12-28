@@ -271,7 +271,7 @@ export const productsData: IProductsData[] = [
     {
         id: 15,
         category: 'Магические предметы',
-        categoryEng: 'magic-itemsmagic-items',
+        categoryEng: 'magic-items',
         subcategory: 'Камни',
         subcategoryEng: 'stones',
         title: 'Воскрешающий камень',

@@ -12,11 +12,6 @@
     }
 }
 
-.category-input,
-.subcategory-input {
-    width: 0px;
-}
-
 .filter-category-title,
 .filter-subcategory-title {
     background-color: transparent;
@@ -59,14 +54,24 @@
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-    padding-left: 25px;//
+    padding-left: 25px; //
 
-    &:hover {
+    &:hover,
+    &.checked {
         background-color: rgba(255, 255, 255, 0.8);
         color: black;
     }
     &:not(:last-child) {
         margin-bottom: 10px;
+    }
+
+    &::before {
+        position: absolute;
+        content: url('../../../../public/icons/check.svg');
+        width: 10px;
+        top: 0px;
+        left: 20px;
+        display: none;
     }
 }
 
@@ -74,17 +79,17 @@
 .subcategory-input {
     cursor: pointer;
     position: relative;
-    z-index: 2;
-    opacity: 0;
+    z-index: -2;
+    // opacity: 0;
+    // width: 0px;
 }
 
 .amount-block {
     position: relative;
     // right: 10%;
     right: 0px;
-    @include flex-row(center,center);
+    @include flex-row(center, center);
     flex-wrap: nowrap;
-    
 
     .amount-input-current,
     .amount-input-total {
@@ -109,13 +114,13 @@
     width: 15px;
     height: 15px;
 
-    &.checked {
-        &::after {
-            position: absolute;
-            content: url('../../../../public/icons/check.svg');
-            width: 10px;
-            top: -8px;
-            right: 7px;
-        }
-    }
+    // &:checked {
+    //     &::after {
+    //         position: absolute;
+    //         content: url('../../../../public/icons/check.svg');
+    //         width: 10px;
+    //         top: -8px;
+    //         right: 7px;
+    //     }
+    // }
 }
