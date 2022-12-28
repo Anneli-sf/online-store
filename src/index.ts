@@ -21,10 +21,6 @@ createFooter();
 const mainSection = document.querySelector('.main') as HTMLElement;
 mainSection.append(createProducstPage(productsData));
 
-//-----------------------------IDs-------------------------//
-const idArray = productsData.map((item) => item.id);
-//---------------------------------------------------------//
-
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
@@ -47,12 +43,12 @@ const DetailsPage = {
     },
 };
 
-const ErrorComponent = {
-    render: () => {
-        mainSection.innerHTML = '';
-        return (mainSection.innerHTML = 'Error');
-    },
-};
+// const ErrorComponent = {
+//     render: () => {
+//         mainSection.innerHTML = '';
+//         return (mainSection.innerHTML = 'Error');
+//     },
+// };
 
 const routes = [
     { path: '/', component: MainPage },
@@ -65,8 +61,8 @@ const routes = [
 let currentDataArr: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
-document.addEventListener('click', (e: Event) => {
-    // console.log(e.target);
+mainSection.addEventListener('click', (e: Event) => {
+    console.log(e.target);
 
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
@@ -84,18 +80,25 @@ document.addEventListener('click', (e: Event) => {
 
     //---------if click on FILTERS
     if (e.target instanceof Element && e.target.className == 'category-label') {
-        const chosenCategoryArr: IProductsData[] = productsData.filter(
-            (item) => item.categoryEng === e.target?.firstChild.id
-        );
+        if (e.target.classList.contains('checked')) {
+            e.target.classList.remove('checked');
+        } else {
+            e.target.classList.add('checked');
+        }
+
+        const chosenCategoryArr: IProductsData[] = productsData.filter((item) => {
+            const element = e.target as HTMLLabelElement;
+            if (element.children[0] !== null) return item.categoryEng === element.children[0].id;
+        });
         // console.log('chosenCategory', chosenCategoryArr);
         if (!isAlreadyHave(currentDataArr, chosenCategoryArr)) {
-            currentDataArr.push(chosenCategoryArr);
-            currentDataArr = currentDataArr.flat();
+            currentDataArr = currentDataArr.concat(chosenCategoryArr);
+            console.log(chosenCategoryArr);
             localStorage.setItem('productsList', JSON.stringify(currentDataArr));
         } else {
             currentDataArr = deleteChosenCategory(currentDataArr, chosenCategoryArr);
             if (currentDataArr.length === 0) {
-                currentDataArr = productsData;
+                currentDataArr.concat(productsData);
             }
             localStorage.setItem('productsList', JSON.stringify(currentDataArr));
         }
