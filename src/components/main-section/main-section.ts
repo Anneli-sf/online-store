@@ -6,7 +6,7 @@ import { IProductsData } from '../data/data';
 
 export function createProducstPage(currentArr: IProductsData[]): HTMLDivElement {
     const productsWrapper = createElement('div', 'products-wrapper') as HTMLDivElement;
-    productsWrapper.append(createAside(currentArr), createProductsSection(currentArr));
+    productsWrapper.append(createAside(currentArr), createProductsSection());
 
     return productsWrapper;
 }

@@ -361,7 +361,7 @@ export const productsData: IProductsData[] = [
         discount: 5,
         stock: 53,
         raiting: 4.95,
-        images: ['assets/images-storage/automobile/auto1.png', 'assets/images-storage/automobile/auto2.png'],
+        images: ['assets/images-storage/automobile/auto1.jpg', 'assets/images-storage/automobile/auto2.png'],
     },
     {
         id: 21,
@@ -482,7 +482,7 @@ export const productsData: IProductsData[] = [
         discount: 5,
         stock: 5,
         raiting: 4.74,
-        images: ['assets/images-storage/express/exp1.jpg', 'assets/images-storage/express/exp2.jpg'],
+        images: ['assets/images-storage/express/exp1.webp', 'assets/images-storage/express/exp2.jpg'],
     },
     {
         id: 29,
