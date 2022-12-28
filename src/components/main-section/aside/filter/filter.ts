@@ -78,14 +78,18 @@ function createCategoryFormLabel(
         currentAmount.readOnly = true;
         switch (arrCategoriesNames) {
             case categoriesList:
-                currentAmount.value = currentArr //productsData
-                    .filter((item) => item.category === arrCategoriesNames[i])
-                    .reduce((acc, curr) => acc + curr.stock, 0);
+                currentAmount.value = String(
+                    currentArr //productsData
+                        .filter((item) => item.category === arrCategoriesNames[i])
+                        .reduce((acc, curr) => acc + curr.stock, 0)
+                );
                 break;
             case subCategoriesList:
-                currentAmount.value = currentArr //productsData
-                    .filter((item) => item.subcategory === arrCategoriesNames[i])
-                    .reduce((acc, curr) => acc + curr.stock, 0);
+                currentAmount.value = String(
+                    currentArr //productsData
+                        .filter((item) => item.subcategory === arrCategoriesNames[i])
+                        .reduce((acc, curr) => acc + curr.stock, 0)
+                );
                 break;
         }
 
@@ -93,14 +97,18 @@ function createCategoryFormLabel(
         totalAmount.readOnly = true;
         switch (arrCategoriesNames) {
             case categoriesList:
-                totalAmount.value = productsData
-                    .filter((item) => item.category === arrCategoriesNames[i])
-                    .reduce((acc, curr) => acc + curr.stock, 0);
+                totalAmount.value = String(
+                    productsData
+                        .filter((item) => item.category === arrCategoriesNames[i])
+                        .reduce((acc, curr) => acc + curr.stock, 0)
+                );
                 break;
             case subCategoriesList:
-                totalAmount.value = productsData
-                    .filter((item) => item.subcategory === arrCategoriesNames[i])
-                    .reduce((acc, curr) => acc + curr.stock, 0);
+                totalAmount.value = String(
+                    productsData
+                        .filter((item) => item.subcategory === arrCategoriesNames[i])
+                        .reduce((acc, curr) => acc + curr.stock, 0)
+                );
                 break;
         }
 
