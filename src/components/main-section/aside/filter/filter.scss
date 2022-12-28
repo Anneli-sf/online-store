@@ -10,117 +10,104 @@
             margin-bottom: 20px;
         }
     }
-}
 
-.filter-category-title,
-.filter-subcategory-title {
-    background-color: transparent;
-    color: white;
-    border-bottom: 1px solid white;
-    padding: 5px;
-    text-align: center;
-}
-
-.filter-price-title {
-    margin-bottom: 20px;
-}
-
-.form {
-    &__category {
-        padding: 10px 5px;
-        display: flex;
-        flex-direction: column;
-        height: 200px;
-        overflow: auto;
-        &::-webkit-scrollbar {
-            width: 0px;
-        }
-    }
-    &__subcategory {
-        padding: 10px 5px;
-        display: flex;
-        flex-direction: column;
-        height: 200px;
-        overflow: auto;
-        &::-webkit-scrollbar {
-            width: 0px;
-        }
-    }
-}
-
-.category-label,
-.subcategory-label {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-    padding-left: 25px; //
-
-    &:hover,
-    &.checked {
-        background-color: rgba(255, 255, 255, 0.8);
-        color: black;
-    }
-    &:not(:last-child) {
-        margin-bottom: 10px;
-    }
-
-    &::before {
-        position: absolute;
-        content: url('../../../../public/icons/check.svg');
-        width: 10px;
-        top: 0px;
-        left: 20px;
-        display: none;
-    }
-}
-
-.category-input,
-.subcategory-input {
-    cursor: pointer;
-    position: relative;
-    z-index: -2;
-    // opacity: 0;
-    // width: 0px;
-}
-
-.amount-block {
-    position: relative;
-    // right: 10%;
-    right: 0px;
-    @include flex-row(center, center);
-    flex-wrap: nowrap;
-
-    .amount-input-current,
-    .amount-input-total {
-        width: 25px;
-        height: 15px;
-        font-size: inherit;
-        font-family: inherit;
+    .filter-category-title,
+    .filter-subcategory-title {
         background-color: transparent;
         color: white;
-        border: none;
-        vertical-align: middle;
+        border-bottom: 1px solid white;
+        padding: 5px;
+        text-align: center;
     }
-}
 
-.checkbox {
-    position: absolute;
-    z-index: 1;
-    // top: 20%;
-    top: 15%;
-    // right: 0px;
-    left: 0px;
-    width: 15px;
-    height: 15px;
+    .filter-price-title {
+        margin-bottom: 20px;
+    }
 
-    // &:checked {
-    //     &::after {
-    //         position: absolute;
-    //         content: url('../../../../public/icons/check.svg');
-    //         width: 10px;
-    //         top: -8px;
-    //         right: 7px;
-    //     }
-    // }
+    .form {
+        &__category {
+            padding: 10px 5px;
+            display: flex;
+            flex-direction: column;
+            height: 200px;
+            overflow: auto;
+            &::-webkit-scrollbar {
+                width: 0px;
+            }
+        }
+        &__subcategory {
+            padding: 10px 5px;
+            display: flex;
+            flex-direction: column;
+            height: 200px;
+            overflow: auto;
+            &::-webkit-scrollbar {
+                width: 0px;
+            }
+        }
+    }
+
+    .category-label,
+    .subcategory-label {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        padding-left: 25px; //
+
+        &:hover,
+        &.checked {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            &::before {
+                display: block;
+            }
+        }
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        &::before {
+            position: absolute;
+            content: url('../../../../public/icons/check.svg');
+            width: 10px;
+            top: 0px;
+            left: 20px;
+            display: none;
+        }
+    }
+
+    .category-input,
+    .subcategory-input {
+        cursor: pointer;
+        position: relative;
+        opacity: 0;
+        // width: 0px;
+    }
+
+    .amount-block {
+        position: relative;
+        // right: 10%;
+        right: 0px;
+        @include flex-row(center, center);
+        flex-wrap: nowrap;
+
+        .amount-input-current,
+        .amount-input-total {
+            width: 35px;
+            height: 15px;
+            font-size: inherit;
+            font-family: inherit;
+            background-color: transparent;
+            color: white;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .slash {
+            position: absolute;
+            left: 33%;
+        }
+    }
+
 }
