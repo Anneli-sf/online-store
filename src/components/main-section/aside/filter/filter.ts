@@ -69,10 +69,24 @@ function createCategoryFormLabel(
     inputClass: string
 ): HTMLFormElement {
     for (let i = 0; i < arrCategoriesNames.length; i++) {
-        const categoryFormLabel = createLabel(arrCategoriesNames[i], labelClass) as HTMLLabelElement;
+        const categoryFormLabel = createLabel(arrCategoriesNames[i], labelClass, arrEngNames[i]) as HTMLLabelElement;
         const categoryFormInput = createSimpleInput(inputClass, 'checkbox') as HTMLInputElement;
         categoryFormInput.id = arrEngNames[i];
-        // categoryFormInput.checked = false;
+
+        // TODO   WHATs HAPPEN WITH LABELs AFTER PAGE RELOAD
+        categoryFormLabel.onclick = function () {
+            if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
+                localStorage.removeItem(`${categoryFormInput.id}`);
+            } else {
+                localStorage.setItem(`${categoryFormInput.id}`, categoryFormInput.id);
+            }
+        };
+        if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
+            categoryFormLabel.classList.add('checked');
+        } else {
+            categoryFormLabel.classList.remove('checked');
+        }
+        //-------------------------------------------------------
 
         const currentAmount = createSimpleInput('amount-input-current', 'number', '', '') as HTMLInputElement;
         currentAmount.readOnly = true;
@@ -113,7 +127,9 @@ function createCategoryFormLabel(
         }
 
         const amountBlock = createElement('div', 'amount-block') as HTMLDivElement;
-        amountBlock.append(currentAmount, '/', totalAmount);
+        const spanSlash = createElement('span', 'slash') as HTMLSpanElement;
+        spanSlash.textContent = '/';
+        amountBlock.append(currentAmount, spanSlash, totalAmount);
 
         categoryFormLabel.append(amountBlock);
         categoryFormLabel.prepend(categoryFormInput);

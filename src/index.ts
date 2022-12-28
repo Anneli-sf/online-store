@@ -62,7 +62,7 @@ let currentDataArr: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
 mainSection.addEventListener('click', (e: Event) => {
-    console.log(e.target);
+    console.log(e);
 
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
@@ -79,9 +79,9 @@ mainSection.addEventListener('click', (e: Event) => {
     }
 
     //---------if click on FILTERS
-    if (e.target instanceof Element && e.target.className == 'category-label') {
-        if (e.target.classList.contains('checked')) {
-            e.target.classList.remove('checked');
+    if (e.target instanceof Element && e.target.classList[0] === 'category-label') {
+        if (e.target.tagName == 'LABEL') {
+            e.target.classList.add('checked');
         } else {
             e.target.classList.add('checked');
         }
