@@ -62,10 +62,10 @@ const routes = [
 // idArray.forEach((item) => {
 //     routes.push({ path: `#/product-details/${item}`, component: DetailsPage });
 // });
-let currentDataArr = [];
+let currentDataArr: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
-document.addEventListener('click', (e) => {
+document.addEventListener('click', (e: Event) => {
     // console.log(e.target);
 
     //---------if click on DETAILS
@@ -79,23 +79,25 @@ document.addEventListener('click', (e) => {
 
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage });
         console.log('routes', routes);
-        router(Number(e.target.id));
+        // router(Number(e.target.id));
     }
 
     //---------if click on FILTERS
     if (e.target instanceof Element && e.target.className == 'category-label') {
         const chosenCategoryArr: IProductsData[] = productsData.filter(
-            (item) => item.categoryEng === e.target.firstChild.id
+            (item) => item.categoryEng === e.target?.firstChild.id
         );
         // console.log('chosenCategory', chosenCategoryArr);
         if (!isAlreadyHave(currentDataArr, chosenCategoryArr)) {
             currentDataArr.push(chosenCategoryArr);
             currentDataArr = currentDataArr.flat();
+            localStorage.setItem('productsList', JSON.stringify(currentDataArr));
         } else {
             currentDataArr = deleteChosenCategory(currentDataArr, chosenCategoryArr);
             if (currentDataArr.length === 0) {
                 currentDataArr = productsData;
             }
+            localStorage.setItem('productsList', JSON.stringify(currentDataArr));
         }
         // console.log('currentDataArr', currentDataArr);
 

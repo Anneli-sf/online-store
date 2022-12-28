@@ -53,9 +53,21 @@ function createProductsHeader() {
 function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
-    currentArr.forEach((item) => {
-        productsList.append(createProductCard(item.id));
-    });
+    const string: string | null = localStorage.getItem('productsList');
+
+    if (string !== null) {
+        const array: IProductsData[] = JSON.parse(string);
+        if (array !== null && array.length !== 0) {
+            array.forEach((item) => {
+                productsList.append(createProductCard(item.id));
+            });
+        } else {
+            currentArr.forEach((item) => {
+                productsList.append(createProductCard(item.id));
+            });
+        }
+    }
+
     return productsList;
 }
 
