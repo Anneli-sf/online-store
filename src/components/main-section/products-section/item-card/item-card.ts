@@ -3,10 +3,9 @@ import {
     createButton,
     createElement,
     createImage,
-    createLink,
     createParagraph,
 } from '../../../global-components/global-components';
-import { IProductsData, productsData } from '../../../data/data';
+import { productsData } from '../../../data/data';
 
 // const detailsLink = createElement('a', 'btn__details-link') as HTMLLinkElement;
 // const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
@@ -46,6 +45,6 @@ export function createProductCard(productId: number): HTMLElement {
     buttonsItemContainer.append(buttonAdd, cardLink);
 
     productsItem.append(productDiscount, imageContainer, productTitle, productAvailable, buttonsItemContainer);
-  
+
     return productsItem;
 }
