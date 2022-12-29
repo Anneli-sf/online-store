@@ -1,11 +1,25 @@
 import './dual-slider.scss';
 import { createElement, createSimpleInput } from '../../../global-components/global-components';
+import { getMaxPrice, getMinAmount, getMinPrice, getMaxAmount } from '../../../helpers/helpers';
+import { IProductsData, productsData } from '../../../data/data';
 
-const toSlider = createSimpleInput('to-slider', 'range', '', '0', '0', '100') as HTMLInputElement;
+const toSlider = createSimpleInput('to-slider', 'range', '', '0', '0', '0') as HTMLInputElement;
+const maxPriceProductData = `${getMaxPrice(productsData)}`;
+const maxAmountProductData = `${getMaxAmount(productsData)}`;
 
-export function createSliders(): HTMLDivElement {
+export function createSliders(currentArray: IProductsData[]): HTMLDivElement {
     const sliders = createElement('div', 'sliders') as HTMLDivElement;
-    sliders.append(createDualSlider('price', '10', '30', 'Цена'), createDualSlider('amount', '10', '30', 'Количество'));
+
+    const minPrice = `${getMinPrice(currentArray)}`;
+    const maxPrice = `${getMaxPrice(currentArray)}`;
+
+    const minAmount = `${getMinAmount(currentArray)}`;
+    const maxAmount = `${getMaxAmount(currentArray)}`;
+
+    sliders.append(
+        createDualSlider('price', minPrice, maxPrice, 'Цена', maxPriceProductData),
+        createDualSlider('amount', minAmount, maxAmount, 'Количество', maxAmountProductData)
+    );
     return sliders;
 }
 
@@ -13,7 +27,8 @@ function createDualSlider(
     classId: string,
     fromSliderValue: string,
     toSliderValue: string,
-    titleText: string
+    titleText: string,
+    maxValue: string
 ): HTMLDivElement {
     const fromSlider = createSimpleInput(
         `from-slider-${classId}`,
@@ -21,12 +36,15 @@ function createDualSlider(
         '',
         fromSliderValue,
         '0',
-        '100'
+        maxValue
     ) as HTMLInputElement;
 
     const toSliderInput = toSlider.cloneNode(true) as HTMLInputElement;
     toSliderInput.classList.add(`to-slider-${classId}`);
     toSliderInput.value = toSliderValue;
+    console.log('toSliderInput', toSliderInput);
+    toSliderInput.max = toSliderValue;
+
 
     const fromInput = createSimpleInput(
         `form_control_container__time__input_min-${classId}`,
@@ -34,7 +52,7 @@ function createDualSlider(
         '',
         fromSliderValue,
         '0',
-        '100',
+        maxValue,
         true
     ) as HTMLInputElement;
 
@@ -44,7 +62,7 @@ function createDualSlider(
         '',
         toSliderValue,
         '0',
-        '100',
+        maxValue,
         true
     ) as HTMLInputElement;
 
