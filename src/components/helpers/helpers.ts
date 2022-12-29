@@ -12,7 +12,7 @@ export const isAlreadyHave = (currentArr: IProductsData[], chosenCategory: IProd
     return currentArr.some((el) => el.id === chosenCategory[0].id);
 };
 
-export const updateCurrArrayByCategory = (
+export const deleteDoubleAddUnique = (
     currentArr: IProductsData[],
     chosenCategory: IProductsData[]
 ): IProductsData[] => {
@@ -25,7 +25,7 @@ export const updateCurrArrayByCategory = (
     return currentArr;
 };
 
-export const updateCurrArraybySubcategory = (
+export const addDoubleDeleteUnique = (
     currentArr: IProductsData[],
     chosenCategory: IProductsData[]
 ): IProductsData[] => {
