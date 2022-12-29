@@ -35,3 +35,23 @@ export const addDoubleDeleteUnique = (
     }
     return resultArr;
 };
+
+export const getMinPrice = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.price);
+    return numbersArray.reduce((x, y) => Math.min(x, y));
+};
+
+export const getMaxPrice = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.price);
+    return numbersArray.reduce((x, y) => Math.max(x, y));
+};
+
+export const getMinAmount = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.stock);
+    return numbersArray.reduce((x, y) => Math.min(x, y));
+};
+
+export const getMaxAmount = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.stock);
+    return numbersArray.reduce((x, y) => Math.max(x, y));
+};
