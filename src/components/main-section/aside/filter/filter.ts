@@ -74,18 +74,18 @@ function createCategoryFormLabel(
         categoryFormInput.id = arrEngNames[i];
 
         // TODO   WHATs HAPPEN WITH LABELs AFTER PAGE RELOAD
-        categoryFormLabel.onclick = function () {
-            if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
-                localStorage.removeItem(`${categoryFormInput.id}`);
-            } else {
-                localStorage.setItem(`${categoryFormInput.id}`, categoryFormInput.id);
-            }
-        };
-        if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
-            categoryFormLabel.classList.add('checked');
-        } else {
-            categoryFormLabel.classList.remove('checked');
-        }
+        // categoryFormLabel.onclick = function () {
+        //     if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
+        //         localStorage.removeItem(`${categoryFormInput.id}`);
+        //     } else {
+        //         localStorage.setItem(`${categoryFormInput.id}`, categoryFormInput.id);
+        //     }
+        // };
+        // if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
+        //     categoryFormLabel.classList.add('checked');
+        // } else {
+        //     categoryFormLabel.classList.remove('checked');
+        // }
         //-------------------------------------------------------
 
         const currentAmount = createSimpleInput('amount-input-current', 'number', '', '') as HTMLInputElement;

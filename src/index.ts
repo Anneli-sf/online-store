@@ -13,7 +13,7 @@ import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
-import { deleteChosenCategory, isAlreadyHave } from './components/helpers/helpers';
+import { isAlreadyHave, updateCurrArrayByCategory, updateCurrArraybySubcategory } from './components/helpers/helpers';
 
 createHeader();
 createFooter();
@@ -59,10 +59,11 @@ const routes = [
 //     routes.push({ path: `#/product-details/${item}`, component: DetailsPage });
 // });
 let currentDataArr: IProductsData[] = [];
+let countArr: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
-mainSection.addEventListener('click', (e: Event) => {
-    console.log(e);
+document.addEventListener('click', (e: Event) => {
+    // console.log(e.target);
 
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
@@ -78,34 +79,70 @@ mainSection.addEventListener('click', (e: Event) => {
         // router(Number(e.target.id));
     }
 
-    //---------if click on FILTERS
-    if (e.target instanceof Element && e.target.classList[0] === 'category-label') {
-        if (e.target.tagName == 'LABEL') {
-            e.target.classList.add('checked');
-        } else {
-            e.target.classList.add('checked');
-        }
+    //---------if click on FILTERS CATEGORY
+    if (e.target instanceof Element && e.target.className === 'category-label') {
+        //e.target.classList[0] === 'category-label'
+        // if (e.target.tagName == 'LABEL') {
+        //     e.target.classList.add('checked');
+        // } else {
+        //     e.target.classList.add('checked');
+        // }//--------ничего не добавляет
 
         const chosenCategoryArr: IProductsData[] = productsData.filter((item) => {
             const element = e.target as HTMLLabelElement;
             if (element.children[0] !== null) return item.categoryEng === element.children[0].id;
         });
-        // console.log('chosenCategory', chosenCategoryArr);
-        if (!isAlreadyHave(currentDataArr, chosenCategoryArr)) {
-            currentDataArr = currentDataArr.concat(chosenCategoryArr);
-            console.log(chosenCategoryArr);
-            localStorage.setItem('productsList', JSON.stringify(currentDataArr));
-        } else {
-            currentDataArr = deleteChosenCategory(currentDataArr, chosenCategoryArr);
-            if (currentDataArr.length === 0) {
-                currentDataArr.concat(productsData);
-            }
-            localStorage.setItem('productsList', JSON.stringify(currentDataArr));
-        }
-        // console.log('currentDataArr', currentDataArr);
+        console.log('chosenCategory', chosenCategoryArr);
+        // if (!isAlreadyHave(currentDataArr, chosenCategoryArr)) {
+        //     currentDataArr = currentDataArr.concat(chosenCategoryArr);
+        //     localStorage.setItem('productsList', JSON.stringify(currentDataArr));
+        // } else {
+        //     currentDataArr = deleteChosenCategory(currentDataArr, chosenCategoryArr);
+        //     if (currentDataArr.length === 0) {
+        //         currentDataArr.concat(productsData);
+        //     }
+        //     localStorage.setItem('productsList', JSON.stringify(currentDataArr));
+        // }
+        currentDataArr = updateCurrArrayByCategory(currentDataArr, chosenCategoryArr);
+        console.log('currentDataArr', currentDataArr);
+        // localStorage.setItem('productsList', JSON.stringify(currentDataArr));
 
-        mainSection.innerHTML = ``;
-        mainSection.append(createProducstPage(currentDataArr));
+        if (currentDataArr.length === 0) {
+            mainSection.innerHTML = ``;
+            mainSection.append(createProducstPage(productsData));
+        } else {
+            mainSection.innerHTML = ``;
+            mainSection.append(createProducstPage(currentDataArr));
+        }
+    }
+
+    //---------if click on FILTERS SUBCATEGORY
+    if (e.target instanceof Element && e.target.className === 'subcategory-label') {
+        
+        const chosenSubCategoryArr: IProductsData[] = currentDataArr.filter((item) => {
+            const element = e.target as HTMLLabelElement;
+            if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
+        });
+        console.log('chosenSubCategory', chosenSubCategoryArr);
+
+        //если категории уже выбраны
+        if (currentDataArr && !isAlreadyHave(countArr, chosenSubCategoryArr)) {
+            currentDataArr = updateCurrArraybySubcategory(currentDataArr, chosenSubCategoryArr);
+            countArr = countArr.concat(chosenSubCategoryArr);
+        } else if (currentDataArr && isAlreadyHave(countArr, chosenSubCategoryArr)) {
+            console.log('нужно делать наверно через имена категорий');
+        }
+
+        console.log('currentDataArr', currentDataArr);
+        console.log('countArr', countArr);
+
+        if (currentDataArr.length === 0) {
+            mainSection.innerHTML = ``;
+            mainSection.append(createProducstPage(productsData));
+        } else {
+            mainSection.innerHTML = ``;
+            mainSection.append(createProducstPage(currentDataArr));
+        }
     }
 });
 

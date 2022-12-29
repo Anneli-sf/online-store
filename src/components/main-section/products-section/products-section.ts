@@ -12,9 +12,9 @@ const sortItemSubCategory = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPrice = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
 
-export function createProductsSection(): HTMLDivElement {
+export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
-    contentBlock.append(createProductsHeader(), createProductsList());
+    contentBlock.append(createProductsHeader(), createProductsList(currentArr)); //вернула
     document.querySelector('.main')?.append(contentBlock);
     return contentBlock;
 }
@@ -50,20 +50,24 @@ function createProductsHeader() {
 }
 
 //----------------------products list
-function createProductsList(): HTMLUListElement {
+function createProductsList(currentArr: IProductsData[]): HTMLUListElement {//вернула
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
-    const array: IProductsData[] = JSON.parse(localStorage.getItem('productsList') as string);
+    // const array: IProductsData[] = JSON.parse(localStorage.getItem('productsList') as string);
 
-    if (array !== null && array.length !== 0) {
-        array.forEach((item) => {
-            productsList.append(createProductCard(item.id));
-        });
-    } else {
-        productsData.forEach((item) => {
-            productsList.append(createProductCard(item.id));
-        });
-    }
+    // if (array !== null && array.length !== 0) {
+    //     array.forEach((item) => {
+    //         productsList.append(createProductCard(item.id));
+    //     });
+    // } else {
+    //     productsData.forEach((item) => {
+    //         productsList.append(createProductCard(item.id));
+    //     });
+    // }
+
+    currentArr.forEach((item) => {
+        productsList.append(createProductCard(item.id));
+    });
 
     return productsList;
 }
