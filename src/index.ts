@@ -119,39 +119,55 @@ document.addEventListener('click', (e: Event) => {
 
     //---------if click on FILTERS SUBCATEGORY
     if (e.target instanceof Element && e.target.className === 'subcategory-label') {
-        const chosenSubCategoryArr: IProductsData[] = currDataWithCategories.filter((item) => {
-            const element = e.target as HTMLLabelElement;
-            if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
-        });
-        console.log('chosenSubCategory', chosenSubCategoryArr);
-
         //если категории уже выбраны
-        if (currDataWithCategories && !isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-            stackArr = stackArr.concat(chosenSubCategoryArr); //---?
-            currDataWithSubCategories = currDataWithSubCategories.concat(stackArr);
-            console.log('currDataWithSubCategories', currDataWithSubCategories);
-        } else if (currDataWithCategories && isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-            stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr); //удаляем кликнутое второй раз
-            console.log('stackArr второй клик', stackArr);
-            if (stackArr.length === 0) {
-                // const chosenCategoryArr: IProductsData[] = productsData.filter((item) => {
-                //     const element = e.target as HTMLLabelElement;
-                //     if (element.children[0] !== null) return item.categoryEng === element.children[0].id;
-                // });
-                currDataWithSubCategories = currDataWithCategories;
-                console.log('currDataWithSubCategories когда стек пустой', currDataWithSubCategories);
-            } else {
-                currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
-            }
-        }
+        if (currDataWithCategories.length > 0) {
+            const chosenSubCategoryArr: IProductsData[] = currDataWithCategories.filter((item) => {
+                const element = e.target as HTMLLabelElement;
+                if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
+            });
+            console.log('chosenSubCategory', chosenSubCategoryArr);
 
-        // if (currDataWithCategories.length === 0) {
-        //     mainSection.innerHTML = ``;
-        //     mainSection.append(createProducstPage(currDataWithCategories));
-        // } else {
-        mainSection.innerHTML = ``;
-        mainSection.append(createProducstPage(currDataWithSubCategories));
-        // }
+            if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = stackArr.concat(chosenSubCategoryArr);
+                currDataWithSubCategories = currDataWithSubCategories.concat(stackArr);
+                // console.log('currDataWithSubCategories', currDataWithSubCategories);
+            } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr); //удаляем кликнутое второй раз
+                // console.log('stackArr второй клик', stackArr);
+                if (stackArr.length === 0) {
+                    currDataWithSubCategories = currDataWithCategories;
+                    // console.log('currDataWithSubCategories когда стек пустой', currDataWithSubCategories);
+                } else {
+                    currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
+                }
+            }
+
+            mainSection.innerHTML = ``;
+            mainSection.append(createProducstPage(currDataWithSubCategories));
+        } else if (currDataWithCategories.length === 0) {
+            //если категории НЕ выбраны
+            const chosenSubCategoryArr: IProductsData[] = productsData.filter((item) => {
+                const element = e.target as HTMLLabelElement;
+                if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
+            });
+            console.log('chosenSubCategory при пустых категориях', chosenSubCategoryArr);
+
+            if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = stackArr.concat(chosenSubCategoryArr);
+                currDataWithSubCategories = stackArr;
+                console.log('currDataWithSubCategories при пустом стеке', currDataWithSubCategories);
+            } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr);
+
+                if (stackArr.length > 0) {
+                    currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
+                } else if (stackArr.length === 0) {
+                    currDataWithSubCategories = productsData;
+                }
+            }
+            mainSection.innerHTML = ``;
+            mainSection.append(createProducstPage(currDataWithSubCategories));
+        }
     }
 });
 
