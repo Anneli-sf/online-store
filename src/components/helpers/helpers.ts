@@ -12,7 +12,7 @@ export const isAlreadyHave = (currentArr: IProductsData[], chosenCategory: IProd
     return currentArr.some((el) => el.id === chosenCategory[0].id);
 };
 
-export const updateCurrArrayByCategory = (
+export const deleteDoubleAddUnique = (
     currentArr: IProductsData[],
     chosenCategory: IProductsData[]
 ): IProductsData[] => {
@@ -25,7 +25,7 @@ export const updateCurrArrayByCategory = (
     return currentArr;
 };
 
-export const updateCurrArraybySubcategory = (
+export const addDoubleDeleteUnique = (
     currentArr: IProductsData[],
     chosenCategory: IProductsData[]
 ): IProductsData[] => {
@@ -34,4 +34,24 @@ export const updateCurrArraybySubcategory = (
         currentArr.some((item) => item.id === chosenCategory[i].id) ? resultArr.push(chosenCategory[i]) : resultArr;
     }
     return resultArr;
+};
+
+export const getMinPrice = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.price);
+    return numbersArray.reduce((x, y) => Math.min(x, y));
+};
+
+export const getMaxPrice = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.price);
+    return numbersArray.reduce((x, y) => Math.max(x, y));
+};
+
+export const getMinAmount = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.stock);
+    return numbersArray.reduce((x, y) => Math.min(x, y));
+};
+
+export const getMaxAmount = (arr: IProductsData[]): number => {
+    const numbersArray: number[] = arr.map((item) => item.stock);
+    return numbersArray.reduce((x, y) => Math.max(x, y));
 };
