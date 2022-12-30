@@ -6,16 +6,12 @@ import { IProductsData, productsData } from '../../../data/data';
 // const toSlider = createSimpleInput('to-slider', 'range', '', '0', '0', '0') as HTMLInputElement;
 const maxPriceProductData = `${getMaxPrice(productsData)}`;
 const maxAmountProductData = `${getMaxAmount(productsData)}`;
-console.log('maxPriceProductData', maxPriceProductData);
-console.log('maxAmountProductData', maxAmountProductData);
 
 export function createSliders(currentArray: IProductsData[]): HTMLDivElement {
     const sliders = createElement('div', 'sliders') as HTMLDivElement;
 
     const minPrice = `${getMinPrice(currentArray)}`;
     const maxPrice = `${getMaxPrice(currentArray)}`;
-    console.log('minPrice', minPrice);
-    console.log('maxPrice', maxPrice);
 
     const minAmount = `${getMinAmount(currentArray)}`;
     const maxAmount = `${getMaxAmount(currentArray)}`;
