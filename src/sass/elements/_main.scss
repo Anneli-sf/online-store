@@ -35,7 +35,7 @@ html {
             // align-items: flex-start;
             // @include flex-row(normal, flex-start);
             @include flex-row(center, center);
-            padding: 0px;
+            padding-top: 100px;
             position: relative;
             flex: 0 0 auto;
             // height: 100%;
