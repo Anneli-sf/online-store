@@ -15,28 +15,55 @@ const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
 export const createCartPage = (): HTMLDivElement => {
     const cartPage = createElement('div', 'cart-wrapper') as HTMLDivElement;
-    cartPage.append(createProductsCartBlock(), createSummaryCartBlock());
+    cartPage.append(createProductsCartBlock(+localStorage.getItem('currentPage') - 1), createSummaryCartBlock());
     return cartPage;
 };
 
-const createProductsCartBlock = () => {
-    const cartBlock = createBlock('cart-products', 'Товары в корзине');
-    // const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
+function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        const chunk = arr.slice(i, i + chunkSize);
+        res.push(chunk);
+    }
+    return res;
+}
 
-    const blockHeader = cartBlock.querySelector('.block-header') as HTMLElement;
-    blockHeader?.append(quantityProductsOnCart(), switchPagesBlock());
-    createProductsList(5);
+export const createProductsCartBlock = (id) => {
+    const cartBlock = createElement('div', 'cart-products');
+    const cartBlockHeader = createElement('div', 'block-header');
+    const cartBlockTitle = createElement('p', 'block-title');
+    cartBlockTitle.textContent = 'Товары в корзине';
 
-    cartBlock.querySelector('.block-section')?.append(listBlock);
+    const cartBlockContent = createElement('div', 'block-section');
+
+    cartBlockHeader.append(cartBlockTitle, quantityProductsOnCart(), switchPagesBlock());
+
+    const fillCartPages = (id) => {
+        const arr = JSON.parse(localStorage.getItem('cartList') as string);
+        if (arr.length === 0) {
+            return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3);
+        } else {
+            return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3)[id];
+        }
+    };
+
+    const idArray = fillCartPages(id);
+    idArray.forEach((item) => {
+        createProductsList(item);
+    });
+
+    cartBlockContent.append(listBlock);
 
     cartBlock.querySelectorAll('.number-product').forEach((item, index) => {
         item.textContent = `${index + 1}`;
     });
+
+    cartBlock.append(cartBlockHeader, cartBlockContent);
     // document.querySelector('.main')?.append(cartBlock);
     return cartBlock;
 };
 
-const createProductsList = (productId: number): HTMLUListElement => {
+export const createProductsList = (productId: number): HTMLUListElement => {
     listBlock.append(cartProductBlock(productId));
 
     return listBlock;
@@ -44,16 +71,30 @@ const createProductsList = (productId: number): HTMLUListElement => {
 //----------------------------HEADER
 const quantityProductsOnCart = () => {
     const labelQuantityOfProducts = createLabel('Товары: ', 'quantity');
-    const inputQuantityOfProducts = createSimpleInput('quantity', 'number', '', '5') as HTMLInputElement;
+    const inputQuantityOfProducts = createSimpleInput(
+        'quantity',
+        'number',
+        '',
+        `${JSON.parse(localStorage.getItem('cartList') as string).length}`
+    ) as HTMLInputElement;
     labelQuantityOfProducts.append(inputQuantityOfProducts);
 
     return labelQuantityOfProducts;
 };
 
+if (!localStorage.getItem('currentPage')) {
+    localStorage.setItem('currentPage', '1');
+}
+
 const switchPagesBlock = () => {
     const pagesSwitchesButtonsBlock = createElement('div', 'btns-container-switch-pages') as HTMLDivElement;
 
-    const currentPage = createSimpleInput('current-page', 'number', '', '1') as HTMLInputElement;
+    const currentPage = createSimpleInput(
+        'current-page',
+        'number',
+        '',
+        `${localStorage.getItem('currentPage')}`
+    ) as HTMLInputElement;
 
     const textPage = createParagraph('Страница: ', 'title-of-container-switch-btns') as HTMLParagraphElement;
 
@@ -70,7 +111,7 @@ const switchPagesBlock = () => {
 const cartProductBlock = (productId: number) => {
     const productCartBlock = createElement('li', 'cart-item') as HTMLLIElement;
     productCartBlock.append(
-        numberOfProductBlock(),
+        numberOfProductBlock(productId),
         imageProductBlock(productId),
         productsDescriptionBlock(productId),
         productsValuesBlock(productId)
@@ -79,8 +120,9 @@ const cartProductBlock = (productId: number) => {
     return productCartBlock;
 };
 
-const numberOfProductBlock = () => {
+const numberOfProductBlock = (productId: number) => {
     const numberOfProduct = createElement('p', 'number-product') as HTMLParagraphElement;
+    numberOfProduct.textContent = `${JSON.parse(localStorage.getItem('cartList') as string).indexOf(productId) + 1}`;
     return numberOfProduct;
 };
 
@@ -96,7 +138,7 @@ const imageProductBlock = (productId: number): HTMLImageElement => {
 const productsDescriptionBlock = (productId: number) => {
     const descriptionBlock = createElement('div', 'description-cart-item') as HTMLDivElement;
     const descriptionHeader = createElement('div', 'description-header') as HTMLDivElement;
-    const descriptionTitle = createParagraph(productsData[7].title, 'block-title') as HTMLParagraphElement;
+    const descriptionTitle = createParagraph(productsData[productId].title, 'block-title') as HTMLParagraphElement;
 
     const descriptionContent = createElement('div', 'description-content') as HTMLDivElement;
 
@@ -175,7 +217,7 @@ export const createSummaryCartBlock = () => {
     const summaryBlock = createBlock('summary', 'Итого') as HTMLElement;
 
     const summarySectionBlock = summaryBlock.querySelector('.block-section') as HTMLElement;
-    console.log(summarySectionBlock);
+
     const quantityOfPoducts = createParagraph('Товары, шт: ', 'quantity-products') as HTMLParagraphElement;
     const quantityOfPoductsValue = createSimpleInput('quantity-products-value', '', '', '1') as HTMLInputElement;
     const totalSum = createParagraph('Сумма: ', 'total-sum') as HTMLParagraphElement;
@@ -194,7 +236,7 @@ export const createSummaryCartBlock = () => {
 };
 
 const formOfBuyProductsBlock = () => {
-    const buyForm = createInput('promecode-input', '', 'Введите промокод') as HTMLFormElement; //'form-buy'
+    const buyForm = createInput('promecode-input', 'text', 'Введите промокод') as HTMLFormElement; //'form-buy'
 
     const promoTest = createParagraph("Попробуйте: 'Гарри', 'Поттер'", 'promo-test') as HTMLParagraphElement;
     const buttonBuyNow = createButton('Купить сейчас', 'btn-buy-now');
