@@ -47,7 +47,8 @@ export const createSimpleInput = (
     inputValue?: string,
     minValue?: string,
     maxValue?: string,
-    readOnly?: boolean
+    readOnly?: boolean,
+    id?: string
 ): HTMLInputElement => {
     const input = createElement('input', `${inputClass}`) as HTMLInputElement;
     input.type = inputType;
@@ -56,6 +57,7 @@ export const createSimpleInput = (
     minValue ? (input.min = minValue) : undefined;
     maxValue ? (input.max = maxValue) : undefined;
     if (readOnly) input.readOnly = readOnly;
+    if (id) input.id = id;
 
     return input;
 };

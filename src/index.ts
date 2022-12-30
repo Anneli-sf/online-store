@@ -225,6 +225,60 @@ document.addEventListener('click', (e: Event) => {
         });
         console.log('left!');
     }
+
+    if (e.target instanceof Element && e.target.parentElement && e.target.closest('.delete-item')) {
+        --e.target.parentElement.querySelector('input').value;
+        localStorage.setItem(`quantityProduct_${e.target.id}`, e.target.parentElement.querySelector('input').value);
+        let stock = +localStorage.getItem(`stock_${e.target.id}`);
+        stock++;
+        localStorage.setItem(`stock_${e.target.id}`, `${stock}`);
+        document.querySelectorAll('.stock-value').forEach((item) => {
+            if (item.id === e.target.id) {
+                item.value++;
+            }
+        });
+        if (localStorage.getItem(`stock_${e.target.id}`) !== '0') {
+            document.querySelectorAll('.add-item').forEach((item) => {
+                if (item.id === e.target.id) {
+                    item.style.transform = 'scale(1)';
+                }
+            });
+        }
+        if (+localStorage.getItem(`stock_${e.target.id}`) === productsData[e.target.id].stock) {
+            document.querySelectorAll('.delete-item').forEach((item) => {
+                if (item.id === e.target.id) {
+                    item.style.transform = 'scale(0)';
+                }
+            });
+        }
+    }
+
+    if (e.target instanceof Element && e.target.parentElement && e.target.closest('.add-item')) {
+        ++e.target.parentElement.querySelector('input').value;
+        localStorage.setItem(`quantityProduct_${e.target.id}`, e.target.parentElement.querySelector('input').value);
+        let stock = +localStorage.getItem(`stock_${e.target.id}`);
+        stock--;
+        localStorage.setItem(`stock_${e.target.id}`, `${stock}`);
+        document.querySelectorAll('.stock-value').forEach((item) => {
+            if (item.id === e.target.id) {
+                item.value--;
+            }
+        });
+        if (localStorage.getItem(`stock_${e.target.id}`) === '0') {
+            document.querySelectorAll('.add-item').forEach((item) => {
+                if (item.id === e.target.id) {
+                    item.style.transform = 'scale(0)';
+                }
+            });
+        }
+        if (+localStorage.getItem(`stock_${e.target.id}`) !== productsData[e.target.id].stock) {
+            document.querySelectorAll('.delete-item').forEach((item) => {
+                if (item.id === e.target.id) {
+                    item.style.transform = 'scale(1)';
+                }
+            });
+        }
+    }
 });
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
