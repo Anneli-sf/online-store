@@ -13,7 +13,7 @@ import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
-import { isAlreadyHave, updateCurrArrayByCategory, updateCurrArraybySubcategory } from './components/helpers/helpers';
+import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
 
 createHeader();
 createFooter();
@@ -59,14 +59,16 @@ const routes = [
 // idArray.forEach((item) => {
 //     routes.push({ path: `#/product-details/${item}`, component: DetailsPage });
 // });
-let currentDataArr: IProductsData[] = [];
-let countArr: IProductsData[] = [];
+
 if (!localStorage.getItem('cartList')) {
     localStorage.setItem('cartList', JSON.stringify([]));
 }
 if (!localStorage.getItem('cartItems')) {
     localStorage.setItem('cartItems', JSON.stringify([]));
 }
+let currDataWithCategories: IProductsData[] = [];
+let currDataWithSubCategories: IProductsData[] = [];
+let stackArr: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
@@ -99,55 +101,83 @@ document.addEventListener('click', (e: Event) => {
             const element = e.target as HTMLLabelElement;
             if (element.children[0] !== null) return item.categoryEng === element.children[0].id;
         });
-        // console.log('chosenCategory', chosenCategoryArr);
-        // if (!isAlreadyHave(currentDataArr, chosenCategoryArr)) {
-        //     currentDataArr = currentDataArr.concat(chosenCategoryArr);
-        //     localStorage.setItem('productsList', JSON.stringify(currentDataArr));
+        
+        console.log('chosenCategory', chosenCategoryArr);
+        // if (!isAlreadyHave(, chosenCategoryArr)) {
+        //      = .concat(chosenCategoryArr);
+        //     localStorage.setItem('productsList', JSON.stringify());
         // } else {
-        //     currentDataArr = deleteChosenCategory(currentDataArr, chosenCategoryArr);
-        //     if (currentDataArr.length === 0) {
-        //         currentDataArr.concat(productsData);
+        //      = deleteChosenCategory(, chosenCategoryArr);
+        //     if (.length === 0) {
+        //         .concat(productsData);
         //     }
-        //     localStorage.setItem('productsList', JSON.stringify(currentDataArr));
+        //     localStorage.setItem('productsList', JSON.stringify());
         // }
-        currentDataArr = updateCurrArrayByCategory(currentDataArr, chosenCategoryArr);
-        // console.log('currentDataArr', currentDataArr);
-        // localStorage.setItem('productsList', JSON.stringify(currentDataArr));
 
-        if (currentDataArr.length === 0) {
+        currDataWithCategories = deleteDoubleAddUnique(currDataWithCategories, chosenCategoryArr);
+        console.log('');
+        // localStorage.setItem('productsList', JSON.stringify());
+
+        if (currDataWithCategories.length === 0) {
             mainSection.innerHTML = ``;
             mainSection.append(createProducstPage(productsData));
         } else {
             mainSection.innerHTML = ``;
-            mainSection.append(createProducstPage(currentDataArr));
+            mainSection.append(createProducstPage(currDataWithCategories));
         }
     }
 
     //---------if click on FILTERS SUBCATEGORY
     if (e.target instanceof Element && e.target.className === 'subcategory-label') {
-        const chosenSubCategoryArr: IProductsData[] = currentDataArr.filter((item) => {
-            const element = e.target as HTMLLabelElement;
-            if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
-        });
-        console.log('chosenSubCategory', chosenSubCategoryArr);
+    
+    //если категории уже выбраны
+        if (currDataWithCategories.length > 0) {
+            const chosenSubCategoryArr: IProductsData[] = currDataWithCategories.filter((item) => {
+                const element = e.target as HTMLLabelElement;
+                if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
+            });
+            console.log('chosenSubCategory', chosenSubCategoryArr);
 
-        //если категории уже выбраны
-        if (currentDataArr && !isAlreadyHave(countArr, chosenSubCategoryArr)) {
-            currentDataArr = updateCurrArraybySubcategory(currentDataArr, chosenSubCategoryArr);
-            countArr = countArr.concat(chosenSubCategoryArr);
-        } else if (currentDataArr && isAlreadyHave(countArr, chosenSubCategoryArr)) {
-            console.log('нужно делать наверно через имена категорий');
-        }
+            if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = stackArr.concat(chosenSubCategoryArr);
+                currDataWithSubCategories = currDataWithSubCategories.concat(stackArr);
+                // console.log('currDataWithSubCategories', currDataWithSubCategories);
+            } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr); //удаляем кликнутое второй раз
+                // console.log('stackArr второй клик', stackArr);
+                if (stackArr.length === 0) {
+                    currDataWithSubCategories = currDataWithCategories;
+                    // console.log('currDataWithSubCategories когда стек пустой', currDataWithSubCategories);
+                } else {
+                    currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
+                }
+            }
 
-        console.log('currentDataArr', currentDataArr);
-        console.log('countArr', countArr);
-
-        if (currentDataArr.length === 0) {
             mainSection.innerHTML = ``;
-            mainSection.append(createProducstPage(productsData));
-        } else {
+            mainSection.append(createProducstPage(currDataWithSubCategories));
+        } else if (currDataWithCategories.length === 0) {
+            //если категории НЕ выбраны
+            const chosenSubCategoryArr: IProductsData[] = productsData.filter((item) => {
+                const element = e.target as HTMLLabelElement;
+                if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
+            });
+            console.log('chosenSubCategory при пустых категориях', chosenSubCategoryArr);
+
+            if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = stackArr.concat(chosenSubCategoryArr);
+                currDataWithSubCategories = stackArr;
+                console.log('currDataWithSubCategories при пустом стеке', currDataWithSubCategories);
+            } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
+                stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr);
+
+                if (stackArr.length > 0) {
+                    currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
+                } else if (stackArr.length === 0) {
+                    currDataWithSubCategories = productsData;
+                }
+            }
             mainSection.innerHTML = ``;
-            mainSection.append(createProducstPage(currentDataArr));
+            mainSection.append(createProducstPage(currDataWithSubCategories));
         }
     }
 

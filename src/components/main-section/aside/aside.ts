@@ -14,6 +14,6 @@ export function createAside(currentArr: IProductsData[]): HTMLElement {
     const buttonCopy = createButton('скопировать ссылку', 'btn-copy') as HTMLButtonElement;
 
     buttonContainer.append(buttonReset, buttonCopy);
-    asideBlock.append(buttonContainer, createFilters(currentArr), createSliders());
+    asideBlock.append(buttonContainer, createFilters(currentArr), createSliders(currentArr));
     return asideBlock;
 }
