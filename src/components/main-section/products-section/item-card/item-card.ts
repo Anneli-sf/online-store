@@ -31,9 +31,10 @@ export function createProductCard(productId: number): HTMLElement {
     ) as HTMLParagraphElement;
     if (!productsData[productId].discount) productDiscount.style.display = 'none';
 
-    const buttonAdd = createButton('в корзину', 'btn__add') as HTMLButtonElement;
+    const buttonAdd = createBtnText(productId);
+    buttonAdd.id = `${productId}`;
     const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
-    buttonDetails.id = productImage.id;
+    buttonDetails.id = `${productId}`;
 
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
     const cardLink = createElement('a', 'card-link') as HTMLLinkElement;
@@ -48,3 +49,11 @@ export function createProductCard(productId: number): HTMLElement {
 
     return productsItem;
 }
+
+const createBtnText = (productId: number) => {
+    if (localStorage.getItem(`btn_${productId}`)) {
+        return createButton(`${localStorage.getItem(`btn_${productId}`)}`, 'btn__add') as HTMLButtonElement;
+    } else {
+        return createButton('в корзину', 'btn__add') as HTMLButtonElement;
+    }
+};
