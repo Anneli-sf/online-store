@@ -174,38 +174,57 @@ const productsDescriptionBlock = (productId: number) => {
     return descriptionBlock;
 };
 
-const productsValuesBlock = (productId: number, itemQuantity = '1') => {
+const productsValuesBlock = (productId: number) => {
     const valuesBlock = createElement('div', 'values-cart-item') as HTMLDivElement;
     const stock = createParagraph('Доступно: ', 'stock') as HTMLParagraphElement;
+
+    if (!localStorage.getItem(`stock_${productId}`)) {
+        localStorage.setItem(`stock_${productId}`, productsData[productId].stock - 1);
+    }
 
     const stockValue = createSimpleInput(
         'stock-value',
         'number',
         '',
-        `${productsData[productId].stock}`
+        `${localStorage.getItem(`stock_${productId}`)}`,
+        '',
+        '',
+        '',
+        `${productId}`
     ) as HTMLInputElement;
     stockValue.setAttribute('readonly', 'true');
     const shtuk = createElement('span', 'stock-text') as HTMLDivElement;
     shtuk.textContent = `шт.`;
 
+    if (!localStorage.getItem(`quantityProduct_${productId}`)) {
+        localStorage.setItem(`quantityProduct_${productId}`, '1');
+    }
+
     const quantityOfItemsInCart = createSimpleInput(
         'quantity-items-cart',
         'number',
         '',
-        itemQuantity
+        +localStorage.getItem(`quantityProduct_${productId}`)
     ) as HTMLInputElement;
     quantityOfItemsInCart.setAttribute('readonly', 'true');
 
     const addAndDelItemsButtonsContainer = createElement('div', 'add-del-btns-container') as HTMLDivElement;
     const addItemButton = createButton('', 'add-item') as HTMLButtonElement;
+    addItemButton.id = `${productId}`;
     const deleteItemButton = createButton('', 'delete-item') as HTMLButtonElement;
+    deleteItemButton.id = `${productId}`;
 
-    const totalPrice = createElement('p', 'total-price') as HTMLParagraphElement;
-    totalPrice.textContent = `${productsData[7].price * +itemQuantity}`;
+    const container = createElement('div', 'container') as HTMLDivElement;
+    const totalPrice = createElement('input', 'total-price') as HTMLInputElement;
+    totalPrice.readOnly = true;
+    totalPrice.value = `${productsData[productId].price}`;
+    const span = createElement('span', 'span');
+    span.textContent = '$';
+    container.append(totalPrice, span);
 
     stock.append(stockValue, shtuk);
-    addAndDelItemsButtonsContainer.append(addItemButton, quantityOfItemsInCart, deleteItemButton);
-    valuesBlock.append(stock, addAndDelItemsButtonsContainer, totalPrice);
+    addAndDelItemsButtonsContainer.append(deleteItemButton, quantityOfItemsInCart, addItemButton);
+    valuesBlock.append(stock, addAndDelItemsButtonsContainer, container);
 
     return valuesBlock;
 };
@@ -219,9 +238,23 @@ export const createSummaryCartBlock = () => {
     const summarySectionBlock = summaryBlock.querySelector('.block-section') as HTMLElement;
 
     const quantityOfPoducts = createParagraph('Товары, шт: ', 'quantity-products') as HTMLParagraphElement;
-    const quantityOfPoductsValue = createSimpleInput('quantity-products-value', '', '', '1') as HTMLInputElement;
+    const quantityOfPoductsValue = createSimpleInput(
+        'quantity-products-value',
+        '',
+        '',
+        `${JSON.parse(localStorage.getItem('cartItems') as string)
+            .flat()
+            .reduce((acc, curr) => acc + curr.stock, 0)}`
+    ) as HTMLInputElement;
     const totalSum = createParagraph('Сумма: ', 'total-sum') as HTMLParagraphElement;
-    const totalSumValue = createSimpleInput('total-sum-value', '', '', '100$') as HTMLInputElement;
+    const totalSumValue = createSimpleInput(
+        'total-sum-value',
+        '',
+        '',
+        `${JSON.parse(localStorage.getItem('cartItems') as string)
+            .flat()
+            .reduce((acc, curr) => acc + curr.price, 0)}`
+    ) as HTMLInputElement;
 
     summarySectionBlock.append(
         quantityOfPoducts,
