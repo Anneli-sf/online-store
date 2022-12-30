@@ -10,7 +10,7 @@ import './components/modal-window-page/modal-window-page';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage } from './components/cart-page/cart-page';
+import { createCartPage, createProductsList } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
@@ -24,7 +24,7 @@ mainSection.append(createProducstPage(productsData));
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (productsData: IProductsData[]) => {
+    render: () => {
         // mainSection.innerHTML = '';
         return createProducstPage(productsData);
     },
@@ -32,6 +32,7 @@ const MainPage = {
 
 const CartPage = {
     render: () => {
+        mainSection.innerHTML = ``;
         return createCartPage();
     },
 };
@@ -43,12 +44,12 @@ const DetailsPage = {
     },
 };
 
-// const ErrorComponent = {
-//     render: () => {
-//         mainSection.innerHTML = '';
-//         return (mainSection.innerHTML = 'Error');
-//     },
-// };
+const ErrorComponent = {
+    render: () => {
+        mainSection.innerHTML = '';
+        return (mainSection.innerHTML = 'Error');
+    },
+};
 
 const routes = [
     { path: '/', component: MainPage },
@@ -58,13 +59,20 @@ const routes = [
 // idArray.forEach((item) => {
 //     routes.push({ path: `#/product-details/${item}`, component: DetailsPage });
 // });
+
+if (!localStorage.getItem('cartList')) {
+    localStorage.setItem('cartList', JSON.stringify([]));
+}
+if (!localStorage.getItem('cartItems')) {
+    localStorage.setItem('cartItems', JSON.stringify([]));
+}
 let currDataWithCategories: IProductsData[] = [];
 let currDataWithSubCategories: IProductsData[] = [];
 let stackArr: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
-    // console.log(e.target);
+    // console.log(e);
 
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
@@ -93,6 +101,7 @@ document.addEventListener('click', (e: Event) => {
             const element = e.target as HTMLLabelElement;
             if (element.children[0] !== null) return item.categoryEng === element.children[0].id;
         });
+        
         console.log('chosenCategory', chosenCategoryArr);
         // if (!isAlreadyHave(, chosenCategoryArr)) {
         //      = .concat(chosenCategoryArr);
@@ -104,6 +113,7 @@ document.addEventListener('click', (e: Event) => {
         //     }
         //     localStorage.setItem('productsList', JSON.stringify());
         // }
+
         currDataWithCategories = deleteDoubleAddUnique(currDataWithCategories, chosenCategoryArr);
         console.log('');
         // localStorage.setItem('productsList', JSON.stringify());
@@ -119,7 +129,8 @@ document.addEventListener('click', (e: Event) => {
 
     //---------if click on FILTERS SUBCATEGORY
     if (e.target instanceof Element && e.target.className === 'subcategory-label') {
-        //если категории уже выбраны
+    
+    //если категории уже выбраны
         if (currDataWithCategories.length > 0) {
             const chosenSubCategoryArr: IProductsData[] = currDataWithCategories.filter((item) => {
                 const element = e.target as HTMLLabelElement;
@@ -169,21 +180,75 @@ document.addEventListener('click', (e: Event) => {
             mainSection.append(createProducstPage(currDataWithSubCategories));
         }
     }
+
+    //-------------------BASKET
+    if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__add')) {
+        let arrayId = JSON.parse(localStorage.getItem('cartList') as string);
+        let cartProductsArray = JSON.parse(localStorage.getItem('cartItems') as string);
+
+        if (localStorage.getItem(`btn_${e.target.id}`) === 'добавлен') {
+            localStorage.setItem(`btn_${e.target.id}`, 'в корзину');
+        } else {
+            localStorage.setItem(`btn_${e.target.id}`, 'добавлен');
+        }
+
+        if (arrayId.includes(+e.target.id)) {
+            arrayId = arrayId.filter((item) => item !== +e.target?.id);
+            cartProductsArray = cartProductsArray.flat().filter((item) => item.id !== +e.target?.id);
+            e.target.textContent = localStorage.getItem(`btn_${e.target.id}`);
+        } else {
+            arrayId.push(+e.target.id);
+            cartProductsArray.push(productsData[+e.target?.id]);
+            e.target.textContent = localStorage.getItem(`btn_${e.target.id}`);
+        }
+        localStorage.setItem('cartList', JSON.stringify(arrayId));
+        localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(cartProductsArray.flat(), 3)));
+    }
+
+    if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-switch-page-right')) {
+        localStorage.setItem('currentPage', `${+localStorage.getItem('currentPage') + 1}`);
+        ++e.target.parentElement.querySelector('input').value;
+        document.querySelector('.cart-list')?.innerHTML = '';
+        const arr = JSON.parse(localStorage.getItem('cartItems'))[localStorage.getItem('currentPage') - 1];
+        arr.forEach((item) => {
+            createProductsList(item.id);
+        });
+    }
+
+    if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-switch-page-left')) {
+        localStorage.setItem('currentPage', `${+localStorage.getItem('currentPage') - 1}`);
+        --e.target.parentElement.querySelector('input').value;
+        document.querySelector('.cart-list')?.innerHTML = '';
+        const arr = JSON.parse(localStorage.getItem('cartItems'))[localStorage.getItem('currentPage') - 1];
+        arr.forEach((item) => {
+            createProductsList(item.id);
+        });
+        console.log('left!');
+    }
 });
 
-// const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
-// const findComponentByPath = (path, routes) =>
-//     routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
+const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
+const findComponentByPath = (path, routes) =>
+    routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 
-// const router = (id?: number) => {
-//     const path = parseLocation();
-//     const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
+const router = (id?: number) => {
+    const path = parseLocation();
+    const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
 
-//     mainSection.innerHTML = ``;
-//     mainSection.append(component.render(id));
-// };
+    mainSection.innerHTML = ``;
+    mainSection.append(component.render(id));
+};
 
-// window.addEventListener('hashchange', () => router());
-// window.addEventListener('load', () => router());
+window.addEventListener('hashchange', () => router());
+window.addEventListener('load', () => router());
 
 // //--------------------------------------------------------//
+
+function sliceIntoChunks(arr, chunkSize) {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        const chunk = arr.slice(i, i + chunkSize);
+        res.push(chunk);
+    }
+    return res;
+}
