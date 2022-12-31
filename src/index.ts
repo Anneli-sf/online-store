@@ -13,14 +13,25 @@ import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
-import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
+import {
+    isAlreadyHave,
+    deleteDoubleAddUnique,
+    addDoubleDeleteUnique,
+    sortByASC,
+    sortByDESC,
+    sortByPriceInc,
+    sortByPriceDecr,
+} from './components/helpers/helpers';
 
 createHeader();
 createFooter();
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 // mainSection.append(createProducstPage(productsData));
-
+const appendToMainSection = (arr: IProductsData[]): void => {
+    mainSection.innerHTML = ``;
+    mainSection.append(createProducstPage(arr));
+};
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
@@ -94,7 +105,7 @@ window.addEventListener('load', () => router());
 let currDataWithCategories: IProductsData[] = [];
 let currDataWithSubCategories: IProductsData[] = [];
 let stackArr: IProductsData[] = [];
-let currentArray: IProductsData[] = []; 
+let currentArray: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
@@ -310,6 +321,27 @@ document.addEventListener('click', (e: Event) => {
                 }
             });
         }
+    }
+
+    //-------------/BASKET
+    console.log(e.target);
+    if (e.target instanceof Element && e.target.classList.contains('sort__item')) {
+        const sortList = document.querySelectorAll('.sort__item');
+        let currArr = [];
+        console.log(sortList[0]);
+        switch (e.target) {
+            case sortList[0]:
+                currArr = sortByASC(productsData);
+                break;
+            case sortList[1]:
+                currArr = sortByDESC(productsData);
+            case sortList[4]:
+                currArr = sortByPriceInc(productsData);
+            case sortList[3]:
+                currArr = sortByPriceDecr(productsData);
+        }
+        console.log(currArr);
+        appendToMainSection(currArr);
     }
 });
 
