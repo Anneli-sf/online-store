@@ -303,10 +303,11 @@
 
         .total-sum-value {
             position: relative;
-            &::after {
-                position: absolute;
-                content: '$';
-            }
+            font-size: 20px;
+        }
+
+        .quantity-products-value {
+            font-size: 20px;
         }
 
         .promecode-input {
