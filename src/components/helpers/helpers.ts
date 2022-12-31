@@ -55,3 +55,20 @@ export const getMaxAmount = (arr: IProductsData[]): number => {
     const numbersArray: number[] = arr.map((item) => item.stock);
     return numbersArray.reduce((x, y) => Math.max(x, y));
 };
+
+//------------------------SORT
+export const sortByASC = (arr: IProductsData[]): IProductsData[] => {
+    return arr.sort((x, y) => (x.title < y.title ? -1 : 1));
+};
+
+export const sortByDESC = (arr: IProductsData[]): IProductsData[] => {
+    return arr.sort((x, y) => (x.title > y.title ? -1 : 1));
+};
+
+export const sortByPriceInc = (arr: IProductsData[]): IProductsData[] => {
+    return arr.sort((x, y) => y.price - x.price);
+};
+
+export const sortByPriceDecr = (arr: IProductsData[]): IProductsData[] => {
+    return arr.sort((x, y) => x.price - y.price);
+};
