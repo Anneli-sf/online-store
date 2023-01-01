@@ -28,6 +28,17 @@ function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
     return res;
 }
 
+export const fillCartPages = () => {
+    const arr = JSON.parse(localStorage.getItem('cartList') as string);
+    if (arr.length === 0) {
+        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3);
+    } else {
+        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3)[
+            +localStorage.getItem('currentPage') - 1
+        ];
+    }
+};
+
 export const createProductsCartBlock = () => {
     const cartBlock = createElement('div', 'cart-products');
     const cartBlockHeader = createElement('div', 'block-header');
@@ -37,17 +48,6 @@ export const createProductsCartBlock = () => {
     const cartBlockContent = createElement('div', 'block-section');
 
     cartBlockHeader.append(cartBlockTitle, quantityProductsOnCart(), switchPagesBlock());
-
-    const fillCartPages = () => {
-        const arr = JSON.parse(localStorage.getItem('cartList') as string);
-        if (arr.length === 0) {
-            return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3);
-        } else {
-            return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3)[
-                +localStorage.getItem('currentPage') - 1
-            ];
-        }
-    };
 
     const idArray = fillCartPages();
     listBlock.innerHTML = '';
@@ -202,7 +202,7 @@ const productsValuesBlock = (productId: number) => {
         'stock-value',
         'number',
         '',
-        `${localStorage.getItem(`stock_${productId}`)}`,
+        `${productsData[productId].stock - 1}`,
         '',
         '',
         '',

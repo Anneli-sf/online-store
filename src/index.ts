@@ -10,7 +10,7 @@ import './components/modal-window-page/modal-window-page';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage, createProductsList, createProductsCartBlock } from './components/cart-page/cart-page';
+import { createCartPage, createProductsList, fillCartPages } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
@@ -65,6 +65,16 @@ if (!localStorage.getItem('cartList')) {
 }
 if (!localStorage.getItem('cartItems')) {
     localStorage.setItem('cartItems', JSON.stringify([]));
+}
+if (!localStorage.getItem('totalStock')) {
+    localStorage.setItem('totalStock', '0');
+}
+if (!localStorage.getItem('totalPrice')) {
+    localStorage.setItem('totalPrice', '0');
+}
+if (!localStorage.getItem('btnLeft') && !localStorage.getItem('btnRight')) {
+    localStorage.setItem('btnLeft', 'hide');
+    localStorage.setItem('btnRight', 'hide');
 }
 
 let currDataWithCategories: IProductsData[] = [];
@@ -204,13 +214,18 @@ document.addEventListener('click', (e: Event) => {
         localStorage.setItem('cartList', JSON.stringify(arrayId));
         localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(cartProductsArray.flat(), 3)));
 
-        if (!localStorage.getItem('totalPrice')) {
-            localStorage.setItem('totalPrice', `${productsData[e.target.id].price}`);
-        } else {
+        if (localStorage.getItem(`btn_${e.target.id}`) === 'в корзину') {
+            localStorage.setItem(
+                'totalPrice',
+                `${+localStorage.getItem('totalPrice') - productsData[e.target.id].price}`
+            );
+            localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock') - 2));
+        } else if (localStorage.getItem(`btn_${e.target.id}`) === 'добавлен') {
             localStorage.setItem(
                 'totalPrice',
                 `${+localStorage.getItem('totalPrice') + productsData[e.target.id].price}`
             );
+            localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock')));
         }
 
         if (JSON.parse(localStorage.getItem('cartList')).length > 3) {
@@ -223,6 +238,14 @@ document.addEventListener('click', (e: Event) => {
         } else {
             localStorage.setItem('btnLeft', 'show');
         }
+
+        if (localStorage.getItem(`quantityProduct_${e.target.id}`) === '0') {
+            localStorage.setItem(`quantityProduct_${e.target.id}`, '1');
+            localStorage.setItem(`price_${e.target.id}`, `${productsData[e.target.id].price}`);
+        }
+        localStorage.setItem(`stock_${e.target.id}`, `${productsData[e.target.id].stock - 1}`);
+
+        localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock') + 1));
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-switch-page-right')) {
@@ -257,7 +280,7 @@ document.addEventListener('click', (e: Event) => {
         } else {
             localStorage.setItem('btnLeft', 'show');
         }
-        localStorage.setItem('btnRight', 'show');
+        // localStorage.setItem('btnRight', 'show');
         document.querySelector('.btn-switch-page-right').style.transform = 'scale(1)';
     }
 
@@ -285,6 +308,8 @@ document.addEventListener('click', (e: Event) => {
                     item.style.transform = 'scale(0)';
                 }
             });
+            console.log(localStorage.getItem(`stock_${e.target.id}`));
+            console.log(productsData[e.target.id].stock);
         }
         localStorage.setItem(
             `price_${e.target.id}`,
@@ -307,7 +332,29 @@ document.addEventListener('click', (e: Event) => {
         } else {
             localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock') - 1));
         }
-        document.querySelector('.quantity-products-value').value = localStorage.getItem('totalStock');
+        document.querySelector('.quantity-products-value').value--;
+
+        if (localStorage.getItem(`quantityProduct_${e.target.id}`) === '0') {
+            const arr1 = JSON.parse(localStorage.getItem('cartList')).filter((item) => +item !== +e.target.id);
+            const arr2 = JSON.parse(localStorage.getItem('cartItems'))
+                .flat()
+                .filter((item) => +item.id !== +e.target.id);
+            localStorage.setItem('cartList', JSON.stringify(arr1));
+            localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(arr2.flat(), 3)));
+            localStorage.setItem(`btn_${e.target.id}`, 'в корзину');
+            document.querySelector('.cart-list').innerHTML = '';
+            const arr3 = fillCartPages();
+            arr3.forEach((item) => {
+                createProductsList(item);
+            });
+            document.querySelector('input.quantity').value = JSON.parse(localStorage.getItem('cartList') as string).length;
+            // localStorage.setItem(`quantityProduct_${e.target.id}`, '1');
+            // localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock') - 1));
+        }
+        if (JSON.parse(localStorage.getItem('cartList') as string).length <= 3) {
+            localStorage.setItem('btnRight', 'hide');
+            document.querySelector('.btn-switch-page-right').style.transform = 'scale(0)';
+        }
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.add-item')) {
@@ -363,7 +410,7 @@ document.addEventListener('click', (e: Event) => {
         } else {
             localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock') + 1));
         }
-        document.querySelector('.quantity-products-value').value = localStorage.getItem('totalStock');
+        document.querySelector('.quantity-products-value').value++;
     }
 });
 
