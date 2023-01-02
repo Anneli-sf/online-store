@@ -13,7 +13,11 @@ export function createHeader(): HTMLBodyElement {
     logoLink.append(logo);
     logoLink.href = '#/';
 
-    const quantity = createParagraph('Общая сумма: 0', 'quantity') as HTMLParagraphElement;
+    const quantity = createParagraph('Общая сумма: ', 'quantity') as HTMLParagraphElement;
+    const span = createElement('span', 'total-quantity-header');
+    span.textContent = localStorage.getItem('totalPrice');
+
+    quantity.append(span);
 
     const cartLink = createElement('a', 'cart-link') as HTMLLinkElement;
     cartLink.href = '#/cart';

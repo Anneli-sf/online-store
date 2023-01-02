@@ -1,10 +1,9 @@
-
-
 .products-available {
     position: absolute;
-    top: 65%;
+    top: 52%;
     left: 0px;
     width: 100%;
+    height: 8%;
     text-align: center;
     background-color: oldlace;
     color: black;
@@ -12,11 +11,36 @@
 
 .products-price {
     position: relative;
+    // animation: move 5s infinite linear;
     &::after {
         position: absolute;
         content: '$';
     }
 }
+
+// @keyframes move {
+//     0% {
+//         transform: translateX(-50%);
+//     }
+//     25% {
+//         transform: translateX(0%);
+//     }
+//     40% {
+//         transform: translateX(50%);
+//     }
+//     55% {
+//         transform: translateX(100%);
+//     }
+//     70% {
+//         transform: translateX(50%);
+//     }
+//     85% {
+//         transform: translateX(0%);
+//     }
+//     100% {
+//         transform: translateX(-50%);
+//     }
+// }
 
 .products-image {
     transition: all 1s ease-in-out;
@@ -35,5 +59,6 @@
 }
 
 .products-title {
-    padding: 20px 0px;
+    padding: 10px 0px;
+    font-size: 20px;
 }
