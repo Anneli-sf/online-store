@@ -72,3 +72,13 @@ export const sortByPriceInc = (arr: IProductsData[]): IProductsData[] => {
 export const sortByPriceDecr = (arr: IProductsData[]): IProductsData[] => {
     return arr.sort((x, y) => x.price - y.price);
 };
+
+export const unicCategories = (arr: IProductsData[]): string[] => {
+    const set = new Set(arr.map((el) => el.categoryEng));
+    return [...set];
+};
+
+export const unicSubcategories = (arr: IProductsData[]): string[] => {
+    const set = new Set(arr.map((el) => el.subcategoryEng));
+    return [...set];
+};
