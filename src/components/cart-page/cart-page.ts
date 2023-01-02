@@ -19,7 +19,7 @@ export const createCartPage = (): HTMLDivElement => {
     return cartPage;
 };
 
-function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
+export function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
     const res = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
         const chunk = arr.slice(i, i + chunkSize);
@@ -28,12 +28,12 @@ function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
     return res;
 }
 
-export const fillCartPages = () => {
+export const fillCartPages = (size: number) => {
     const arr = JSON.parse(localStorage.getItem('cartList') as string);
     if (arr.length === 0) {
-        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3);
+        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), size);
     } else {
-        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3)[
+        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), size)[
             +localStorage.getItem('currentPage') - 1
         ];
     }
@@ -47,9 +47,27 @@ export const createProductsCartBlock = () => {
 
     const cartBlockContent = createElement('div', 'block-section');
 
-    cartBlockHeader.append(cartBlockTitle, quantityProductsOnCart(), switchPagesBlock());
+    const paginationInput = createElement('input', 'pagination') as HTMLInputElement;
+    paginationInput.type = 'text';
+    paginationInput.placeholder = 'кол-во товаров';
+    paginationInput.maxLength = 1;
+    paginationInput.oninput = () => {
+        if (paginationInput.value && paginationInput.value !== '0') {
+            paginationInput.value = paginationInput.value.replace(/[^1-9.]/g, '').replace(/(\..*)\./g, '$1');
+            document.querySelector('.cart-list').innerHTML = '';
+            const arr2 = JSON.parse(localStorage.getItem('cartItems')).flat();
+            localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(arr2.flat(), +paginationInput.value)));
+            localStorage.setItem('size', paginationInput.value);
+            const arr3 = fillCartPages(+localStorage.getItem('size'));
+            arr3.forEach((item) => {
+                createProductsList(item);
+            });
+        }
+    };
 
-    const idArray = fillCartPages();
+    cartBlockHeader.append(cartBlockTitle, quantityProductsOnCart(), paginationInput, switchPagesBlock());
+
+    const idArray = fillCartPages(+localStorage.getItem('size'));
     listBlock.innerHTML = '';
     idArray.forEach((item) => {
         createProductsList(item);
@@ -202,7 +220,7 @@ const productsValuesBlock = (productId: number) => {
         'stock-value',
         'number',
         '',
-        `${productsData[productId].stock - 1}`,
+        localStorage.getItem(`stock_${productId}`),
         '',
         '',
         '',
@@ -227,6 +245,11 @@ const productsValuesBlock = (productId: number) => {
     const addAndDelItemsButtonsContainer = createElement('div', 'add-del-btns-container') as HTMLDivElement;
     const addItemButton = createButton('', 'add-item') as HTMLButtonElement;
     addItemButton.id = `${productId}`;
+
+    if (localStorage.getItem(`stock_${productId}`) === '0') {
+        addItemButton.style.transform = 'scale(0)';
+    }
+
     const deleteItemButton = createButton('', 'delete-item') as HTMLButtonElement;
     deleteItemButton.id = `${productId}`;
 

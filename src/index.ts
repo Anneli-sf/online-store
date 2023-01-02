@@ -10,7 +10,7 @@ import './components/modal-window-page/modal-window-page';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage, createProductsList, fillCartPages } from './components/cart-page/cart-page';
+import { createCartPage, createProductsList, fillCartPages, sliceIntoChunks } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
@@ -72,9 +72,12 @@ if (!localStorage.getItem('totalStock')) {
 if (!localStorage.getItem('totalPrice')) {
     localStorage.setItem('totalPrice', '0');
 }
-if (!localStorage.getItem('btnLeft') && !localStorage.getItem('btnRight')) {
+if (JSON.parse(localStorage.getItem('cartList')).length === 0) {
     localStorage.setItem('btnLeft', 'hide');
     localStorage.setItem('btnRight', 'hide');
+}
+if (!localStorage.getItem('size')) {
+    localStorage.setItem('size', '3');
 }
 
 let currDataWithCategories: IProductsData[] = [];
@@ -212,7 +215,10 @@ document.addEventListener('click', (e: Event) => {
             e.target.textContent = localStorage.getItem(`btn_${e.target.id}`);
         }
         localStorage.setItem('cartList', JSON.stringify(arrayId));
-        localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(cartProductsArray.flat(), 3)));
+        localStorage.setItem(
+            'cartItems',
+            JSON.stringify(sliceIntoChunks(cartProductsArray.flat(), +localStorage.getItem('size')))
+        );
 
         if (localStorage.getItem(`btn_${e.target.id}`) === 'в корзину') {
             localStorage.setItem(
@@ -228,12 +234,15 @@ document.addEventListener('click', (e: Event) => {
             localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock')));
         }
 
-        if (JSON.parse(localStorage.getItem('cartList')).length > 3) {
+        if (JSON.parse(localStorage.getItem('cartList')).length > +localStorage.getItem('size')) {
             localStorage.setItem('btnRight', 'show');
         } else {
             localStorage.setItem('btnRight', 'hide');
         }
-        if (JSON.parse(localStorage.getItem('cartList')).length < 3 || localStorage.getItem('currentPage') === '1') {
+        if (
+            JSON.parse(localStorage.getItem('cartList')).length < +localStorage.getItem('size') ||
+            localStorage.getItem('currentPage') === '1'
+        ) {
             localStorage.setItem('btnLeft', 'hide');
         } else {
             localStorage.setItem('btnLeft', 'show');
@@ -280,7 +289,7 @@ document.addEventListener('click', (e: Event) => {
         } else {
             localStorage.setItem('btnLeft', 'show');
         }
-        // localStorage.setItem('btnRight', 'show');
+        localStorage.setItem('btnRight', 'show');
         document.querySelector('.btn-switch-page-right').style.transform = 'scale(1)';
     }
 
@@ -308,8 +317,6 @@ document.addEventListener('click', (e: Event) => {
                     item.style.transform = 'scale(0)';
                 }
             });
-            console.log(localStorage.getItem(`stock_${e.target.id}`));
-            console.log(productsData[e.target.id].stock);
         }
         localStorage.setItem(
             `price_${e.target.id}`,
@@ -340,21 +347,27 @@ document.addEventListener('click', (e: Event) => {
                 .flat()
                 .filter((item) => +item.id !== +e.target.id);
             localStorage.setItem('cartList', JSON.stringify(arr1));
-            localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(arr2.flat(), 3)));
+            localStorage.setItem(
+                'cartItems',
+                JSON.stringify(sliceIntoChunks(arr2.flat(), +localStorage.getItem('size')))
+            );
             localStorage.setItem(`btn_${e.target.id}`, 'в корзину');
             document.querySelector('.cart-list').innerHTML = '';
-            const arr3 = fillCartPages();
+            const arr3 = fillCartPages(+localStorage.getItem('size'));
             arr3.forEach((item) => {
                 createProductsList(item);
             });
-            document.querySelector('input.quantity').value = JSON.parse(localStorage.getItem('cartList') as string).length;
+            document.querySelector('input.quantity').value = JSON.parse(
+                localStorage.getItem('cartList') as string
+            ).length;
             // localStorage.setItem(`quantityProduct_${e.target.id}`, '1');
             // localStorage.setItem('totalStock', String(+localStorage.getItem('totalStock') - 1));
         }
-        if (JSON.parse(localStorage.getItem('cartList') as string).length <= 3) {
+        if (JSON.parse(localStorage.getItem('cartList') as string).length <= +localStorage.getItem('size')) {
             localStorage.setItem('btnRight', 'hide');
             document.querySelector('.btn-switch-page-right').style.transform = 'scale(0)';
         }
+        document.querySelector('.total-quantity-header')?.textContent = localStorage.getItem('totalPrice');
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.add-item')) {
@@ -412,6 +425,7 @@ document.addEventListener('click', (e: Event) => {
         }
         document.querySelector('.quantity-products-value').value++;
     }
+    document.querySelector('.total-quantity-header')?.textContent = localStorage.getItem('totalPrice');
 });
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
@@ -430,12 +444,3 @@ window.addEventListener('hashchange', () => router());
 window.addEventListener('load', () => router());
 
 // //--------------------------------------------------------//
-
-function sliceIntoChunks(arr, chunkSize) {
-    const res = [];
-    for (let i = 0; i < arr.length; i += chunkSize) {
-        const chunk = arr.slice(i, i + chunkSize);
-        res.push(chunk);
-    }
-    return res;
-}
