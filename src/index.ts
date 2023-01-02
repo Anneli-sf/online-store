@@ -21,6 +21,8 @@ import {
     sortByDESC,
     sortByPriceInc,
     sortByPriceDecr,
+    unicCategories,
+    unicSubcategories,
 } from './components/helpers/helpers';
 
 createHeader();
@@ -119,7 +121,7 @@ if (!localStorage.getItem('size')) {
 let currDataWithCategories: IProductsData[] = [];
 let currDataWithSubCategories: IProductsData[] = [];
 let stackArr: IProductsData[] = [];
-let currentArray: IProductsData[] = [];
+// let currentArray: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
@@ -127,9 +129,6 @@ document.addEventListener('click', (e: Event) => {
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
         const state: string = '#/product-details/' + e.target.id;
         window.history.pushState({ path: state }, '', state);
-
-        // const link = e.target.parentElement as HTMLLinkElement;
-        // link.url = `#${window.location.href.split('#')[1]}`;
         e.target.url = window.location.href;
 
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage });
@@ -406,171 +405,59 @@ function sliceIntoChunks(arr, chunkSize) {
     return res;
 }
 
-const aside = document.querySelector('.main-aside') as HTMLDivElement;
-aside?.addEventListener('change', (e) => {
-    if (e.target instanceof Element && e.target.className === 'category-label') {
-        // currentArray = [];
-        console.log('e.target', e.target);
-        const categoryName: string = e.target.getAttribute('for'); //sport
-        // console.log('categoryName', categoryName);
-        // console.log('window.location.href', window.location.href);
+//-------------------------------------------------FILTERS
+const filters = {
+    categories: [] as IProductsData[],
+    subcategories: [] as IProductsData[],
+    currArr: [] as IProductsData[],
+};
 
-        let state;
-        const chosenCategory = productsData.filter((el) => el.categoryEng === categoryName);
-        currentArray = deleteDoubleAddUnique(currentArray, chosenCategory);
+const currentFilters = (el: HTMLInputElement) => {
+    if (filters.currArr.length === productsData.length) filters.currArr = [];
 
-        console.log('Arr для вызова', currentArray);
+    const chosenCategory: IProductsData[] = productsData.filter((item) => item.categoryEng === el.getAttribute('id'));
+    const chosenSubCategory: IProductsData[] = productsData.filter(
+        (item) => item.subcategoryEng === el.getAttribute('id')
+    );
+    filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
+    // console.log(filters.categories);
+    filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
+    // console.log(filters.subcategories);
+    filters.currArr =
+        filters.subcategories.length === 0
+            ? filters.categories
+            : filters.categories.length === 0
+            ? filters.subcategories
+            : addDoubleDeleteUnique(filters.categories, filters.subcategories);
+    // console.log('filters.currArr', filters.currArr);
+    return filters.currArr.length === 0 ? productsData : filters.currArr;
+};
 
-        window.location.href.includes('category=')
-            ? (state = window.location.href + '↕' + categoryName)
-            : (state = window.location.href + '?category=' + categoryName);
+document?.addEventListener('change', (e) => {
+    const element = e.target as HTMLInputElement;
+    if (element instanceof Element && element.closest('input')) {
+        const result: IProductsData[] = currentFilters(element);
+        // console.log('result', result);
+        const categories: string[] = unicCategories(result);
+        const subcategories: string[] = unicSubcategories(result);
 
-        if (window.location.href.includes(categoryName)) {
-            state = window.location.href.split(categoryName).join('');
-        }
+        const state = () => {
+            let categoryState = '';
+            let subcategoryState = '';
 
-        if (currentArray.length === 0) {
-            state = window.location.href.split('?')[0];
-            console.log('state', state);
-            // currentArray = productsData.slice();
-            router(productsData);
-        } else router(currentArray);
+            if (categories.length > 0) categoryState = 'category=' + categories.join('↕');
+            if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
+            let state = `/?${categoryState}&${subcategoryState}`;
+            if (result.length === productsData.length) state = '/';
+            console.log(state);
+            return state;
+        };
 
-        e.target.url = state;
-        window.history.pushState({ path: e.target.url }, '', e.target.url);
-        console.log('e.target.url', e.target.url);
-        // console.log('window.location.hash', window.location.hash);
-
+        element.url = state();
+        window.history.pushState({ path: element.url }, '', element.url);
         routes.push({ path: '/', component: MainPage });
-        console.log('routes', routes);
-
-        // router(currentArray);
+        router(result);
     }
-
-    if (e.target instanceof Element && e.target.className === 'subcategory-label') {
-        console.log('currentArray', currentArray);
-        e.target.classList.toggle('checked');
-        const subcategoryName: string = e.target.getAttribute('for'); //sport
-        // console.log('categoryName', categoryName);
-        // console.log('window.location.href', window.location.href);
-
-        let state;
-        const chosensubCategory = currentArray.filter((el) => el.subcategoryEng === subcategoryName);
-
-        if (currentArray.length === 0) {
-            const chosensubCategory = productsData.filter((el) => el.subcategoryEng === subcategoryName);
-            currentArray = deleteDoubleAddUnique(currentArray, chosensubCategory);
-        } else {
-            const chosensubCategory = currentArray.filter((el) => el.subcategoryEng === subcategoryName);
-            currentArray = deleteDoubleAddUnique(currentArray, chosensubCategory);
-        }
-
-        console.log('Arr для вызова', currentArray);
-
-        window.location.href.includes('subcategory=')
-            ? (state = window.location.href + '↕' + subcategoryName)
-            : (state = window.location.href + '?subcategory=' + subcategoryName);
-
-        if (window.location.href.includes(subcategoryName)) {
-            state = window.location.href.split(subcategoryName).join('');
-        }
-
-        if (currentArray.length === 0) {
-            state = window.location.href.split('?')[0];
-            console.log('state', state);
-            currentArray = productsData.slice();
-        }
-
-        e.target.url = state;
-        window.history.pushState({ path: e.target.url }, '', e.target.url);
-        console.log('e.target.url', e.target.url);
-        // console.log('window.location.hash', window.location.hash);
-
-        routes.push({ path: '/', component: MainPage });
-        console.log('routes', routes);
-
-        router(currentArray);
-    }
-    //---------if click on FILTERS CATEGORY
-    // if (e.target instanceof Element && e.target.className === 'category-label') {
-    //     const chosenCategoryArr: IProductsData[] = productsData.filter((item) => {
-    //         const element = e.target as HTMLLabelElement;
-    //         if (element.children[0] !== null) return item.categoryEng === element.children[0].id;
-    //     });
-
-    //     console.log('chosenCategory', chosenCategoryArr);
-    //     // if (!isAlreadyHave(, chosenCategoryArr)) {
-    //     //      = .concat(chosenCategoryArr);
-    //     //     localStorage.setItem('productsList', JSON.stringify());
-    //     // } else {
-    //     //      = deleteChosenCategory(, chosenCategoryArr);
-    //     //     if (.length === 0) {
-    //     //         .concat(productsData);
-    //     //     }
-    //     //     localStorage.setItem('productsList', JSON.stringify());
-    //     // }
-    //     currDataWithCategories = deleteDoubleAddUnique(currDataWithCategories, chosenCategoryArr);
-    //     // localStorage.setItem('productsList', JSON.stringify());
-
-    //     if (currDataWithCategories.length === 0) {
-    //         mainSection.innerHTML = ``;
-    //         mainSection.append(createProducstPage(productsData));
-    //     } else {
-    //         mainSection.innerHTML = ``;
-    //         mainSection.append(createProducstPage(currDataWithCategories));
-    //     }
-    // }
-
-    // //---------if click on FILTERS SUBCATEGORY
-    // if (e.target instanceof Element && e.target.className === 'subcategory-label') {
-    //     //если категории уже выбраны
-    //     if (currDataWithCategories.length > 0) {
-    //         const chosenSubCategoryArr: IProductsData[] = currDataWithCategories.filter((item) => {
-    //             const element = e.target as HTMLLabelElement;
-    //             if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
-    //         });
-    //         console.log('chosenSubCategory', chosenSubCategoryArr);
-
-    //         if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-    //             stackArr = stackArr.concat(chosenSubCategoryArr);
-    //             currDataWithSubCategories = currDataWithSubCategories.concat(stackArr);
-    //             // console.log('currDataWithSubCategories', currDataWithSubCategories);
-    //         } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-    //             stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr); //удаляем кликнутое второй раз
-    //             // console.log('stackArr второй клик', stackArr);
-    //             if (stackArr.length === 0) {
-    //                 currDataWithSubCategories = currDataWithCategories;
-    //                 // console.log('currDataWithSubCategories когда стек пустой', currDataWithSubCategories);
-    //             } else {
-    //                 currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
-    //             }
-    //         }
-
-    //         mainSection.innerHTML = ``;
-    //         mainSection.append(createProducstPage(currDataWithSubCategories));
-    //     } else if (currDataWithCategories.length === 0) {
-    //         //если категории НЕ выбраны
-    //         const chosenSubCategoryArr: IProductsData[] = productsData.filter((item) => {
-    //             const element = e.target as HTMLLabelElement;
-    //             if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
-    //         });
-    //         console.log('chosenSubCategory при пустых категориях', chosenSubCategoryArr);
-
-    //         if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-    //             stackArr = stackArr.concat(chosenSubCategoryArr);
-    //             currDataWithSubCategories = stackArr;
-    //             console.log('currDataWithSubCategories при пустом стеке', currDataWithSubCategories);
-    //         } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-    //             stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr);
-
-    //             if (stackArr.length > 0) {
-    //                 currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
-    //             } else if (stackArr.length === 0) {
-    //                 currDataWithSubCategories = productsData;
-    //             }
-    //         }
-    //         mainSection.innerHTML = ``;
-    //         mainSection.append(createProducstPage(currDataWithSubCategories));
-    //     }
-    // }
 });
+
+//-------------------------------------------------/FILTERS
