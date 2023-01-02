@@ -15,11 +15,11 @@ const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
 export const createCartPage = (): HTMLDivElement => {
     const cartPage = createElement('div', 'cart-wrapper') as HTMLDivElement;
-    cartPage.append(createProductsCartBlock(+localStorage.getItem('currentPage') - 1), createSummaryCartBlock());
+    cartPage.append(createProductsCartBlock(), createSummaryCartBlock());
     return cartPage;
 };
 
-function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
+export function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
     const res = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
         const chunk = arr.slice(i, i + chunkSize);
@@ -28,7 +28,18 @@ function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
     return res;
 }
 
-export const createProductsCartBlock = (id) => {
+export const fillCartPages = (size: number) => {
+    const arr = JSON.parse(localStorage.getItem('cartList') as string);
+    if (arr.length === 0) {
+        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), size);
+    } else {
+        return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), size)[
+            +localStorage.getItem('currentPage') - 1
+        ];
+    }
+};
+
+export const createProductsCartBlock = () => {
     const cartBlock = createElement('div', 'cart-products');
     const cartBlockHeader = createElement('div', 'block-header');
     const cartBlockTitle = createElement('p', 'block-title');
@@ -36,18 +47,28 @@ export const createProductsCartBlock = (id) => {
 
     const cartBlockContent = createElement('div', 'block-section');
 
-    cartBlockHeader.append(cartBlockTitle, quantityProductsOnCart(), switchPagesBlock());
-
-    const fillCartPages = (id) => {
-        const arr = JSON.parse(localStorage.getItem('cartList') as string);
-        if (arr.length === 0) {
-            return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3);
-        } else {
-            return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), 3)[id];
+    const paginationInput = createElement('input', 'pagination') as HTMLInputElement;
+    paginationInput.type = 'text';
+    paginationInput.placeholder = 'кол-во товаров';
+    paginationInput.maxLength = 1;
+    paginationInput.oninput = () => {
+        if (paginationInput.value && paginationInput.value !== '0') {
+            paginationInput.value = paginationInput.value.replace(/[^1-9.]/g, '').replace(/(\..*)\./g, '$1');
+            document.querySelector('.cart-list').innerHTML = '';
+            const arr2 = JSON.parse(localStorage.getItem('cartItems')).flat();
+            localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(arr2.flat(), +paginationInput.value)));
+            localStorage.setItem('size', paginationInput.value);
+            const arr3 = fillCartPages(+localStorage.getItem('size'));
+            arr3.forEach((item) => {
+                createProductsList(item);
+            });
         }
     };
 
-    const idArray = fillCartPages(id);
+    cartBlockHeader.append(cartBlockTitle, quantityProductsOnCart(), paginationInput, switchPagesBlock());
+
+    const idArray = fillCartPages(+localStorage.getItem('size'));
+    listBlock.innerHTML = '';
     idArray.forEach((item) => {
         createProductsList(item);
     });
@@ -101,6 +122,18 @@ const switchPagesBlock = () => {
     const buttonSwitchPagesToLeft = createButton('', 'btn-switch-page-left');
     const buttonSwitchPagesToRight = createButton('', 'btn-switch-page-right');
 
+    if (localStorage.getItem('btnLeft') === 'show') {
+        buttonSwitchPagesToLeft.style.transform = 'scale(1)';
+    } else if (localStorage.getItem('btnLeft') === 'hide') {
+        buttonSwitchPagesToLeft.style.transform = 'scale(0)';
+    }
+
+    if (localStorage.getItem('btnRight') === 'show') {
+        buttonSwitchPagesToRight.style.transform = 'scale(1)';
+    } else if (localStorage.getItem('btnRight') === 'hide') {
+        buttonSwitchPagesToRight.style.transform = 'scale(0)';
+    }
+
     pagesSwitchesButtonsBlock.append(textPage, buttonSwitchPagesToLeft, currentPage, buttonSwitchPagesToRight);
 
     return pagesSwitchesButtonsBlock;
@@ -108,8 +141,9 @@ const switchPagesBlock = () => {
 
 //----------------------------/HEADER
 
-const cartProductBlock = (productId: number) => {
+const cartProductBlock = (productId?: number) => {
     const productCartBlock = createElement('li', 'cart-item') as HTMLLIElement;
+    productCartBlock.id = `${productId}`;
     productCartBlock.append(
         numberOfProductBlock(productId),
         imageProductBlock(productId),
@@ -186,7 +220,7 @@ const productsValuesBlock = (productId: number) => {
         'stock-value',
         'number',
         '',
-        `${localStorage.getItem(`stock_${productId}`)}`,
+        localStorage.getItem(`stock_${productId}`),
         '',
         '',
         '',
@@ -211,13 +245,24 @@ const productsValuesBlock = (productId: number) => {
     const addAndDelItemsButtonsContainer = createElement('div', 'add-del-btns-container') as HTMLDivElement;
     const addItemButton = createButton('', 'add-item') as HTMLButtonElement;
     addItemButton.id = `${productId}`;
+
+    if (localStorage.getItem(`stock_${productId}`) === '0') {
+        addItemButton.style.transform = 'scale(0)';
+    }
+
     const deleteItemButton = createButton('', 'delete-item') as HTMLButtonElement;
     deleteItemButton.id = `${productId}`;
 
     const container = createElement('div', 'container') as HTMLDivElement;
     const totalPrice = createElement('input', 'total-price') as HTMLInputElement;
     totalPrice.readOnly = true;
-    totalPrice.value = `${productsData[productId].price}`;
+    totalPrice.id = `${productId}`;
+    if (!localStorage.getItem(`price_${productId}`)) {
+        localStorage.setItem(`price_${productId}`, `${productsData[productId].price}`);
+        totalPrice.value = `${productsData[productId].price}`;
+    } else {
+        (totalPrice.value as string | null) = localStorage.getItem(`price_${productId}`);
+    }
     const span = createElement('span', 'span');
     span.textContent = '$';
     container.append(totalPrice, span);
@@ -238,22 +283,39 @@ export const createSummaryCartBlock = () => {
     const summarySectionBlock = summaryBlock.querySelector('.block-section') as HTMLElement;
 
     const quantityOfPoducts = createParagraph('Товары, шт: ', 'quantity-products') as HTMLParagraphElement;
+
+    let totalStock = JSON.parse(localStorage.getItem('cartList') as string).length;
+
+    if (localStorage.getItem('totalStock')) {
+        totalStock = +localStorage.getItem('totalStock');
+    }
+
     const quantityOfPoductsValue = createSimpleInput(
         'quantity-products-value',
         '',
         '',
-        `${JSON.parse(localStorage.getItem('cartItems') as string)
-            .flat()
-            .reduce((acc, curr) => acc + curr.stock, 0)}`
+        `${totalStock}`,
+        '',
+        '',
+        true
     ) as HTMLInputElement;
     const totalSum = createParagraph('Сумма: ', 'total-sum') as HTMLParagraphElement;
+
+    let totalPrice = JSON.parse(localStorage.getItem('cartItems') as string)
+        .flat()
+        .reduce((acc, curr) => acc + curr.price, 0);
+
+    if (localStorage.getItem('totalPrice')) {
+        totalPrice = +localStorage.getItem('totalPrice');
+    }
     const totalSumValue = createSimpleInput(
         'total-sum-value',
         '',
         '',
-        `${JSON.parse(localStorage.getItem('cartItems') as string)
-            .flat()
-            .reduce((acc, curr) => acc + curr.price, 0)}`
+        `${totalPrice}`,
+        '',
+        '',
+        true
     ) as HTMLInputElement;
 
     summarySectionBlock.append(
