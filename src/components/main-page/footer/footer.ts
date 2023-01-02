@@ -11,6 +11,6 @@ export function createFooter(): HTMLBodyElement {
     gitHubLogoAnneli.setAttribute('target', '_blank');
     gitHubLogoAlex.setAttribute('target', '_blank');
 
-    footer.append(footerRsSchoolLogo, gitHubLogoAnneli, gitHubLogoAlex);
+    footer.append(gitHubLogoAnneli, footerRsSchoolLogo, gitHubLogoAlex);
     return footer;
 }
