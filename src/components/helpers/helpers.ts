@@ -58,11 +58,11 @@ export const getMaxAmount = (arr: IProductsData[]): number => {
 
 //------------------------SORT
 export const sortByASC = (arr: IProductsData[]): IProductsData[] => {
-    return arr.sort((x, y) => (x.title < y.title ? -1 : 1));
+    return arr.sort((x, y) => (x.title.toLowerCase() < y.title.toLowerCase() ? -1 : 1));
 };
 
 export const sortByDESC = (arr: IProductsData[]): IProductsData[] => {
-    return arr.sort((x, y) => (x.title > y.title ? -1 : 1));
+    return arr.sort((x, y) => (x.title.toLowerCase() < y.title.toLowerCase() ? 1 : -1));
 };
 
 export const sortByPriceInc = (arr: IProductsData[]): IProductsData[] => {
