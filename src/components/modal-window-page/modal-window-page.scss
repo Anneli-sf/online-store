@@ -9,9 +9,6 @@
 
 .container {
     position: relative;
-    // top: 60%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,7 +16,8 @@
     width: 30%;
     margin: 0 auto;
     form {
-        background: #fff;
+        background-color: #ffc500;
+        color: #7f0909;
         border-radius: 5px;
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         padding: 20px;
@@ -34,7 +32,7 @@
 
     form .inputBox span {
         display: block;
-        color: #999;
+        color: #7f0909;
         padding-bottom: 5px;
         font-size: 16px;
     }
@@ -45,7 +43,7 @@
         padding: 5px 10px;
         border-radius: 10px;
         border: 1px solid rgba(0, 0, 0, 0.3);
-        color: #444;
+        color: #7f0909;
         margin-right: 10px;
     }
 
@@ -59,15 +57,18 @@
     }
 
     form .submit-btn {
-        width: 100%;
-        background: linear-gradient(45deg, black, white);
-        margin-top: 10px;
-        padding: 10px;
-        font-size: 16px;
-        color: #fff;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: 0.2s linear;
+        width: 30%;
+        font-size: 20px;
+        border-color: #7f0909;
+        color: #ffc500;
+        box-shadow: 0 0 40px 40px #7f0909 inset, 0 0 0 0 #7f0909;
+        transition: all 150ms ease-in-out;
+        border-radius: 5px;
+        transform: translate(115%, 10px);
+        &:hover {
+          box-shadow: 0 0 10px 0 #7f0909 inset, 0 0 10px 4px #7f0909;
+          color: #7f0909;
+        }
     }
 
     form .submit-btn:hover {
@@ -80,7 +81,7 @@
         position: absolute;
         height: 215px;
         width: 350px;
-        transform: scale(0.7) translateY(-205%);
+        transform: scale(0.7) translate(165%, -20%);
     }
 
     .card-container .front {
@@ -89,7 +90,7 @@
         width: 100%;
         top: 0;
         left: 0;
-        background: linear-gradient(45deg, black, white);
+        background: linear-gradient(45deg, #7f0909, #ffc500);
         border-radius: 5px;
         backface-visibility: hidden;
         box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
@@ -117,7 +118,7 @@
     .card-container .front .card-number-box {
         padding: 10px 0;
         font-size: 22px;
-        color: #fff;
+        color: white;
         height: 50px;
     }
 
@@ -131,7 +132,7 @@
 
     .card-container .front .flexbox .box {
         font-size: 15px;
-        color: #fff;
+        color: white;
     }
 
     .card-container .back {
@@ -140,7 +141,7 @@
         left: 0;
         height: 100%;
         width: 100%;
-        background: linear-gradient(45deg, black, white);
+        background: linear-gradient(45deg, #7f0909, #ffc500);
         border-radius: 5px;
         padding: 20px 0;
         text-align: right;
@@ -162,7 +163,7 @@
     }
 
     .card-container .back .box span {
-        color: #fff;
+        color: white;
         font-size: 15px;
     }
 
