@@ -42,13 +42,6 @@ const MainPage = {
     },
 };
 
-const MainPageWithFilters = {
-    render: (currentArray) => {
-        return createProducstPage(currentArray);
-        // console.log(`${currentArray} works`);
-    },
-};
-
 const CartPage = {
     render: () => {
         mainSection.innerHTML = '';
@@ -117,7 +110,6 @@ if (JSON.parse(localStorage.getItem('cartList')).length === 0) {
 if (!localStorage.getItem('size')) {
     localStorage.setItem('size', '3');
 }
-
 
 // TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
@@ -368,25 +360,6 @@ document.addEventListener('click', (e: Event) => {
     }
 
     //-------------/BASKET
-    //-----------------------------------SORT
-    if (e.target instanceof Element && e.target.classList.contains('sort__item')) {
-        const sortList = document.querySelectorAll('.sort__item');
-        let currArr = [];
-        console.log(sortList[0]);
-        switch (e.target) {
-            case sortList[0]:
-                currArr = sortByASC(productsData);
-                break;
-            case sortList[1]:
-                currArr = sortByDESC(productsData);
-            case sortList[4]:
-                currArr = sortByPriceInc(productsData);
-            case sortList[3]:
-                currArr = sortByPriceDecr(productsData);
-        }
-        console.log(currArr);
-        appendToMainSection(currArr);
-    }
     document.querySelector('.total-quantity-header')?.textContent = localStorage.getItem('totalPrice');
     //-----------------------------------/SORT
 });
@@ -458,3 +431,4 @@ document?.addEventListener('change', (e) => {
 });
 
 //-------------------------------------------------/FILTERS
+
