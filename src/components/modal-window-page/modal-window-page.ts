@@ -166,6 +166,31 @@ const createInputBox = (spanText: string, inputClass: string, inputMaxLength?: n
     span.textContent = spanText;
 
     const input = createSimpleInput(inputClass, 'text') as HTMLInputElement;
+    if (input.classList.contains('card-number-input')) {
+        input.oninput = () => {
+            (document.querySelector('.card-number-box') as HTMLDivElement).innerHTML = input.value;
+        };
+    }
+    if (input.classList.contains('card-holder-input')) {
+        input.oninput = () => {
+            (document.querySelector('.card-holder-name') as HTMLDivElement).innerHTML = input.value;
+        };
+    }
+    if (input.classList.contains('cvv-input')) {
+        input.oninput = () => {
+            (document.querySelector('.cvv-box') as HTMLDivElement).innerHTML = input.value;
+        };
+        input.onmouseenter = () => {
+            (document.querySelector('.front') as HTMLDivElement).style.transform =
+                'perspective(1000px) rotateY(-180deg)';
+            (document.querySelector('.back') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(0deg)';
+        };
+
+        input.onmouseleave = () => {
+            (document.querySelector('.front') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(0deg)';
+            (document.querySelector('.back') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(180deg)';
+        };
+    }
     if (inputMaxLength) input.maxLength = inputMaxLength;
 
     createCharacteristicInput(input, spanText);
@@ -180,6 +205,16 @@ const createSelectBox = (text: string, selectClass: string, startCalcNumber: num
     span.textContent = text;
 
     const select = createElement('select', selectClass) as HTMLSelectElement;
+    if (select.classList.contains('month-input')) {
+        select.oninput = () => {
+            (document.querySelector('.exp-month') as HTMLDivElement).innerHTML = select.value;
+        };
+    }
+    if (select.classList.contains('year-input')) {
+        select.oninput = () => {
+            (document.querySelector('.exp-year') as HTMLDivElement).innerHTML = select.value;
+        };
+    }
     const optionFirst = createElement('option', 'option-first') as HTMLOptionElement;
     optionFirst.disabled = true;
     optionFirst.textContent = text;
@@ -214,6 +249,15 @@ const selectYear = createSelectBox('Год', 'year-input', 2023, 2035);
 // ------------------------------------FORM-------------------------------------//
 const createForm = () => {
     const form = createElement('form', 'form') as HTMLFormElement;
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (validation(this) == true) {
+            console.log('Форма заполнена успешно!');
+        } else {
+            console.log('Поля не заполнены, либо заполнены неправильно!');
+        }
+    });
 
     const flexboxBlock = createElement('div', 'flexbox');
     const buttonSubmit = createButton('отправить', 'submit-btn');
@@ -236,38 +280,7 @@ export const createContainerCard = () => {
 };
 // -------------------------------------------------------------------------//
 
-// document.querySelector('.main')?.append(createContainerCard());
-
 // ------------------------------------ANIMATION-------------------------------------//
-// -----------------------------------SHOW INPUT VALUE ON CARD--------------------------------------//
-const showInputValueOnCard = (inputClassName: string, parentInputClassName: string) => {
-    (document.querySelector(inputClassName) as HTMLInputElement).oninput = () => {
-        (document.querySelector(parentInputClassName) as HTMLDivElement).innerText = (document.querySelector(
-            inputClassName
-        ) as HTMLInputElement).value;
-    };
-};
-// -------------------------------------------------------------------------//
-// --------------------------------ROTATE CARD WHEN MOUSE ENTERED-----------------------------------------//
-const rotateCard = () => {
-    (document.querySelector('.cvv-input') as HTMLInputElement).onmouseenter = () => {
-        (document.querySelector('.front') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(-180deg)';
-        (document.querySelector('.back') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(0deg)';
-    };
-
-    (document.querySelector('.cvv-input') as HTMLInputElement).onmouseleave = () => {
-        (document.querySelector('.front') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(0deg)';
-        (document.querySelector('.back') as HTMLDivElement).style.transform = 'perspective(1000px) rotateY(180deg)';
-    };
-};
-// -------------------------------------------------------------------------//
-// showInputValueOnCard('.card-number-input', '.card-number-box');
-// showInputValueOnCard('.card-holder-input', '.card-holder-name');
-// showInputValueOnCard('.month-input', '.exp-month');
-// showInputValueOnCard('.year-input', '.exp-year');
-// showInputValueOnCard('.cvv-input', '.cvv-box');
-// rotateCard();
-// -------------------------------------------------------------------------//
 
 // -----------------------------------FORM VALIDATE--------------------------------------//
 function validation(form: HTMLFormElement) {
@@ -328,15 +341,17 @@ function validation(form: HTMLFormElement) {
 
 // ---------------------------------IS FORM VALIDITY----------------------------------------//
 const isFormValidity = () => {
-    (document.querySelector('.form') as HTMLFormElement).addEventListener('submit', function (e) {
-        e.preventDefault();
+    if (document.querySelector('.form') as HTMLFormElement) {
+        (document.querySelector('.form') as HTMLFormElement).addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        if (validation(this) == true) {
-            alert('Форма заполнена успешно!');
-        } else {
-            alert('Поля не заполнены, либо заполнены неправильно!');
-        }
-    });
+            if (validation(this) == true) {
+                alert('Форма заполнена успешно!');
+            } else {
+                alert('Поля не заполнены, либо заполнены неправильно!');
+            }
+        });
+    }
 };
-// isFormValidity();
+isFormValidity();
 // -------------------------------------------------------------------------//
