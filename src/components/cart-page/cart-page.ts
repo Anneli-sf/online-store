@@ -5,17 +5,21 @@ import {
     createButton,
     createLabel,
     createImage,
-    createInput,
     createSimpleInput,
     createParagraph,
 } from '../global-components/global-components';
-import { productsData } from '../data/data';
+import { IProductsData, productsData } from '../data/data';
 
 const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
 export const createCartPage = (): HTMLDivElement => {
     const cartPage = createElement('div', 'cart-wrapper') as HTMLDivElement;
-    cartPage.append(createProductsCartBlock(), createSummaryCartBlock());
+    if (JSON.parse(localStorage.getItem('cartList') as string).length === 0) {
+        console.log('zero');
+        cartPage.append(createEmptyPage());
+    } else {
+        cartPage.append(createProductsCartBlock(), createSummaryCartBlock());
+    }
     return cartPage;
 };
 
@@ -34,9 +38,19 @@ export const fillCartPages = (size: number) => {
         return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), size);
     } else {
         return sliceIntoChunks(JSON.parse(localStorage.getItem('cartList') as string), size)[
-            +localStorage.getItem('currentPage') - 1
+            +(localStorage.getItem('currentPage') as string) - 1
         ];
     }
+};
+
+const createEmptyPage = () => {
+    const empty = createElement('div', 'empty');
+    const emptyText = createElement('p', 'empty-text');
+    emptyText.textContent = 'Корзина пуста...';
+
+    empty.append(emptyText);
+
+    return empty;
 };
 
 export const createProductsCartBlock = () => {
@@ -51,23 +65,37 @@ export const createProductsCartBlock = () => {
     paginationInput.type = 'text';
     paginationInput.placeholder = 'кол-во товаров';
     paginationInput.maxLength = 1;
+    paginationInput.value = localStorage.getItem('size') as string;
     paginationInput.oninput = () => {
+        console.log(paginationInput.value);
         if (paginationInput.value && paginationInput.value !== '0') {
             paginationInput.value = paginationInput.value.replace(/[^1-9.]/g, '').replace(/(\..*)\./g, '$1');
-            document.querySelector('.cart-list').innerHTML = '';
-            const arr2 = JSON.parse(localStorage.getItem('cartItems')).flat();
+            localStorage.setItem('currentPage', '1');
+            localStorage.setItem('btnLeft', 'hide');
+            (document.querySelector('.btn-switch-page-left') as HTMLButtonElement).style.transform = 'scale(0)';
+            (document.querySelector('.current-page') as HTMLInputElement).value = '1';
+            (document.querySelector('.cart-list') as HTMLUListElement).innerHTML = '';
+            const arr2 = JSON.parse(localStorage.getItem('cartItems') as string).flat();
             localStorage.setItem('cartItems', JSON.stringify(sliceIntoChunks(arr2.flat(), +paginationInput.value)));
             localStorage.setItem('size', paginationInput.value);
-            const arr3 = fillCartPages(+localStorage.getItem('size'));
+            const arr3 = fillCartPages(+(localStorage.getItem('size') as string)) as number[];
             arr3.forEach((item) => {
                 createProductsList(item);
             });
+            if (JSON.parse(localStorage.getItem('cartItems') as string).length === 1) {
+                localStorage.setItem('btnRight', 'hide');
+                (document.querySelector('.btn-switch-page-right') as HTMLButtonElement).style.transform = 'scale(0)';
+            }
+            if (JSON.parse(localStorage.getItem('cartItems') as string).length > 1) {
+                localStorage.setItem('btnRight', 'show');
+                (document.querySelector('.btn-switch-page-right') as HTMLButtonElement).style.transform = 'scale(1)';
+            }
         }
     };
 
     cartBlockHeader.append(cartBlockTitle, quantityProductsOnCart(), paginationInput, switchPagesBlock());
 
-    const idArray = fillCartPages(+localStorage.getItem('size'));
+    const idArray = fillCartPages(+(localStorage.getItem('size') as string)) as number[];
     listBlock.innerHTML = '';
     idArray.forEach((item) => {
         createProductsList(item);
@@ -141,7 +169,7 @@ const switchPagesBlock = () => {
 
 //----------------------------/HEADER
 
-const cartProductBlock = (productId?: number) => {
+const cartProductBlock = (productId: number) => {
     const productCartBlock = createElement('li', 'cart-item') as HTMLLIElement;
     productCartBlock.id = `${productId}`;
     productCartBlock.append(
@@ -213,17 +241,17 @@ const productsValuesBlock = (productId: number) => {
     const stock = createParagraph('Доступно: ', 'stock') as HTMLParagraphElement;
 
     if (!localStorage.getItem(`stock_${productId}`)) {
-        localStorage.setItem(`stock_${productId}`, productsData[productId].stock - 1);
+        localStorage.setItem(`stock_${productId}`, String(productsData[productId].stock - 1));
     }
 
     const stockValue = createSimpleInput(
         'stock-value',
         'number',
         '',
-        localStorage.getItem(`stock_${productId}`),
+        localStorage.getItem(`stock_${productId}`) as string,
         '',
         '',
-        '',
+        false,
         `${productId}`
     ) as HTMLInputElement;
     stockValue.setAttribute('readonly', 'true');
@@ -238,7 +266,7 @@ const productsValuesBlock = (productId: number) => {
         'quantity-items-cart',
         'number',
         '',
-        +localStorage.getItem(`quantityProduct_${productId}`)
+        String(+(localStorage.getItem(`quantityProduct_${productId}`) as string))
     ) as HTMLInputElement;
     quantityOfItemsInCart.setAttribute('readonly', 'true');
 
@@ -287,7 +315,7 @@ export const createSummaryCartBlock = () => {
     let totalStock = JSON.parse(localStorage.getItem('cartList') as string).length;
 
     if (localStorage.getItem('totalStock')) {
-        totalStock = +localStorage.getItem('totalStock');
+        totalStock = +(localStorage.getItem('totalStock') as string);
     }
 
     const quantityOfPoductsValue = createSimpleInput(
@@ -301,12 +329,12 @@ export const createSummaryCartBlock = () => {
     ) as HTMLInputElement;
     const totalSum = createParagraph('Сумма: ', 'total-sum') as HTMLParagraphElement;
 
-    let totalPrice = JSON.parse(localStorage.getItem('cartItems') as string)
+    let totalPrice = (JSON.parse(localStorage.getItem('cartItems') as string) as IProductsData[])
         .flat()
         .reduce((acc, curr) => acc + curr.price, 0);
 
     if (localStorage.getItem('totalPrice')) {
-        totalPrice = +localStorage.getItem('totalPrice');
+        totalPrice = +(localStorage.getItem('totalPrice') as string);
     }
     const totalSumValue = createSimpleInput(
         'total-sum-value',
@@ -317,26 +345,54 @@ export const createSummaryCartBlock = () => {
         '',
         true
     ) as HTMLInputElement;
+    const span = createElement('span', 'span-price-promocode');
 
-    summarySectionBlock.append(
-        quantityOfPoducts,
-        quantityOfPoductsValue,
-        totalSum,
-        totalSumValue,
-        formOfBuyProductsBlock()
-    );
-    // document.querySelector('.main')?.append(summaryBlock);
-
-    return summaryBlock;
-};
-
-const formOfBuyProductsBlock = () => {
-    const buyForm = createInput('promecode-input', 'text', 'Введите промокод') as HTMLFormElement; //'form-buy'
+    const buyForm = createElement('form', 'promocode-form') as HTMLFormElement;
+    buyForm.action = '#/modal';
+    const buyInput = createElement('input', 'promecode-input') as HTMLInputElement;
+    buyInput.oninput = () => {
+        if (buyInput.value === 'Гарри') {
+            localStorage.setItem(
+                'totalPriceProm',
+                String(Math.round(+(localStorage.getItem('totalPrice') as string) * 0.8))
+            );
+            (document.querySelector('.span-price-promocode') as HTMLSpanElement).textContent = localStorage.getItem(
+                'totalPriceProm'
+            );
+            (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
+                'totalPriceProm'
+            ) as string;
+            (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'line-through';
+        } else if (buyInput.value === 'Поттер') {
+            localStorage.setItem(
+                'totalPriceProm',
+                String(Math.round(+(localStorage.getItem('totalPrice') as string) * 0.9))
+            );
+            (document.querySelector('.span-price-promocode') as HTMLSpanElement).textContent = localStorage.getItem(
+                'totalPriceProm'
+            );
+            (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
+                'totalPriceProm'
+            ) as string;
+            (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'line-through';
+        } else {
+            localStorage.setItem('totalPriceProm', localStorage.getItem('totalPrice') as string);
+            (document.querySelector('.span-price-promocode') as HTMLSpanElement).textContent = '';
+            (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
+                'totalPrice'
+            );
+            (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
+        }
+    };
 
     const promoTest = createParagraph("Попробуйте: 'Гарри', 'Поттер'", 'promo-test') as HTMLParagraphElement;
     const buttonBuyNow = createButton('Купить сейчас', 'btn-buy-now');
+    buttonBuyNow.type = 'submit';
 
-    buyForm.append(promoTest, buttonBuyNow);
+    buyForm.append(buyInput, promoTest, buttonBuyNow);
 
-    return buyForm;
+    summarySectionBlock.append(quantityOfPoducts, quantityOfPoductsValue, totalSum, totalSumValue, span, buyForm);
+    // document.querySelector('.main')?.append(summaryBlock);
+
+    return summaryBlock;
 };
