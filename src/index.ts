@@ -118,10 +118,6 @@ if (!localStorage.getItem('size')) {
     localStorage.setItem('size', '3');
 }
 
-let currDataWithCategories: IProductsData[] = [];
-let currDataWithSubCategories: IProductsData[] = [];
-let stackArr: IProductsData[] = [];
-// let currentArray: IProductsData[] = [];
 
 // TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
@@ -372,7 +368,7 @@ document.addEventListener('click', (e: Event) => {
     }
 
     //-------------/BASKET
-    // console.log(e.target);
+    //-----------------------------------SORT
     if (e.target instanceof Element && e.target.classList.contains('sort__item')) {
         const sortList = document.querySelectorAll('.sort__item');
         let currArr = [];
@@ -392,6 +388,7 @@ document.addEventListener('click', (e: Event) => {
         appendToMainSection(currArr);
     }
     document.querySelector('.total-quantity-header')?.textContent = localStorage.getItem('totalPrice');
+    //-----------------------------------/SORT
 });
 
 // //--------------------------------------------------------//

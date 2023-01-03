@@ -7,10 +7,8 @@ const sortArrow = createImage('./assets/icons/arrow-down.svg', 'sort-arrow', 'so
 const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
 const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemCategory = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemSubCategory = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemPrice = createElement('li', 'sort__item') as HTMLLIElement;
-const sortItemDiscount = createElement('li', 'sort__item') as HTMLLIElement;
+const sortItemPriceInc = createElement('li', 'sort__item') as HTMLLIElement;
+const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
@@ -25,32 +23,23 @@ function createProductsHeader() {
 
     sortList.textContent = 'Сортировка по:';
 
-    sortItemAlphabetAZ.textContent = 'Сортировка по алфавиту A-Я';
-    sortItemAlphabetZA.textContent = 'Сортировка по алфавиту Я-А';
-    sortItemCategory.textContent = 'Сортировка по категории';
-    sortItemSubCategory.textContent = 'Сортировка по подкатегории';
-    sortItemPrice.textContent = 'Сортировка по цене';
-    sortItemDiscount.textContent = 'Сортировка по скидке';
+    sortItemAlphabetAZ.textContent = 'Сортировать от A до Я';
+    sortItemAlphabetZA.textContent = 'Сортировать от Я до А';
+    sortItemPriceInc.textContent = 'Сортировать по цене 🠕';
+    sortItemPrixeDecr.textContent = 'Сортировать по цене 🠗';
 
     const sortText = createParagraph('Найдено товаров: 0', 'sort__text') as HTMLParagraphElement;
     const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement; //HTMLInputElement;
 
-    sortList.append(
-        sortItemAlphabetAZ,
-        sortItemAlphabetZA,
-        sortItemCategory,
-        sortItemSubCategory,
-        sortItemPrice,
-        sortItemDiscount,
-        sortArrow
-    );
+    sortList.append(sortItemAlphabetAZ, sortItemAlphabetZA, sortItemPriceInc, sortItemPrixeDecr, sortArrow);
     sortBlock.append(sortList, sortText, sortInput);
 
     return sortBlock;
 }
 
 //----------------------products list
-function createProductsList(currentArr: IProductsData[]): HTMLUListElement {//вернула
+function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
+    //вернула
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
     // const array: IProductsData[] = JSON.parse(localStorage.getItem('productsList') as string);
