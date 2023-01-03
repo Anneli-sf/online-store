@@ -2,9 +2,10 @@ import './products-section.scss';
 import { createElement, createImage, createInput, createParagraph } from '../../global-components/global-components';
 import { createProductCard } from './item-card/item-card';
 import { IProductsData, productsData } from '../../data/data';
+import { sortByASC, sortByDESC, sortByPriceDecr, sortByPriceInc } from '../../helpers/helpers';
 
 const sortArrow = createImage('./assets/icons/arrow-down.svg', 'sort-arrow', 'sort-arrow') as HTMLImageElement;
-const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
+export const sortList = createElement('ul', 'sort__list') as HTMLUListElement;
 const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPriceInc = createElement('li', 'sort__item') as HTMLLIElement;
@@ -14,6 +15,7 @@ export function createProductsSection(currentArr: IProductsData[]): HTMLDivEleme
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
     contentBlock.append(createProductsHeader(), createProductsList(currentArr)); //вернула
     document.querySelector('.main')?.append(contentBlock);
+
     return contentBlock;
 }
 
@@ -39,7 +41,6 @@ function createProductsHeader() {
 
 //----------------------products list
 function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
-    //вернула
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
     // const array: IProductsData[] = JSON.parse(localStorage.getItem('productsList') as string);
@@ -53,6 +54,32 @@ function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
     //         productsList.append(createProductCard(item.id));
     //     });
     // }
+    sortList.addEventListener('click', (e) => {
+        if (e.target instanceof Element && e.target.classList.contains('sort__item')) {
+            const sortList = document.querySelectorAll('.sort__item');
+            let sortArr: IProductsData[] = [];
+
+            switch (e.target) {
+                case sortList[0]:
+                    sortArr = sortByASC(currentArr);
+                    break;
+                case sortList[1]:
+                    sortArr = sortByDESC(currentArr);
+                    break;
+                case sortList[2]:
+                    sortArr = sortByPriceDecr(currentArr);
+                    break;
+                case sortList[3]:
+                    sortArr = sortByPriceInc(currentArr);
+                    break;
+            }
+
+            productsList.innerHTML = '';
+            sortArr.forEach((item) => {
+                productsList.append(createProductCard(item.id));
+            });
+        }
+    });
 
     currentArr.forEach((item) => {
         productsList.append(createProductCard(item.id));

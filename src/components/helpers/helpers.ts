@@ -58,21 +58,22 @@ export const getMaxAmount = (arr: IProductsData[]): number => {
 
 //------------------------SORT
 export const sortByASC = (arr: IProductsData[]): IProductsData[] => {
-    return arr.sort((x, y) => (x.title.toLowerCase() < y.title.toLowerCase() ? -1 : 1));
+    return [...arr].sort((x, y) => (x.title.toLowerCase() < y.title.toLowerCase() ? -1 : 1));
 };
 
 export const sortByDESC = (arr: IProductsData[]): IProductsData[] => {
-    return arr.sort((x, y) => (x.title.toLowerCase() < y.title.toLowerCase() ? 1 : -1));
+    return [...arr].sort((x, y) => (x.title.toLowerCase() > y.title.toLowerCase() ? -1 : 1));
 };
 
 export const sortByPriceInc = (arr: IProductsData[]): IProductsData[] => {
-    return arr.sort((x, y) => y.price - x.price);
+    return [...arr].sort((x, y) => y.price - x.price);
 };
 
 export const sortByPriceDecr = (arr: IProductsData[]): IProductsData[] => {
-    return arr.sort((x, y) => x.price - y.price);
+    return [...arr].sort((x, y) => x.price - y.price);
 };
 
+//------------------------unic categories
 export const unicCategories = (arr: IProductsData[]): string[] => {
     const set = new Set(arr.map((el) => el.categoryEng));
     return [...set];
