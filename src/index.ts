@@ -411,11 +411,11 @@ document.addEventListener('click', (e: Event) => {
             localStorage.setItem('btnRight', 'hide');
             (document.querySelector('.btn-switch-page-right') as HTMLButtonElement).style.transform = 'scale(0)';
         }
-        if (document.querySelector('.promecode-input')) {
-            (document.querySelector('.promecode-input') as HTMLInputElement).value = '';
-        }
         (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
-        (document.querySelector('.span-price-promocode') as HTMLSpanElement).textContent = '';
+        if (JSON.parse(localStorage.getItem('cartList') as string).length === 0) {
+            mainSection.innerHTML = '';
+            mainSection.append(createCartPage());
+        }
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.add-item')) {
@@ -480,13 +480,14 @@ document.addEventListener('click', (e: Event) => {
     (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
         'totalPrice'
     );
-    if (document.querySelector('.promecode-input')) {
-        (document.querySelector('.promecode-input') as HTMLInputElement).value = '';
-    }
-    if (document.querySelector('.total-sum-value') as HTMLInputElement) {
-        (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
-    }
-    (document.querySelector('.span-price-promocode') as HTMLSpanElement).textContent = '';
+
+    // if (e.target instanceof Element && e.target.parentElement && e.target.closest('.prom-btn-garry')) {
+        
+    // }
+
+    // if (e.target instanceof Element && e.target.parentElement && e.target.closest('.prom-btn-potter')) {
+        
+    // }
 });
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';

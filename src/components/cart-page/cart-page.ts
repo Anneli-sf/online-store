@@ -14,9 +14,10 @@ const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
 export const createCartPage = (): HTMLDivElement => {
     const cartPage = createElement('div', 'cart-wrapper') as HTMLDivElement;
+    const emptyBlock = createEmptyPage();
+
     if (JSON.parse(localStorage.getItem('cartList') as string).length === 0) {
-        console.log('zero');
-        cartPage.append(createEmptyPage());
+        cartPage.append(emptyBlock);
     } else {
         cartPage.append(createProductsCartBlock(), createSummaryCartBlock());
     }
@@ -345,25 +346,39 @@ export const createSummaryCartBlock = () => {
         '',
         true
     ) as HTMLInputElement;
-    const span = createElement('span', 'span-price-promocode');
 
     const buyForm = createElement('form', 'promocode-form') as HTMLFormElement;
     buyForm.action = '#/modal';
     const buyInput = createElement('input', 'promecode-input') as HTMLInputElement;
+    const promocodeBlock = createElement('div', 'promocode-block');
     buyInput.oninput = () => {
         if (buyInput.value === 'Гарри') {
-            localStorage.setItem(
-                'totalPriceProm',
-                String(Math.round(+(localStorage.getItem('totalPrice') as string) * 0.8))
-            );
-            (document.querySelector('.span-price-promocode') as HTMLSpanElement).textContent = localStorage.getItem(
-                'totalPriceProm'
-            );
-            (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
-                'totalPriceProm'
-            ) as string;
-            (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'line-through';
+            const promContainer = createElement('div', 'prom-cont-garry');
+            const promText = createElement('p', 'prom-text-garry');
+            promText.textContent = 'Промокод "Гарри" - 10%';
+
+            const promBtn = createElement('button', 'prom-btn-garry') as HTMLButtonElement;
+            promBtn.textContent = 'добавить';
+            promBtn.type = 'button';
+
+            promContainer.append(promText, promBtn);
+            if (!document.querySelector('.prom-cont-garry')) {
+                promocodeBlock.style.opacity = '1';
+                promocodeBlock.append(promContainer);
+            }
         } else if (buyInput.value === 'Поттер') {
+            const promContainer = createElement('div', 'prom-cont-potter');
+            const promText = createElement('p', 'prom-text-potter');
+            promText.textContent = 'Промокод "Поттер" - 15%';
+
+            const promBtn = createElement('button', 'prom-btn-potter') as HTMLButtonElement;
+            promBtn.textContent = 'добавить';
+            promBtn.type = 'button';
+            promContainer.append(promText, promBtn);
+            if (!document.querySelector('.prom-cont-potter')) {
+                promocodeBlock.style.opacity = '1';
+                promocodeBlock.append(promContainer);
+            }
             localStorage.setItem(
                 'totalPriceProm',
                 String(Math.round(+(localStorage.getItem('totalPrice') as string) * 0.9))
@@ -382,6 +397,7 @@ export const createSummaryCartBlock = () => {
                 'totalPrice'
             );
             (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
+            promocodeBlock.style.opacity = '0';
         }
     };
 
@@ -389,9 +405,9 @@ export const createSummaryCartBlock = () => {
     const buttonBuyNow = createButton('Купить сейчас', 'btn-buy-now');
     buttonBuyNow.type = 'submit';
 
-    buyForm.append(buyInput, promoTest, buttonBuyNow);
+    buyForm.append(buyInput, promocodeBlock, promoTest, buttonBuyNow);
 
-    summarySectionBlock.append(quantityOfPoducts, quantityOfPoductsValue, totalSum, totalSumValue, span, buyForm);
+    summarySectionBlock.append(quantityOfPoducts, quantityOfPoductsValue, totalSum, totalSumValue, buyForm);
     // document.querySelector('.main')?.append(summaryBlock);
 
     return summaryBlock;
