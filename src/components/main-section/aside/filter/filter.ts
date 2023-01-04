@@ -62,7 +62,13 @@ function createFilterSubСategories(currentArr: IProductsData[]): HTMLDivElement
         )
     );
 
-    // subcategoryForm.addEventListener('click', (e) => toggleFilterInput(e, '.subcategory-input'));
+    filterSubcategory.addEventListener('change', (e) => {
+        const element = e.target as HTMLInputElement;
+        const label = element.parentElement as HTMLLabelElement;
+        if (element instanceof Element && element.closest('input')) {
+            element.checked ? label.classList.add('checked') : label.classList.remove('checked');
+        }
+    });
 
     return filterSubcategory;
 }
