@@ -5,43 +5,40 @@ import './components/main-section/aside/dual-slider/dual-slider';
 import './components/main-section/aside/aside';
 import './components/main-section/main-section';
 import './components/main-page/header/header';
+
 import './components/modal-window-page/modal-window-page';
 
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import {
-    createCartPage,
-    createProductsCartBlock,
-    createProductsList,
-    fillCartPages,
-    sliceIntoChunks,
-} from './components/cart-page/cart-page';
-import { createProductsSection, contentBlock } from './components/main-section/products-section/products-section';
+import { createCartPage, createProductsList, fillCartPages, sliceIntoChunks } from './components/cart-page/cart-page';
+import { createProductsSection } from './components/main-section/products-section/products-section';
 import { createProducstPage, productsWrapper } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import {
-    isAlreadyHave,
     deleteDoubleAddUnique,
     addDoubleDeleteUnique,
-    sortByASC,
-    sortByDESC,
-    sortByPriceInc,
-    sortByPriceDecr,
     unicCategories,
     unicSubcategories,
 } from './components/helpers/helpers';
+import { createContainerCard } from './components/modal-window-page/modal-window-page';
+// import { filters, findCurrentFilters, stateFilters } from './components/main-section/main-section-route';
 
 createHeader();
 createFooter();
 
+window.addEventListener('hashchange', () => router());
+// window.addEventListener('load', () => router());
+window.addEventListener('load', () => {
+    mainSection.append(createProducstPage(productsData));
+});
+
 const mainSection = document.querySelector('.main') as HTMLElement;
-// const contentBlock = document.querySelector('.products') as HTMLDivElement;
+const currentLabels = [...document.querySelectorAll('label')] as HTMLLabelElement[];
+const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
+
 // mainSection.append(createProducstPage(productsData));
-// const appendToMainSection = (arr: IProductsData[]): void => {
-//     mainSection.innerHTML = ``;
-//     mainSection.append(createProducstPage(arr));
-// };
+
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
@@ -88,13 +85,6 @@ const routes = [
     { path: '/modal', component: ModalWindow },
 ];
 
-if (!localStorage.getItem('cartList')) {
-    localStorage.setItem('cartList', JSON.stringify([]));
-}
-if (!localStorage.getItem('cartItems')) {
-    localStorage.setItem('cartItems', JSON.stringify([]));
-}
-
 //-------------------------------ROUTING
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
 const findComponentByPath = (path, routes) => {
@@ -112,15 +102,15 @@ const router = (option?) => {
     mainSection.append(component.render(option));
 };
 
-window.addEventListener('hashchange', () => router());
-// window.addEventListener('load', () => router());
-window.addEventListener('load', () => {
-    mainSection.append(createProducstPage(productsData));
-});
-
 //-------------------------------/ROUTING
 
-//-------variables for filters
+if (!localStorage.getItem('cartList')) {
+    localStorage.setItem('cartList', JSON.stringify([]));
+}
+if (!localStorage.getItem('cartItems')) {
+    localStorage.setItem('cartItems', JSON.stringify([]));
+}
+
 if (!localStorage.getItem('totalStock')) {
     localStorage.setItem('totalStock', '0');
 }
@@ -135,7 +125,6 @@ if (!localStorage.getItem('size')) {
     localStorage.setItem('size', '3');
 }
 
-// TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
@@ -146,8 +135,7 @@ document.addEventListener('click', (e: Event) => {
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage });
         router(Number(e.target.id));
     }
-
-    //-------------------------------------------------------
+    //---------/click on DETAILS----------
 
     //-------------------BASKET
 
@@ -452,17 +440,22 @@ const filters = {
     categories: [] as IProductsData[],
     subcategories: [] as IProductsData[],
     currArr: [] as IProductsData[],
+    categoriesStock: [],
 };
 
-const currentFilters = (el: HTMLInputElement) => {
-    if (filters.currArr.length === productsData.length) filters.currArr = [];
+const findCurrentFilters = (el: HTMLInputElement) => {
+    if (filters.currArr.length === productsData.length) {
+        filters.currArr = [];
+        // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+        // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
+    }
 
     const chosenCategory: IProductsData[] = productsData.filter((item) => item.categoryEng === el.getAttribute('id'));
     const chosenSubCategory: IProductsData[] = productsData.filter(
         (item) => item.subcategoryEng === el.getAttribute('id')
     );
     filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
-    // console.log(filters.categories);
+    console.log(filters.categories);
     filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
     // console.log(filters.subcategories);
     filters.currArr =
@@ -472,44 +465,75 @@ const currentFilters = (el: HTMLInputElement) => {
             ? filters.subcategories
             : addDoubleDeleteUnique(filters.categories, filters.subcategories);
     // console.log('filters.currArr', filters.currArr);
-    return filters.currArr.length === 0 ? productsData : filters.currArr;
+    if (filters.currArr.length === 0) {
+        // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+        // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
+        return productsData;
+    } else {
+        return filters.currArr;
+    }
+
+    // return filters.currArr.length === 0 ? productsData : filters.currArr;
 };
 
-document?.addEventListener('change', (e) => {
+const stateFilters = (categories: string[], subcategories: string[], resultArr: IProductsData[]) => {
+    let categoryState = '';
+    let subcategoryState = '';
+
+    if (categories.length > 0) categoryState = 'category=' + categories.join('↕');
+    if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
+    let state = `/?${categoryState}&${subcategoryState}`;
+    if (resultArr.length === productsData.length) state = '/';
+    // console.log(state);
+    return state;
+};
+
+document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     if (element instanceof Element && element.closest('input')) {
-        const result: IProductsData[] = currentFilters(element);//---------------массив, из которого все собираем
+        const result: IProductsData[] = findCurrentFilters(element);
         console.log('result', result);
+
+        //-----------------get unic names of categories/ subcategories
         const categories: string[] = unicCategories(result);
         const subcategories: string[] = unicSubcategories(result);
-        console.log(categories);
-        console.log(subcategories);
+        // console.log(categories);
+        // console.log(subcategories);
 
-        const state = () => {
-            let categoryState = '';
-            let subcategoryState = '';
+        //-------------------set chosen amount of goods
+        const currentCatStock: any = {};
+        const currentSubCatStock: any = {};
+        result.forEach((item) => {
+            if (Object.keys(currentCatStock).includes(item.categoryEng)) {
+                currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
+            } else currentCatStock[item.categoryEng] = item.stock;
 
-            if (categories.length > 0) categoryState = 'category=' + categories.join('↕');
-            if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
-            let state = `/?${categoryState}&${subcategoryState}`;
-            if (result.length === productsData.length) state = '/';
-            // console.log(state);
-            return state;
-        };
-
-       //TODO вставить текущее количество
-        const currentAmounts = document.querySelectorAll('.amount-input-current');
-        console.log('currentAmounts', currentAmounts);
-        currentAmounts.forEach((input) => {
-            result.forEach((el) => {
-                // console.log('input.value', input.value);
-                // el.categoryEng === input.id ? (input.value += el.stock) : (input.value = 0);
-                // el.subcategoryEng === input.id ? (input.value += el.stock) : (input.value = 0);
-            });
+            if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
+                currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
+            } else currentSubCatStock[item.subcategoryEng] = item.stock;
         });
-        //--------------------//конец TODO-----------------------
 
-        element.url = state();
+        currentAmounts.forEach((input: HTMLInputElement) => {
+            if (Object.keys(currentCatStock).includes(input.id)) {
+                input.value = currentCatStock[input.id];
+            } else if (Object.keys(currentSubCatStock).includes(input.id)) {
+                input.value = currentSubCatStock[input.id];
+            } else {
+                input.value = '0';
+            }
+        });
+
+        //-------------------set styles of available labels
+        currentLabels.forEach((label: HTMLLabelElement) => {
+            const attrFor = label.getAttribute('for') as string;
+            if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
+                label.style.opacity = '1';
+            } else {
+                label.style.opacity = '0.6';
+            }
+        });
+
+        element.url = stateFilters(categories, subcategories, result);
         window.history.pushState({ path: element.url }, '', element.url);
         routes.push({ path: '/', component: MainPage });
         router(result);
