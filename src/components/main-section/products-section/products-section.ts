@@ -10,12 +10,13 @@ const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPriceInc = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
+// export const contentBlock = createElement('div', 'products') as HTMLDivElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
     contentBlock.append(createProductsHeader(), createProductsList(currentArr)); //вернула
-    document.querySelector('.main')?.append(contentBlock);
-
+    // document.querySelector('.main')?.append(contentBlock);
+    console.log('contentBlock', contentBlock);
     return contentBlock;
 }
 

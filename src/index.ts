@@ -10,8 +10,15 @@ import './components/modal-window-page/modal-window-page';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage, createProductsList, fillCartPages, sliceIntoChunks } from './components/cart-page/cart-page';
-import { createProducstPage } from './components/main-section/main-section';
+import {
+    createCartPage,
+    createProductsCartBlock,
+    createProductsList,
+    fillCartPages,
+    sliceIntoChunks,
+} from './components/cart-page/cart-page';
+import { createProductsSection, contentBlock } from './components/main-section/products-section/products-section';
+import { createProducstPage, productsWrapper } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import {
     isAlreadyHave,
@@ -29,16 +36,21 @@ createHeader();
 createFooter();
 
 const mainSection = document.querySelector('.main') as HTMLElement;
+// const contentBlock = document.querySelector('.products') as HTMLDivElement;
 // mainSection.append(createProducstPage(productsData));
-const appendToMainSection = (arr: IProductsData[]): void => {
-    mainSection.innerHTML = ``;
-    mainSection.append(createProducstPage(arr));
-};
+// const appendToMainSection = (arr: IProductsData[]): void => {
+//     mainSection.innerHTML = ``;
+//     mainSection.append(createProducstPage(arr));
+// };
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
     render: (array = productsData) => {
-        return createProducstPage(array);
+        const contentBlock = document.querySelector('.products') as HTMLDivElement;
+        contentBlock.remove();
+        // contentBlock.innerHTML = '';
+        productsWrapper.append(createProductsSection(array));
+        return productsWrapper;
     },
 };
 
@@ -93,15 +105,19 @@ const findComponentByPath = (path, routes) => {
 
 const router = (option?) => {
     const path = parseLocation();
-    console.log('path parse', path);
+    // console.log('path parse', path);
     const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
 
-    mainSection.innerHTML = ``;
+    // mainSection.innerHTML = ``;
     mainSection.append(component.render(option));
 };
 
 window.addEventListener('hashchange', () => router());
-window.addEventListener('load', () => router());
+// window.addEventListener('load', () => router());
+window.addEventListener('load', () => {
+    mainSection.append(createProducstPage(productsData));
+});
+
 //-------------------------------/ROUTING
 
 //-------variables for filters
@@ -128,7 +144,6 @@ document.addEventListener('click', (e: Event) => {
         e.target.url = window.location.href;
 
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage });
-        // console.log('routes', routes);
         router(Number(e.target.id));
     }
 
@@ -463,10 +478,12 @@ const currentFilters = (el: HTMLInputElement) => {
 document?.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     if (element instanceof Element && element.closest('input')) {
-        const result: IProductsData[] = currentFilters(element);
-        // console.log('result', result);
+        const result: IProductsData[] = currentFilters(element);//---------------массив, из которого все собираем
+        console.log('result', result);
         const categories: string[] = unicCategories(result);
         const subcategories: string[] = unicSubcategories(result);
+        console.log(categories);
+        console.log(subcategories);
 
         const state = () => {
             let categoryState = '';
@@ -476,9 +493,21 @@ document?.addEventListener('change', (e) => {
             if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
             let state = `/?${categoryState}&${subcategoryState}`;
             if (result.length === productsData.length) state = '/';
-            console.log(state);
+            // console.log(state);
             return state;
         };
+
+       //TODO вставить текущее количество
+        const currentAmounts = document.querySelectorAll('.amount-input-current');
+        console.log('currentAmounts', currentAmounts);
+        currentAmounts.forEach((input) => {
+            result.forEach((el) => {
+                // console.log('input.value', input.value);
+                // el.categoryEng === input.id ? (input.value += el.stock) : (input.value = 0);
+                // el.subcategoryEng === input.id ? (input.value += el.stock) : (input.value = 0);
+            });
+        });
+        //--------------------//конец TODO-----------------------
 
         element.url = state();
         window.history.pushState({ path: element.url }, '', element.url);
@@ -488,4 +517,3 @@ document?.addEventListener('change', (e) => {
 });
 
 //-------------------------------------------------/FILTERS
-
