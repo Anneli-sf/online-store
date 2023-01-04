@@ -2,10 +2,7 @@
     background-color: #ffc500;
     color: black;
     position: relative;
-    // margin-bottom: 10px;
-    // display: flex;
-    // justify-content: space-between;
-    // align-items: center;
+    border-bottom: 5px solid #7f0909;
     @include flex-row();
     padding: 5px 50px;
     width: 100%;
