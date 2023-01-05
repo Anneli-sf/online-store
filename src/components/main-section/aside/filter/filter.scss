@@ -59,10 +59,14 @@
         &.checked {
             background-color: rgba(255, 255, 255, 0.8);
             color: black;
+        }
+
+        &.checked {
             &::before {
                 display: block;
             }
         }
+
         &:not(:last-child) {
             margin-bottom: 10px;
         }
@@ -81,8 +85,8 @@
     .subcategory-input {
         cursor: pointer;
         position: relative;
-        opacity: 0;
-        // width: 0px;
+        // opacity: 0;
+        z-index: -2;
     }
 
     .amount-block {
