@@ -34,8 +34,7 @@ window.addEventListener('load', () => {
 });
 
 const mainSection = document.querySelector('.main') as HTMLElement;
-const currentLabels = [...document.querySelectorAll('label')] as HTMLLabelElement[];
-const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
+
 
 // mainSection.append(createProducstPage(productsData));
 
@@ -465,15 +464,15 @@ const findCurrentFilters = (el: HTMLInputElement) => {
             ? filters.subcategories
             : addDoubleDeleteUnique(filters.categories, filters.subcategories);
     // console.log('filters.currArr', filters.currArr);
-    if (filters.currArr.length === 0) {
-        // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
-        // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
-        return productsData;
-    } else {
-        return filters.currArr;
-    }
+    // if (filters.currArr.length === 0) {
+    //     // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+    //     // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
+    //     return productsData;
+    // } else {
+    //     return filters.currArr;
+    // }
 
-    // return filters.currArr.length === 0 ? productsData : filters.currArr;
+    return filters.currArr.length === 0 ? productsData : filters.currArr;
 };
 
 const stateFilters = (categories: string[], subcategories: string[], resultArr: IProductsData[]) => {
@@ -513,6 +512,7 @@ document.addEventListener('change', (e) => {
             } else currentSubCatStock[item.subcategoryEng] = item.stock;
         });
 
+        const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
         currentAmounts.forEach((input: HTMLInputElement) => {
             if (Object.keys(currentCatStock).includes(input.id)) {
                 input.value = currentCatStock[input.id];
@@ -523,7 +523,10 @@ document.addEventListener('change', (e) => {
             }
         });
 
+        console.log('currentAmounts', currentAmounts);
+
         //-------------------set styles of available labels
+        const currentLabels = [...document.querySelectorAll('label')] as HTMLLabelElement[];
         currentLabels.forEach((label: HTMLLabelElement) => {
             const attrFor = label.getAttribute('for') as string;
             if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
