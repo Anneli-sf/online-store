@@ -1,5 +1,11 @@
 import './products-section.scss';
-import { createElement, createImage, createInput, createParagraph } from '../../global-components/global-components';
+import {
+    createButton,
+    createElement,
+    createImage,
+    createInput,
+    createParagraph,
+} from '../../global-components/global-components';
 import { createProductCard } from './item-card/item-card';
 import { IProductsData, productsData } from '../../data/data';
 import { sortByASC, sortByDESC, sortByPriceDecr, sortByPriceInc } from '../../helpers/helpers';
@@ -10,6 +16,7 @@ const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPriceInc = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
+const btnsViewBlock = createElement('div', 'view-btns');
 // export const contentBlock = createElement('div', 'products') as HTMLDivElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
@@ -35,9 +42,15 @@ function createProductsHeader(currentArr: IProductsData[]) {
 
     const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement;
 
+    const btnStartView = createButton('one view', 'btn-start-view') as HTMLButtonElement;
+    btnStartView.classList.add('active');
+    const btnAnotherView = createButton('another view', 'btn-another-view') as HTMLButtonElement;
+    // const btnsViewBlock = createElement('div', 'view-btns');
+
     sortText.append(sortSpan);
     sortList.append(sortItemAlphabetAZ, sortItemAlphabetZA, sortItemPriceInc, sortItemPrixeDecr, sortArrow);
-    sortBlock.append(sortList, sortText, sortInput);
+    btnsViewBlock.append(btnStartView, btnAnotherView);
+    sortBlock.append(sortList, sortText, sortInput, btnsViewBlock);
 
     return sortBlock;
 }
@@ -100,5 +113,22 @@ sortArrow.addEventListener('click', () => {
         sortList.classList.add('open');
         sortList.querySelectorAll('.sort__item').forEach((el) => el.classList.add('open'));
         sortArrow.classList.add('open');
+    }
+});
+
+btnsViewBlock.addEventListener('click', (e) => {
+    const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
+    const btnStartView = document.querySelector('.btn-start-view') as HTMLButtonElement;
+    const btnAnotherView = document.querySelector('.btn-another-view') as HTMLButtonElement;
+    if (e.target instanceof HTMLButtonElement) {
+        if (e.target.classList.contains('btn-another-view')) {
+            btnAnotherView.classList.add('active');
+            btnStartView.classList.remove('active');
+            cards.forEach((el) => el.classList.add('another-view'));
+        } else {
+            btnAnotherView.classList.remove('active');
+            btnStartView.classList.add('active');
+            cards.forEach((el) => el.classList.remove('another-view'));
+        }
     }
 });

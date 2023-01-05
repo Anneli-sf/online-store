@@ -441,6 +441,9 @@ function sliceIntoChunks(arr, chunkSize) {
 }
 
 //-------------------------------------------------FILTERS
+interface IStock {
+    [key: string]: number;
+}
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
@@ -455,8 +458,8 @@ document.addEventListener('change', (e) => {
         // console.log(subcategories);
 
         //-------------------set chosen amount of goods
-        const currentCatStock: any = {};
-        const currentSubCatStock: any = {};
+        const currentCatStock: IStock = {};
+        const currentSubCatStock: IStock = {};
         result.forEach((item) => {
             if (Object.keys(currentCatStock).includes(item.categoryEng)) {
                 currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
@@ -467,12 +470,14 @@ document.addEventListener('change', (e) => {
             } else currentSubCatStock[item.subcategoryEng] = item.stock;
         });
 
+        console.log('currentCatStock', currentCatStock);
+
         const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
         currentAmounts.forEach((input: HTMLInputElement) => {
             if (Object.keys(currentCatStock).includes(input.id)) {
-                input.value = currentCatStock[input.id];
+                input.value = currentCatStock[input.id].toString();
             } else if (Object.keys(currentSubCatStock).includes(input.id)) {
-                input.value = currentSubCatStock[input.id];
+                input.value = currentSubCatStock[input.id].toString();
             } else {
                 input.value = '0';
             }
