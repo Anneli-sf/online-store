@@ -11,18 +11,19 @@ import './components/cart-page/cart-page-target/cart-page-target';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage, createProductsList, fillCartPages, sliceIntoChunks } from './components/cart-page/cart-page';
+import { createCartPage } from './components/cart-page/cart-page';
 import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
 import { createContainerCard } from './components/modal-window-page/modal-window-page';
 import {
-    addBtnStyleToLocalStorage,
-    createArrayOfCurrentItemsIds,
-    changeTotalPriceDependOnBtns,
-    changeDisplayDependOnBtns,
-    setQuantityAndPriceOnLocalStorage,
-    setTotalAndProductStockOnLocalStorage
+    fillCartPageNext,
+    fillCartPagePrev,
+    showHideBtnNext,
+    showHideBtnPrev,
+    executeWhenAddProductToCart,
+    executeWhenDeleteBtnQuantityOfProduct,
+    executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
 
 createHeader();
@@ -219,258 +220,31 @@ document.addEventListener('click', (e: Event) => {
     //-------------------BASKET
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__add')) {
-        const element = e.target;
-
-        addBtnStyleToLocalStorage(+element.id);
-        createArrayOfCurrentItemsIds(element);
-        changeTotalPriceDependOnBtns(element);
-        changeDisplayDependOnBtns();
-        setQuantityAndPriceOnLocalStorage(element);
-        setTotalAndProductStockOnLocalStorage(element);
+        const element = e.target as HTMLInputElement;
+        executeWhenAddProductToCart(element);
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-switch-page-right')) {
-        localStorage.setItem('currentPage', `${+(localStorage.getItem('currentPage') as string) + 1}`);
-        (e.target.parentElement.querySelector('input') as HTMLInputElement).value = String(
-            +(e.target.parentElement.querySelector('input') as HTMLInputElement).value + 1
-        );
-        (document.querySelector('.cart-list') as HTMLUListElement).innerHTML = '';
-        const arr = JSON.parse(localStorage.getItem('cartItems') as string)[
-            +(localStorage.getItem('currentPage') as string) - 1
-        ] as IProductsData[];
-        arr.forEach((item) => {
-            createProductsList(item.id);
-        });
-        if (
-            +(localStorage.getItem('currentPage') as string) ===
-            JSON.parse(localStorage.getItem('cartItems') as string).length
-        ) {
-            (e.target as HTMLElement).style.transform = 'scale(0)';
-            localStorage.setItem('btnRight', 'hide');
-        } else {
-            localStorage.setItem('btnRight', 'show');
-        }
-        localStorage.setItem('btnLeft', 'show');
-        (document.querySelector('.btn-switch-page-left') as HTMLButtonElement).style.transform = 'scale(1)';
+        const element = e.target as HTMLInputElement;
+        fillCartPageNext(element);
+        showHideBtnNext(element);
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-switch-page-left')) {
         const element = e.target as HTMLElement;
-        localStorage.setItem('currentPage', `${+(localStorage.getItem('currentPage') as string) - 1}`);
-        (element.parentElement?.querySelector('input') as HTMLInputElement).value = String(
-            +(element.parentElement?.querySelector('input') as HTMLInputElement).value - 1
-        );
-        const arr = JSON.parse(localStorage.getItem('cartItems') as string)[
-            +(localStorage.getItem('currentPage') as string) - 1
-        ] as IProductsData[];
-        (document.querySelector('.cart-list') as HTMLUListElement).innerHTML = '';
-        arr.forEach((item) => {
-            createProductsList(item.id);
-        });
-        if (+(localStorage.getItem('currentPage') as string) === 1) {
-            element.style.transform = 'scale(0)';
-            localStorage.setItem('btnLeft', 'hide');
-        } else {
-            localStorage.setItem('btnLeft', 'show');
-        }
-        localStorage.setItem('btnRight', 'show');
-        (document.querySelector('.btn-switch-page-right') as HTMLButtonElement).style.transform = 'scale(1)';
+        fillCartPagePrev(element);
+        showHideBtnPrev(element);
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.delete-item')) {
-        const element = e.target as HTMLElement;
-        (element.parentElement?.querySelector('input') as HTMLInputElement).value = String(
-            +(element.parentElement?.querySelector('input') as HTMLInputElement).value - 1
-        );
-        localStorage.setItem(
-            `quantityProduct_${element.id}`,
-            (element.parentElement?.querySelector('input') as HTMLInputElement).value
-        );
-        let stock = +(localStorage.getItem(`stock_${element.id}`) as string);
-        stock++;
-        localStorage.setItem(`stock_${element.id}`, `${stock}`);
-        (document.querySelectorAll('.stock-value') as NodeListOf<HTMLInputElement>).forEach((item) => {
-            if (item.id === element.id) {
-                item.value = String(+item.value + 1);
-            }
-        });
-        if (localStorage.getItem(`stock_${element.id}`) !== '0') {
-            (document.querySelectorAll('.add-item') as NodeListOf<HTMLButtonElement>).forEach((item) => {
-                if (item.id === element.id) {
-                    item.style.transform = 'scale(1)';
-                }
-            });
-        }
-        if (+(localStorage.getItem(`stock_${element.id}`) as string) === productsData[+element.id].stock) {
-            (document.querySelectorAll('.delete-item') as NodeListOf<HTMLButtonElement>).forEach((item) => {
-                if (item.id === element.id) {
-                    item.style.transform = 'scale(0)';
-                }
-            });
-        }
-        localStorage.setItem(
-            `price_${element.id}`,
-            String(+(localStorage.getItem(`price_${element.id}`) as string) - productsData[+element.id].price)
-        );
-        (document.querySelectorAll('.total-price') as NodeListOf<HTMLInputElement>).forEach((item) => {
-            if (item.id === element.id) {
-                item.value = String(+(localStorage.getItem(`price_${element.id}`) as string));
-            }
-        });
-        localStorage.setItem(
-            'totalPrice',
-            String(+(localStorage.getItem('totalPrice') as string) - productsData[+element.id].price)
-        );
-        (document.querySelector('.total-sum-value') as HTMLInputElement).value = localStorage.getItem(
-            'totalPrice'
-        ) as string;
-
-        if (!localStorage.getItem('totalStock')) {
-            localStorage.setItem('totalStock', `${JSON.parse(localStorage.getItem('cartList') as string).length}`);
-            localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) - 1));
-        } else {
-            localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) - 1));
-        }
-        (document.querySelector('.quantity-products-value') as HTMLInputElement).value = `${
-            +(document.querySelector('.quantity-products-value') as HTMLInputElement).value - 1
-        }`;
-
-        if (localStorage.getItem(`quantityProduct_${element.id}`) === '0') {
-            const arr1: Array<number> = JSON.parse(localStorage.getItem('cartList') as string).filter(
-                (item: number) => item !== +element.id
-            );
-            const arr2 = JSON.parse(localStorage.getItem('cartItems') as string)
-                .flat()
-                .filter((item: HTMLElement) => +item.id !== +element.id);
-            localStorage.setItem('cartList', JSON.stringify(arr1));
-            localStorage.setItem(
-                'cartItems',
-                JSON.stringify(sliceIntoChunks(arr2.flat(), +(localStorage.getItem('size') as string)))
-            );
-            localStorage.setItem(`btn_${element.id}`, 'в корзину');
-            (document.querySelector('.cart-list') as HTMLUListElement).innerHTML = '';
-            const arr3 = fillCartPages(+(localStorage.getItem('size') as string));
-            if (arr3) {
-                arr3.forEach((item) => {
-                    createProductsList(+item);
-                });
-            } else {
-                localStorage.setItem('currentPage', String(+(localStorage.getItem('currentPage') as string) - 1));
-                (document.querySelector('.current-page') as HTMLInputElement).value = `${
-                    +(document.querySelector('.current-page') as HTMLInputElement).value - 1
-                }`;
-                const arr3 = fillCartPages(+(localStorage.getItem('size') as string)) as Array<number>;
-                arr3.forEach((item) => {
-                    createProductsList(item);
-                });
-            }
-            if (localStorage.getItem('currentPage') === '1') {
-                localStorage.setItem('btnLeft', 'hide');
-                (document.querySelector('.btn-switch-page-left') as HTMLButtonElement).style.transform = 'scale(0)';
-            }
-            (document.querySelector('input.quantity') as HTMLInputElement).value = JSON.parse(
-                localStorage.getItem('cartList') as string
-            ).length;
-        }
-        if (
-            JSON.parse(localStorage.getItem('cartList') as string).length <= +(localStorage.getItem('size') as string)
-        ) {
-            localStorage.setItem('btnRight', 'hide');
-            (document.querySelector('.btn-switch-page-right') as HTMLButtonElement).style.transform = 'scale(0)';
-        }
-        (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
-            'totalPrice'
-        );
-        if (
-            +(localStorage.getItem('currentPage') as string) ===
-            JSON.parse(localStorage.getItem('cartItems') as string).length
-        ) {
-            localStorage.setItem('btnRight', 'hide');
-            (document.querySelector('.btn-switch-page-right') as HTMLButtonElement).style.transform = 'scale(0)';
-        }
-        (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
-        if (JSON.parse(localStorage.getItem('cartList') as string).length === 0) {
-            mainSection.innerHTML = '';
-            mainSection.append(createCartPage());
-        }
-        if (document.querySelector('.end-sum')) {
-            document.querySelector('.end-sum')?.remove();
-        }
-        (document.querySelector('.found-products') as HTMLSpanElement).textContent = localStorage.getItem('totalStock');
+        const element = e.target as HTMLInputElement;
+        executeWhenDeleteBtnQuantityOfProduct(element, mainSection as HTMLDivElement);
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.add-item')) {
-        const element = e.target as HTMLElement;
-        (element.parentElement?.querySelector('input') as HTMLInputElement).value = `${
-            +(element.parentElement?.querySelector('input') as HTMLInputElement).value + 1
-        }`;
-        localStorage.setItem(
-            `quantityProduct_${element.id}`,
-            (element.parentElement?.querySelector('input') as HTMLInputElement).value
-        );
-        let stock = +(localStorage.getItem(`stock_${element.id}`) as string);
-        stock--;
-        localStorage.setItem(`stock_${element.id}`, `${stock}`);
-        (document.querySelectorAll('.stock-value') as NodeListOf<HTMLInputElement>).forEach((item) => {
-            if (item.id === element.id) {
-                item.value = String(+item.value - 1);
-            }
-        });
-        if (localStorage.getItem(`stock_${element.id}`) === '0') {
-            (document.querySelectorAll('.add-item') as NodeListOf<HTMLButtonElement>).forEach((item) => {
-                if (item.id === element.id) {
-                    item.style.transform = 'scale(0)';
-                }
-            });
-        }
-        if (+(localStorage.getItem(`stock_${element.id}`) as string) !== productsData[+element.id].stock) {
-            (document.querySelectorAll('.delete-item') as NodeListOf<HTMLElement>).forEach((item) => {
-                if (item.id === element.id) {
-                    item.style.transform = 'scale(1)';
-                }
-            });
-        }
-        localStorage.setItem(
-            `price_${element.id}`,
-            String(+(localStorage.getItem(`price_${element.id}`) as string) + productsData[+element.id].price)
-        );
-        (document.querySelectorAll('.total-price') as NodeListOf<HTMLInputElement>).forEach((item) => {
-            if (item.id === element.id) {
-                item.value = localStorage.getItem(`price_${element.id}`) as string;
-            }
-        });
-        if (localStorage.getItem('totalPrice')) {
-            localStorage.setItem(
-                'totalPrice',
-                String(+(localStorage.getItem('totalPrice') as string) + productsData[+element.id].price)
-            );
-        } else {
-            localStorage.setItem(
-                'totalPrice',
-                String(+(localStorage.getItem('totalPrice') as string) + productsData[+element.id].price * 2)
-            );
-        }
-        (document.querySelector('.total-sum-value') as HTMLInputElement).value = localStorage.getItem(
-            'totalPrice'
-        ) as string;
-
-        if (!localStorage.getItem('totalStock')) {
-            localStorage.setItem('totalStock', `${JSON.parse(localStorage.getItem('cartList') as string).length}`);
-            localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) + 1));
-        } else {
-            localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) + 1));
-        }
-        (document.querySelector('.quantity-products-value') as HTMLInputElement).value = `${
-            +(document.querySelector('.quantity-products-value') as HTMLInputElement).value + 1
-        }`;
+        const element = e.target as HTMLInputElement;
+        executeWhenAddBtnQuantityOfProduct(element);
     }
-    (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
-        'totalPrice'
-    );
-    if (document.querySelector('.end-sum')) {
-        document.querySelector('.end-sum')?.remove();
-    }
-    (document.querySelector('.found-products') as HTMLSpanElement).textContent = localStorage.getItem('totalStock');
 });
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
