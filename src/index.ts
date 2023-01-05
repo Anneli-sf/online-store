@@ -13,7 +13,15 @@ import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList, fillCartPages, sliceIntoChunks } from './components/cart-page/cart-page';
 import { createProductsSection } from './components/main-section/products-section/products-section';
-import { createProducstPage, productsWrapper } from './components/main-section/main-section';
+import {
+    createProducstPage,
+    productsWrapper,
+    filters,
+    findCurrentFilters,
+    stateFilters,
+    setPricesToSlider,
+    setAmountToSlider,
+} from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import {
     deleteDoubleAddUnique,
@@ -22,7 +30,6 @@ import {
     unicSubcategories,
 } from './components/helpers/helpers';
 import { createContainerCard } from './components/modal-window-page/modal-window-page';
-// import { filters, findCurrentFilters, stateFilters } from './components/main-section/main-section-route';
 
 createHeader();
 createFooter();
@@ -34,7 +41,6 @@ window.addEventListener('load', () => {
 });
 
 const mainSection = document.querySelector('.main') as HTMLElement;
-
 
 // mainSection.append(createProducstPage(productsData));
 
@@ -87,8 +93,8 @@ const routes = [
 //-------------------------------ROUTING
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
 const findComponentByPath = (path, routes) => {
-    console.log('routes', routes);
-    console.log('path', path);
+    // console.log('routes', routes);
+    // console.log('path', path);
     return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 };
 
@@ -435,57 +441,6 @@ function sliceIntoChunks(arr, chunkSize) {
 }
 
 //-------------------------------------------------FILTERS
-const filters = {
-    categories: [] as IProductsData[],
-    subcategories: [] as IProductsData[],
-    currArr: [] as IProductsData[],
-    categoriesStock: [],
-};
-
-const findCurrentFilters = (el: HTMLInputElement) => {
-    if (filters.currArr.length === productsData.length) {
-        filters.currArr = [];
-        // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
-        // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
-    }
-
-    const chosenCategory: IProductsData[] = productsData.filter((item) => item.categoryEng === el.getAttribute('id'));
-    const chosenSubCategory: IProductsData[] = productsData.filter(
-        (item) => item.subcategoryEng === el.getAttribute('id')
-    );
-    filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
-    console.log(filters.categories);
-    filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
-    // console.log(filters.subcategories);
-    filters.currArr =
-        filters.subcategories.length === 0
-            ? filters.categories
-            : filters.categories.length === 0
-            ? filters.subcategories
-            : addDoubleDeleteUnique(filters.categories, filters.subcategories);
-    // console.log('filters.currArr', filters.currArr);
-    // if (filters.currArr.length === 0) {
-    //     // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
-    //     // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
-    //     return productsData;
-    // } else {
-    //     return filters.currArr;
-    // }
-
-    return filters.currArr.length === 0 ? productsData : filters.currArr;
-};
-
-const stateFilters = (categories: string[], subcategories: string[], resultArr: IProductsData[]) => {
-    let categoryState = '';
-    let subcategoryState = '';
-
-    if (categories.length > 0) categoryState = 'category=' + categories.join('↕');
-    if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
-    let state = `/?${categoryState}&${subcategoryState}`;
-    if (resultArr.length === productsData.length) state = '/';
-    // console.log(state);
-    return state;
-};
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
@@ -523,7 +478,7 @@ document.addEventListener('change', (e) => {
             }
         });
 
-        console.log('currentAmounts', currentAmounts);
+        // console.log('currentAmounts', currentAmounts);
 
         //-------------------set styles of available labels
         const currentLabels = [...document.querySelectorAll('label')] as HTMLLabelElement[];
@@ -535,6 +490,10 @@ document.addEventListener('change', (e) => {
                 label.style.opacity = '0.6';
             }
         });
+
+        //--------------------------set prices and stock  to slider
+        setPricesToSlider(result);
+        setAmountToSlider(result);
 
         element.url = stateFilters(categories, subcategories, result);
         window.history.pushState({ path: element.url }, '', element.url);

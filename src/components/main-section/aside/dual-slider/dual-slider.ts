@@ -48,6 +48,9 @@ function createDualSlider(
         maxValue
     ) as HTMLInputElement;
 
+    fromSlider.id = `min-${classId}`;
+    toSlider.id = `max-${classId}`;
+
     // console.log('fromSlider.value', fromSlider.value);
     // console.log('toSlider.value', toSlider.value);
     toSlider.value = toSliderValue;
@@ -70,6 +73,8 @@ function createDualSlider(
         maxValue,
         true
     ) as HTMLInputElement;
+    fromInput.id = `min-input-${classId}`;
+    toInput.id = `max-input-${classId}`;
 
     const filter = createElement('div', `filter__${classId}`) as HTMLDivElement;
     const sliderControl = createElement('div', `slider-control-${classId}`) as HTMLDivElement;
