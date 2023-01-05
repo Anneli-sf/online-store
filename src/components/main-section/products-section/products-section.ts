@@ -17,6 +17,9 @@ const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPriceInc = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
 const btnsViewBlock = createElement('div', 'view-btns');
+const btnStartView = createButton('one view', 'btn-start-view') as HTMLButtonElement;
+const btnAnotherView = createButton('another view', 'btn-another-view') as HTMLButtonElement;
+btnStartView.classList.add('active');
 // export const contentBlock = createElement('div', 'products') as HTMLDivElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
@@ -42,9 +45,9 @@ function createProductsHeader(currentArr: IProductsData[]) {
 
     const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement;
 
-    const btnStartView = createButton('one view', 'btn-start-view') as HTMLButtonElement;
-    btnStartView.classList.add('active');
-    const btnAnotherView = createButton('another view', 'btn-another-view') as HTMLButtonElement;
+    // const btnStartView = createButton('one view', 'btn-start-view') as HTMLButtonElement;
+    // btnStartView.classList.add('active');
+    // const btnAnotherView = createButton('another view', 'btn-another-view') as HTMLButtonElement;
     // const btnsViewBlock = createElement('div', 'view-btns');
 
     sortText.append(sortSpan);

@@ -22,12 +22,11 @@ export const filters = {
 };
 
 export const findCurrentFilters = (el: HTMLInputElement) => {
-    if (filters.currArr.length === productsData.length) {
-        filters.currArr = [];
-        // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
-        // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
-    }
-
+    // if (filters.currArr.length === productsData.length) {
+    //     filters.currArr = [];
+    //     //     // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+    //     //     // [...document.querySelectorAll('input')].forEach((input) => (input.checked = false));
+    // }
     const chosenCategory: IProductsData[] = productsData.filter((item) => item.categoryEng === el.getAttribute('id'));
     const chosenSubCategory: IProductsData[] = productsData.filter(
         (item) => item.subcategoryEng === el.getAttribute('id')
@@ -47,18 +46,27 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
     // if (filters.currArr.length === 0) {
     //     const contentBlock = document.querySelector('.products') as HTMLDivElement;
     //     contentBlock.innerHTML = `ПРОСТИТЕ, ТОВАР НЕ НАЙДЕН`;
-    // filters.currArr = productsData;
-    // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
-    // [...document.querySelectorAll('input')].forEach((input) =>
-    // (input.checked = true) ? (input.checked = false) : input
-    // );
-    // return productsData;
+    //     filters.currArr = filters.categories;
+    //     // [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+    //     // [...document.querySelectorAll('input')].forEach((input) =>
+    //     // (input.checked = true) ? (input.checked = false) : input
+    //     // );
+    //     // return productsData;
+    // } else {
+    //     return filters.currArr;
     // }
-    // else {
-    // return filters.currArr;
-    // }
-
-    return filters.currArr.length === 0 ? productsData : filters.currArr;
+    // return filters.currArr.length === 0 ? filters.categories : filters.currArr;
+    if (filters.currArr.length === 0) {
+        filters.currArr = productsData;
+        filters.categories = [];
+        filters.subcategories = [];
+        [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+        [...document.querySelectorAll('input')].forEach((input) =>
+            (input.checked = true) ? (input.checked = false) : input
+        );
+        return filters.currArr;
+    } else return filters.currArr;
+    // return filters.currArr.length === 0 ? productsData : filters.currArr;
 };
 
 export const stateFilters = (categories: string[], subcategories: string[], resultArr: IProductsData[]) => {
