@@ -22,8 +22,18 @@ export function createHeader(): HTMLBodyElement {
     const cartLink = createElement('a', 'cart-link') as HTMLLinkElement;
     cartLink.href = '#/cart';
 
+    const basketContainer = createElement('div', 'basket-container');
+
     const basket = createImage('../../../assets/icons/basket.png', 'basket', 'basket') as HTMLImageElement;
-    cartLink.append(basket);
+    const basketSpan = createElement('span', 'found-products');
+    if (localStorage.getItem('totalStock')) {
+        basketSpan.textContent = localStorage.getItem('totalStock');
+    } else {
+        basketSpan.textContent = '0';
+    }
+
+    basketContainer.append(basket, basketSpan);
+    cartLink.append(basketContainer);
 
     header.append(logoLink, quantity, cartLink);
 
