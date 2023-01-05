@@ -32,7 +32,10 @@ function createProductsHeader() {
     sortItemPrice.textContent = 'Сортировка по цене';
     sortItemDiscount.textContent = 'Сортировка по скидке';
 
-    const sortText = createParagraph('Найдено товаров: 0', 'sort__text') as HTMLParagraphElement;
+    const sortText = createParagraph('Найдено товаров: ', 'sort__text') as HTMLParagraphElement;
+    const sortSpan = createElement('span', 'found-items');
+    sortSpan.textContent = '0';
+    sortText.append(sortSpan);
     const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement; //HTMLInputElement;
 
     sortList.append(
@@ -50,7 +53,8 @@ function createProductsHeader() {
 }
 
 //----------------------products list
-function createProductsList(currentArr: IProductsData[]): HTMLUListElement {//вернула
+function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
+    //вернула
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
     // const array: IProductsData[] = JSON.parse(localStorage.getItem('productsList') as string);
