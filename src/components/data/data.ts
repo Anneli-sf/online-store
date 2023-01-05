@@ -503,8 +503,8 @@ export const productsData: IProductsData[] = [
         id: 30,
         category: 'Зелья',
         categoryEng: 'potions',
-        subcategory: 'Отрицательные существа',
-        subcategoryEng: 'negative-animals',
+        subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Гербицид',
         description:
             'Зелье, которое способно уничтожать или повреждать растения. Имеет отвратительный вкус, непригодно для употребления человеком, так как может ухудшить его здоровье.',
@@ -629,8 +629,8 @@ export const productsData: IProductsData[] = [
         id: 38,
         category: 'Зелья',
         categoryEng: 'potions',
-        subcategory: 'Злые зелья',
-        subcategoryEng: '',
+        subcategory: 'Добрые зелья',
+        subcategoryEng: 'good-potions',
         title: 'Уидосорос',
         description:
             'Яд. В 1991 году Северус Снегг оставил один флакон с ядом в загадке с зельями — одном из препятствий на пути к философскому камню.',

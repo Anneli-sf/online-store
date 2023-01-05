@@ -336,6 +336,22 @@
             font-size: 20px;
         }
 
+        .end-sum {
+            border: 1px solid #ffc500;
+            padding: 10px 10px 0px 10px;
+            border-radius: 10px;
+            opacity: 0;
+            margin-bottom: 10px;
+        }
+
+        .new-price {
+            position: absolute;
+            right: 26%;
+            top: 25%;
+            font-size: 25px;
+            color: forestgreen;
+        }
+
         .promecode-input {
             background-color: transparent;
             padding: 5px 20px;
@@ -367,6 +383,41 @@
             opacity: 0.1;
             &:hover {
                 opacity: 1;
+            }
+        }
+
+        .promocode-block {
+            border: 1px solid #ffc500;
+            padding: 10px 10px 0px 10px;
+            border-radius: 10px;
+            opacity: 0;
+        }
+
+        .prom-cont-garry,
+        .prom-cont-potter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .prom-text-garry,
+        .prom-text-potter {
+            margin-right: 10px;
+        }
+
+        .prom-btn-garry,
+        .prom-btn-potter {
+            background-color: transparent;
+            border: 1px solid #ffc500;
+            border-radius: 5px;
+            color: #ffc500;
+            padding: 5px;
+            &:hover {
+                -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+                -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+                box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
             }
         }
 

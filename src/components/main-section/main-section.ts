@@ -87,7 +87,7 @@ export const setPricesToSlider = (resultArr: IProductsData[]): void => {
     const maxPrice = document.querySelector('#max-price') as HTMLInputElement;
     const minPriceNumber = document.querySelector('#min-input-price') as HTMLInputElement;
     const maxPriceNumber = document.querySelector('#max-input-price') as HTMLInputElement;
-    const prices: number[] = resultArr.reduce((total, item: IProductsData) => {
+    const prices: number[] = resultArr.reduce((total: Array<number>, item: IProductsData) => {
         total.push(item.price);
         return total;
     }, []);
@@ -103,7 +103,7 @@ export const setAmountToSlider = (resultArr: IProductsData[]): void => {
     const maxAmount = document.querySelector('#max-amount') as HTMLInputElement;
     const minAmountNumber = document.querySelector('#min-input-amount') as HTMLInputElement;
     const maxAmountNumber = document.querySelector('#max-input-amount') as HTMLInputElement;
-    const stock: number[] = resultArr.reduce((total, item: IProductsData) => {
+    const stock: number[] = resultArr.reduce((total: Array<number>, item: IProductsData) => {
         total.push(item.stock);
         return total;
     }, []);
