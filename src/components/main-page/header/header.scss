@@ -13,3 +13,18 @@
         transform: scale(1.2);
     }
 }
+
+.basket-container {
+    position: relative;
+    .found-products {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        left: 17%;
+        top: 33%;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+    }
+}

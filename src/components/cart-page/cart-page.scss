@@ -336,6 +336,22 @@
             font-size: 20px;
         }
 
+        .end-sum {
+            border: 1px solid #ffc500;
+            padding: 10px 10px 0px 10px;
+            border-radius: 10px;
+            opacity: 0;
+            margin-bottom: 10px;
+        }
+
+        .new-price {
+            position: absolute;
+            right: 26%;
+            top: 25%;
+            font-size: 25px;
+            color: forestgreen;
+        }
+
         .promecode-input {
             background-color: transparent;
             padding: 5px 20px;
@@ -374,10 +390,6 @@
             border: 1px solid #ffc500;
             padding: 10px 10px 0px 10px;
             border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
             opacity: 0;
         }
 
