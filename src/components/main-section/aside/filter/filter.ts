@@ -6,6 +6,7 @@ import { IProductsData, productsData } from '../../../data/data';
 export function createFilters(currentArr: IProductsData[]): HTMLDivElement {
     const filters = createElement('div', 'filters') as HTMLDivElement;
     filters.append(createFilterСategories(currentArr), createFilterSubСategories(currentArr));
+
     return filters;
 }
 
@@ -28,6 +29,14 @@ function createFilterСategories(currentArr: IProductsData[]): HTMLDivElement {
             'category-input'
         )
     );
+
+    filterCategory.addEventListener('change', (e) => {
+        const element = e.target as HTMLInputElement;
+        const label = element.parentElement as HTMLLabelElement;
+        if (element instanceof Element && element.closest('input')) {
+            element.checked ? label.classList.add('checked') : label.classList.remove('checked');
+        }
+    });
 
     // categoryForm.addEventListener('click', (e) => toggleFilterInput(e, '.category-input'));
     return filterCategory;
@@ -53,7 +62,13 @@ function createFilterSubСategories(currentArr: IProductsData[]): HTMLDivElement
         )
     );
 
-    // subcategoryForm.addEventListener('click', (e) => toggleFilterInput(e, '.subcategory-input'));
+    filterSubcategory.addEventListener('change', (e) => {
+        const element = e.target as HTMLInputElement;
+        const label = element.parentElement as HTMLLabelElement;
+        if (element instanceof Element && element.closest('input')) {
+            element.checked ? label.classList.add('checked') : label.classList.remove('checked');
+        }
+    });
 
     return filterSubcategory;
 }
@@ -73,39 +88,7 @@ function createCategoryFormLabel(
         const categoryFormInput = createSimpleInput(inputClass, 'checkbox') as HTMLInputElement;
         categoryFormInput.id = arrEngNames[i];
 
-        // TODO   WHATs HAPPEN WITH LABELs AFTER PAGE RELOAD
-        // categoryFormLabel.onclick = function () {
-        //     if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
-        //         localStorage.removeItem(`${categoryFormInput.id}`);
-        //     } else {
-        //         localStorage.setItem(`${categoryFormInput.id}`, categoryFormInput.id);
-        //     }
-        // };
-        // if (localStorage.getItem(`${categoryFormInput.id}`) !== null) {
-        //     categoryFormLabel.classList.add('checked');
-        // } else {
-        //     categoryFormLabel.classList.remove('checked');
-        // }
-        //-------------------------------------------------------
-
-        const currentAmount = createSimpleInput('amount-input-current', 'number', '', '') as HTMLInputElement;
-        currentAmount.readOnly = true;
-        switch (arrCategoriesNames) {
-            case categoriesList:
-                currentAmount.value = String(
-                    currentArr //productsData
-                        .filter((item) => item.category === arrCategoriesNames[i])
-                        .reduce((acc, curr) => acc + curr.stock, 0)
-                );
-                break;
-            case subCategoriesList:
-                currentAmount.value = String(
-                    currentArr //productsData
-                        .filter((item) => item.subcategory === arrCategoriesNames[i])
-                        .reduce((acc, curr) => acc + curr.stock, 0)
-                );
-                break;
-        }
+        // createCurrentAmount();
 
         const totalAmount = createSimpleInput('amount-input-total', 'number', '', '') as HTMLInputElement;
         totalAmount.readOnly = true;
@@ -129,7 +112,7 @@ function createCategoryFormLabel(
         const amountBlock = createElement('div', 'amount-block') as HTMLDivElement;
         const spanSlash = createElement('span', 'slash') as HTMLSpanElement;
         spanSlash.textContent = '/';
-        amountBlock.append(currentAmount, spanSlash, totalAmount);
+        amountBlock.append(createCurrentAmount(arrCategoriesNames, currentArr, arrEngNames, i), spanSlash, totalAmount);
 
         categoryFormLabel.append(amountBlock);
         categoryFormLabel.prepend(categoryFormInput);
@@ -139,6 +122,33 @@ function createCategoryFormLabel(
     return formEl;
 }
 
+const createCurrentAmount = (
+    arrCategoriesNames: string[],
+    currentArr: IProductsData[],
+    arrEngNames: string[],
+    i: number
+): HTMLInputElement => {
+    const currentAmount = createSimpleInput('amount-input-current', 'number', '', '') as HTMLInputElement;
+    currentAmount.readOnly = true;
+    currentAmount.id = arrEngNames[i];
+    switch (arrCategoriesNames) {
+        case categoriesList:
+            currentAmount.value = String(
+                currentArr
+                    .filter((item) => item.category === arrCategoriesNames[i])
+                    .reduce((acc, curr) => acc + curr.stock, 0)
+            );
+            break;
+        case subCategoriesList:
+            currentAmount.value = String(
+                currentArr
+                    .filter((item) => item.subcategory === arrCategoriesNames[i])
+                    .reduce((acc, curr) => acc + curr.stock, 0)
+            );
+            break;
+    }
+    return currentAmount;
+};
 //-------------------------------toggle inputs at filters
 
 // const toggleFilterInput = (e: Event, inputClass: string) => {

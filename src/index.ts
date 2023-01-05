@@ -5,29 +5,54 @@ import './components/main-section/aside/dual-slider/dual-slider';
 import './components/main-section/aside/aside';
 import './components/main-section/main-section';
 import './components/main-page/header/header';
+
 import './components/modal-window-page/modal-window-page';
 
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList, fillCartPages, sliceIntoChunks } from './components/cart-page/cart-page';
-import { createProducstPage } from './components/main-section/main-section';
+import { createProductsSection } from './components/main-section/products-section/products-section';
+import {
+    createProducstPage,
+    productsWrapper,
+    filters,
+    findCurrentFilters,
+    stateFilters,
+    setPricesToSlider,
+    setAmountToSlider,
+} from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
-import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
+import {
+    deleteDoubleAddUnique,
+    addDoubleDeleteUnique,
+    unicCategories,
+    unicSubcategories,
+} from './components/helpers/helpers';
 import { createContainerCard } from './components/modal-window-page/modal-window-page';
 
 createHeader();
 createFooter();
 
+window.addEventListener('hashchange', () => router());
+// window.addEventListener('load', () => router());
+window.addEventListener('load', () => {
+    mainSection.append(createProducstPage(productsData));
+});
+
 const mainSection = document.querySelector('.main') as HTMLElement;
-mainSection.append(createProducstPage(productsData));
+
+// mainSection.append(createProducstPage(productsData));
 
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: () => {
-        // mainSection.innerHTML = '';
-        return createProducstPage(productsData);
+    render: (array = productsData) => {
+        const contentBlock = document.querySelector('.products') as HTMLDivElement;
+        contentBlock.remove();
+        // contentBlock.innerHTML = '';
+        productsWrapper.append(createProductsSection(array));
+        return productsWrapper;
     },
 };
 
@@ -65,9 +90,24 @@ const routes = [
     { path: '/modal', component: ModalWindow },
 ];
 
-// idArray.forEach((item) => {
-//     routes.push({ path: `#/product-details/${item}`, component: DetailsPage });
-// });
+//-------------------------------ROUTING
+const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
+const findComponentByPath = (path, routes) => {
+    // console.log('routes', routes);
+    // console.log('path', path);
+    return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
+};
+
+const router = (option?) => {
+    const path = parseLocation();
+    // console.log('path parse', path);
+    const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
+
+    // mainSection.innerHTML = ``;
+    mainSection.append(component.render(option));
+};
+
+//-------------------------------/ROUTING
 
 if (!localStorage.getItem('cartList')) {
     localStorage.setItem('cartList', JSON.stringify([]));
@@ -75,6 +115,7 @@ if (!localStorage.getItem('cartList')) {
 if (!localStorage.getItem('cartItems')) {
     localStorage.setItem('cartItems', JSON.stringify([]));
 }
+
 if (!localStorage.getItem('totalStock')) {
     localStorage.setItem('totalStock', '0');
 }
@@ -89,118 +130,17 @@ if (!localStorage.getItem('size')) {
     localStorage.setItem('size', '3');
 }
 
-let currDataWithCategories: IProductsData[] = [];
-let currDataWithSubCategories: IProductsData[] = [];
-let stackArr: IProductsData[] = [];
-
-// TODO   SAVE THE PAGE when RELOAD
 document.addEventListener('click', (e: Event) => {
-    // console.log(e);
-
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
         const state: string = '#/product-details/' + e.target.id;
         window.history.pushState({ path: state }, '', state);
-
-        const link = e.target.parentElement as HTMLLinkElement;
-        link.href = `#${window.location.href.split('#')[1]}`;
-        // console.log('link.href', link.href);
+        e.target.url = window.location.href;
 
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage });
-        console.log('routes', routes);
-        // router(Number(e.target.id));
+        router(Number(e.target.id));
     }
-
-    //---------if click on FILTERS CATEGORY
-    if (e.target instanceof Element && e.target.className === 'category-label') {
-        //e.target.classList[0] === 'category-label'
-        // if (e.target.tagName == 'LABEL') {
-        //     e.target.classList.add('checked');
-        // } else {
-        //     e.target.classList.add('checked');
-        // }//--------ничего не добавляет
-
-        const chosenCategoryArr: IProductsData[] = productsData.filter((item) => {
-            const element = e.target as HTMLLabelElement;
-            if (element.children[0] !== null) return item.categoryEng === element.children[0].id;
-        });
-
-        console.log('chosenCategory', chosenCategoryArr);
-        // if (!isAlreadyHave(, chosenCategoryArr)) {
-        //      = .concat(chosenCategoryArr);
-        //     localStorage.setItem('productsList', JSON.stringify());
-        // } else {
-        //      = deleteChosenCategory(, chosenCategoryArr);
-        //     if (.length === 0) {
-        //         .concat(productsData);
-        //     }
-        //     localStorage.setItem('productsList', JSON.stringify());
-        // }
-
-        currDataWithCategories = deleteDoubleAddUnique(currDataWithCategories, chosenCategoryArr);
-        // localStorage.setItem('productsList', JSON.stringify());
-
-        if (currDataWithCategories.length === 0) {
-            mainSection.innerHTML = ``;
-            mainSection.append(createProducstPage(productsData));
-        } else {
-            mainSection.innerHTML = ``;
-            mainSection.append(createProducstPage(currDataWithCategories));
-        }
-    }
-
-    //---------if click on FILTERS SUBCATEGORY
-    if (e.target instanceof Element && e.target.className === 'subcategory-label') {
-        //если категории уже выбраны
-        if (currDataWithCategories.length > 0) {
-            const chosenSubCategoryArr: IProductsData[] = currDataWithCategories.filter((item) => {
-                const element = e.target as HTMLLabelElement;
-                if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
-            });
-            console.log('chosenSubCategory', chosenSubCategoryArr);
-
-            if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-                stackArr = stackArr.concat(chosenSubCategoryArr);
-                currDataWithSubCategories = currDataWithSubCategories.concat(stackArr);
-                // console.log('currDataWithSubCategories', currDataWithSubCategories);
-            } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-                stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr); //удаляем кликнутое второй раз
-                // console.log('stackArr второй клик', stackArr);
-                if (stackArr.length === 0) {
-                    currDataWithSubCategories = currDataWithCategories;
-                    // console.log('currDataWithSubCategories когда стек пустой', currDataWithSubCategories);
-                } else {
-                    currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
-                }
-            }
-
-            mainSection.innerHTML = ``;
-            mainSection.append(createProducstPage(currDataWithSubCategories));
-        } else if (currDataWithCategories.length === 0) {
-            //если категории НЕ выбраны
-            const chosenSubCategoryArr: IProductsData[] = productsData.filter((item) => {
-                const element = e.target as HTMLLabelElement;
-                if (element.children[0] !== null) return item.subcategoryEng === element.children[0].id;
-            });
-            console.log('chosenSubCategory при пустых категориях', chosenSubCategoryArr);
-
-            if (!isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-                stackArr = stackArr.concat(chosenSubCategoryArr);
-                currDataWithSubCategories = stackArr;
-                console.log('currDataWithSubCategories при пустом стеке', currDataWithSubCategories);
-            } else if (isAlreadyHave(stackArr, chosenSubCategoryArr)) {
-                stackArr = deleteDoubleAddUnique(stackArr, chosenSubCategoryArr);
-
-                if (stackArr.length > 0) {
-                    currDataWithSubCategories = addDoubleDeleteUnique(currDataWithSubCategories, stackArr);
-                } else if (stackArr.length === 0) {
-                    currDataWithSubCategories = productsData;
-                }
-            }
-            mainSection.innerHTML = ``;
-            mainSection.append(createProducstPage(currDataWithSubCategories));
-        }
-    }
+    //---------/click on DETAILS----------
 
     //-------------------BASKET
 
@@ -489,19 +429,77 @@ document.addEventListener('click', (e: Event) => {
     (document.querySelector('.span-price-promocode') as HTMLSpanElement).textContent = '';
 });
 
-const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
-const findComponentByPath = (path, routes) =>
-    routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
-
-const router = (id?: number) => {
-    const path = parseLocation();
-    const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
-
-    mainSection.innerHTML = ``;
-    mainSection.append(component.render(id));
-};
-
-window.addEventListener('hashchange', () => router());
-window.addEventListener('load', () => router());
-
 // //--------------------------------------------------------//
+
+function sliceIntoChunks(arr, chunkSize) {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        const chunk = arr.slice(i, i + chunkSize);
+        res.push(chunk);
+    }
+    return res;
+}
+
+//-------------------------------------------------FILTERS
+
+document.addEventListener('change', (e) => {
+    const element = e.target as HTMLInputElement;
+    if (element instanceof Element && element.closest('input')) {
+        const result: IProductsData[] = findCurrentFilters(element);
+        console.log('result', result);
+
+        //-----------------get unic names of categories/ subcategories
+        const categories: string[] = unicCategories(result);
+        const subcategories: string[] = unicSubcategories(result);
+        // console.log(categories);
+        // console.log(subcategories);
+
+        //-------------------set chosen amount of goods
+        const currentCatStock: any = {};
+        const currentSubCatStock: any = {};
+        result.forEach((item) => {
+            if (Object.keys(currentCatStock).includes(item.categoryEng)) {
+                currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
+            } else currentCatStock[item.categoryEng] = item.stock;
+
+            if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
+                currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
+            } else currentSubCatStock[item.subcategoryEng] = item.stock;
+        });
+
+        const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
+        currentAmounts.forEach((input: HTMLInputElement) => {
+            if (Object.keys(currentCatStock).includes(input.id)) {
+                input.value = currentCatStock[input.id];
+            } else if (Object.keys(currentSubCatStock).includes(input.id)) {
+                input.value = currentSubCatStock[input.id];
+            } else {
+                input.value = '0';
+            }
+        });
+
+        // console.log('currentAmounts', currentAmounts);
+
+        //-------------------set styles of available labels
+        const currentLabels = [...document.querySelectorAll('label')] as HTMLLabelElement[];
+        currentLabels.forEach((label: HTMLLabelElement) => {
+            const attrFor = label.getAttribute('for') as string;
+            if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
+                label.style.opacity = '1';
+            } else {
+                label.style.opacity = '0.6';
+            }
+        });
+
+        //--------------------------set prices and stock  to slider
+        setPricesToSlider(result);
+        setAmountToSlider(result);
+
+        element.url = stateFilters(categories, subcategories, result);
+        window.history.pushState({ path: element.url }, '', element.url);
+        routes.push({ path: '/', component: MainPage });
+        router(result);
+    }
+});
+
+//-------------------------------------------------/FILTERS

@@ -32,9 +32,9 @@ export function createProductCard(productId: number): HTMLElement {
     if (!productsData[productId].discount) productDiscount.style.display = 'none';
 
     const buttonAdd = createBtnText(productId);
-    buttonAdd.id = `${productId}`;
+    buttonAdd.id = `${productImage.id}`;
     const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
-    buttonDetails.id = `${productId}`;
+    buttonDetails.id = `${productImage.id}`;
 
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;
     const cardLink = createElement('a', 'card-link') as HTMLLinkElement;
