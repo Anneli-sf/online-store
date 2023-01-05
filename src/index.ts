@@ -6,6 +6,7 @@ import './components/main-section/aside/aside';
 import './components/main-section/main-section';
 import './components/main-page/header/header';
 import './components/modal-window-page/modal-window-page';
+import './components/cart-page/cart-page-target/cart-page-target';
 
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
@@ -15,6 +16,14 @@ import { createProducstPage } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import { isAlreadyHave, deleteDoubleAddUnique, addDoubleDeleteUnique } from './components/helpers/helpers';
 import { createContainerCard } from './components/modal-window-page/modal-window-page';
+import {
+    addBtnStyleToLocalStorage,
+    createArrayOfCurrentItemsIds,
+    changeTotalPriceDependOnBtns,
+    changeDisplayDependOnBtns,
+    setQuantityAndPriceOnLocalStorage,
+    setTotalAndProductStockOnLocalStorage
+} from './components/cart-page/cart-page-target/cart-page-target';
 
 createHeader();
 createFooter();
@@ -22,32 +31,37 @@ createFooter();
 const mainSection = document.querySelector('.main') as HTMLElement;
 mainSection.append(createProducstPage(productsData));
 
+interface IComponent {
+    render: (id?: number) => HTMLElement;
+}
+
+interface IRoutes {
+    path: string;
+    component: IComponent;
+}
+
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
     render: () => {
-        // mainSection.innerHTML = '';
         return createProducstPage(productsData);
     },
 };
 
 const CartPage = {
     render: () => {
-        mainSection.innerHTML = '';
         return createCartPage();
     },
 };
 
 const DetailsPage = {
-    render: (id: number): HTMLDivElement => {
-        mainSection.innerHTML = ``;
+    render: (id: number) => {
         return createDetailsPage(id);
     },
 };
 
 const ModalWindow = {
     render: () => {
-        mainSection.innerHTML = ``;
         return createContainerCard();
     },
 };
@@ -106,7 +120,7 @@ document.addEventListener('click', (e: Event) => {
         link.href = `#${window.location.href.split('#')[1]}`;
         // console.log('link.href', link.href);
 
-        routes.push({ path: window.location.href.split('#')[1], component: DetailsPage });
+        routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
         console.log('routes', routes);
         // router(Number(e.target.id));
     }
@@ -205,71 +219,21 @@ document.addEventListener('click', (e: Event) => {
     //-------------------BASKET
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__add')) {
-        let arrayId = JSON.parse(localStorage.getItem('cartList') as string) as Array<number>;
-        let cartProductsArray = JSON.parse(localStorage.getItem('cartItems') as string) as IProductsData[];
-        const id: number = +e.target.id;
+        const element = e.target;
 
-        if (localStorage.getItem(`btn_${id}`) === 'добавлен') {
-            localStorage.setItem(`btn_${id}`, 'в корзину');
-        } else {
-            localStorage.setItem(`btn_${id}`, 'добавлен');
-        }
-
-        if (arrayId.includes(+id)) {
-            arrayId = arrayId.filter((item) => item !== id);
-            cartProductsArray = cartProductsArray.flat().filter((item) => item.id !== id);
-            e.target.textContent = localStorage.getItem(`btn_${id}`);
-        } else {
-            arrayId.push(+id);
-            cartProductsArray.push(productsData[id]);
-            e.target.textContent = localStorage.getItem(`btn_${id}`);
-        }
-        localStorage.setItem('cartList', JSON.stringify(arrayId));
-        localStorage.setItem(
-            'cartItems',
-            JSON.stringify(sliceIntoChunks(cartProductsArray.flat(), +localStorage.getItem('size')))
-        );
-
-        if (localStorage.getItem(`btn_${id}`) === 'в корзину') {
-            localStorage.setItem(
-                'totalPrice',
-                `${+(localStorage.getItem('totalPrice') as string) - productsData[id].price}`
-            );
-            localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) - 2));
-        } else if (localStorage.getItem(`btn_${id}`) === 'добавлен') {
-            localStorage.setItem(
-                'totalPrice',
-                `${+(localStorage.getItem('totalPrice') as string) + productsData[id].price}`
-            );
-            localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string)));
-        }
-
-        if (JSON.parse(localStorage.getItem('cartList') as string).length > +(localStorage.getItem('size') as string)) {
-            localStorage.setItem('btnRight', 'show');
-        } else {
-            localStorage.setItem('btnRight', 'hide');
-        }
-        if (
-            JSON.parse(localStorage.getItem('cartList') as string).length < +(localStorage.getItem('size') as string) ||
-            localStorage.getItem('currentPage') === '1'
-        ) {
-            localStorage.setItem('btnLeft', 'hide');
-        } else {
-            localStorage.setItem('btnLeft', 'show');
-        }
-
-        if (localStorage.getItem(`quantityProduct_${id}`) === '0') {
-            localStorage.setItem(`quantityProduct_${id}`, '1');
-            localStorage.setItem(`price_${id}`, `${productsData[id].price}`);
-        }
-        localStorage.setItem(`stock_${id}`, `${productsData[id].stock - 1}`);
-
-        localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) + 1));
+        addBtnStyleToLocalStorage(+element.id);
+        createArrayOfCurrentItemsIds(element);
+        changeTotalPriceDependOnBtns(element);
+        changeDisplayDependOnBtns();
+        setQuantityAndPriceOnLocalStorage(element);
+        setTotalAndProductStockOnLocalStorage(element);
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-switch-page-right')) {
         localStorage.setItem('currentPage', `${+(localStorage.getItem('currentPage') as string) + 1}`);
-        ++e.target.parentElement.querySelector('input').value;
+        (e.target.parentElement.querySelector('input') as HTMLInputElement).value = String(
+            +(e.target.parentElement.querySelector('input') as HTMLInputElement).value + 1
+        );
         (document.querySelector('.cart-list') as HTMLUListElement).innerHTML = '';
         const arr = JSON.parse(localStorage.getItem('cartItems') as string)[
             +(localStorage.getItem('currentPage') as string) - 1
@@ -292,8 +256,10 @@ document.addEventListener('click', (e: Event) => {
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-switch-page-left')) {
         const element = e.target as HTMLElement;
-        localStorage.setItem('currentPage', `${+localStorage.getItem('currentPage') - 1}`);
-        --element.parentElement.querySelector('input').value;
+        localStorage.setItem('currentPage', `${+(localStorage.getItem('currentPage') as string) - 1}`);
+        (element.parentElement?.querySelector('input') as HTMLInputElement).value = String(
+            +(element.parentElement?.querySelector('input') as HTMLInputElement).value - 1
+        );
         const arr = JSON.parse(localStorage.getItem('cartItems') as string)[
             +(localStorage.getItem('currentPage') as string) - 1
         ] as IProductsData[];
@@ -313,14 +279,19 @@ document.addEventListener('click', (e: Event) => {
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.delete-item')) {
         const element = e.target as HTMLElement;
-        --element.parentElement.querySelector('input').value;
-        localStorage.setItem(`quantityProduct_${element.id}`, element.parentElement.querySelector('input').value);
+        (element.parentElement?.querySelector('input') as HTMLInputElement).value = String(
+            +(element.parentElement?.querySelector('input') as HTMLInputElement).value - 1
+        );
+        localStorage.setItem(
+            `quantityProduct_${element.id}`,
+            (element.parentElement?.querySelector('input') as HTMLInputElement).value
+        );
         let stock = +(localStorage.getItem(`stock_${element.id}`) as string);
         stock++;
         localStorage.setItem(`stock_${element.id}`, `${stock}`);
         (document.querySelectorAll('.stock-value') as NodeListOf<HTMLInputElement>).forEach((item) => {
             if (item.id === element.id) {
-                item.value++;
+                item.value = String(+item.value + 1);
             }
         });
         if (localStorage.getItem(`stock_${element.id}`) !== '0') {
@@ -350,7 +321,9 @@ document.addEventListener('click', (e: Event) => {
             'totalPrice',
             String(+(localStorage.getItem('totalPrice') as string) - productsData[+element.id].price)
         );
-        (document.querySelector('.total-sum-value') as HTMLInputElement).value = localStorage.getItem('totalPrice');
+        (document.querySelector('.total-sum-value') as HTMLInputElement).value = localStorage.getItem(
+            'totalPrice'
+        ) as string;
 
         if (!localStorage.getItem('totalStock')) {
             localStorage.setItem('totalStock', `${JSON.parse(localStorage.getItem('cartList') as string).length}`);
@@ -358,7 +331,9 @@ document.addEventListener('click', (e: Event) => {
         } else {
             localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) - 1));
         }
-        (document.querySelector('.quantity-products-value') as HTMLInputElement).value--;
+        (document.querySelector('.quantity-products-value') as HTMLInputElement).value = `${
+            +(document.querySelector('.quantity-products-value') as HTMLInputElement).value - 1
+        }`;
 
         if (localStorage.getItem(`quantityProduct_${element.id}`) === '0') {
             const arr1: Array<number> = JSON.parse(localStorage.getItem('cartList') as string).filter(
@@ -377,11 +352,13 @@ document.addEventListener('click', (e: Event) => {
             const arr3 = fillCartPages(+(localStorage.getItem('size') as string));
             if (arr3) {
                 arr3.forEach((item) => {
-                    createProductsList(item);
+                    createProductsList(+item);
                 });
             } else {
                 localStorage.setItem('currentPage', String(+(localStorage.getItem('currentPage') as string) - 1));
-                (document.querySelector('.current-page') as HTMLInputElement).value--;
+                (document.querySelector('.current-page') as HTMLInputElement).value = `${
+                    +(document.querySelector('.current-page') as HTMLInputElement).value - 1
+                }`;
                 const arr3 = fillCartPages(+(localStorage.getItem('size') as string)) as Array<number>;
                 arr3.forEach((item) => {
                     createProductsList(item);
@@ -416,11 +393,17 @@ document.addEventListener('click', (e: Event) => {
             mainSection.innerHTML = '';
             mainSection.append(createCartPage());
         }
+        if (document.querySelector('.end-sum')) {
+            document.querySelector('.end-sum')?.remove();
+        }
+        (document.querySelector('.found-products') as HTMLSpanElement).textContent = localStorage.getItem('totalStock');
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.add-item')) {
         const element = e.target as HTMLElement;
-        ++element.parentElement.querySelector('input').value;
+        (element.parentElement?.querySelector('input') as HTMLInputElement).value = `${
+            +(element.parentElement?.querySelector('input') as HTMLInputElement).value + 1
+        }`;
         localStorage.setItem(
             `quantityProduct_${element.id}`,
             (element.parentElement?.querySelector('input') as HTMLInputElement).value
@@ -459,15 +442,17 @@ document.addEventListener('click', (e: Event) => {
         if (localStorage.getItem('totalPrice')) {
             localStorage.setItem(
                 'totalPrice',
-                String(+(localStorage.getItem('totalPrice') as string) + productsData[element.id].price)
+                String(+(localStorage.getItem('totalPrice') as string) + productsData[+element.id].price)
             );
         } else {
             localStorage.setItem(
                 'totalPrice',
-                String(+(localStorage.getItem('totalPrice') as string) + productsData[element.id].price * 2)
+                String(+(localStorage.getItem('totalPrice') as string) + productsData[+element.id].price * 2)
             );
         }
-        (document.querySelector('.total-sum-value') as HTMLInputElement).value = localStorage.getItem('totalPrice');
+        (document.querySelector('.total-sum-value') as HTMLInputElement).value = localStorage.getItem(
+            'totalPrice'
+        ) as string;
 
         if (!localStorage.getItem('totalStock')) {
             localStorage.setItem('totalStock', `${JSON.parse(localStorage.getItem('cartList') as string).length}`);
@@ -475,23 +460,21 @@ document.addEventListener('click', (e: Event) => {
         } else {
             localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) + 1));
         }
-        document.querySelector('.quantity-products-value').value++;
+        (document.querySelector('.quantity-products-value') as HTMLInputElement).value = `${
+            +(document.querySelector('.quantity-products-value') as HTMLInputElement).value + 1
+        }`;
     }
     (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
         'totalPrice'
     );
-
-    // if (e.target instanceof Element && e.target.parentElement && e.target.closest('.prom-btn-garry')) {
-        
-    // }
-
-    // if (e.target instanceof Element && e.target.parentElement && e.target.closest('.prom-btn-potter')) {
-        
-    // }
+    if (document.querySelector('.end-sum')) {
+        document.querySelector('.end-sum')?.remove();
+    }
+    (document.querySelector('.found-products') as HTMLSpanElement).textContent = localStorage.getItem('totalStock');
 });
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
-const findComponentByPath = (path, routes) =>
+const findComponentByPath = (path: string, routes: IRoutes[]) =>
     routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 
 const router = (id?: number) => {
