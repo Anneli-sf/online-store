@@ -373,4 +373,6 @@ export const executeWhenAddProductToCart = (element: HTMLElement) => {
     changeDisplayDependOnBtns();
     setQuantityAndPriceOnLocalStorage(element);
     setTotalAndProductStockOnLocalStorage(element);
+    updateFoundProductsSpan();
+    setTotalPriceInHeader();
 };

@@ -67,7 +67,7 @@ interface IRoutes {
 
 const MainPage = {
     render: (array = productsData) => {
-        const contentBlock = document.querySelector('.products') as HTMLDivElement;
+        const contentBlock = document.querySelector('.products') as HTMLElement;
         contentBlock.remove();
         // contentBlock.innerHTML = '';
         productsWrapper.append(createProductsSection(array));
@@ -77,18 +77,21 @@ const MainPage = {
 
 const CartPage = {
     render: () => {
+        mainSection.innerHTML = '';
         return createCartPage();
     },
 };
 
 const DetailsPage = {
     render: (id: number) => {
+        mainSection.innerHTML = '';
         return createDetailsPage(id);
     },
 };
 
 const ModalWindow = {
     render: () => {
+        mainSection.innerHTML = '';
         return createContainerCard();
     },
 };
@@ -114,13 +117,13 @@ const findComponentByPath = (path: string, routes: IRoutes[]) => {
     return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 };
 
-const router = (option?) => {
+const router = (option?: number | IProductsData[]) => {
     const path = parseLocation();
     // console.log('path parse', path);
-    const { component = ErrorComponent } = findComponentByPath(path, routes) || {};
+    const { component = ErrorComponent } = findComponentByPath(path, routes as IRoutes[]) || {};
 
     // mainSection.innerHTML = ``;
-    mainSection.append(component.render(option));
+    mainSection.append(component.render(option as number));
 };
 
 //-------------------------------/ROUTING
@@ -149,12 +152,12 @@ if (!localStorage.getItem('size')) {
 document.addEventListener('click', (e: Event) => {
     //---------if click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
-        const state: string = '#/product-details/' + e.target.id;
+        const element = e.target as HTMLButtonElement;
+        const state: string = '#/product-details/' + element.id;
         window.history.pushState({ path: state }, '', state);
-        e.target.url = window.location.href;
-
+        element.url = window.location.href;
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
-        router(Number(e.target.id));
+        router(Number(element.id));
     }
     //---------/click on DETAILS----------
 
@@ -202,9 +205,13 @@ document.addEventListener('change', (e) => {
         // console.log(categories);
         // console.log(subcategories);
 
+        interface IStock {
+            [key: string]: number;
+        }
+
         //-------------------set chosen amount of goods
-        const currentCatStock: any = {};
-        const currentSubCatStock: any = {};
+        const currentCatStock: IStock = {};
+        const currentSubCatStock: IStock = {};
         result.forEach((item) => {
             if (Object.keys(currentCatStock).includes(item.categoryEng)) {
                 currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
@@ -218,9 +225,9 @@ document.addEventListener('change', (e) => {
         const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
         currentAmounts.forEach((input: HTMLInputElement) => {
             if (Object.keys(currentCatStock).includes(input.id)) {
-                input.value = currentCatStock[input.id];
+                input.value = `${currentCatStock[input.id]}`;
             } else if (Object.keys(currentSubCatStock).includes(input.id)) {
-                input.value = currentSubCatStock[input.id];
+                input.value = `${currentSubCatStock[input.id]}`;
             } else {
                 input.value = '0';
             }
@@ -241,12 +248,11 @@ document.addEventListener('change', (e) => {
 
         //--------------------------set prices and stock  to slider
         setPricesToSlider(result);
-        setAmountToSlider(result);
-
         element.url = stateFilters(categories, subcategories, result);
         window.history.pushState({ path: element.url }, '', element.url);
         routes.push({ path: '/', component: MainPage });
         router(result);
+        setAmountToSlider(result);
     }
 });
 
