@@ -14,14 +14,12 @@ const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
-    contentBlock.append(createProductsHeader(), createProductsList(currentArr)); //вернула
-    // document.querySelector('.main')?.append(contentBlock);
-    console.log('contentBlock', contentBlock);
+    contentBlock.append(createProductsHeader(currentArr), createProductsList(currentArr));
     return contentBlock;
 }
 
 //----------------------products header
-function createProductsHeader() {
+function createProductsHeader(currentArr: IProductsData[]) {
     const sortBlock = createElement('div', 'products__header') as HTMLDivElement;
 
     sortList.textContent = 'Сортировка по:';
@@ -31,9 +29,13 @@ function createProductsHeader() {
     sortItemPriceInc.textContent = 'Сортировать по цене 🠕';
     sortItemPrixeDecr.textContent = 'Сортировать по цене 🠗';
 
-    const sortText = createParagraph('Найдено товаров: 0', 'sort__text') as HTMLParagraphElement;
-    const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement; //HTMLInputElement;
+    const sortText = createParagraph('Найдено товаров: ', 'sort__text') as HTMLParagraphElement;
+    const sortSpan = createElement('span', 'found-items');
+    sortSpan.textContent = currentArr.length.toString();
 
+    const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement;
+
+    sortText.append(sortSpan);
     sortList.append(sortItemAlphabetAZ, sortItemAlphabetZA, sortItemPriceInc, sortItemPrixeDecr, sortArrow);
     sortBlock.append(sortList, sortText, sortInput);
 
