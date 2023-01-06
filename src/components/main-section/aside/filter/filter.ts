@@ -1,7 +1,8 @@
 import './filter.scss';
 import { createElement, createLabel, createSimpleInput } from '../../../global-components/global-components';
 import { subCategoriesList, categoriesList, categoriesEngNames, subcategoriesEngNames } from './filter.constants';
-import { IProductsData, productsData } from '../../../data/data';
+import { productsData } from '../../../data/data';
+import { IProductsData } from '../../../global-components/interfaces';
 
 export function createFilters(currentArr: IProductsData[]): HTMLDivElement {
     const filters = createElement('div', 'filters') as HTMLDivElement;

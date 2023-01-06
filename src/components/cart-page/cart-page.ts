@@ -8,7 +8,9 @@ import {
     createSimpleInput,
     createParagraph,
 } from '../global-components/global-components';
-import { IProductsData, productsData } from '../data/data';
+import { productsData } from '../data/data';
+import { createContainerCard } from '../modal-window-page/modal-window-page';
+import { IProductsData } from '../global-components/interfaces';
 
 const listBlock = createElement('ul', 'cart-list') as HTMLUListElement;
 
@@ -374,7 +376,6 @@ export const createSummaryCartBlock = () => {
     ) as HTMLInputElement;
 
     const buyForm = createElement('form', 'promocode-form') as HTMLFormElement;
-    buyForm.action = '#/modal';
     const endSumBlock = createElement('div', 'end-sum');
     const buyInput = createElement('input', 'promecode-input') as HTMLInputElement;
     const promocodeBlock = createElement('div', 'promocode-block');
@@ -485,7 +486,7 @@ export const createSummaryCartBlock = () => {
             document.querySelector('.end-sum .prom-cont-garry')?.remove();
             if (document.querySelector('.end-sum .prom-cont-potter')) {
                 (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
-                    +(document.querySelector('.new-price') as HTMLSpanElement).textContent / 0.9
+                    +((document.querySelector('.new-price') as HTMLSpanElement).textContent as string) / 0.9
                 )}`;
             } else {
                 (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '0';
@@ -498,7 +499,7 @@ export const createSummaryCartBlock = () => {
             document.querySelector('.end-sum .prom-cont-potter')?.remove();
             if (document.querySelector('.end-sum .prom-cont-garry')) {
                 (document.querySelector('.new-price') as HTMLDivElement).textContent = `${Math.floor(
-                    +(document.querySelector('.new-price') as HTMLSpanElement).textContent / 0.85
+                    +((document.querySelector('.new-price') as HTMLSpanElement).textContent as string) / 0.85
                 )}`;
             } else {
                 (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '0';
@@ -510,7 +511,11 @@ export const createSummaryCartBlock = () => {
 
     const promoTest = createParagraph("Попробуйте: 'Гарри', 'Поттер'", 'promo-test') as HTMLParagraphElement;
     const buttonBuyNow = createButton('Купить сейчас', 'btn-buy-now');
-    buttonBuyNow.type = 'submit';
+    buttonBuyNow.type = 'button';
+
+    buttonBuyNow.addEventListener('click', () => {
+        document.querySelector('.main')?.append(createContainerCard());
+    });
 
     buyForm.append(endSumBlock, buyInput, promocodeBlock, promoTest, buttonBuyNow);
 

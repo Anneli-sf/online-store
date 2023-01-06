@@ -1,7 +1,8 @@
 import './dual-slider.scss';
 import { createElement, createSimpleInput } from '../../../global-components/global-components';
 import { getMaxPrice, getMinAmount, getMinPrice, getMaxAmount } from '../../../helpers/helpers';
-import { IProductsData, productsData } from '../../../data/data';
+import { productsData } from '../../../data/data';
+import { IProductsData } from '../../../global-components/interfaces';
 
 // const toSlider = createSimpleInput('to-slider', 'range', '', '0', '0', '0') as HTMLInputElement;
 const maxPriceProductData = `${getMaxPrice(productsData)}`;
