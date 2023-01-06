@@ -1,17 +1,5 @@
-export interface IProductsData {
-    id: number;
-    category: string;
-    categoryEng: string;
-    subcategory: string;
-    subcategoryEng: string;
-    title: string;
-    description: string;
-    price: number;
-    discount: number;
-    stock: number;
-    raiting: number;
-    images: string[];
-}
+import { IProductsData } from '../global-components/interfaces';
+
 export const productsData: IProductsData[] = [
     {
         id: 0,
