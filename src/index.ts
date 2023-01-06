@@ -13,7 +13,11 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
-import { createProductsSection } from './components/main-section/products-section/products-section';
+import {
+    btnAnotherView,
+    createProductsSection,
+    popupClose,
+} from './components/main-section/products-section/products-section';
 import {
     createProducstPage,
     productsWrapper,
@@ -66,14 +70,23 @@ interface IRoutes {
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (array = productsData) => {
-        const contentBlock = document.querySelector('.products') as HTMLElement;
-        contentBlock.remove();
-        // contentBlock.innerHTML = '';
-        productsWrapper.append(createProductsSection(array));
-        return productsWrapper;
-    },
+    render: (array = productsData) => updateProductsSection(array),
 };
+
+function updateProductsSection(array: IProductsData[]): HTMLDivElement {
+    const contentBlock = document.querySelector('.products') as HTMLElement;
+
+    contentBlock.remove();
+    productsWrapper.append(createProductsSection(array));
+
+    //--------keep present card's view
+    const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
+    btnAnotherView.classList.contains('active')
+        ? cards.forEach((el) => el.classList.add('another-view'))
+        : cards.forEach((el) => el.classList.remove('another-view'));
+
+    return productsWrapper;
+}
 
 const CartPage = {
     render: () => {
@@ -150,7 +163,7 @@ if (!localStorage.getItem('size')) {
 }
 
 document.addEventListener('click', (e: Event) => {
-    //---------if click on DETAILS
+    //---------click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
         const element = e.target as HTMLButtonElement;
         const state: string = '#/product-details/' + element.id;
@@ -213,8 +226,6 @@ document.addEventListener('change', (e) => {
         }
 
         //-------------------set chosen amount of goods
-        const currentCatStock: IStock = {};
-        const currentSubCatStock: IStock = {};
         const currentCatStock: IStock = {};
         const currentSubCatStock: IStock = {};
         result.forEach((item) => {
