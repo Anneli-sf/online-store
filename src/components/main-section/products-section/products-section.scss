@@ -170,6 +170,7 @@
         padding: 8px;
         border-radius: 50%;
     }
+    }
 
 .btn__add,
 .btn__details,
@@ -238,39 +239,4 @@
     opacity: 1;
     transform: translate(0px, 0px);
 }
-
-// .popup-btn-close {
-//     margin: 0;
-//     padding: 15px;
-//     display: block;
-//     position: absolute;
-//     top: 0px;
-//     right: 0px;
-
-//     width: 60px;
-//     height: 60px;
-//     border-radius: 100px;
-
-//     text-align: center;
-//     font-size: 24px;
-//     line-height: 1.2;
-//     color: #000000;
-
-//     transition: 0.5s;
-// }
-
-// .popup-wrapper:hover .popup-btn-close {
-//     background: #fddcc4;
-//     border: none;
-//     cursor: pointer;
-//     transition: 0.5s;
-// }
-
-// .popup:hover .popup-btn-close {
-//     background: transparent;
-//     border: 2px solid #f1cdb3;
-//     cursor: pointer;
-//     transition: 0.5s;
-// }
-
 
