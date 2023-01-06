@@ -5,24 +5,24 @@
 }
 
 .basket {
-    width: 30px;
+    width: 40px;
     cursor: pointer;
-    transition: all 1s ease-in-out;
     filter: invert(1);
-    &:hover {
-        transform: scale(1.2);
-    }
 }
 
 .basket-container {
     position: relative;
+    transition: all 1s ease-in-out;
+    &:hover {
+        transform: scale(1.2);
+    }
     .found-products {
         position: absolute;
         width: 20px;
         height: 20px;
         background-color: white;
-        left: 17%;
-        top: 33%;
+        left: 24%;
+        top: 39%;
         border-radius: 50%;
         color: black;
         text-align: center;
