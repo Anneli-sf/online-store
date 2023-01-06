@@ -7,6 +7,8 @@
         background-color: transparent;
         color: black;
 
+        
+
         &.open {
             background-color: #ffc500;
             color: black;
@@ -25,8 +27,14 @@
         width: 100%;
         margin-top: 5px;
 
+        
+
         &.open {
             transform: scale(1);
+
+            &:nth-child(4) {
+                margin-bottom: 20px;
+            }
         }
 
         &:hover {
@@ -42,18 +50,23 @@
 }
 
 .sort-arrow {
-    width: 25px;
+    width: 35px;
     position: absolute;
-    top: 3px;
-    right: 20%;
+    top: -2px;
+    right: 15%;
     z-index: 3;
     cursor: pointer;
     transform: scale(1, 1);
 
     &.open {
         transform: scale(1, -1);
-        top: 90%;
+        top: 80%;
         right: 44%;
+    }
+
+    &:hover {
+        filter: invert(11%) sepia(64%) saturate(5450%) hue-rotate(352deg) brightness(74%) contrast(102%);
+        transition: all 0.5s;
     }
 }
 

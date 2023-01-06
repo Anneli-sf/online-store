@@ -40,6 +40,7 @@ import {
 } from './components/cart-page/cart-page-target/cart-page-target';
 import { IProductsData, IComponent, IRoutes, IStock } from './components/global-components/interfaces';
 import { buttonReset } from './components/main-section/aside/aside';
+import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 
 createHeader();
 createFooter();
@@ -67,11 +68,7 @@ function updateProductsSection(array: IProductsData[]): HTMLDivElement {
     contentBlock.remove();
     productsWrapper.append(createProductsSection(array));
 
-    //--------keep present card's view
-    const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
-    btnAnotherView.classList.contains('active')
-        ? cards.forEach((el) => el.classList.add('another-view'))
-        : cards.forEach((el) => el.classList.remove('another-view'));
+    keepViewStyle();
 
     return productsWrapper;
 }
@@ -193,7 +190,7 @@ document.addEventListener('change', (e) => {
             } else currentSubCatStock[item.subcategoryEng] = item.stock;
         });
 
-        console.log('currentCatStock', currentCatStock);
+        // console.log('currentCatStock', currentCatStock);
 
         const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
         currentAmounts.forEach((input: HTMLInputElement) => {
@@ -221,9 +218,6 @@ document.addEventListener('change', (e) => {
             }
         });
 
-        // buttonReset.addEventListener('click', () => {
-        //     result = productsData;
-        // });
         //--------------------------set prices and stock  to slider
         setPricesToSlider(result);
         element.url = stateFilters(categories, subcategories, result);
@@ -236,10 +230,10 @@ document.addEventListener('change', (e) => {
 
 //-------------------------------------------------/FILTERS
 
-buttonReset.addEventListener('click', () => {
-    // routes.push({ path: '/', component: MainPage });
-    router();
-    deleteCheckBoxStyles();
-    setPricesToSlider(productsData);
-    setAmountToSlider(productsData);
-});
+// buttonReset.addEventListener('click', () => {
+//     // routes.push({ path: '/', component: MainPage });
+//     router();
+//     deleteCheckBoxStyles();
+//     setPricesToSlider(productsData);
+//     setAmountToSlider(productsData);
+// });

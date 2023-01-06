@@ -6,6 +6,7 @@ import {
     createParagraph,
 } from '../../../global-components/global-components';
 import { productsData } from '../../../data/data';
+import { btnAnotherView } from '../products-section';
 
 // const detailsLink = createElement('a', 'btn__details-link') as HTMLLinkElement;
 // const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
@@ -46,7 +47,6 @@ export function createProductCard(productId: number): HTMLElement {
     buttonsItemContainer.append(buttonAdd, cardLink);
 
     productsItem.append(productDiscount, imageContainer, productTitle, productAvailable, buttonsItemContainer);
-
     return productsItem;
 }
 
@@ -56,4 +56,11 @@ const createBtnText = (productId: number) => {
     } else {
         return createButton('в корзину', 'btn__add') as HTMLButtonElement;
     }
+};
+//--------keep present card's view
+export const keepViewStyle = (): void => {
+    const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
+    btnAnotherView.classList.contains('active')
+        ? cards.forEach((el) => el.classList.add('another-view'))
+        : cards.forEach((el) => el.classList.remove('another-view'));
 };
