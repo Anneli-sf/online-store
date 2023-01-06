@@ -26,6 +26,7 @@ import {
     stateFilters,
     setPricesToSlider,
     setAmountToSlider,
+    deleteCheckBoxStyles,
 } from './components/main-section/main-section';
 import { productsData, IProductsData } from './components/data/data';
 import {
@@ -44,6 +45,7 @@ import {
     executeWhenDeleteBtnQuantityOfProduct,
     executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
+import { buttonReset } from './components/main-section/aside/aside';
 
 createHeader();
 createFooter();
@@ -212,7 +214,7 @@ interface IStock {
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     if (element instanceof Element && element.closest('input')) {
-        const result: IProductsData[] = findCurrentFilters(element);
+        let result: IProductsData[] = findCurrentFilters(element);
         console.log('result', result);
 
         //-----------------get unic names of categories/ subcategories
@@ -220,10 +222,6 @@ document.addEventListener('change', (e) => {
         const subcategories: string[] = unicSubcategories(result);
         // console.log(categories);
         // console.log(subcategories);
-
-        interface IStock {
-            [key: string]: number;
-        }
 
         //-------------------set chosen amount of goods
         const currentCatStock: IStock = {};
@@ -266,6 +264,9 @@ document.addEventListener('change', (e) => {
             }
         });
 
+        buttonReset.addEventListener('click', () => {
+            result = productsData;
+        });
         //--------------------------set prices and stock  to slider
         setPricesToSlider(result);
         element.url = stateFilters(categories, subcategories, result);
@@ -277,3 +278,11 @@ document.addEventListener('change', (e) => {
 });
 
 //-------------------------------------------------/FILTERS
+
+buttonReset.addEventListener('click', () => {
+    // routes.push({ path: '/', component: MainPage });
+    router();
+    deleteCheckBoxStyles();
+    setPricesToSlider(productsData);
+    setAmountToSlider(productsData);
+});

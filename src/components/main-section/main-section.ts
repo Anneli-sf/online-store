@@ -1,6 +1,6 @@
 import './main-section.scss';
 import { createElement } from '../global-components/global-components';
-import { createAside } from './aside/aside';
+import { buttonReset, createAside } from './aside/aside';
 import { createProductsSection, popupToggle } from './products-section/products-section';
 import { productsData, IProductsData } from '../data/data';
 import { deleteDoubleAddUnique, addDoubleDeleteUnique } from '../helpers/helpers';
@@ -22,7 +22,6 @@ export const filters = {
 };
 
 export const findCurrentFilters = (el: HTMLInputElement) => {
-
     const chosenCategory: IProductsData[] = productsData.filter((item) => item.categoryEng === el.getAttribute('id'));
     const chosenSubCategory: IProductsData[] = productsData.filter(
         (item) => item.subcategoryEng === el.getAttribute('id')
@@ -65,17 +64,25 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
             : addDoubleDeleteUnique(filters.categories, filters.subcategories);
     // console.log('filters.currArr', filters.currArr);
 
+    // buttonReset.addEventListener('click', () => {
+    //     filters.currArr = [];
+    // });
+
     if (filters.currArr.length === 0) {
         filters.currArr = productsData;
         filters.categories = [];
         filters.subcategories = [];
-        [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
-        [...document.querySelectorAll('input')].forEach((input) =>
-            (input.checked = true) ? (input.checked = false) : input
-        );
+        deleteCheckBoxStyles();
         return filters.currArr;
     } else return filters.currArr;
     // return filters.currArr.length === 0 ? productsData : filters.currArr;
+};
+
+export const deleteCheckBoxStyles = (): void => {
+    [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+    [...document.querySelectorAll('input')].forEach((input) =>
+        (input.checked = true) ? (input.checked = false) : input
+    );
 };
 
 export const stateFilters = (categories: string[], subcategories: string[], resultArr: IProductsData[]) => {
