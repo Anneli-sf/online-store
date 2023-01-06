@@ -164,15 +164,15 @@ document.addEventListener('click', (e: Event) => {
 });
 
 //-------------------------------------------------FILTERS
-interface IStock {
-    [key: string]: number;
-}
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
+    // console.log('element', element);
+
     if (element instanceof Element && element.closest('input')) {
-        let result: IProductsData[] = findCurrentFilters(element);
-        console.log('result', result);
+        const result: IProductsData[] = findCurrentFilters(element);
+
+        // console.log('result', result);
 
         //-----------------get unic names of categories/ subcategories
         const categories: string[] = unicCategories(result);
@@ -211,7 +211,7 @@ document.addEventListener('change', (e) => {
         // console.log('currentAmounts', currentAmounts);
 
         //-------------------set styles of available labels
-        const currentLabels = [...document.querySelectorAll('label')] as HTMLLabelElement[];
+        const currentLabels = [...document.querySelectorAll('.filter-label')] as HTMLLabelElement[];
         currentLabels.forEach((label: HTMLLabelElement) => {
             const attrFor = label.getAttribute('for') as string;
             if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
@@ -221,9 +221,9 @@ document.addEventListener('change', (e) => {
             }
         });
 
-        buttonReset.addEventListener('click', () => {
-            result = productsData;
-        });
+        // buttonReset.addEventListener('click', () => {
+        //     result = productsData;
+        // });
         //--------------------------set prices and stock  to slider
         setPricesToSlider(result);
         element.url = stateFilters(categories, subcategories, result);

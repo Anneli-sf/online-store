@@ -28,6 +28,7 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
         (item) => item.subcategoryEng === el.getAttribute('id')
     );
     // console.log('chosenSubCategory', chosenSubCategory);
+    console.log('el', el);
 
     filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
 
@@ -64,10 +65,10 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
             ? filters.subcategories
             : addDoubleDeleteUnique(filters.categories, filters.subcategories);
     // console.log('filters.currArr', filters.currArr);
-
-    // buttonReset.addEventListener('click', () => {
-    //     filters.currArr = [];
-    // });
+    if (el.className == 'input-reset') {
+        filters.currArr = [];
+        console.log('works');
+    }
 
     if (filters.currArr.length === 0) {
         filters.currArr = productsData;
