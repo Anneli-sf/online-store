@@ -26,11 +26,12 @@ const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;
 const popupCard = createElement('div', 'popup') as HTMLDivElement;
 const popupContent = createElement('div', 'popup-content') as HTMLDivElement;
 popupContent.innerHTML = 'ТОВАР НЕ НАЙДЕН';
-// const popupText = createParagraph('ТОВАР НЕ НАЙДЕН', 'popup') as HTMLParagraphElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
-    contentBlock.append(createProductsHeader(currentArr), createProductsList(currentArr), createPopup());
+    const productsList = createProductsList(currentArr) as HTMLUListElement;
+    productsList.append(createPopup());
+    contentBlock.append(createProductsHeader(currentArr), productsList);
 
     return contentBlock;
 }
@@ -150,8 +151,6 @@ function createPopup(): HTMLDivElement {
 export function popupToggle() {
     const POPUP_CARD = document.querySelector('.popup-content') as HTMLDivElement;
     const POPUP = document.querySelector('.popup-wrapper') as HTMLDivElement;
-    const BODY = document.querySelector('body') as HTMLBodyElement;
     POPUP.classList.toggle('popup-open');
     POPUP_CARD.classList.toggle('popup-open');
-    BODY.classList.toggle('scroll-inactive');
 }
