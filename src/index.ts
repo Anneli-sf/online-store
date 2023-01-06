@@ -17,20 +17,13 @@ import { createProductsSection } from './components/main-section/products-sectio
 import {
     createProducstPage,
     productsWrapper,
-    filters,
     findCurrentFilters,
     stateFilters,
     setPricesToSlider,
     setAmountToSlider,
 } from './components/main-section/main-section';
-import { productsData, IProductsData } from './components/data/data';
-import {
-    deleteDoubleAddUnique,
-    addDoubleDeleteUnique,
-    unicCategories,
-    unicSubcategories,
-} from './components/helpers/helpers';
-import { createContainerCard } from './components/modal-window-page/modal-window-page';
+import { productsData } from './components/data/data';
+import { unicCategories, unicSubcategories, fillLocalStorageOnStart } from './components/helpers/helpers';
 import {
     fillCartPageNext,
     fillCartPagePrev,
@@ -40,9 +33,11 @@ import {
     executeWhenDeleteBtnQuantityOfProduct,
     executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
+import { IProductsData, IComponent, IRoutes, IStock } from './components/global-components/interfaces';
 
 createHeader();
 createFooter();
+fillLocalStorageOnStart();
 
 window.addEventListener('hashchange', () => router());
 // window.addEventListener('load', () => router());
@@ -54,22 +49,12 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 
 // mainSection.append(createProducstPage(productsData));
 
-interface IComponent {
-    render: (id?: number | IProductsData[]) => HTMLElement;
-}
-
-interface IRoutes {
-    path: string;
-    component: IComponent;
-}
-
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
     render: (array = productsData) => {
         const contentBlock = document.querySelector('.products') as HTMLElement;
         contentBlock.remove();
-        // contentBlock.innerHTML = '';
         productsWrapper.append(createProductsSection(array));
         return productsWrapper;
     },
@@ -89,13 +74,6 @@ const DetailsPage = {
     },
 };
 
-const ModalWindow = {
-    render: () => {
-        mainSection.innerHTML = '';
-        return createContainerCard();
-    },
-};
-
 const ErrorComponent = {
     render: () => {
         mainSection.innerHTML = '';
@@ -106,7 +84,6 @@ const ErrorComponent = {
 const routes = [
     { path: '/', component: MainPage },
     { path: '/cart', component: CartPage },
-    { path: '/modal', component: ModalWindow },
 ];
 
 //-------------------------------ROUTING
@@ -127,27 +104,6 @@ const router = (option?: number | IProductsData[]) => {
 };
 
 //-------------------------------/ROUTING
-
-if (!localStorage.getItem('cartList')) {
-    localStorage.setItem('cartList', JSON.stringify([]));
-}
-if (!localStorage.getItem('cartItems')) {
-    localStorage.setItem('cartItems', JSON.stringify([]));
-}
-
-if (!localStorage.getItem('totalStock')) {
-    localStorage.setItem('totalStock', '0');
-}
-if (!localStorage.getItem('totalPrice')) {
-    localStorage.setItem('totalPrice', '0');
-}
-if (JSON.parse(localStorage.getItem('cartList') as string).length === 0) {
-    localStorage.setItem('btnLeft', 'hide');
-    localStorage.setItem('btnRight', 'hide');
-}
-if (!localStorage.getItem('size')) {
-    localStorage.setItem('size', '3');
-}
 
 document.addEventListener('click', (e: Event) => {
     //---------if click on DETAILS
@@ -204,10 +160,6 @@ document.addEventListener('change', (e) => {
         const subcategories: string[] = unicSubcategories(result);
         // console.log(categories);
         // console.log(subcategories);
-
-        interface IStock {
-            [key: string]: number;
-        }
 
         //-------------------set chosen amount of goods
         const currentCatStock: IStock = {};
