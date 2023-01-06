@@ -1,4 +1,4 @@
-import { IProductsData } from '../data/data';
+import { IProductsData } from '../global-components/interfaces';
 
 // export const deleteChosenCategory = (currentArr: IProductsData[], chosenCategory: IProductsData[]): IProductsData[] => {
 //     for (let i = 0; i < chosenCategory.length; i++) {
@@ -82,4 +82,28 @@ export const unicCategories = (arr: IProductsData[]): string[] => {
 export const unicSubcategories = (arr: IProductsData[]): string[] => {
     const set = new Set(arr.map((el) => el.subcategoryEng));
     return [...set];
+};
+
+//-------------------------LocalStorage start parameteres
+
+export const fillLocalStorageOnStart = () => {
+    if (!localStorage.getItem('cartList')) {
+        localStorage.setItem('cartList', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('cartItems')) {
+        localStorage.setItem('cartItems', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('totalStock')) {
+        localStorage.setItem('totalStock', '0');
+    }
+    if (!localStorage.getItem('totalPrice')) {
+        localStorage.setItem('totalPrice', '0');
+    }
+    if (JSON.parse(localStorage.getItem('cartList') as string).length === 0) {
+        localStorage.setItem('btnLeft', 'hide');
+        localStorage.setItem('btnRight', 'hide');
+    }
+    if (!localStorage.getItem('size')) {
+        localStorage.setItem('size', '3');
+    }
 };

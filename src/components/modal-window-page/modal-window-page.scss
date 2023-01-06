@@ -7,6 +7,28 @@
     text-decoration: none;
 }
 
+.passed-block {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .passed-time {
+        background-color: transparent;
+        font-size: 20px;
+        color: #ffc500;
+    }
+}
+
+.form-wrapper {
+    top: 0%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: #7f0909d6;
+}
+
 .container {
     position: relative;
     display: flex;

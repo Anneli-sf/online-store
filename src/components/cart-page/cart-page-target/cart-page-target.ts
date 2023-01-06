@@ -1,5 +1,6 @@
-import { productsData, IProductsData } from '../../data/data';
+import { productsData } from '../../data/data';
 import { sliceIntoChunks, createProductsList, fillCartPages, createCartPage } from '../cart-page';
+import { IProductsData } from '../../global-components/interfaces';
 
 const addBtnStyleToLocalStorage = (id: number) => {
     if (localStorage.getItem(`btn_${id}`) === 'добавлен') {

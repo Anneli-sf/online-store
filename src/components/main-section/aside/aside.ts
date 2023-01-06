@@ -2,7 +2,7 @@ import './aside.scss';
 import { createElement, createButton } from '../../global-components/global-components';
 import { createFilters } from './filter/filter';
 import { createSliders } from './dual-slider/dual-slider';
-import { IProductsData } from '../../data/data';
+import { IProductsData } from '../../global-components/interfaces';
 
 //------------------ASIDE
 export const buttonReset = createButton('сбросить фильтры', 'btn-reset') as HTMLButtonElement;

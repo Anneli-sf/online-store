@@ -1,5 +1,8 @@
 import './modal-window-page.scss';
 import { createElement, createSimpleInput, createButton } from '../global-components/global-components';
+import { productsData } from '../data/data';
+import { createProducstPage } from '../main-section/main-section';
+import { productsWrapper } from '../main-section/main-section';
 
 // --------------------------------------BOX-----------------------------------//
 const createBoxBlock = (spanText: string, divText: string, divClassName: string, imgSrc?: string | undefined) => {
@@ -246,7 +249,23 @@ const selectMonth = createSelectBox('Месяц', 'month-input', 1, 13);
 const selectYear = createSelectBox('Год', 'year-input', 2023, 2035);
 // -------------------------------------------------------------------------//
 
+const createBlockIfValidationPassed = () => {
+    const block = createElement('div', 'passed-block') as HTMLDivElement;
+    const text = createElement('p', 'passed-text') as HTMLParagraphElement;
+    const time = createElement('input', 'passed-time') as HTMLInputElement;
+    text.textContent = 'Введенные данные успешно приняты, окно закроется через  ';
+    time.type = 'number';
+    time.value = '5';
+    setInterval(() => {
+        time.value = String(+time.value - 1);
+    }, 1000);
+    text.append(time);
+    block.append(text);
+    return block;
+};
+
 // ------------------------------------FORM-------------------------------------//
+const mainSection = document.querySelector('.main') as HTMLDivElement;
 const createForm = () => {
     const form = createElement('form', 'form') as HTMLFormElement;
     form.addEventListener('submit', function (e) {
@@ -254,6 +273,12 @@ const createForm = () => {
 
         if (validation(this) == true) {
             console.log('Форма заполнена успешно!');
+            mainSection.innerHTML = '';
+            mainSection.append(createBlockIfValidationPassed());
+            setTimeout(() => {
+                mainSection.innerHTML = '';
+                return mainSection.append(productsWrapper);
+            }, 5000);
         } else {
             console.log('Поля не заполнены, либо заполнены неправильно!');
         }
@@ -272,11 +297,12 @@ const createForm = () => {
 
 // -----------------------------------CONTAINER--------------------------------------//
 export const createContainerCard = () => {
+    const wrapper = createElement('div', 'form-wrapper');
     const container = createElement('div', 'container');
-
+    wrapper.append(container);
     container.append(cardContainer(), createForm());
 
-    return container;
+    return wrapper;
 };
 // -------------------------------------------------------------------------//
 
@@ -347,6 +373,11 @@ const isFormValidity = () => {
 
             if (validation(this) == true) {
                 alert('Форма заполнена успешно!');
+                mainSection.innerHTML = '';
+                mainSection.append(createBlockIfValidationPassed());
+                setTimeout(() => {
+                    createProducstPage(productsData);
+                }, 3000);
             } else {
                 alert('Поля не заполнены, либо заполнены неправильно!');
             }

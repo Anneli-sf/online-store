@@ -8,7 +8,7 @@ import {
     createParagraph,
 } from '../../global-components/global-components';
 import { createProductCard } from './item-card/item-card';
-import { IProductsData } from '../../data/data';
+import { IProductsData } from '../../global-components/interfaces';
 import { sortByASC, sortByDESC, sortByPriceDecr, sortByPriceInc } from '../../helpers/helpers';
 
 const sortArrow = createImage('./assets/icons/arrow-down.svg', 'sort-arrow', 'sort-arrow') as HTMLImageElement;

@@ -11,7 +11,7 @@ export function createHeader(): HTMLBodyElement {
 
     const logoLink = createElement('a', 'logo-link') as HTMLLinkElement;
     logoLink.append(logo);
-    logoLink.href = '#/';
+    logoLink.href = '/';
 
     const quantity = createParagraph('Общая сумма: ', 'quantity') as HTMLParagraphElement;
     const span = createElement('span', 'total-quantity-header');

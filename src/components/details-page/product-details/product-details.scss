@@ -2,12 +2,14 @@
 
 .mini-photos-section {
     @include flex-column(space-around);
-    width: 5%;
+    max-width: 8%;
     gap: 1em;
 
     .mini-photo-item {
         width: 100%;
-        border: 1px solid white;
+        border: 1px solid #ffc500;
+        border-radius: 10px;
+        overflow: hidden;
         cursor: pointer;
 
         .mini-photo-img {
@@ -17,19 +19,40 @@
     }
 }
 
+.details-page {
+    .details-block {
+        padding: 0px 50px;
+        color: #ffc500;
+    }
+
+    .product-descrip-section {
+        color: #ffc500;
+        &::-webkit-scrollbar {
+            width: 0px;
+        }
+    }
+    .block-title,
+    .block-text {
+        color: #ffc500;
+    }
+}
+
 .active-photo-section {
-    @include flex-row(center);
     cursor: pointer;
 
     .active-photo-item {
         width: 100%;
-        height: 100%;
-        border: 1px solid white;
+        border: 1px solid #ffc500;
         overflow: hidden;
+        border-radius: 10px;
 
         .active-photo-img {
             width: 100%;
             height: 100%;
+            transition: all 0.5s ease-in-out;
+            &:hover {
+                transform: scale(1.2);
+            }
         }
     }
 }
@@ -38,6 +61,7 @@
     @include flex-column();
     width: 45%;
     gap: 1em;
+    flex: 1 0 50%;
 
     .product-descrip-block {
         width: 100%;
@@ -87,9 +111,17 @@
         font-size: 2.5em;
     }
 
-    .btn-add-to-cart,
+    .btn__add,
     .btn-buy-now {
-        max-width: 200px;
-        width: 100%;
+        padding: 10px 10px;
+        border-color: #ffc500;
+        color: #7f0909;
+        box-shadow: 0 0 40px 40px #ffc500 inset, 0 0 0 0 #ffc500;
+        transition: all 150ms ease-in-out;
+        border-radius: 5px;
+        &:hover {
+            box-shadow: 0 0 10px 0 #ffc500 inset, 0 0 10px 4px #ffc500;
+            color: #ffc500;
+        }
     }
 }

@@ -7,6 +7,8 @@ import {
     createElement,
     createButton,
 } from '../../global-components/global-components';
+import { createCartPage } from '../../cart-page/cart-page';
+import { createContainerCard } from '../../modal-window-page/modal-window-page';
 
 //--------------section with all info about product
 export function createDetailsBlock(productId: number): HTMLElement {
@@ -121,6 +123,37 @@ const createProductInfoSection = (productId: number): HTMLElement => {
 
     return productInfoSection;
 };
+//--------------------------------------------------------
+const mainSection = document.querySelector('.main') as HTMLDivElement;
+
+const quickAddProductToCart = (productId: number) => {
+    const arr = JSON.parse(localStorage.getItem('cartList') as string);
+    const arr2 = JSON.parse(localStorage.getItem('cartItems') as string);
+    if (!arr.includes(productId)) {
+        arr.push(productId);
+    }
+    if (!arr2.includes(productsData[productId])) {
+        arr2.push(productsData[productId]);
+    }
+    localStorage.setItem('cartList', JSON.stringify(arr));
+    localStorage.setItem('cartItems', JSON.stringify(arr2));
+    localStorage.setItem('totalStock', String(+(localStorage.getItem('totalStock') as string) + 1));
+    (document.querySelector('.found-products') as HTMLSpanElement).textContent = localStorage.getItem('totalStock');
+    localStorage.setItem(
+        'totalPrice',
+        String(+(localStorage.getItem('totalPrice') as string) + productsData[productId].price)
+    );
+    (document.querySelector('.total-quantity-header') as HTMLSpanElement).textContent = localStorage.getItem(
+        'totalPrice'
+    ) as string;
+    localStorage.setItem(`btn_${productId}`, 'добавлен');
+    document.querySelectorAll('.btn__add').forEach((item) => {
+        if (+item.id === productId) {
+            item.textContent = 'добавлен';
+        }
+    });
+    localStorage.setItem(`stock_${productId}`, `${productsData[productId].stock - 1}`);
+};
 
 //--------------section with price and buttons for purchase
 const createSailDetailsSection = (productId: number): HTMLElement => {
@@ -128,9 +161,29 @@ const createSailDetailsSection = (productId: number): HTMLElement => {
 
     const priceBlock: HTMLElement = createElement('div', 'price-block');
     priceBlock.innerText = `${productsData[productId].price}$`;
+    let text = '';
 
-    const buttonAddToCart: HTMLButtonElement = createButton('добавить в корзину', 'btn-add-to-cart');
+    if (localStorage.getItem(`btn_${productId}`)) {
+        text = `${localStorage.getItem(`btn_${productId}`)}`;
+    } else {
+        text = 'в корзину';
+    }
+
+    const buttonAddToCart: HTMLButtonElement = createButton(text, 'btn__add');
+    buttonAddToCart.id = `${productId}`;
     const buttonBuyNow: HTMLButtonElement = createButton('быстрая покупка', 'btn-buy-now');
+    buttonBuyNow.id = `${productId}`;
+
+    buttonBuyNow.addEventListener('click', () => {
+        if (localStorage.getItem(`btn_${productId}`) === 'добавлен') {
+            mainSection.innerHTML = '';
+            mainSection.append(createCartPage(), createContainerCard());
+        } else {
+            quickAddProductToCart(productId);
+            mainSection.innerHTML = '';
+            mainSection.append(createCartPage(), createContainerCard());
+        }
+    });
 
     sailDetailsSection.append(priceBlock, buttonAddToCart, buttonBuyNow);
     return sailDetailsSection;
