@@ -13,7 +13,11 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
-import { createProductsSection } from './components/main-section/products-section/products-section';
+import {
+    btnAnotherView,
+    createProductsSection,
+    popupClose,
+} from './components/main-section/products-section/products-section';
 import {
     createProducstPage,
     productsWrapper,
@@ -21,6 +25,7 @@ import {
     stateFilters,
     setPricesToSlider,
     setAmountToSlider,
+    deleteCheckBoxStyles,
 } from './components/main-section/main-section';
 import { productsData } from './components/data/data';
 import { unicCategories, unicSubcategories, fillLocalStorageOnStart } from './components/helpers/helpers';
@@ -34,6 +39,7 @@ import {
     executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
 import { IProductsData, IComponent, IRoutes, IStock } from './components/global-components/interfaces';
+import { buttonReset } from './components/main-section/aside/aside';
 
 createHeader();
 createFooter();
@@ -52,13 +58,23 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (array = productsData) => {
-        const contentBlock = document.querySelector('.products') as HTMLElement;
-        contentBlock.remove();
-        productsWrapper.append(createProductsSection(array));
-        return productsWrapper;
-    },
+    render: (array = productsData) => updateProductsSection(array),
 };
+
+function updateProductsSection(array: IProductsData[]): HTMLDivElement {
+    const contentBlock = document.querySelector('.products') as HTMLElement;
+
+    contentBlock.remove();
+    productsWrapper.append(createProductsSection(array));
+
+    //--------keep present card's view
+    const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
+    btnAnotherView.classList.contains('active')
+        ? cards.forEach((el) => el.classList.add('another-view'))
+        : cards.forEach((el) => el.classList.remove('another-view'));
+
+    return productsWrapper;
+}
 
 const CartPage = {
     render: () => {
@@ -106,7 +122,7 @@ const router = (option?: number | IProductsData[]) => {
 //-------------------------------/ROUTING
 
 document.addEventListener('click', (e: Event) => {
-    //---------if click on DETAILS
+    //---------click on DETAILS
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn__details')) {
         const element = e.target as HTMLButtonElement;
         const state: string = '#/product-details/' + element.id;
@@ -148,11 +164,14 @@ document.addEventListener('click', (e: Event) => {
 });
 
 //-------------------------------------------------FILTERS
+interface IStock {
+    [key: string]: number;
+}
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     if (element instanceof Element && element.closest('input')) {
-        const result: IProductsData[] = findCurrentFilters(element);
+        let result: IProductsData[] = findCurrentFilters(element);
         console.log('result', result);
 
         //-----------------get unic names of categories/ subcategories
@@ -174,11 +193,15 @@ document.addEventListener('change', (e) => {
             } else currentSubCatStock[item.subcategoryEng] = item.stock;
         });
 
+        console.log('currentCatStock', currentCatStock);
+
         const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
         currentAmounts.forEach((input: HTMLInputElement) => {
             if (Object.keys(currentCatStock).includes(input.id)) {
+                input.value = currentCatStock[input.id].toString();
                 input.value = `${currentCatStock[input.id]}`;
             } else if (Object.keys(currentSubCatStock).includes(input.id)) {
+                input.value = currentSubCatStock[input.id].toString();
                 input.value = `${currentSubCatStock[input.id]}`;
             } else {
                 input.value = '0';
@@ -198,6 +221,9 @@ document.addEventListener('change', (e) => {
             }
         });
 
+        buttonReset.addEventListener('click', () => {
+            result = productsData;
+        });
         //--------------------------set prices and stock  to slider
         setPricesToSlider(result);
         element.url = stateFilters(categories, subcategories, result);
@@ -209,3 +235,11 @@ document.addEventListener('change', (e) => {
 });
 
 //-------------------------------------------------/FILTERS
+
+buttonReset.addEventListener('click', () => {
+    // routes.push({ path: '/', component: MainPage });
+    router();
+    deleteCheckBoxStyles();
+    setPricesToSlider(productsData);
+    setAmountToSlider(productsData);
+});

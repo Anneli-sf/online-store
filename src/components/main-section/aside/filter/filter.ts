@@ -39,7 +39,6 @@ function createFilterСategories(currentArr: IProductsData[]): HTMLDivElement {
         }
     });
 
-    // categoryForm.addEventListener('click', (e) => toggleFilterInput(e, '.category-input'));
     return filterCategory;
 }
 

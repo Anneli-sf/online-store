@@ -1,5 +1,12 @@
 import './products-section.scss';
-import { createElement, createImage, createInput, createParagraph } from '../../global-components/global-components';
+import {
+    createButton,
+    createElement,
+    createImage,
+    createInput,
+    createLink,
+    createParagraph,
+} from '../../global-components/global-components';
 import { createProductCard } from './item-card/item-card';
 import { IProductsData } from '../../global-components/interfaces';
 import { sortByASC, sortByDESC, sortByPriceDecr, sortByPriceInc } from '../../helpers/helpers';
@@ -10,11 +17,22 @@ const sortItemAlphabetAZ = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPriceInc = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
-// export const contentBlock = createElement('div', 'products') as HTMLDivElement;
+const btnsViewBlock = createElement('div', 'view-btns');
+const btnStartView = createButton('one view', 'btn-start-view') as HTMLButtonElement;
+export const btnAnotherView = createButton('another view', 'btn-another-view') as HTMLButtonElement;
+btnStartView.classList.add('active');
+
+const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;
+const popupCard = createElement('div', 'popup') as HTMLDivElement;
+const popupContent = createElement('div', 'popup-content') as HTMLDivElement;
+popupContent.innerHTML = 'ТОВАР НЕ НАЙДЕН';
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
     const contentBlock = createElement('div', 'products') as HTMLDivElement;
-    contentBlock.append(createProductsHeader(currentArr), createProductsList(currentArr));
+    const productsList = createProductsList(currentArr) as HTMLUListElement;
+    productsList.append(createPopup());
+    contentBlock.append(createProductsHeader(currentArr), productsList);
+
     return contentBlock;
 }
 
@@ -37,7 +55,8 @@ function createProductsHeader(currentArr: IProductsData[]) {
 
     sortText.append(sortSpan);
     sortList.append(sortItemAlphabetAZ, sortItemAlphabetZA, sortItemPriceInc, sortItemPrixeDecr, sortArrow);
-    sortBlock.append(sortList, sortText, sortInput);
+    btnsViewBlock.append(btnStartView, btnAnotherView);
+    sortBlock.append(sortList, sortText, sortInput, btnsViewBlock);
 
     return sortBlock;
 }
@@ -102,3 +121,36 @@ sortArrow.addEventListener('click', () => {
         sortArrow.classList.add('open');
     }
 });
+
+//---------------click on View-buttons
+btnsViewBlock.addEventListener('click', (e) => {
+    const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
+    const btnStartView = document.querySelector('.btn-start-view') as HTMLButtonElement;
+    const btnAnotherView = document.querySelector('.btn-another-view') as HTMLButtonElement;
+    if (e.target instanceof HTMLButtonElement) {
+        if (e.target.classList.contains('btn-another-view')) {
+            btnAnotherView.classList.add('active');
+            btnStartView.classList.remove('active');
+            cards.forEach((el) => el.classList.add('another-view'));
+        } else {
+            btnAnotherView.classList.remove('active');
+            btnStartView.classList.add('active');
+            cards.forEach((el) => el.classList.remove('another-view'));
+        }
+    }
+});
+
+//----------------------------POPUP Error
+function createPopup(): HTMLDivElement {
+    popupCard.append(popupContent);
+    popup.appendChild(popupCard);
+
+    return popup;
+}
+
+export function popupToggle() {
+    const POPUP_CARD = document.querySelector('.popup-content') as HTMLDivElement;
+    const POPUP = document.querySelector('.popup-wrapper') as HTMLDivElement;
+    POPUP.classList.toggle('popup-open');
+    POPUP_CARD.classList.toggle('popup-open');
+}
