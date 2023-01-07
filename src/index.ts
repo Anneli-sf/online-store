@@ -13,7 +13,9 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
-import { btnAnotherView, createProductsSection } from './components/main-section/products-section/products-section';
+
+import { createProductsSection } from './components/main-section/products-section/products-section';
+
 import {
     createProducstPage,
     productsWrapper,
@@ -21,7 +23,7 @@ import {
     stateFilters,
     setPricesToSlider,
     setAmountToSlider,
-    deleteCheckBoxStyles,
+    showNotFound,
 } from './components/main-section/main-section';
 import { productsData } from './components/data/data';
 import { unicCategories, unicSubcategories, fillLocalStorageOnStart } from './components/helpers/helpers';
@@ -34,8 +36,8 @@ import {
     executeWhenDeleteBtnQuantityOfProduct,
     executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
-import { IProductsData, IComponent, IRoutes, IStock } from './components/global-components/interfaces';
-import { buttonReset } from './components/main-section/aside/aside';
+import { IProductsData, IComponent, IRoutes, IStock, IFilters } from './components/global-components/interfaces';
+import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 
 createHeader();
 createFooter();
@@ -63,11 +65,7 @@ function updateProductsSection(array: IProductsData[]): HTMLDivElement {
     contentBlock.remove();
     productsWrapper.append(createProductsSection(array));
 
-    //--------keep present card's view
-    const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
-    btnAnotherView.classList.contains('active')
-        ? cards.forEach((el) => el.classList.add('another-view'))
-        : cards.forEach((el) => el.classList.remove('another-view'));
+    keepViewStyle();
 
     return productsWrapper;
 }
@@ -161,78 +159,116 @@ document.addEventListener('click', (e: Event) => {
 
 //-------------------------------------------------FILTERS
 
+const filters: IFilters = {
+    categories: [],
+    subcategories: [],
+    currArr: [],
+    price: [],
+    stack: [],
+};
+
+let result: IProductsData[] = [];
+
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
-    if (element instanceof Element && element.closest('input')) {
-        let result: IProductsData[] = findCurrentFilters(element);
-        console.log('result', result);
-
-        //-----------------get unic names of categories/ subcategories
-        const categories: string[] = unicCategories(result);
-        const subcategories: string[] = unicSubcategories(result);
-        // console.log(categories);
-        // console.log(subcategories);
-
-        //-------------------set chosen amount of goods
-        const currentCatStock: IStock = {};
-        const currentSubCatStock: IStock = {};
-        result.forEach((item) => {
-            if (Object.keys(currentCatStock).includes(item.categoryEng)) {
-                currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
-            } else currentCatStock[item.categoryEng] = item.stock;
-
-            if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
-                currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
-            } else currentSubCatStock[item.subcategoryEng] = item.stock;
-        });
-
-        console.log('currentCatStock', currentCatStock);
-
-        const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
-        currentAmounts.forEach((input: HTMLInputElement) => {
-            if (Object.keys(currentCatStock).includes(input.id)) {
-                input.value = currentCatStock[input.id].toString();
-                input.value = `${currentCatStock[input.id]}`;
-            } else if (Object.keys(currentSubCatStock).includes(input.id)) {
-                input.value = currentSubCatStock[input.id].toString();
-                input.value = `${currentSubCatStock[input.id]}`;
-            } else {
-                input.value = '0';
-            }
-        });
-
-        // console.log('currentAmounts', currentAmounts);
-
-        //-------------------set styles of available labels
-        const currentLabels = [...document.querySelectorAll('label')] as HTMLLabelElement[];
-        currentLabels.forEach((label: HTMLLabelElement) => {
-            const attrFor = label.getAttribute('for') as string;
-            if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
-                label.style.opacity = '1';
-            } else {
-                label.style.opacity = '0.6';
-            }
-        });
-
-        buttonReset.addEventListener('click', () => {
-            result = productsData;
-        });
-        //--------------------------set prices and stock  to slider
+    // console.log('element', element);
+    // let result: IProductsData[] = [];
+    if (element instanceof Element && element.closest('.filter-input')) {
+        // const result: IProductsData[] = findCurrentFilters(element);
+        result = findCurrentFilters(element, filters);
         setPricesToSlider(result);
-        element.url = stateFilters(categories, subcategories, result);
-        window.history.pushState({ path: element.url }, '', element.url);
-        routes.push({ path: '/', component: MainPage });
-        router(result);
         setAmountToSlider(result);
     }
+    console.log('result', result);
+    if (element instanceof Element && element.closest('.slider-price')) {
+        const max = document.querySelector('#max-price') as HTMLInputElement;
+        const min = document.querySelector('#min-price') as HTMLInputElement;
+        // console.log('max, min', max.value, min.value);
+        if (filters.currArr.length === 0) {
+            result = productsData.filter((item) => item.price >= +min.value && item.price <= +max.value);
+        } else {
+            const stack: IProductsData[] = result.filter(
+                (item) => item.price >= +min.value && item.price <= +max.value
+            );
+            if (stack.length === 0) {
+                result = result;
+                showNotFound();
+            } else result = stack;
+        }
+    }
+
+    if (element instanceof Element && element.closest('.slider-amount')) {
+        const max = document.querySelector('#max-amount') as HTMLInputElement;
+        const min = document.querySelector('#min-amount') as HTMLInputElement;
+        // console.log('max, min', max.value, min.value);
+        if (filters.currArr.length === 0) {
+            result = productsData.filter((item) => item.stock >= +min.value && item.price <= +max.value);
+        } else {
+            const stack: IProductsData[] = result.filter(
+                (item) => item.stock >= +min.value && item.price <= +max.value
+            );
+            if (stack.length === 0) {
+                result = result;
+                showNotFound();
+            } else result = stack;
+        }
+    }
+
+    // console.log('result', result);
+
+    //-----------------get unic names of categories/ subcategories
+    const categories: string[] = unicCategories(result);
+    const subcategories: string[] = unicSubcategories(result);
+    // console.log(categories);
+    // console.log(subcategories);
+
+    //-------------------set chosen amount of goods
+    const currentCatStock: IStock = {};
+    const currentSubCatStock: IStock = {};
+    result.forEach((item) => {
+        if (Object.keys(currentCatStock).includes(item.categoryEng)) {
+            currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
+        } else currentCatStock[item.categoryEng] = item.stock;
+
+        if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
+            currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
+        } else currentSubCatStock[item.subcategoryEng] = item.stock;
+    });
+
+    // console.log('currentCatStock', currentCatStock);
+
+    const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
+    currentAmounts.forEach((input: HTMLInputElement) => {
+        if (Object.keys(currentCatStock).includes(input.id)) {
+            input.value = `${currentCatStock[input.id]}`;
+        } else if (Object.keys(currentSubCatStock).includes(input.id)) {
+            input.value = `${currentSubCatStock[input.id]}`;
+        } else {
+            input.value = '0';
+        }
+    });
+
+    // console.log('currentAmounts', currentAmounts);
+
+    //-------------------set styles of available labels
+    const currentLabels = [...document.querySelectorAll('.filter-label')] as HTMLLabelElement[];
+    currentLabels.forEach((label: HTMLLabelElement) => {
+        const attrFor = label.getAttribute('for') as string;
+        if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
+            label.style.opacity = '1';
+        } else {
+            label.style.opacity = '0.6';
+        }
+    });
+
+    //--------------------------set prices and stock  to slider
+    // setPricesToSlider(result);
+    element.url = stateFilters(categories, subcategories, result);
+    window.history.pushState({ path: element.url }, '', element.url);
+    routes.push({ path: '/', component: MainPage });
+    router(result);
+    // setAmountToSlider(result);
+    // }
 });
 
 //-------------------------------------------------/FILTERS
-
-buttonReset.addEventListener('click', () => {
-    // routes.push({ path: '/', component: MainPage });
-    router();
-    deleteCheckBoxStyles();
-    setPricesToSlider(productsData);
-    setAmountToSlider(productsData);
-});

@@ -7,6 +7,8 @@
         background-color: transparent;
         color: black;
 
+        
+
         &.open {
             background-color: #ffc500;
             color: black;
@@ -25,8 +27,14 @@
         width: 100%;
         margin-top: 5px;
 
+        
+
         &.open {
             transform: scale(1);
+
+            &:nth-child(4) {
+                margin-bottom: 20px;
+            }
         }
 
         &:hover {
@@ -42,18 +50,23 @@
 }
 
 .sort-arrow {
-    width: 25px;
+    width: 35px;
     position: absolute;
-    top: 3px;
-    right: 20%;
+    top: -2px;
+    right: 15%;
     z-index: 3;
     cursor: pointer;
     transform: scale(1, 1);
 
     &.open {
         transform: scale(1, -1);
-        top: 90%;
+        top: 80%;
         right: 44%;
+    }
+
+    &:hover {
+        filter: invert(11%) sepia(64%) saturate(5450%) hue-rotate(352deg) brightness(74%) contrast(102%);
+        transition: all 0.5s;
     }
 }
 
@@ -172,6 +185,7 @@
         border-radius: 50%;
     }
 }
+
 .btn__add,
 .btn__details,
 .btn-another-view,
@@ -233,36 +247,3 @@
     transform: translate(0px, 0px);
 }
 
-// .popup-btn-close {
-//     margin: 0;
-//     padding: 15px;
-//     display: block;
-//     position: absolute;
-//     top: 0px;
-//     right: 0px;
-
-//     width: 60px;
-//     height: 60px;
-//     border-radius: 100px;
-
-//     text-align: center;
-//     font-size: 24px;
-//     line-height: 1.2;
-//     color: #000000;
-
-//     transition: 0.5s;
-// }
-
-// .popup-wrapper:hover .popup-btn-close {
-//     background: #fddcc4;
-//     border: none;
-//     cursor: pointer;
-//     transition: 0.5s;
-// }
-
-// .popup:hover .popup-btn-close {
-//     background: transparent;
-//     border: 2px solid #f1cdb3;
-//     cursor: pointer;
-//     transition: 0.5s;
-// }
