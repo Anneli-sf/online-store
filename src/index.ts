@@ -165,67 +165,78 @@ document.addEventListener('click', (e: Event) => {
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     // console.log('element', element);
-
-    if (element instanceof Element && element.closest('input')) {
-        const result: IProductsData[] = findCurrentFilters(element);
-
-        // console.log('result', result);
-
-        //-----------------get unic names of categories/ subcategories
-        const categories: string[] = unicCategories(result);
-        const subcategories: string[] = unicSubcategories(result);
-        // console.log(categories);
-        // console.log(subcategories);
-
-        //-------------------set chosen amount of goods
-        const currentCatStock: IStock = {};
-        const currentSubCatStock: IStock = {};
-        result.forEach((item) => {
-            if (Object.keys(currentCatStock).includes(item.categoryEng)) {
-                currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
-            } else currentCatStock[item.categoryEng] = item.stock;
-
-            if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
-                currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
-            } else currentSubCatStock[item.subcategoryEng] = item.stock;
-        });
-
-        // console.log('currentCatStock', currentCatStock);
-
-        const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
-        currentAmounts.forEach((input: HTMLInputElement) => {
-            if (Object.keys(currentCatStock).includes(input.id)) {
-                input.value = currentCatStock[input.id].toString();
-                input.value = `${currentCatStock[input.id]}`;
-            } else if (Object.keys(currentSubCatStock).includes(input.id)) {
-                input.value = currentSubCatStock[input.id].toString();
-                input.value = `${currentSubCatStock[input.id]}`;
-            } else {
-                input.value = '0';
-            }
-        });
-
-        // console.log('currentAmounts', currentAmounts);
-
-        //-------------------set styles of available labels
-        const currentLabels = [...document.querySelectorAll('.filter-label')] as HTMLLabelElement[];
-        currentLabels.forEach((label: HTMLLabelElement) => {
-            const attrFor = label.getAttribute('for') as string;
-            if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
-                label.style.opacity = '1';
-            } else {
-                label.style.opacity = '0.6';
-            }
-        });
-
-        //--------------------------set prices and stock  to slider
-        setPricesToSlider(result);
-        element.url = stateFilters(categories, subcategories, result);
-        window.history.pushState({ path: element.url }, '', element.url);
-        routes.push({ path: '/', component: MainPage });
-        router(result);
-        setAmountToSlider(result);
+    let result: IProductsData[] = [];
+    if (element instanceof Element && element.closest('.filter-input')) {
+        // const result: IProductsData[] = findCurrentFilters(element);
+        result = findCurrentFilters(element);
     }
+
+    if (element instanceof Element && element.closest('.slider-price')) {
+        const max = document.querySelector('#max-price') as HTMLInputElement;
+        const min = document.querySelector('#min-price') as HTMLInputElement;
+        // console.log('max, min', max.value, min.value);
+        if (result.length == 0) {
+            result = productsData.filter((item) => item.price >= +min.value && item.price <= +max.value);
+        } else result = result.filter((item) => item.price >= +min.value && item.price <= +max.value);
+    }
+
+    console.log('result', result);
+
+    //-----------------get unic names of categories/ subcategories
+    const categories: string[] = unicCategories(result);
+    const subcategories: string[] = unicSubcategories(result);
+    // console.log(categories);
+    // console.log(subcategories);
+
+    //-------------------set chosen amount of goods
+    const currentCatStock: IStock = {};
+    const currentSubCatStock: IStock = {};
+    result.forEach((item) => {
+        if (Object.keys(currentCatStock).includes(item.categoryEng)) {
+            currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
+        } else currentCatStock[item.categoryEng] = item.stock;
+
+        if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
+            currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
+        } else currentSubCatStock[item.subcategoryEng] = item.stock;
+    });
+
+    // console.log('currentCatStock', currentCatStock);
+
+    const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
+    currentAmounts.forEach((input: HTMLInputElement) => {
+        if (Object.keys(currentCatStock).includes(input.id)) {
+            input.value = currentCatStock[input.id].toString();
+            input.value = `${currentCatStock[input.id]}`;
+        } else if (Object.keys(currentSubCatStock).includes(input.id)) {
+            input.value = currentSubCatStock[input.id].toString();
+            input.value = `${currentSubCatStock[input.id]}`;
+        } else {
+            input.value = '0';
+        }
+    });
+
+    // console.log('currentAmounts', currentAmounts);
+
+    //-------------------set styles of available labels
+    const currentLabels = [...document.querySelectorAll('.filter-label')] as HTMLLabelElement[];
+    currentLabels.forEach((label: HTMLLabelElement) => {
+        const attrFor = label.getAttribute('for') as string;
+        if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
+            label.style.opacity = '1';
+        } else {
+            label.style.opacity = '0.6';
+        }
+    });
+
+    //--------------------------set prices and stock  to slider
+    setPricesToSlider(result);
+    element.url = stateFilters(categories, subcategories, result);
+    window.history.pushState({ path: element.url }, '', element.url);
+    routes.push({ path: '/', component: MainPage });
+    router(result);
+    setAmountToSlider(result);
+    // }
 });
 
 //-------------------------------------------------/FILTERS
