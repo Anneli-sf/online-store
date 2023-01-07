@@ -179,7 +179,7 @@ document.addEventListener('change', (e) => {
         setPricesToSlider(result);
         setAmountToSlider(result);
     }
-    console.log('result', result);
+    // console.log('result', result);
     if (element instanceof Element && element.closest('.slider-price')) {
         const max = document.querySelector('#max-price') as HTMLInputElement;
         const min = document.querySelector('#min-price') as HTMLInputElement;
@@ -195,6 +195,7 @@ document.addEventListener('change', (e) => {
                 showNotFound();
             } else result = stack;
         }
+        setAmountToSlider(result);
     }
 
     if (element instanceof Element && element.closest('.slider-amount')) {
@@ -212,6 +213,7 @@ document.addEventListener('change', (e) => {
                 showNotFound();
             } else result = stack;
         }
+        setPricesToSlider(result);
     }
 
     // console.log('result', result);
@@ -225,17 +227,18 @@ document.addEventListener('change', (e) => {
     //-------------------set chosen amount of goods
     const currentCatStock: IStock = {};
     const currentSubCatStock: IStock = {};
+
     result.forEach((item) => {
         if (Object.keys(currentCatStock).includes(item.categoryEng)) {
-            currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
-        } else currentCatStock[item.categoryEng] = item.stock;
+            currentCatStock[item.categoryEng] = (currentCatStock[item.categoryEng] || 0) + 1;
+        } else currentCatStock[item.categoryEng] = 1;
 
         if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
-            currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
-        } else currentSubCatStock[item.subcategoryEng] = item.stock;
+            currentSubCatStock[item.subcategoryEng] = (currentSubCatStock[item.subcategoryEng] || 0) + 1;
+        } else currentSubCatStock[item.subcategoryEng] = 1;
     });
 
-    // console.log('currentCatStock', currentCatStock);
+    // console.log('currentCatStock', 'currentSubCatStock', currentCatStock, currentSubCatStock);
 
     const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
     currentAmounts.forEach((input: HTMLInputElement) => {
