@@ -2,9 +2,9 @@ import './main-section.scss';
 import { createElement } from '../global-components/global-components';
 import { buttonReset, createAside } from './aside/aside';
 import { createProductsSection, popupToggle } from './products-section/products-section';
-import { productsData, IProductsData } from '../data/data';
+import { productsData } from '../data/data';
 import { deleteDoubleAddUnique, addDoubleDeleteUnique } from '../helpers/helpers';
-import { IProductsData } from '../global-components/interfaces';
+import { IProductsData, IFilters } from '../global-components/interfaces';
 
 export const productsWrapper = createElement('div', 'products-wrapper') as HTMLDivElement;
 export function createProducstPage(currentArr: IProductsData[]): HTMLDivElement {
@@ -13,25 +13,14 @@ export function createProducstPage(currentArr: IProductsData[]): HTMLDivElement 
     return productsWrapper;
 }
 
-//---------------------------------SETTINGS
-export const filters = {
-    categories: [] as IProductsData[],
-    subcategories: [] as IProductsData[],
-    currArr: [] as IProductsData[],
-    price: [] as IProductsData[],
-    stack: [] as IProductsData[],
-};
-
-export const findCurrentFilters = (el: HTMLInputElement) => {
+export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters) => {
     const chosenCategory: IProductsData[] = productsData.filter((item) => item.categoryEng === el.getAttribute('id'));
     const chosenSubCategory: IProductsData[] = productsData.filter(
         (item) => item.subcategoryEng === el.getAttribute('id')
     );
-    // console.log('chosenSubCategory', chosenSubCategory);
-    // console.log('el', el);
 
     filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
-
+    console.log('filters.categories', filters.categories);
     //-----------содержит ли категории выбранные подкатегории
     if (filters.categories.length > 0) {
         let isContain = 0;
@@ -41,22 +30,37 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
             });
         });
         // console.log('isContain', isContain);
-        // console.log('filters.subcategories', filters.subcategories);
 
         if (isContain == 0 && chosenSubCategory.length > 0) {
             filters.subcategories = filters.subcategories;
-            const contentBlock = document.querySelector('.products') as HTMLElement;
-            contentBlock.style.display = 'none';
-            // console.log('ERROR');
-            popupToggle();
+            showNotFound();
         } else {
             filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
-        }
-    } else {
+        } //---------------если категория не выбрана
+    }
+    // else if (filters.categories.length == 0 && filters.subcategories.length > 0) {
+    //     let isContain = 0;
+    //     filters.subcategories.forEach((item) => {
+    //         chosenCategory.forEach((element) => {
+    //             if (item.subcategoryEng == element.subcategoryEng) isContain++;
+    //         });
+    //     });
+
+    //     if (isContain == 0) {
+    //         filters.categories = filters.categories;
+    //         const contentBlock = document.querySelector('.products') as HTMLElement;
+    //         contentBlock.style.display = 'none';
+    //         // console.log('ERROR');
+    //         popupToggle();
+    //     } else {
+    //         filters.categories = addDoubleDeleteUnique(filters.subcategories, chosenCategory);
+    //     }
+    // }
+    else {
         filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
     }
 
-    // console.log('filters.subcategories', filters.subcategories);
+    console.log('filters.subcategories', filters.subcategories);
 
     filters.currArr =
         filters.subcategories.length === 0
@@ -67,7 +71,7 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
     // console.log('filters.currArr', filters.currArr);
     if (el.classList.contains('input-reset')) {
         filters.currArr = [];
-        console.log('works');
+        // console.log('works');
     }
 
     if (filters.currArr.length === 0) {
@@ -130,4 +134,11 @@ export const setAmountToSlider = (resultArr: IProductsData[]): void => {
     maxAmount.value = Math.max(...stock).toString();
     minAmountNumber.value = minAmount.value;
     maxAmountNumber.value = maxAmount.value;
+};
+
+//---------------show goods are not founded
+export const showNotFound = (): void => {
+    const contentBlock = document.querySelector('.products') as HTMLElement;
+    contentBlock.style.display = 'none';
+    popupToggle();
 };
