@@ -16,5 +16,3 @@ export function createAside(currentArr: IProductsData[]): HTMLElement {
     asideBlock.append(buttonContainer, createFilters(currentArr), createSliders(currentArr));
     return asideBlock;
 }
-
-

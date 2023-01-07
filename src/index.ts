@@ -13,11 +13,7 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
-import {
-    btnAnotherView,
-    createProductsSection,
-    popupClose,
-} from './components/main-section/products-section/products-section';
+import { btnAnotherView, createProductsSection } from './components/main-section/products-section/products-section';
 import {
     createProducstPage,
     productsWrapper,
@@ -164,9 +160,6 @@ document.addEventListener('click', (e: Event) => {
 });
 
 //-------------------------------------------------FILTERS
-interface IStock {
-    [key: string]: number;
-}
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
