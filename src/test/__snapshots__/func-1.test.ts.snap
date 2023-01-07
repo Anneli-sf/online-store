@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`If block created? 1`] = `
+<div
+  class="empty"
+>
+  <p
+    class="empty-text"
+  >
+    Корзина пуста...
+  </p>
+</div>
+`;
