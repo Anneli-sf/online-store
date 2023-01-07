@@ -88,6 +88,7 @@ function createCategoryFormLabel(
         const categoryFormInput = createSimpleInput(inputClass, 'checkbox') as HTMLInputElement;
         categoryFormInput.id = arrEngNames[i];
         categoryFormLabel.classList.add('filter-label');
+        categoryFormInput.classList.add('filter-input');
 
         // createCurrentAmount();
 
