@@ -13,11 +13,7 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
-import {
-    btnAnotherView,
-    createProductsSection,
-    popupClose,
-} from './components/main-section/products-section/products-section';
+import { createProductsSection } from './components/main-section/products-section/products-section';
 import {
     createProducstPage,
     productsWrapper,
@@ -25,7 +21,7 @@ import {
     stateFilters,
     setPricesToSlider,
     setAmountToSlider,
-    deleteCheckBoxStyles,
+    showNotFound,
 } from './components/main-section/main-section';
 import { productsData } from './components/data/data';
 import { unicCategories, unicSubcategories, fillLocalStorageOnStart } from './components/helpers/helpers';
@@ -38,8 +34,7 @@ import {
     executeWhenDeleteBtnQuantityOfProduct,
     executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
-import { IProductsData, IComponent, IRoutes, IStock } from './components/global-components/interfaces';
-import { buttonReset } from './components/main-section/aside/aside';
+import { IProductsData, IComponent, IRoutes, IStock, IFilters } from './components/global-components/interfaces';
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 
 createHeader();
@@ -161,26 +156,62 @@ document.addEventListener('click', (e: Event) => {
 });
 
 //-------------------------------------------------FILTERS
+const filters: IFilters = {
+    categories: [],
+    subcategories: [],
+    currArr: [],
+    price: [],
+    stack: [],
+};
+
+let result: IProductsData[] = [];
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     // console.log('element', element);
-    let result: IProductsData[] = [];
+    // let result: IProductsData[] = [];
     if (element instanceof Element && element.closest('.filter-input')) {
         // const result: IProductsData[] = findCurrentFilters(element);
-        result = findCurrentFilters(element);
+        result = findCurrentFilters(element, filters);
+        setPricesToSlider(result);
+        setAmountToSlider(result);
     }
-
+    console.log('result', result);
     if (element instanceof Element && element.closest('.slider-price')) {
         const max = document.querySelector('#max-price') as HTMLInputElement;
         const min = document.querySelector('#min-price') as HTMLInputElement;
         // console.log('max, min', max.value, min.value);
-        if (result.length == 0) {
+        if (filters.currArr.length === 0) {
             result = productsData.filter((item) => item.price >= +min.value && item.price <= +max.value);
-        } else result = result.filter((item) => item.price >= +min.value && item.price <= +max.value);
+        } else {
+            const stack: IProductsData[] = result.filter(
+                (item) => item.price >= +min.value && item.price <= +max.value
+            );
+            if (stack.length === 0) {
+                result = result;
+                showNotFound();
+            } else result = stack;
+        }
     }
 
-    console.log('result', result);
+    if (element instanceof Element && element.closest('.slider-amount')) {
+        const max = document.querySelector('#max-amount') as HTMLInputElement;
+        const min = document.querySelector('#min-amount') as HTMLInputElement;
+        // console.log('max, min', max.value, min.value);
+        if (filters.currArr.length === 0) {
+            result = productsData.filter((item) => item.stock >= +min.value && item.price <= +max.value);
+        } else {
+            const stack: IProductsData[] = result.filter(
+                (item) => item.stock >= +min.value && item.price <= +max.value
+            );
+            if (stack.length === 0) {
+                result = result;
+                showNotFound();
+            } else result = stack;
+        }
+    }
+
+    // console.log('result', result);
 
     //-----------------get unic names of categories/ subcategories
     const categories: string[] = unicCategories(result);
@@ -206,10 +237,8 @@ document.addEventListener('change', (e) => {
     const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
     currentAmounts.forEach((input: HTMLInputElement) => {
         if (Object.keys(currentCatStock).includes(input.id)) {
-            input.value = currentCatStock[input.id].toString();
             input.value = `${currentCatStock[input.id]}`;
         } else if (Object.keys(currentSubCatStock).includes(input.id)) {
-            input.value = currentSubCatStock[input.id].toString();
             input.value = `${currentSubCatStock[input.id]}`;
         } else {
             input.value = '0';
@@ -230,21 +259,13 @@ document.addEventListener('change', (e) => {
     });
 
     //--------------------------set prices and stock  to slider
-    setPricesToSlider(result);
+    // setPricesToSlider(result);
     element.url = stateFilters(categories, subcategories, result);
     window.history.pushState({ path: element.url }, '', element.url);
     routes.push({ path: '/', component: MainPage });
     router(result);
-    setAmountToSlider(result);
+    // setAmountToSlider(result);
     // }
 });
 
 //-------------------------------------------------/FILTERS
-
-// buttonReset.addEventListener('click', () => {
-//     // routes.push({ path: '/', component: MainPage });
-//     router();
-//     deleteCheckBoxStyles();
-//     setPricesToSlider(productsData);
-//     setAmountToSlider(productsData);
-// });
