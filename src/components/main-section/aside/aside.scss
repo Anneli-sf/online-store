@@ -1,8 +1,7 @@
 @import '../../../sass/abstracts/mixins';
 
 .main-aside {
-    flex: 1 0 15%;
-    // height: 100%;
+    flex: 1 0 20%;
     margin-right: 10px;
     display: flex;
     flex-direction: column;
@@ -23,7 +22,6 @@
     &-copy {
         padding: 5px 10px;
         background-color: transparent;
-
         color: white;
         cursor: pointer;
         &:hover {
