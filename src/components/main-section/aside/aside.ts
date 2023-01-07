@@ -15,6 +15,7 @@ export function createAside(currentArr: IProductsData[]): HTMLElement {
     const buttonResetLabel = createLabel('сбросить фильтры', 'label-reset', 'reset') as HTMLLabelElement;
     // buttonResetLabel.style.opacity = '1';
     inputReset.id = 'reset';
+    inputReset.classList.add('filter-input');
     buttonResetLabel.append(inputReset);
     buttonReset.prepend(buttonResetLabel);
 

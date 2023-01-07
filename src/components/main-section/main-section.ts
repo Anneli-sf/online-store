@@ -28,7 +28,7 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
         (item) => item.subcategoryEng === el.getAttribute('id')
     );
     // console.log('chosenSubCategory', chosenSubCategory);
-    console.log('el', el);
+    // console.log('el', el);
 
     filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
 
@@ -40,8 +40,8 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
                 if (item.categoryEng == element.categoryEng) isContain++;
             });
         });
-        console.log('isContain', isContain);
-        console.log('filters.subcategories', filters.subcategories);
+        // console.log('isContain', isContain);
+        // console.log('filters.subcategories', filters.subcategories);
 
         if (isContain == 0 && chosenSubCategory.length > 0) {
             filters.subcategories = filters.subcategories;
@@ -65,7 +65,7 @@ export const findCurrentFilters = (el: HTMLInputElement) => {
             ? filters.subcategories
             : addDoubleDeleteUnique(filters.categories, filters.subcategories);
     // console.log('filters.currArr', filters.currArr);
-    if (el.className == 'input-reset') {
+    if (el.classList.contains('input-reset')) {
         filters.currArr = [];
         console.log('works');
     }
