@@ -25,3 +25,7 @@ export interface IProductsData {
 export interface IStock {
     [key: string]: number;
 }
+
+export interface IFilters {
+    [key: string]: IProductsData[];
+}

@@ -87,6 +87,8 @@ function createCategoryFormLabel(
         const categoryFormLabel = createLabel(arrCategoriesNames[i], labelClass, arrEngNames[i]) as HTMLLabelElement;
         const categoryFormInput = createSimpleInput(inputClass, 'checkbox') as HTMLInputElement;
         categoryFormInput.id = arrEngNames[i];
+        categoryFormLabel.classList.add('filter-label');
+        categoryFormInput.classList.add('filter-input');
 
         // createCurrentAmount();
 
@@ -149,11 +151,4 @@ const createCurrentAmount = (
     }
     return currentAmount;
 };
-//-------------------------------toggle inputs at filters
 
-// const toggleFilterInput = (e: Event, inputClass: string) => {
-//     if (e.target instanceof Element && e.target.closest(inputClass)) {
-//         const currInput = document.querySelector(inputClass) as HTMLInputElement;
-//         currInput.checked ? (currInput.checked = true) : (currInput.checked = false);
-//     }
-// };

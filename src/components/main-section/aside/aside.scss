@@ -35,3 +35,14 @@
         }
     }
 }
+
+.label-reset {
+    cursor: pointer;
+
+    .input-reset {
+        opacity: 0;
+        z-index: -5;
+    }
+}
+
+
