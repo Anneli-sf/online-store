@@ -1,8 +1,8 @@
 import './main-section.scss';
 import { createElement } from '../global-components/global-components';
-import { buttonReset, createAside } from './aside/aside';
+import { createAside } from './aside/aside';
 import { createProductsSection, popupToggle } from './products-section/products-section';
-import { productsData, IProductsData } from '../data/data';
+import { productsData } from '../data/data';
 import { deleteDoubleAddUnique, addDoubleDeleteUnique } from '../helpers/helpers';
 import { IProductsData } from '../global-components/interfaces';
 
