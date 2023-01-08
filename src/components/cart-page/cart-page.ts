@@ -27,7 +27,7 @@ export const createCartPage = (): HTMLDivElement => {
 };
 
 export function sliceIntoChunks(arr: Array<number>, chunkSize: number) {
-    const res = [];
+    const res: Array<number[]> = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
         const chunk = arr.slice(i, i + chunkSize);
         res.push(chunk);
@@ -46,9 +46,9 @@ export const fillCartPages = (size: number) => {
     }
 };
 
-const createEmptyPage = () => {
-    const empty = createElement('div', 'empty');
-    const emptyText = createElement('p', 'empty-text');
+export const createEmptyPage = () => {
+    const empty = createElement('div', 'empty') as HTMLDivElement;
+    const emptyText = createElement('p', 'empty-text') as HTMLParagraphElement;
     emptyText.textContent = 'Корзина пуста...';
 
     empty.append(emptyText);
@@ -185,7 +185,7 @@ const cartProductBlock = (productId: number) => {
     return productCartBlock;
 };
 
-const numberOfProductBlock = (productId: number) => {
+export const numberOfProductBlock = (productId: number) => {
     const numberOfProduct = createElement('p', 'number-product') as HTMLParagraphElement;
     numberOfProduct.textContent = `${JSON.parse(localStorage.getItem('cartList') as string).indexOf(productId) + 1}`;
     return numberOfProduct;

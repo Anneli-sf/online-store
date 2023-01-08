@@ -4,7 +4,6 @@ import {
     createElement,
     createImage,
     createInput,
-    createLink,
     createParagraph,
     createSimpleInput,
 } from '../../global-components/global-components';
