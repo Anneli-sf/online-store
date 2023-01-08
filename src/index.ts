@@ -14,7 +14,11 @@ import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList } from './components/cart-page/cart-page';
 
-import { contentBlock, createProductsMainList } from './components/main-section/products-section/products-section';
+import {
+    closePopup,
+    contentBlock,
+    createProductsMainList,
+} from './components/main-section/products-section/products-section';
 import {
     findCurrentFilters,
     stateFilters,
@@ -115,9 +119,9 @@ const findComponentByPath = (path: string) => {
     // console.log('routes', routes);
     // console.log('path', path);
     const namePage = path.split('/')[1];
-    console.log('path.split', path.split('/')[1]);
+    // console.log('path.split', path.split('/')[1]);
     // console.log(routes.map((item) => item.path.match(/`^\\${path}$`/)));
-    console.log(routes.map((item) => item.path.includes(namePage)));
+    // console.log(routes.map((item) => item.path.includes(namePage)));
     return routes.find((r) => r.path.includes(namePage)) || undefined;
     // return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 };
@@ -192,8 +196,9 @@ let result: IProductsData[] = [];
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
-    console.log('element', element);
+    // console.log('element', element);
 
+    //---------------------SEARCH
     if (element instanceof Element && element.className === 'sort__input') {
         console.log('result', result);
         console.log('element.value', element.value);
@@ -209,6 +214,7 @@ document.addEventListener('change', (e) => {
         setAmountToSlider(result);
     }
 
+    //----------------------CHECKBOXES
     if (element instanceof Element && element.closest('.filter-input')) {
         // const result: IProductsData[] = findCurrentFilters(element);
         result = findCurrentFilters(element, filters);
@@ -216,24 +222,34 @@ document.addEventListener('change', (e) => {
         setAmountToSlider(result);
     }
     // console.log('result', result);
+
+    //----------------------SLIDER PRICE
     if (element instanceof Element && element.closest('.slider-price')) {
         const max = document.querySelector('#max-price') as HTMLInputElement;
         const min = document.querySelector('#min-price') as HTMLInputElement;
         // console.log('max, min', max.value, min.value);
         if (filters.currArr.length === 0) {
+            // console.log('filters.currArr', filters.currArr);
             result = productsData.filter((item) => item.price >= +min.value && item.price <= +max.value);
         } else {
-            const stack: IProductsData[] = result.filter(
+            // console.log('filters.currArr', filters.currArr);
+            let stack: IProductsData[] = filters.currArr.filter(
                 (item) => item.price >= +min.value && item.price <= +max.value
             );
             if (stack.length === 0) {
-                result = result;
+                result = filters.currArr; //result;
                 showNotFound();
-            } else result = stack;
+            } else {
+                result = stack;
+                closePopup();
+                stack = [];
+            }
+            console.log('stack', stack);
         }
         setAmountToSlider(result);
     }
 
+    //----------------------SLIDER AMOUNT
     if (element instanceof Element && element.closest('.slider-amount')) {
         const max = document.querySelector('#max-amount') as HTMLInputElement;
         const min = document.querySelector('#min-amount') as HTMLInputElement;
@@ -241,13 +257,17 @@ document.addEventListener('change', (e) => {
         if (filters.currArr.length === 0) {
             result = productsData.filter((item) => item.stock >= +min.value && item.price <= +max.value);
         } else {
-            const stack: IProductsData[] = result.filter(
+            let stack: IProductsData[] = filters.currArr.filter(
                 (item) => item.stock >= +min.value && item.price <= +max.value
             );
             if (stack.length === 0) {
-                result = result;
+                result = filters.currArr;
                 showNotFound();
-            } else result = stack;
+            } else {
+                result = stack;
+                closePopup();
+                stack = [];
+            }
         }
         setPricesToSlider(result);
     }

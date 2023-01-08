@@ -147,9 +147,21 @@ function createPopup(): HTMLDivElement {
     return popup;
 }
 
-export function popupToggle() {
-    const POPUP_CARD = document.querySelector('.popup-content') as HTMLDivElement;
-    const POPUP = document.querySelector('.popup-wrapper') as HTMLDivElement;
-    popup.classList.toggle('popup-open');
-    popupContent.classList.toggle('popup-open');
+export function openPopup() {
+    // const popupContent = document.querySelector('.popup-content') as HTMLDivElement;
+    // const popup = document.querySelector('.popup-wrapper') as HTMLDivElement;
+    popup.classList.add('popup-open');
+    popupContent.classList.add('popup-open');
 }
+
+export function closePopup() {
+    // const popupContent = document.querySelector('.popup-content') as HTMLDivElement;
+    // const popup = document.querySelector('.popup-wrapper') as HTMLDivElement;
+    popup.classList.remove('popup-open');
+    popupContent.classList.remove('popup-open');
+}
+
+// export function togglePopup() {
+//     popup.classList.toggle('popup-open');
+//     popupContent.classList.toggle('popup-open');
+// }
