@@ -1,6 +1,6 @@
 import { createEmptyPage, sliceIntoChunks } from '../components/cart-page/cart-page';
 import { productsData } from '../components/data/data';
-import { stateFilters } from '../components/main-section/main-section';
+import { stateFilters } from '../components/main-section/main-section-index';
 import { isAlreadyHave, getMinPrice, getMaxPrice, getMinAmount, getMaxAmount } from '../components/helpers/helpers';
 import { IProductsData } from '../components/global-components/interfaces';
 

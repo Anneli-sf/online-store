@@ -14,21 +14,15 @@ import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList } from './components/cart-page/cart-page';
 
+import { contentBlock, createProductsMainList } from './components/main-section/products-section/products-section';
 import {
-    createProductsSection,
-    contentBlock,
-    createProductsMainList,
-} from './components/main-section/products-section/products-section';
-
-import {
-    createProducstPage,
-    productsWrapper,
     findCurrentFilters,
     stateFilters,
-    setPricesToSlider,
     setAmountToSlider,
+    setPricesToSlider,
     showNotFound,
-} from './components/main-section/main-section';
+} from './components/main-section/main-section-index';
+import { createProducstPage, productsWrapper } from './components/main-section/main-section';
 import { productsData } from './components/data/data';
 import { unicCategories, unicSubcategories, fillLocalStorageOnStart } from './components/helpers/helpers';
 import {
@@ -40,7 +34,7 @@ import {
     executeWhenDeleteBtnQuantityOfProduct,
     executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
-import { IProductsData, IComponent, IRoutes, IStock, IFilters } from './components/global-components/interfaces';
+import { IProductsData, IComponent, IStock, IFilters } from './components/global-components/interfaces';
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
 
