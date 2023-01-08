@@ -1,7 +1,7 @@
 import { IProductsData, IFilters } from '../global-components/interfaces';
 import { productsData } from '../data/data';
 import { deleteDoubleAddUnique, addDoubleDeleteUnique } from '../helpers/helpers';
-import { popupToggle } from './products-section/products-section';
+import { openPopup, closePopup } from './products-section/products-section';
 import { deleteCheckBoxStyles } from './aside/aside';
 
 //------------------main function for checkbox filters
@@ -26,9 +26,10 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters) => {
 
         if (isContain == 0 && chosenSubCategory.length > 0) {
             filters.subcategories = filters.subcategories;
-            showNotFound();
+            el.checked === true ? showNotFound() : closePopup();
         } else {
             filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
+            closePopup();
         } //---------------если категория не выбрана
     } else {
         filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
@@ -95,9 +96,9 @@ export const searchByWord = (word: string, arr: IProductsData[]) => {
 export const showNotFound = (): void => {
     const productsList = document.querySelector('.products__list') as HTMLUListElement;
     const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
-
     productsList.style.display = 'none';
-    popupToggle();
+    openPopup();
+    // togglePopup();
 };
 
 //--------------------------set prices to slider
