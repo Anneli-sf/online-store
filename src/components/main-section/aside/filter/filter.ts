@@ -151,4 +151,3 @@ const createCurrentAmount = (
     }
     return currentAmount;
 };
-
