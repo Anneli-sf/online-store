@@ -260,12 +260,9 @@ document.addEventListener('change', (e) => {
     });
 
     //--------------------------set prices and stock  to slider
-    element.url = stateFilters(categories, subcategories, result);
-    window.history.pushState({ path: element.url }, '', element.url);
+    window.history.pushState({}, '', stateFilters(categories, subcategories, result));
     routes.push({ path: '/', component: MainPage });
     router(result);
-    // setAmountToSlider(result);
-    // }
 });
 
 //-------------------------------------------------/FILTERS
