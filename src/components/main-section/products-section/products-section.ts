@@ -7,7 +7,7 @@ import {
     createLink,
     createParagraph,
 } from '../../global-components/global-components';
-import { createProductCard } from './item-card/item-card';
+import { createProductCard, keepViewStyle } from './item-card/item-card';
 import { IProductsData } from '../../global-components/interfaces';
 import { sortByASC, sortByDESC, sortByPriceDecr, sortByPriceInc } from '../../helpers/helpers';
 
@@ -99,9 +99,12 @@ function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
             productsList.innerHTML = '';
             sortArr.forEach((item) => {
                 productsList.append(createProductCard(item.id));
+                keepViewStyle();
             });
         }
     });
+
+    // keepViewStyle();
 
     currentArr.forEach((item) => {
         productsList.append(createProductCard(item.id));

@@ -1,5 +1,5 @@
 import './header.scss';
-import { createElement, createImage, createLink, createParagraph } from '../../global-components/global-components';
+import { createElement, createImage, createParagraph } from '../../global-components/global-components';
 
 // export const header = document.querySelector('.header') as HTMLBodyElement;
 // const basketLink = createLink('/#/cart', 'basket-link') as HTMLLinkElement;
