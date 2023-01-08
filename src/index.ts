@@ -13,9 +13,7 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage } from './components/cart-page/cart-page';
-
 import { createProductsSection } from './components/main-section/products-section/products-section';
-
 import {
     createProducstPage,
     productsWrapper,

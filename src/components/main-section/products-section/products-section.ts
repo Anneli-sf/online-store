@@ -4,7 +4,6 @@ import {
     createElement,
     createImage,
     createInput,
-    createLink,
     createParagraph,
 } from '../../global-components/global-components';
 import { createProductCard, keepViewStyle } from './item-card/item-card';
