@@ -138,9 +138,12 @@ export const setAmountToSlider = (resultArr: IProductsData[]): void => {
 
 //---------------show goods are not founded
 export const showNotFound = (): void => {
-    const contentBlock = document.querySelector('.products') as HTMLElement;
+    // const contentBlock = document.querySelector('.products') as HTMLElement;
+    const productsList = document.querySelector('.products__list') as HTMLUListElement;
     const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
-    sortSpan.innerHTML = '0';
-    contentBlock.style.display = 'none';
+    
+    // contentBlock.style.display = 'none';
+    productsList.style.display = 'none';
     popupToggle();
+    // sortSpan.innerHTML = '0';
 };

@@ -12,9 +12,13 @@ import './components/cart-page/cart-page-target/cart-page-target';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage } from './components/cart-page/cart-page';
+import { createCartPage, createProductsList } from './components/cart-page/cart-page';
 
-import { createProductsSection } from './components/main-section/products-section/products-section';
+import {
+    createProductsSection,
+    contentBlock,
+    createProductsMainList,
+} from './components/main-section/products-section/products-section';
 
 import {
     createProducstPage,
@@ -61,12 +65,17 @@ const MainPage = {
 };
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
-    const contentBlock = document.querySelector('.products') as HTMLElement;
+    // const contentBlock = document.querySelector('.products') as HTMLElement;
+    const productsList = document.querySelector('.products__list') as HTMLUListElement;
 
-    contentBlock.remove();
-    productsWrapper.append(createProductsSection(array));
+    // contentBlock.remove();
+    productsList.remove();
+    // productsWrapper.append(createProductsSection(array));
+    contentBlock.append(createProductsMainList(array));
 
     keepViewStyle();
+    // const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
+    // sortSpan.innerHTML = array.length.toString();
 
     return productsWrapper;
 }

@@ -107,6 +107,7 @@
     display: flex;
     flex-direction: column;
     padding: 15px;
+    position: relative;
 
     &__list {
         display: flex;
@@ -209,7 +210,7 @@
     height: 100%;
     background-color: #7f0909;
     position: absolute;
-    top: 0;
+    top: 15%;
     left: 0;
     opacity: 0;
     visibility: hidden;
@@ -222,6 +223,12 @@
     opacity: 1;
     visibility: visible;
     transition: all 0.5s ease-in;
+    padding-top: 10%;
+
+    .popup-content {
+        opacity: 1;
+    }
+
 }
 
 .popup-content {
