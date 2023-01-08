@@ -18,8 +18,8 @@ const sortItemAlphabetZA = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPriceInc = createElement('li', 'sort__item') as HTMLLIElement;
 const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
 const btnsViewBlock = createElement('div', 'view-btns');
-const btnStartView = createButton('one view', 'btn-start-view') as HTMLButtonElement;
-export const btnAnotherView = createButton('another view', 'btn-another-view') as HTMLButtonElement;
+const btnStartView = createButton('-', 'btn-start-view') as HTMLButtonElement;
+export const btnAnotherView = createButton('+', 'btn-another-view') as HTMLButtonElement;
 btnStartView.classList.add('active');
 
 const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;

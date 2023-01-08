@@ -100,7 +100,7 @@ function createDualSlider(
     range.append(sliderControl, formControl);
     filter.append(filterHeader, range);
 
-    fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+    fillSlider(fromSlider, toSlider, '#C6C6C6', '#ffc500', toSlider);
     setToggleAccessible(toSlider);
 
     fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider, fromInput);
@@ -116,7 +116,7 @@ function createDualSlider(
         controlSlider: { value: string | number; style: { background: string } }
     ) {
         const [from, to] = getParsed(fromInput, toInput);
-        fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
+        fillSlider(fromInput, toInput, '#C6C6C6', '#ffc500', controlSlider);
         if (from > to) {
             fromSlider.value = to;
             fromInput.value = to;
@@ -132,7 +132,7 @@ function createDualSlider(
         controlSlider: HTMLInputElement
     ) {
         const [from, to] = getParsed(fromInput, toInput);
-        fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
+        fillSlider(fromInput, toInput, '#C6C6C6', '#ffc500', controlSlider);
         setToggleAccessible(toInput);
         if (from <= to) {
             toSlider.value = to;
@@ -148,7 +148,7 @@ function createDualSlider(
         fromInput: { value: number | string }
     ) {
         const [from, to] = getParsed(fromSlider, toSlider);
-        fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+        fillSlider(fromSlider, toSlider, '#C6C6C6', '#ffc500', toSlider);
         if (from > to) {
             fromSlider.value = to;
             fromInput.value = to;
@@ -163,7 +163,7 @@ function createDualSlider(
         toInput: { value: number | string }
     ) {
         const [from, to] = getParsed(fromSlider, toSlider);
-        fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+        fillSlider(fromSlider, toSlider, '#C6C6C6', '#ffc500', toSlider);
         setToggleAccessible(toSlider);
         if (from <= to) {
             toSlider.value = to;

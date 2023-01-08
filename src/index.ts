@@ -149,7 +149,7 @@ document.addEventListener('click', (e: Event) => {
         const state: string = '#/product-details/' + element.id;
         window.history.pushState({ path: state }, '', state);
         element.setAttribute('url', window.location.href);
-        // routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
+        routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
         router(Number(element.id));
     }
     //---------/click on DETAILS----------
@@ -314,8 +314,6 @@ document.addEventListener('change', (e) => {
     // routes.push({ path: '/', component: MainPage });
     console.log(result);
     router(result);
-    // setAmountToSlider(result);
-    // }
 });
 
 //-------------------------------------------------/FILTERS

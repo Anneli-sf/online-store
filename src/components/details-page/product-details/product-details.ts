@@ -171,8 +171,10 @@ const createSailDetailsSection = (productId: number): HTMLElement => {
 
     const buttonAddToCart: HTMLButtonElement = createButton(text, 'btn__add');
     buttonAddToCart.id = `${productId}`;
+    buttonAddToCart.classList.add('button-second');
     const buttonBuyNow: HTMLButtonElement = createButton('быстрая покупка', 'btn-buy-now');
     buttonBuyNow.id = `${productId}`;
+    buttonBuyNow.classList.add('button-second');
 
     buttonBuyNow.addEventListener('click', () => {
         if (localStorage.getItem(`btn_${productId}`) === 'добавлен') {
