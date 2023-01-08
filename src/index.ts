@@ -38,6 +38,7 @@ import {
 } from './components/cart-page/cart-page-target/cart-page-target';
 import { IProductsData, IComponent, IRoutes, IStock, IFilters } from './components/global-components/interfaces';
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
+import { searchByWord } from './components/main-section/main-section-index';
 
 createHeader();
 createFooter();
@@ -171,8 +172,23 @@ let result: IProductsData[] = [];
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
-    // console.log('element', element);
-    // let result: IProductsData[] = [];
+    console.log('element', element);
+
+    if (element instanceof Element && element.className === 'sort__input') {
+        console.log('result', result);
+        console.log('element.value', element.value);
+        element.value;
+        if (result.length === 0) result = productsData;
+        const stack: IProductsData[] = searchByWord(element.value, result);
+        if (stack.length === 0) {
+            result = result;
+            showNotFound();
+        } else result = stack;
+        console.log('result', result);
+        setPricesToSlider(result);
+        setAmountToSlider(result);
+    }
+
     if (element instanceof Element && element.closest('.filter-input')) {
         // const result: IProductsData[] = findCurrentFilters(element);
         result = findCurrentFilters(element, filters);
@@ -275,3 +291,10 @@ document.addEventListener('change', (e) => {
 });
 
 //-------------------------------------------------/FILTERS
+
+// document.onpropertychange = (e) => {
+//     const element = e.target as HTMLInputElement;
+//     if (element instanceof Element && element.className === 'sort__input') {
+//         console.log(element.value)
+//     }
+// };

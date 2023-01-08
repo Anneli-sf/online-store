@@ -6,6 +6,7 @@ import {
     createInput,
     createLink,
     createParagraph,
+    createSimpleInput,
 } from '../../global-components/global-components';
 import { createProductCard, keepViewStyle } from './item-card/item-card';
 import { IProductsData } from '../../global-components/interfaces';
@@ -48,10 +49,11 @@ function createProductsHeader(currentArr: IProductsData[]) {
     sortItemPrixeDecr.textContent = 'Сортировать по цене 🠗';
 
     const sortText = createParagraph('Найдено товаров: ', 'sort__text') as HTMLParagraphElement;
-    const sortSpan = createElement('span', 'found-items');
-    sortSpan.textContent = currentArr.length.toString();
+    const sortSpan = createElement('span', 'found-items') as HTMLSpanElement;
+    sortSpan.innerHTML = currentArr.length.toString();
 
-    const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement;
+    // const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement;
+    const sortInput = createSimpleInput('sort__input', 'search', 'Найти товар', '') as HTMLInputElement;
 
     sortText.append(sortSpan);
     sortList.append(sortItemAlphabetAZ, sortItemAlphabetZA, sortItemPriceInc, sortItemPrixeDecr, sortArrow);
