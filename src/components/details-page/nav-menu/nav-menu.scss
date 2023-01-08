@@ -8,9 +8,9 @@
 
     .nav-list-btn,
     .nav-list-btn.active {
-        color: #fff;
+        color: #7f0909;
         display: block;
-        background: #655d69;
+        background: #ffc500;
         text-decoration: none;
         position: relative;
         height: 34px;
@@ -47,7 +47,7 @@
         content: '';
         position: absolute;
         top: 0;
-        border: 0 solid #655d69;
+        border: 0 solid #ffc500;
         border-width: 17px 10px;
         width: 0;
         height: 0;
@@ -62,30 +62,30 @@
     .nav-list-btn::after {
         left: 100%;
         border-color: transparent;
-        border-left-color: #655d69;
+        border-left-color: #ffc500;
     }
 
     .nav-list-btn:hover {
-        background-color: #f3e5f5;
-        color: black;
+        background-color: #7f0909;
+        color: #ffc500;
     }
 
     .nav-list-btn:hover::before {
-        border-color: #f3e5f5;
+        border-color: #7f0909;
         border-left-color: transparent;
     }
 
     .nav-list-btn:hover::after {
-        border-left-color: #f3e5f5;
+        border-left-color: #7f0909;
     }
 
     .nav-list-btn.active {
-        color: black;
-        background-color: #f3e5f5;
+        color: #ffc500;
+        background-color: #7f0909;
     }
 
     .nav-list-btn.active::before {
-        border-color: #f3e5f5;
+        border-color: #7f0909;
         border-left-color: transparent;
     }
 }

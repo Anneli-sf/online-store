@@ -12,8 +12,10 @@ export function createAside(currentArr: IProductsData[]): HTMLElement {
 
     const buttonContainer = createElement('div', 'btn-container') as HTMLDivElement;
     const buttonCopy = createButton('скопировать ссылку', 'btn-copy') as HTMLButtonElement;
+    buttonCopy.classList.add('button-second');
     const buttonResetLabel = createLabel('сбросить фильтры', 'label-reset', 'reset') as HTMLLabelElement;
-    // buttonResetLabel.style.opacity = '1';
+    buttonResetLabel.classList.add('button-second');
+
     inputReset.id = 'reset';
     inputReset.classList.add('filter-input');
     buttonResetLabel.append(inputReset);

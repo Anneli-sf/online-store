@@ -287,6 +287,7 @@ const createForm = () => {
     const flexboxBlock = createElement('div', 'flexbox');
     const buttonSubmit = createButton('отправить', 'submit-btn');
     buttonSubmit.type = 'submit';
+    buttonSubmit.classList.add('button-first');
 
     flexboxBlock.append(selectMonth, selectYear, inputCVV);
     form.append(inputNumberCard, inputHolder, inputAddress, inputTel, inputMail, flexboxBlock, buttonSubmit);
