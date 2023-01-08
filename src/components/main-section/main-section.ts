@@ -37,26 +37,7 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters) => {
         } else {
             filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
         } //---------------если категория не выбрана
-    }
-    // else if (filters.categories.length == 0 && filters.subcategories.length > 0) {
-    //     let isContain = 0;
-    //     filters.subcategories.forEach((item) => {
-    //         chosenCategory.forEach((element) => {
-    //             if (item.subcategoryEng == element.subcategoryEng) isContain++;
-    //         });
-    //     });
-
-    //     if (isContain == 0) {
-    //         filters.categories = filters.categories;
-    //         const contentBlock = document.querySelector('.products') as HTMLElement;
-    //         contentBlock.style.display = 'none';
-    //         // console.log('ERROR');
-    //         popupToggle();
-    //     } else {
-    //         filters.categories = addDoubleDeleteUnique(filters.subcategories, chosenCategory);
-    //     }
-    // }
-    else {
+    } else {
         filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
     }
 
@@ -141,7 +122,7 @@ export const showNotFound = (): void => {
     // const contentBlock = document.querySelector('.products') as HTMLElement;
     const productsList = document.querySelector('.products__list') as HTMLUListElement;
     const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
-    
+
     // contentBlock.style.display = 'none';
     productsList.style.display = 'none';
     popupToggle();

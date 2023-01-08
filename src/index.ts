@@ -48,10 +48,16 @@ createHeader();
 createFooter();
 fillLocalStorageOnStart();
 
-window.addEventListener('hashchange', () => router());
+window.addEventListener('hashchange', () => {
+    const arr = window.location.hash.split('/');
+
+    router(+arr[arr.length - 1]);
+});
 // window.addEventListener('load', () => router());
 window.addEventListener('load', () => {
-    mainSection.append(createProducstPage(productsData));
+    const searchParams = window.location.search;
+    if (searchParams.length) console.log(searchParams);
+    else mainSection.append(createProducstPage(productsData));
 });
 
 const mainSection = document.querySelector('.main') as HTMLElement;
@@ -61,7 +67,7 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (array = productsData) => updateProductsSection(array),
+    render: (array: IProductsData[] = productsData) => updateProductsSection(array),
 };
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
@@ -89,7 +95,9 @@ const CartPage = {
 
 const DetailsPage = {
     render: (id: number) => {
+        console.log('id', id);
         mainSection.innerHTML = '';
+        //если айли нет еррор
         return createDetailsPage(id);
     },
 };
@@ -104,23 +112,32 @@ const ErrorComponent = {
 const routes = [
     { path: '/', component: MainPage },
     { path: '/cart', component: CartPage },
+    { path: '/product-details', component: DetailsPage },
 ];
 
 //-------------------------------ROUTING
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
-const findComponentByPath = (path: string, routes: IRoutes[]) => {
+const findComponentByPath = (path: string) => {
     // console.log('routes', routes);
     // console.log('path', path);
-    return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
+    const namePage = path.split('/')[1];
+    console.log('path.split', path.split('/')[1]);
+    // console.log(routes.map((item) => item.path.match(/`^\\${path}$`/)));
+    console.log(routes.map((item) => item.path.includes(namePage)));
+    return routes.find((r) => r.path.includes(namePage)) || undefined;
+    // return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 };
 
 const router = (option?: number | IProductsData[]) => {
+    // console.log('option', option);
     const path = parseLocation();
     // console.log('path parse', path);
-    const { component = ErrorComponent } = findComponentByPath(path, routes as IRoutes[]) || {};
+    const { component = ErrorComponent } = findComponentByPath(path) || {};
+    // console.log('find', findComponentByPath(path));
 
     // mainSection.innerHTML = ``;
-    mainSection.append(component.render(option as number));
+    mainSection.append(component.render(option as number & IProductsData[]));
+    // mainSection.append(component.render());
 };
 
 //-------------------------------/ROUTING
@@ -131,8 +148,8 @@ document.addEventListener('click', (e: Event) => {
         const element = e.target as HTMLButtonElement;
         const state: string = '#/product-details/' + element.id;
         window.history.pushState({ path: state }, '', state);
-        element.url = window.location.href;
-        routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
+        element.setAttribute('url', window.location.href);
+        // routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
         router(Number(element.id));
     }
     //---------/click on DETAILS----------
@@ -291,19 +308,14 @@ document.addEventListener('change', (e) => {
 
     //--------------------------set prices and stock  to slider
     // setPricesToSlider(result);
-    element.url = stateFilters(categories, subcategories, result);
-    window.history.pushState({ path: element.url }, '', element.url);
-    routes.push({ path: '/', component: MainPage });
+    // element.url = stateFilters(categories, subcategories, result);
+
+    window.history.pushState({}, '', stateFilters(categories, subcategories, result));
+    // routes.push({ path: '/', component: MainPage });
+    console.log(result);
     router(result);
     // setAmountToSlider(result);
     // }
 });
 
 //-------------------------------------------------/FILTERS
-
-// document.onpropertychange = (e) => {
-//     const element = e.target as HTMLInputElement;
-//     if (element instanceof Element && element.className === 'sort__input') {
-//         console.log(element.value)
-//     }
-// };
