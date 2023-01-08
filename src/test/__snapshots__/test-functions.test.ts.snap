@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`If block created? 1`] = `
+exports[`createEmptyPage Block is created! 1`] = `
 <div
   class="empty"
 >
