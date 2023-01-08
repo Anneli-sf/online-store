@@ -34,7 +34,9 @@ export function createProductCard(productId: number): HTMLElement {
 
     const buttonAdd = createBtnText(productId);
     buttonAdd.id = `${productImage.id}`;
+    buttonAdd.classList.add('button-first');
     const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
+    buttonDetails.classList.add('button-first');
     buttonDetails.id = `${productImage.id}`;
 
     const buttonsItemContainer = createElement('div', 'product-buttons-container') as HTMLDivElement;

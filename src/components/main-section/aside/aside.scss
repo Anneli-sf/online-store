@@ -17,21 +17,6 @@
         align-items: center;
         margin-bottom: 20px;
     }
-
-    &-reset,
-    &-copy {
-        padding: 5px 10px;
-        background-color: transparent;
-        color: white;
-        cursor: pointer;
-        &:hover {
-            background-color: white;
-            color: black;
-        }
-        &:active {
-            transform: scale(0.9);
-        }
-    }
 }
 
 .label-reset {

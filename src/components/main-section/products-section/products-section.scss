@@ -87,19 +87,6 @@
     justify-content: space-around;
 }
 
-.btn {
-    &__add,
-    &__details {
-        padding: 5px 10px;
-        background-color: transparent;
-        color: white;
-        cursor: pointer;
-        &:active {
-            transform: scale(0.9);
-        }
-    }
-}
-
 .products {
     flex: 1 0 70%;
     height: 100%;
@@ -186,22 +173,22 @@
     }
 }
 
-.btn__add,
-.btn__details,
-.btn-another-view,
-.btn-start-view {
-    padding: 5px 10px;
-    border-color: #7f0909;
-    color: #ffc500;
-    box-shadow: 0 0 40px 40px #7f0909 inset, 0 0 0 0 #7f0909;
-    transition: all 150ms ease-in-out;
-    border-radius: 5px;
-    &:hover,
-    &.active {
-        box-shadow: 0 0 10px 0 #7f0909 inset, 0 0 10px 4px #7f0909;
-        color: #7f0909;
-    }
-}
+// .btn__add,
+// .btn__details,
+// .btn-another-view,
+// .btn-start-view {
+//     padding: 5px 10px;
+//     border-color: #7f0909;
+//     color: #ffc500;
+//     box-shadow: 0 0 40px 40px #7f0909 inset, 0 0 0 0 #7f0909;
+//     transition: all 150ms ease-in-out;
+//     border-radius: 5px;
+//     &:hover,
+//     &.active {
+//         box-shadow: 0 0 10px 0 #7f0909 inset, 0 0 10px 4px #7f0909;
+//         color: #7f0909;
+//     }
+// }
 
 /* ----------------------------------------------POPUP */
 .popup-wrapper {

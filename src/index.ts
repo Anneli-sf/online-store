@@ -119,7 +119,7 @@ document.addEventListener('click', (e: Event) => {
         const element = e.target as HTMLButtonElement;
         const state: string = '#/product-details/' + element.id;
         window.history.pushState({ path: state }, '', state);
-        element.url = window.location.href;
+        element.setAttribute('url', window.location.href);
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
         router(Number(element.id));
     }
@@ -260,13 +260,9 @@ document.addEventListener('change', (e) => {
     });
 
     //--------------------------set prices and stock  to slider
-    // setPricesToSlider(result);
-    element.url = stateFilters(categories, subcategories, result);
-    window.history.pushState({ path: element.url }, '', element.url);
+    window.history.pushState({}, '', stateFilters(categories, subcategories, result));
     routes.push({ path: '/', component: MainPage });
     router(result);
-    // setAmountToSlider(result);
-    // }
 });
 
 //-------------------------------------------------/FILTERS
