@@ -512,6 +512,7 @@ export const createSummaryCartBlock = () => {
     const promoTest = createParagraph("Попробуйте: 'Гарри', 'Поттер'", 'promo-test') as HTMLParagraphElement;
     const buttonBuyNow = createButton('Купить сейчас', 'btn-buy-now');
     buttonBuyNow.type = 'button';
+    buttonBuyNow.classList.add('button-second');
 
     buttonBuyNow.addEventListener('click', () => {
         document.querySelector('.main')?.append(createContainerCard());

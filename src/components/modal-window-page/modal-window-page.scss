@@ -45,6 +45,13 @@
         padding: 20px;
         width: 600px;
         padding: 0px 20px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        .button {
+            margin-top: 20px;
+            width: 25%;
+            align-self: center;
+        }
     }
 
     form .inputBox {
@@ -76,21 +83,6 @@
 
     form .flexbox .inputBox {
         flex: 1 1 150px;
-    }
-
-    form .submit-btn {
-        width: 30%;
-        font-size: 20px;
-        border-color: #7f0909;
-        color: #ffc500;
-        box-shadow: 0 0 40px 40px #7f0909 inset, 0 0 0 0 #7f0909;
-        transition: all 150ms ease-in-out;
-        border-radius: 5px;
-        transform: translate(115%, 10px);
-        &:hover {
-          box-shadow: 0 0 10px 0 #7f0909 inset, 0 0 10px 4px #7f0909;
-          color: #7f0909;
-        }
     }
 
     form .submit-btn:hover {
