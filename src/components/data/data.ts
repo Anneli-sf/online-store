@@ -10,7 +10,7 @@ export const productsData: IProductsData[] = [
         title: 'Василиск',
         description:
             'Огромный змей, известный также как «король змей», живущий не одну сотню лет. Очень сильное магическое животное.',
-        price: 305,
+        price: 105,
         discount: 10,
         stock: 5,
         raiting: 4.95,
@@ -345,7 +345,7 @@ export const productsData: IProductsData[] = [
         subcategoryEng: 'flying-objects',
         title: 'Летающий автомобиль',
         description: 'Летающая машина, которая принадлежала Артуру Уизли.',
-        price: 250,
+        price: 110,
         discount: 5,
         stock: 3,
         raiting: 4.95,
@@ -368,7 +368,7 @@ export const productsData: IProductsData[] = [
     },
     {
         id: 22,
-        category: 'зелья',
+        category: 'Зелья',
         categoryEng: 'potions',
         subcategory: 'Добрые зелья',
         subcategoryEng: 'good-potions',
@@ -419,7 +419,7 @@ export const productsData: IProductsData[] = [
         title: 'Добби',
         description:
             'Домашний эльф, служивший семье Малфоев. Его хозяева были Тёмными магами и жестоко с ним обращались.',
-        price: 3,
+        price: 30,
         discount: 3,
         stock: 67,
         raiting: 4.99,
@@ -466,7 +466,7 @@ export const productsData: IProductsData[] = [
         title: 'Хогвартс-экспресс',
         description:
             'Специальный поезд, влекомый алым паровозом, предназначенный для доставки студентов Хогвартса к месту учёбы и обратно. Иногда «Хогвартс-экспресс» доставляет к месту работы новых преподавателей.',
-        price: 499,
+        price: 129,
         discount: 5,
         stock: 5,
         raiting: 4.74,
@@ -526,7 +526,7 @@ export const productsData: IProductsData[] = [
         title: 'Мантикора',
         description:
             'Очень опасное животное с головой человека, телом льва и хвостом скорпиона, обитающее в Греции. Своей свирепостью мантикора не уступает химере и так же редко встречается. Говорят, пожирая свою жертву, она тихо и сладко поет.',
-        price: 240,
+        price: 104,
         discount: 5,
         stock: 5,
         raiting: 4.99,
@@ -577,7 +577,7 @@ export const productsData: IProductsData[] = [
         title: 'Карликовый пушистик',
         description:
             'Этот безобидный зверек встречается по всему миру. Туловище его шарообразной формы и покрыто мягким, пушистым мехом кремового цвета. Пушистик неприхотлив, не возражает, если его гладят или подбрасывают; когда особенно доволен, тихонько урчит.',
-        price: 100,
+        price: 98,
         discount: 5,
         stock: 5,
         raiting: 4.98,
