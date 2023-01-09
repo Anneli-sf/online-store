@@ -57,8 +57,11 @@ window.addEventListener('hashchange', () => {
 // window.addEventListener('load', () => router());
 window.addEventListener('load', () => {
     const searchParams = window.location.search;
-    if (searchParams.length) console.log(searchParams);
-    else mainSection.append(createProducstPage(productsData));
+    console.log(JSON.stringify(searchParams));
+    console.log('result', result);
+    // searchParams.length === 0 ? mainSection.append(createProducstPage(productsData))
+    // :
+    mainSection.append(createProducstPage(productsData));
 });
 
 const mainSection = document.querySelector('.main') as HTMLElement;
@@ -73,9 +76,9 @@ const MainPage = {
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
     const productsList = document.querySelector('.products__list') as HTMLUListElement;
-    productsList.remove();
+    if (productsList) productsList.remove();
     contentBlock.append(createProductsMainList(array));
-    
+
     keepViewStyle();
 
     return productsWrapper;
@@ -92,7 +95,6 @@ const DetailsPage = {
     render: (id: number) => {
         console.log('id', id);
         mainSection.innerHTML = '';
-        //если айли нет еррор
         return createDetailsPage(id);
     },
 };
@@ -213,7 +215,7 @@ document.addEventListener('change', (e) => {
             result = stack;
             closePopup();
         }
-        console.log('result', result);
+        // console.log('result', result);
         setPricesToSlider(result);
         setAmountToSlider(result);
     }
@@ -237,11 +239,11 @@ document.addEventListener('change', (e) => {
                 closePopup();
                 stack = [];
             }
-            console.log('stack', stack);
+            // console.log('stack', stack);
         }
         setAmountToSlider(result);
-        minAmount.value = `${getMinAmount(result)}`;
-        maxAmount.value = `${getMaxAmount(result)}`;
+        // minAmount.value = `${getMinAmount(result)}`;
+        // maxAmount.value = `${getMaxAmount(result)}`;
     }
 
     //----------------------SLIDER AMOUNT
@@ -264,8 +266,8 @@ document.addEventListener('change', (e) => {
             }
         }
         setPricesToSlider(result);
-        minPrice.value = `${getMinPrice(result)}`;
-        maxPrice.value = `${getMaxPrice(result)}`;
+        // minPrice.value = `${getMinPrice(result)}`;
+        // maxPrice.value = `${getMaxPrice(result)}`;
     }
 
     //----------------------CHECKBOXES
@@ -323,7 +325,20 @@ document.addEventListener('change', (e) => {
 
     //--------------------------set prices and stock  to slider
     // element.url = stateFilters(categories, subcategories, result);
-    window.history.pushState({}, '', stateFilters(categories, subcategories, result));
+    window.history.pushState(
+        {},
+        '',
+        stateFilters(
+            categories,
+            subcategories,
+            minPrice.value,
+            maxPrice.value,
+            minAmount.value,
+            maxAmount.value,
+            result,
+            element
+        )
+    );
     // routes.push({ path: '/', component: MainPage });
     router(result);
 });

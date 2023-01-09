@@ -15,7 +15,7 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minP
     // .filter(
     //     (item) => item.price >= +minPrice && item.price <= +maxPrice
     // );
-    console.log('filters.categories', filters.categories);
+    // console.log('filters.categories', filters.categories);
 
     //-----------содержит ли категории выбранные подкатегории
     if (filters.categories.length > 0) {
@@ -41,7 +41,7 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minP
         // .filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
     }
 
-    console.log('filters.subcategories', filters.subcategories);
+    // console.log('filters.subcategories', filters.subcategories);
 
     filters.currArr =
         filters.subcategories.length === 0
@@ -49,12 +49,12 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minP
             : filters.categories.length === 0
             ? filters.subcategories
             : addDoubleDeleteUnique(filters.categories, filters.subcategories);
-    // console.log('filters.currArr', filters.currArr);
+
+    //----------------RESET FILTERS
     if (el.classList.contains('input-reset')) {
         filters.currArr = [];
-        // console.log('works');
     }
-    console.log('max, min', maxPrice, minPrice);
+    // console.log('max, min', maxPrice, minPrice);
     if (filters.currArr.length === 0) {
         filters.currArr = productsData;
         filters.categories = [];
@@ -66,15 +66,26 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minP
 };
 
 //---------------------create URL
-export const stateFilters = (categories: string[], subcategories: string[], resultArr: IProductsData[]) => {
+export const stateFilters = (
+    categories: string[],
+    subcategories: string[],
+    minPrice: string,
+    maxPrice: string,
+    minAmount: string,
+    maxAmount: string,
+    resultArr: IProductsData[],
+    element: HTMLInputElement
+) => {
     let categoryState = '';
     let subcategoryState = '';
+    let searchWord = '';
 
     if (categories.length > 0) categoryState = 'category=' + categories.join('↕');
     if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
-    let state = `/?${categoryState}&${subcategoryState}`;
+    if (element.className === 'sort__input' && element.value.length > 0) searchWord = `&search=${element.value}`;
+    let state = `/?${categoryState}&${subcategoryState}&price=${minPrice}↕${maxPrice}&stock=${minAmount}↕${maxAmount}${searchWord}`;
     if (resultArr.length === productsData.length) state = '/';
-    // console.log(state);
+
     return state;
 };
 
@@ -105,7 +116,6 @@ export const showNotFound = (): void => {
     productsList.style.display = 'none';
     openPopup();
     sortSpan.innerHTML = '0';
-    console.log(sortSpan.innerHTML);
 };
 
 //--------------------------set prices to slider
