@@ -330,7 +330,7 @@ document.addEventListener('change', (e) => {
     window.history.pushState(
         {},
         '',
-        stateFilters(
+        `${window.location.href}${stateFilters(
             categories,
             subcategories,
             minPrice.value,
@@ -339,7 +339,8 @@ document.addEventListener('change', (e) => {
             maxAmount.value,
             result,
             element
-        )
+        )}
+        }`
     );
     // routes.push({ path: '/', component: MainPage });
     router(result);
