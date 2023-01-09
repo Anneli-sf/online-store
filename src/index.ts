@@ -72,7 +72,7 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (array: IProductsData[] = productsData) => updateProductsSection(array),
+    render: (array: IProductsData[] = productsData) => updateProductsSection(array), //window.history.state
 };
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
@@ -326,19 +326,22 @@ document.addEventListener('change', (e) => {
 
     //--------------------------set prices and stock  to slider
     // element.url = stateFilters(categories, subcategories, result);
-    console.log(
-        `${window.location.href}${stateFilters(
-            categories,
-            subcategories,
-            minPrice.value,
-            maxPrice.value,
-            minAmount.value,
-            maxAmount.value,
-            result
-        )}`
-    );
+    // console.log(
+    //     `${window.location.href}${stateFilters(
+    //         categories,
+    //         subcategories,
+    //         minPrice.value,
+    //         maxPrice.value,
+    //         minAmount.value,
+    //         maxAmount.value,
+    //         result
+    //     )}`
+    // );
+    window.addEventListener('popstate', () => {
+        console.log('W-H', window.history);
+    });
     window.history.pushState(
-        {},
+        { categories: categories },
         '',
         `${window.location.href}${stateFilters(
             categories,
@@ -348,8 +351,7 @@ document.addEventListener('change', (e) => {
             minAmount.value,
             maxAmount.value,
             result
-        )}
-        }`
+        )}`
     );
     // routes.push({ path: '/', component: MainPage });
     router(result);
