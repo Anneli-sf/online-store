@@ -18,8 +18,6 @@ import {
     closePopup,
     contentBlock,
     createProductsMainList,
-    popup,
-    sortSpan,
 } from './components/main-section/products-section/products-section';
 import {
     findCurrentFilters,
@@ -43,7 +41,6 @@ import {
 import { IProductsData, IComponent, IStock, IFilters } from './components/global-components/interfaces';
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
-import { getMaxAmount, getMaxPrice, getMinAmount, getMinPrice } from './components/helpers/helpers';
 
 createHeader();
 createFooter();
@@ -57,16 +54,47 @@ window.addEventListener('hashchange', () => {
 // window.addEventListener('load', () => router());
 window.addEventListener('load', () => {
     const searchParams = window.location.search;
-    console.log(JSON.stringify(searchParams));
-    console.log('result', result);
-    // searchParams.length === 0 ? mainSection.append(createProducstPage(productsData))
-    // :
-    mainSection.append(createProducstPage(productsData));
+    console.log(searchParams);
+
+    if (searchParams.length === 0) {
+        mainSection.append(createProducstPage(productsData));
+    } else {
+        const currArray = getDataFromUrl(searchParams);
+        mainSection.append(createProducstPage(currArray));
+        console.log('currArray', result);
+    }
 });
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
-// mainSection.append(createProducstPage(productsData));
+const getDataFromUrl = (searchParams: string): IProductsData[] => {
+    const dataForFilters = searchParams.split('&').map((item) => item.split('=').map((el) => el.split('%E2%86%95'))[1]);
+    const filters = {
+        categories: [] as string[],
+        subcategories: [] as string[],
+        price: [] as string[],
+        stock: [] as string[],
+    };
+    console.log(searchParams);
+    filters.categories = dataForFilters[0];
+    filters.subcategories = dataForFilters[1];
+    filters.price = dataForFilters[2];
+    filters.stock = dataForFilters[3];
+
+    const subcategories: string = filters.subcategories.join(' ');
+    const currArray: IProductsData[] = productsData.filter((item) => {
+        if (subcategories.includes(item.subcategoryEng)) return item;
+    });
+    currArray.filter(
+        (item) =>
+            item.price >= +filters.price[0] &&
+            item.price <= +filters.price[1] &&
+            item.stock >= +filters.stock[0] &&
+            item.stock <= +filters.stock[1]
+    );
+    console.log('currArray', currArray);
+    return currArray;
+};
 
 //---------------------------ROUTE------------------------//
 
@@ -115,26 +143,15 @@ const routes = [
 //-------------------------------ROUTING
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
 const findComponentByPath = (path: string) => {
-    // console.log('routes', routes);
-    // console.log('path', path);
     const namePage = path.split('/')[1];
-    // console.log('path.split', path.split('/')[1]);
-    // console.log(routes.map((item) => item.path.match(/`^\\${path}$`/)));
-    // console.log(routes.map((item) => item.path.includes(namePage)));
     return routes.find((r) => r.path.includes(namePage)) || undefined;
     // return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 };
 
 const router = (option?: number | IProductsData[]) => {
-    // console.log('option', option);
     const path = parseLocation();
-    // console.log('path parse', path);
     const { component = ErrorComponent } = findComponentByPath(path) || {};
-    // console.log('find', findComponentByPath(path));
-
-    // mainSection.innerHTML = ``;
     mainSection.append(component.render(option as number & IProductsData[]));
-    // mainSection.append(component.render());
 };
 
 //-------------------------------/ROUTING
@@ -204,8 +221,6 @@ document.addEventListener('change', (e) => {
 
     //---------------------SEARCH
     if (element instanceof Element && element.className === 'sort__input') {
-        // console.log('result', result);
-        // console.log('element.value', element.value);
         if (result.length === 0) result = productsData;
         const stack: IProductsData[] = searchByWord(element.value, result);
         if (stack.length === 0) {
