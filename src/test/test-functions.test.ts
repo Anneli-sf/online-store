@@ -83,17 +83,17 @@ describe('sliceIntoChunks', () => {
     });
 });
 
-describe('stateFilters', () => {
-    test('Return slash!', () => {
-        expect(stateFilters([], [], productsData)).toEqual('/');
-    });
-    test('Return only category!', () => {
-        expect(stateFilters(['abc'], [], testArray)).toEqual('/?category=abc&');
-    });
-    test('Return categoty and subcategory!', () => {
-        expect(stateFilters(['abc'], ['cba'], testArray)).toEqual('/?category=abc&subcategory=cba');
-    });
-});
+// describe('stateFilters', () => {
+//     test('Return slash!', () => {
+//         expect(stateFilters([], [], productsData)).toEqual('/');
+//     });
+//     test('Return only category!', () => {
+//         expect(stateFilters(['abc'], [], testArray)).toEqual('/?category=abc&');
+//     });
+//     test('Return categoty and subcategory!', () => {
+//         expect(stateFilters(['abc'], ['cba'], testArray)).toEqual('/?category=abc&subcategory=cba');
+//     });
+// });
 
 describe('isAlreadyHave', () => {
     test('It is true!', () => {

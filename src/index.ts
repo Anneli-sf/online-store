@@ -13,6 +13,7 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList } from './components/cart-page/cart-page';
+import { createProductsSection } from './components/main-section/products-section/products-section';
 
 import {
     closePopup,
@@ -99,7 +100,7 @@ const getDataFromUrl = (searchParams: string): IProductsData[] => {
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (array: IProductsData[] = productsData) => updateProductsSection(array),
+    render: (array: IProductsData[] = productsData) => updateProductsSection(array), //window.history.state
 };
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
@@ -340,19 +341,32 @@ document.addEventListener('change', (e) => {
 
     //--------------------------set prices and stock  to slider
     // element.url = stateFilters(categories, subcategories, result);
+    // console.log(
+    //     `${window.location.href}${stateFilters(
+    //         categories,
+    //         subcategories,
+    //         minPrice.value,
+    //         maxPrice.value,
+    //         minAmount.value,
+    //         maxAmount.value,
+    //         result
+    //     )}`
+    // );
+    window.addEventListener('popstate', () => {
+        console.log('W-H', window.history);
+    });
     window.history.pushState(
-        {},
+        { categories: categories },
         '',
-        stateFilters(
+        `${window.location.href}${stateFilters(
             categories,
             subcategories,
             minPrice.value,
             maxPrice.value,
             minAmount.value,
             maxAmount.value,
-            result,
-            element
-        )
+            result
+        )}`
     );
     // routes.push({ path: '/', component: MainPage });
     router(result);

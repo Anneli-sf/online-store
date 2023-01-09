@@ -39,12 +39,14 @@ const createMiniPhotosSection = (productId: number): HTMLElement => {
     const miniPhotoFirsImg: HTMLImageElement = createImage(
         productsData[productId].images[0],
         productsData[productId].title,
-        'mini-photo-img'
+        'mini-photo-img',
+        'first-mini-img'
     );
     const miniPhotoSecondImg: HTMLImageElement = createImage(
         productsData[productId].images[1],
         productsData[productId].title,
-        'mini-photo-img'
+        'mini-photo-img',
+        'second-mini-img'
     );
 
     miniPhotoFirstItem.append(miniPhotoFirsImg);
@@ -61,7 +63,8 @@ const createActivePhotoSection = (productId: number): HTMLElement => {
     const activePhotoImg: HTMLImageElement = createImage(
         productsData[productId].images[0],
         productsData[productId].title,
-        'active-photo-img'
+        'active-photo-img',
+        `${productId}`
     );
     activePhotoItem.append(activePhotoImg);
     activePhotoSection.append(activePhotoItem);
@@ -190,3 +193,16 @@ const createSailDetailsSection = (productId: number): HTMLElement => {
     sailDetailsSection.append(priceBlock, buttonAddToCart, buttonBuyNow);
     return sailDetailsSection;
 };
+
+document.addEventListener('click', (e) => {
+    if (e.target instanceof Element && e.target.closest('.mini-photo-img')) {
+        const element = e.target as HTMLImageElement;
+        const activeImg = document.querySelector('.active-photo-img') as HTMLImageElement;
+
+        if (element.id === 'first-mini-img') {
+            activeImg.src = productsData[+activeImg.id].images[0];
+        } else if (element.id === 'second-mini-img') {
+            activeImg.src = productsData[+activeImg.id].images[1];
+        }
+    }
+});

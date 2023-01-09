@@ -125,11 +125,12 @@ export const createBlockWithText = (
     return container;
 };
 
-export const createImage = (imgSrc: string, imgAlt: string, imgClass?: string): HTMLImageElement => {
+export const createImage = (imgSrc: string, imgAlt: string, imgClass?: string, id?: string): HTMLImageElement => {
     const image = createElement('img', 'image') as HTMLImageElement;
     imgClass ? image.classList.add(imgClass) : undefined;
     image.src = imgSrc;
     image.alt = imgAlt;
+    image.id = id as string;
     return image;
 };
 
