@@ -5,13 +5,16 @@ import { openPopup, closePopup } from './products-section/products-section';
 import { deleteCheckBoxStyles } from './aside/aside';
 
 //------------------main function for checkbox filters
-export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters) => {
+export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minPrice: string, maxPrice: string) => {
     const chosenCategory: IProductsData[] = productsData.filter((item) => item.categoryEng === el.getAttribute('id'));
     const chosenSubCategory: IProductsData[] = productsData.filter(
         (item) => item.subcategoryEng === el.getAttribute('id')
     );
 
     filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
+    // .filter(
+    //     (item) => item.price >= +minPrice && item.price <= +maxPrice
+    // );
     console.log('filters.categories', filters.categories);
 
     //-----------содержит ли категории выбранные подкатегории
@@ -26,13 +29,16 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters) => {
 
         if (isContain == 0 && chosenSubCategory.length > 0) {
             filters.subcategories = filters.subcategories;
+            // .filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
             el.checked === true ? showNotFound() : closePopup();
         } else {
             filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
+            // .filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
             closePopup();
         } //---------------если категория не выбрана
     } else {
         filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
+        // .filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
     }
 
     console.log('filters.subcategories', filters.subcategories);
@@ -48,14 +54,14 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters) => {
         filters.currArr = [];
         // console.log('works');
     }
-
+    console.log('max, min', maxPrice, minPrice);
     if (filters.currArr.length === 0) {
         filters.currArr = productsData;
         filters.categories = [];
         filters.subcategories = [];
         deleteCheckBoxStyles();
         return filters.currArr;
-    } else return filters.currArr;
+    } else return filters.currArr; //.filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
     // return filters.currArr.length === 0 ? productsData : filters.currArr;
 };
 
@@ -98,7 +104,8 @@ export const showNotFound = (): void => {
     const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
     productsList.style.display = 'none';
     openPopup();
-    // togglePopup();
+    sortSpan.innerHTML = '0';
+    console.log(sortSpan.innerHTML);
 };
 
 //--------------------------set prices to slider

@@ -18,6 +18,8 @@ import {
     closePopup,
     contentBlock,
     createProductsMainList,
+    popup,
+    sortSpan,
 } from './components/main-section/products-section/products-section';
 import {
     findCurrentFilters,
@@ -41,6 +43,7 @@ import {
 import { IProductsData, IComponent, IStock, IFilters } from './components/global-components/interfaces';
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
+import { getMaxAmount, getMaxPrice, getMinAmount, getMinPrice } from './components/helpers/helpers';
 
 createHeader();
 createFooter();
@@ -69,17 +72,11 @@ const MainPage = {
 };
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
-    // const contentBlock = document.querySelector('.products') as HTMLElement;
     const productsList = document.querySelector('.products__list') as HTMLUListElement;
-
-    // contentBlock.remove();
     productsList.remove();
-    // productsWrapper.append(createProductsSection(array));
     contentBlock.append(createProductsMainList(array));
-
+    
     keepViewStyle();
-    // const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
-    // sortSpan.innerHTML = array.length.toString();
 
     return productsWrapper;
 }
@@ -198,43 +195,39 @@ document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     // console.log('element', element);
 
+    const maxPrice = document.querySelector('#max-price') as HTMLInputElement;
+    const minPrice = document.querySelector('#min-price') as HTMLInputElement;
+    const maxAmount = document.querySelector('#max-amount') as HTMLInputElement;
+    const minAmount = document.querySelector('#min-amount') as HTMLInputElement;
+
     //---------------------SEARCH
     if (element instanceof Element && element.className === 'sort__input') {
-        console.log('result', result);
-        console.log('element.value', element.value);
-        element.value;
+        // console.log('result', result);
+        // console.log('element.value', element.value);
         if (result.length === 0) result = productsData;
         const stack: IProductsData[] = searchByWord(element.value, result);
         if (stack.length === 0) {
             result = result;
             showNotFound();
-        } else result = stack;
+        } else {
+            result = stack;
+            closePopup();
+        }
         console.log('result', result);
         setPricesToSlider(result);
         setAmountToSlider(result);
     }
 
-    //----------------------CHECKBOXES
-    if (element instanceof Element && element.closest('.filter-input')) {
-        // const result: IProductsData[] = findCurrentFilters(element);
-        result = findCurrentFilters(element, filters);
-        setPricesToSlider(result);
-        setAmountToSlider(result);
-    }
-    // console.log('result', result);
-
     //----------------------SLIDER PRICE
     if (element instanceof Element && element.closest('.slider-price')) {
-        const max = document.querySelector('#max-price') as HTMLInputElement;
-        const min = document.querySelector('#min-price') as HTMLInputElement;
-        // console.log('max, min', max.value, min.value);
         if (filters.currArr.length === 0) {
             // console.log('filters.currArr', filters.currArr);
-            result = productsData.filter((item) => item.price >= +min.value && item.price <= +max.value);
+            result = productsData.filter((item) => item.price >= +minPrice.value && item.price <= +maxPrice.value);
+            filters.currArr = result;
         } else {
             // console.log('filters.currArr', filters.currArr);
             let stack: IProductsData[] = filters.currArr.filter(
-                (item) => item.price >= +min.value && item.price <= +max.value
+                (item) => item.price >= +minPrice.value && item.price <= +maxPrice.value
             );
             if (stack.length === 0) {
                 result = filters.currArr; //result;
@@ -247,18 +240,19 @@ document.addEventListener('change', (e) => {
             console.log('stack', stack);
         }
         setAmountToSlider(result);
+        minAmount.value = `${getMinAmount(result)}`;
+        maxAmount.value = `${getMaxAmount(result)}`;
     }
 
     //----------------------SLIDER AMOUNT
     if (element instanceof Element && element.closest('.slider-amount')) {
-        const max = document.querySelector('#max-amount') as HTMLInputElement;
-        const min = document.querySelector('#min-amount') as HTMLInputElement;
-        // console.log('max, min', max.value, min.value);
         if (filters.currArr.length === 0) {
-            result = productsData.filter((item) => item.stock >= +min.value && item.price <= +max.value);
+            result = productsData.filter((item) => item.stock >= +minAmount.value && item.price <= +maxAmount.value);
+            console.log('categories', filters.categories);
+            console.log('subcategories', filters.subcategories);
         } else {
             let stack: IProductsData[] = filters.currArr.filter(
-                (item) => item.stock >= +min.value && item.price <= +max.value
+                (item) => item.stock >= +minAmount.value && item.price <= +maxAmount.value
             );
             if (stack.length === 0) {
                 result = filters.currArr;
@@ -270,15 +264,22 @@ document.addEventListener('change', (e) => {
             }
         }
         setPricesToSlider(result);
+        minPrice.value = `${getMinPrice(result)}`;
+        maxPrice.value = `${getMaxPrice(result)}`;
     }
 
+    //----------------------CHECKBOXES
+    if (element instanceof Element && element.closest('.filter-input')) {
+        // const result: IProductsData[] = findCurrentFilters(element);
+        result = findCurrentFilters(element, filters, minPrice.value, maxPrice.value);
+        setPricesToSlider(result);
+        setAmountToSlider(result);
+    }
     // console.log('result', result);
 
     //-----------------get unic names of categories/ subcategories
     const categories: string[] = unicCategories(result);
     const subcategories: string[] = unicSubcategories(result);
-    // console.log(categories);
-    // console.log(subcategories);
 
     //-------------------set chosen amount of goods
     const currentCatStock: IStock = {};
@@ -321,12 +322,9 @@ document.addEventListener('change', (e) => {
     });
 
     //--------------------------set prices and stock  to slider
-    // setPricesToSlider(result);
     // element.url = stateFilters(categories, subcategories, result);
-
     window.history.pushState({}, '', stateFilters(categories, subcategories, result));
     // routes.push({ path: '/', component: MainPage });
-    console.log(result);
     router(result);
 });
 
