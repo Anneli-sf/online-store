@@ -1,0 +1,17 @@
+@import './abstracts/mixins';
+@import './abstracts/extends';
+
+@import './base/normalize';
+@import './base/variables';
+
+@import './components/buttons';
+@import './components/inputs';
+
+@import './elements/header';
+@import './elements/footer';
+@import './elements/main';
+
+body {
+    background-color: black;
+    @include flex-column();
+}

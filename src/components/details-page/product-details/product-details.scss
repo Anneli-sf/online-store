@@ -1,0 +1,113 @@
+@import '../../../sass/abstracts/mixins';
+
+.mini-photos-section {
+    @include flex-column(space-around);
+    max-width: 8%;
+    gap: 1em;
+
+    .mini-photo-item {
+        width: 100%;
+        border: 1px solid #ffc500;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+
+        .mini-photo-img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.details-page {
+    .details-block {
+        padding: 0px 50px;
+        color: #ffc500;
+    }
+
+    .product-descrip-section {
+        color: #ffc500;
+        &::-webkit-scrollbar {
+            width: 0px;
+        }
+    }
+    .block-title,
+    .block-text {
+        color: #ffc500;
+    }
+}
+
+.active-photo-section {
+    cursor: pointer;
+
+    .active-photo-item {
+        width: 100%;
+        border: 1px solid #ffc500;
+        overflow: hidden;
+        border-radius: 10px;
+
+        .active-photo-img {
+            width: 100%;
+            height: 100%;
+            transition: all 0.5s ease-in-out;
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+}
+
+.product-info-section {
+    @include flex-column();
+    width: 45%;
+    gap: 1em;
+    flex: 1 0 50%;
+
+    .product-descrip-block {
+        width: 100%;
+        max-height: 150px;
+        overflow: hidden;
+
+        .descrip-text {
+            text-align: justify;
+            max-height: 50%;
+            overflow: auto;
+        }
+    }
+
+    .product-categories-section {
+        @include flex-row();
+        flex-wrap: wrap;
+        gap: 1em;
+        width: 100%;
+
+        .product-category,
+        .product-subcategory {
+            height: 100%;
+            width: 45%;
+        }
+    }
+
+    .product-add-info-section {
+        @include flex-row();
+        flex-wrap: wrap;
+        gap: 1em;
+        width: 100%;
+
+        .product-stock,
+        .product-discount {
+            height: 100%;
+            width: 45%;
+        }
+    }
+}
+
+.sail-details-section {
+    @include flex-column();
+    gap: 1em;
+    width: 20%;
+
+    .price-block {
+        font-size: 2.5em;
+    }
+}

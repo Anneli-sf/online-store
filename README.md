@@ -1,2 +1,2 @@
 # online-store
-online-store for RS School's task 
+# path to the img file: assets/"the path from public"

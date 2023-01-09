@@ -1,0 +1,11 @@
+.products-wrapper {
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
+}

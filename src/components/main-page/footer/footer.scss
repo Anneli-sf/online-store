@@ -1,0 +1,67 @@
+@import '../../../sass/abstracts/mixins';
+
+.rs-logo {
+    cursor: pointer;
+    position: relative;
+    width: 100px;
+    height: 43px;
+    &::after {
+        position: absolute;
+        content: url('../../../public/icons/rsschool.svg');
+        width: 80px;
+        top: 10%;
+    }
+}
+
+.year {
+    color: #7f0909;
+    font-size: 20px;
+}
+
+.anneli-github-logo {
+    cursor: pointer;
+    position: relative;
+    top: -15px;
+    transform: scale(.8);
+    &::before {
+        color: black;
+        position: absolute;
+        content: 'Anneli';
+        top: 30px;
+        left: 2px;
+        font-size: 18px;
+    }
+    &::after {
+        position: absolute;
+        content: url('../../../public/icons/github.svg');
+        top: -10px;
+        width: 40px;
+    }
+}
+
+.alex-github-logo {
+    cursor: pointer;
+    position: relative;
+    top: -15px;
+    transform: scale(.8);
+    &::before {
+        color: black;
+        position: absolute;
+        content: 'Alex';
+        top: 30px;
+        left: 8px;
+        font-size: 18px;
+    }
+    &::after {
+        position: absolute;
+        content: url('../../../public/icons/github.svg');
+        top: -10px;
+        width: 40px;
+    }
+}
+
+.footer {
+    .logo {
+        width: 120px;
+    }
+}
