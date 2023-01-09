@@ -22,12 +22,12 @@ const btnStartView = createButton('-', 'btn-start-view') as HTMLButtonElement;
 export const btnAnotherView = createButton('+', 'btn-another-view') as HTMLButtonElement;
 btnStartView.classList.add('active');
 
-const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;
+export const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;
 const popupCard = createElement('div', 'popup') as HTMLDivElement;
 const popupContent = createElement('div', 'popup-content') as HTMLDivElement;
 popupContent.innerHTML = 'ТОВАР НЕ НАЙДЕН';
 export const contentBlock = createElement('div', 'products') as HTMLDivElement;
-const sortSpan = createElement('span', 'found-items') as HTMLSpanElement;
+export const sortSpan = createElement('span', 'found-items') as HTMLSpanElement;
 // export const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
@@ -97,15 +97,14 @@ export function createProductsMainList(currentArr: IProductsData[]): HTMLUListEl
         }
     });
 
-    // const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
-    popup.classList.contains('.open')
+    popup.classList.contains('popup-open')
         ? (sortSpan.innerHTML = '0')
         : (sortSpan.innerHTML = currentArr.length.toString());
 
     currentArr.forEach((item) => {
         productsList.append(createProductCard(item.id));
     });
-    // productsList.append(createPopup());
+
     return productsList;
 }
 
@@ -148,20 +147,11 @@ function createPopup(): HTMLDivElement {
 }
 
 export function openPopup() {
-    // const popupContent = document.querySelector('.popup-content') as HTMLDivElement;
-    // const popup = document.querySelector('.popup-wrapper') as HTMLDivElement;
     popup.classList.add('popup-open');
     popupContent.classList.add('popup-open');
 }
 
 export function closePopup() {
-    // const popupContent = document.querySelector('.popup-content') as HTMLDivElement;
-    // const popup = document.querySelector('.popup-wrapper') as HTMLDivElement;
     popup.classList.remove('popup-open');
     popupContent.classList.remove('popup-open');
 }
-
-// export function togglePopup() {
-//     popup.classList.toggle('popup-open');
-//     popupContent.classList.toggle('popup-open');
-// }
