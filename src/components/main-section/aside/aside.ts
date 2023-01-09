@@ -6,6 +6,7 @@ import { IProductsData } from '../../global-components/interfaces';
 
 //------------------ASIDE
 export const buttonReset = createButton('', 'btn-reset') as HTMLButtonElement;
+buttonReset.classList.add('button-second');
 export const inputReset = createSimpleInput('input-reset', 'checkbox');
 export function createAside(currentArr: IProductsData[]): HTMLElement {
     const asideBlock = createElement('aside', 'main-aside') as HTMLElement;
@@ -14,7 +15,6 @@ export function createAside(currentArr: IProductsData[]): HTMLElement {
     const buttonCopy = createButton('скопировать ссылку', 'btn-copy') as HTMLButtonElement;
     buttonCopy.classList.add('button-second');
     const buttonResetLabel = createLabel('сбросить фильтры', 'label-reset', 'reset') as HTMLLabelElement;
-    buttonResetLabel.classList.add('button-second');
 
     inputReset.id = 'reset';
     inputReset.classList.add('filter-input');
