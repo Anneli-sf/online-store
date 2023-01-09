@@ -57,8 +57,11 @@ window.addEventListener('hashchange', () => {
 // window.addEventListener('load', () => router());
 window.addEventListener('load', () => {
     const searchParams = window.location.search;
-    if (searchParams.length) console.log(searchParams);
-    else mainSection.append(createProducstPage(productsData));
+    console.log(JSON.stringify(searchParams));
+    console.log('result', result);
+    // searchParams.length === 0 ? mainSection.append(createProducstPage(productsData))
+    // :
+    mainSection.append(createProducstPage(productsData));
 });
 
 const mainSection = document.querySelector('.main') as HTMLElement;
@@ -73,7 +76,7 @@ const MainPage = {
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
     const productsList = document.querySelector('.products__list') as HTMLUListElement;
-    productsList.remove();
+    if (productsList) productsList.remove();
     contentBlock.append(createProductsMainList(array));
 
     keepViewStyle();
