@@ -25,3 +25,10 @@ export function createAside(currentArr: IProductsData[]): HTMLElement {
     asideBlock.append(buttonContainer, createFilters(currentArr), createSliders(currentArr));
     return asideBlock;
 }
+
+export const deleteCheckBoxStyles = (): void => {
+    [...document.querySelectorAll('label')].forEach((label) => label.classList.remove('checked'));
+    [...document.querySelectorAll('input')].forEach((input) =>
+        (input.checked = true) ? (input.checked = false) : input
+    );
+};

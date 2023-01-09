@@ -12,17 +12,23 @@ import './components/cart-page/cart-page-target/cart-page-target';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage } from './components/cart-page/cart-page';
-import { createProductsSection } from './components/main-section/products-section/products-section';
+import { createCartPage, createProductsList } from './components/cart-page/cart-page';
+
 import {
-    createProducstPage,
-    productsWrapper,
+    closePopup,
+    contentBlock,
+    createProductsMainList,
+    popup,
+    sortSpan,
+} from './components/main-section/products-section/products-section';
+import {
     findCurrentFilters,
     stateFilters,
-    setPricesToSlider,
     setAmountToSlider,
+    setPricesToSlider,
     showNotFound,
-} from './components/main-section/main-section';
+} from './components/main-section/main-section-index';
+import { createProducstPage, productsWrapper } from './components/main-section/main-section';
 import { productsData } from './components/data/data';
 import { unicCategories, unicSubcategories, fillLocalStorageOnStart } from './components/helpers/helpers';
 import {
@@ -34,17 +40,25 @@ import {
     executeWhenDeleteBtnQuantityOfProduct,
     executeWhenAddBtnQuantityOfProduct,
 } from './components/cart-page/cart-page-target/cart-page-target';
-import { IProductsData, IComponent, IRoutes, IStock, IFilters } from './components/global-components/interfaces';
+import { IProductsData, IComponent, IStock, IFilters } from './components/global-components/interfaces';
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
+import { searchByWord } from './components/main-section/main-section-index';
+import { getMaxAmount, getMaxPrice, getMinAmount, getMinPrice } from './components/helpers/helpers';
 
 createHeader();
 createFooter();
 fillLocalStorageOnStart();
 
-window.addEventListener('hashchange', () => router());
+window.addEventListener('hashchange', () => {
+    const arr = window.location.hash.split('/');
+
+    router(+arr[arr.length - 1]);
+});
 // window.addEventListener('load', () => router());
 window.addEventListener('load', () => {
-    mainSection.append(createProducstPage(productsData));
+    const searchParams = window.location.search;
+    if (searchParams.length) console.log(searchParams);
+    else mainSection.append(createProducstPage(productsData));
 });
 
 const mainSection = document.querySelector('.main') as HTMLElement;
@@ -54,15 +68,14 @@ const mainSection = document.querySelector('.main') as HTMLElement;
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (array = productsData) => updateProductsSection(array),
+    render: (array: IProductsData[] = productsData) => updateProductsSection(array),
 };
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
-    const contentBlock = document.querySelector('.products') as HTMLElement;
-
-    contentBlock.remove();
-    productsWrapper.append(createProductsSection(array));
-
+    const productsList = document.querySelector('.products__list') as HTMLUListElement;
+    productsList.remove();
+    contentBlock.append(createProductsMainList(array));
+    
     keepViewStyle();
 
     return productsWrapper;
@@ -77,7 +90,9 @@ const CartPage = {
 
 const DetailsPage = {
     render: (id: number) => {
+        console.log('id', id);
         mainSection.innerHTML = '';
+        //если айли нет еррор
         return createDetailsPage(id);
     },
 };
@@ -92,23 +107,32 @@ const ErrorComponent = {
 const routes = [
     { path: '/', component: MainPage },
     { path: '/cart', component: CartPage },
+    { path: '/product-details', component: DetailsPage },
 ];
 
 //-------------------------------ROUTING
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
-const findComponentByPath = (path: string, routes: IRoutes[]) => {
+const findComponentByPath = (path: string) => {
     // console.log('routes', routes);
     // console.log('path', path);
-    return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
+    const namePage = path.split('/')[1];
+    // console.log('path.split', path.split('/')[1]);
+    // console.log(routes.map((item) => item.path.match(/`^\\${path}$`/)));
+    // console.log(routes.map((item) => item.path.includes(namePage)));
+    return routes.find((r) => r.path.includes(namePage)) || undefined;
+    // return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 };
 
 const router = (option?: number | IProductsData[]) => {
+    // console.log('option', option);
     const path = parseLocation();
     // console.log('path parse', path);
-    const { component = ErrorComponent } = findComponentByPath(path, routes as IRoutes[]) || {};
+    const { component = ErrorComponent } = findComponentByPath(path) || {};
+    // console.log('find', findComponentByPath(path));
 
     // mainSection.innerHTML = ``;
-    mainSection.append(component.render(option as number));
+    mainSection.append(component.render(option as number & IProductsData[]));
+    // mainSection.append(component.render());
 };
 
 //-------------------------------/ROUTING
@@ -170,70 +194,108 @@ let result: IProductsData[] = [];
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
     // console.log('element', element);
-    // let result: IProductsData[] = [];
-    if (element instanceof Element && element.closest('.filter-input')) {
-        // const result: IProductsData[] = findCurrentFilters(element);
-        result = findCurrentFilters(element, filters);
+
+    const maxPrice = document.querySelector('#max-price') as HTMLInputElement;
+    const minPrice = document.querySelector('#min-price') as HTMLInputElement;
+    const maxAmount = document.querySelector('#max-amount') as HTMLInputElement;
+    const minAmount = document.querySelector('#min-amount') as HTMLInputElement;
+
+    //---------------------SEARCH
+    if (element instanceof Element && element.className === 'sort__input') {
+        // console.log('result', result);
+        // console.log('element.value', element.value);
+        if (result.length === 0) result = productsData;
+        const stack: IProductsData[] = searchByWord(element.value, result);
+        if (stack.length === 0) {
+            result = result;
+            showNotFound();
+        } else {
+            result = stack;
+            closePopup();
+        }
+        console.log('result', result);
         setPricesToSlider(result);
         setAmountToSlider(result);
     }
-    console.log('result', result);
+
+    //----------------------SLIDER PRICE
     if (element instanceof Element && element.closest('.slider-price')) {
-        const max = document.querySelector('#max-price') as HTMLInputElement;
-        const min = document.querySelector('#min-price') as HTMLInputElement;
-        // console.log('max, min', max.value, min.value);
         if (filters.currArr.length === 0) {
-            result = productsData.filter((item) => item.price >= +min.value && item.price <= +max.value);
+            // console.log('filters.currArr', filters.currArr);
+            result = productsData.filter((item) => item.price >= +minPrice.value && item.price <= +maxPrice.value);
+            filters.currArr = result;
         } else {
-            const stack: IProductsData[] = result.filter(
-                (item) => item.price >= +min.value && item.price <= +max.value
+            // console.log('filters.currArr', filters.currArr);
+            let stack: IProductsData[] = filters.currArr.filter(
+                (item) => item.price >= +minPrice.value && item.price <= +maxPrice.value
             );
             if (stack.length === 0) {
-                result = result;
+                result = filters.currArr; //result;
                 showNotFound();
-            } else result = stack;
+            } else {
+                result = stack;
+                closePopup();
+                stack = [];
+            }
+            console.log('stack', stack);
         }
+        setAmountToSlider(result);
+        minAmount.value = `${getMinAmount(result)}`;
+        maxAmount.value = `${getMaxAmount(result)}`;
     }
 
+    //----------------------SLIDER AMOUNT
     if (element instanceof Element && element.closest('.slider-amount')) {
-        const max = document.querySelector('#max-amount') as HTMLInputElement;
-        const min = document.querySelector('#min-amount') as HTMLInputElement;
-        // console.log('max, min', max.value, min.value);
         if (filters.currArr.length === 0) {
-            result = productsData.filter((item) => item.stock >= +min.value && item.price <= +max.value);
+            result = productsData.filter((item) => item.stock >= +minAmount.value && item.price <= +maxAmount.value);
+            console.log('categories', filters.categories);
+            console.log('subcategories', filters.subcategories);
         } else {
-            const stack: IProductsData[] = result.filter(
-                (item) => item.stock >= +min.value && item.price <= +max.value
+            let stack: IProductsData[] = filters.currArr.filter(
+                (item) => item.stock >= +minAmount.value && item.price <= +maxAmount.value
             );
             if (stack.length === 0) {
-                result = result;
+                result = filters.currArr;
                 showNotFound();
-            } else result = stack;
+            } else {
+                result = stack;
+                closePopup();
+                stack = [];
+            }
         }
+        setPricesToSlider(result);
+        minPrice.value = `${getMinPrice(result)}`;
+        maxPrice.value = `${getMaxPrice(result)}`;
     }
 
+    //----------------------CHECKBOXES
+    if (element instanceof Element && element.closest('.filter-input')) {
+        // const result: IProductsData[] = findCurrentFilters(element);
+        result = findCurrentFilters(element, filters, minPrice.value, maxPrice.value);
+        setPricesToSlider(result);
+        setAmountToSlider(result);
+    }
     // console.log('result', result);
 
     //-----------------get unic names of categories/ subcategories
     const categories: string[] = unicCategories(result);
     const subcategories: string[] = unicSubcategories(result);
-    // console.log(categories);
-    // console.log(subcategories);
 
     //-------------------set chosen amount of goods
     const currentCatStock: IStock = {};
     const currentSubCatStock: IStock = {};
+
     result.forEach((item) => {
         if (Object.keys(currentCatStock).includes(item.categoryEng)) {
-            currentCatStock[item.categoryEng] = currentCatStock[item.categoryEng] + item.stock;
-        } else currentCatStock[item.categoryEng] = item.stock;
+            currentCatStock[item.categoryEng] = (currentCatStock[item.categoryEng] || 0) + 1;
+        } else currentCatStock[item.categoryEng] = 1;
 
         if (Object.keys(currentSubCatStock).includes(item.subcategoryEng)) {
-            currentSubCatStock[item.subcategoryEng] = currentSubCatStock[item.subcategoryEng] + item.stock;
-        } else currentSubCatStock[item.subcategoryEng] = item.stock;
+            currentSubCatStock[item.subcategoryEng] = (currentSubCatStock[item.subcategoryEng] || 0) + 1;
+        } else currentSubCatStock[item.subcategoryEng] = 1;
     });
 
-    // console.log('currentCatStock', currentCatStock);
+    // console.log('currentCatStock', 'currentSubCatStock', currentCatStock, currentSubCatStock);
 
     const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
     currentAmounts.forEach((input: HTMLInputElement) => {
@@ -260,8 +322,9 @@ document.addEventListener('change', (e) => {
     });
 
     //--------------------------set prices and stock  to slider
+    // element.url = stateFilters(categories, subcategories, result);
     window.history.pushState({}, '', stateFilters(categories, subcategories, result));
-    routes.push({ path: '/', component: MainPage });
+    // routes.push({ path: '/', component: MainPage });
     router(result);
 });
 

@@ -97,16 +97,14 @@ function createCategoryFormLabel(
         switch (arrCategoriesNames) {
             case categoriesList:
                 totalAmount.value = String(
-                    productsData
-                        .filter((item) => item.category === arrCategoriesNames[i])
-                        .reduce((acc, curr) => acc + curr.stock, 0)
+                    productsData.filter((item) => item.category === arrCategoriesNames[i]).length
+                    // .reduce((acc, curr) => acc + curr.stock, 0)
                 );
                 break;
             case subCategoriesList:
                 totalAmount.value = String(
-                    productsData
-                        .filter((item) => item.subcategory === arrCategoriesNames[i])
-                        .reduce((acc, curr) => acc + curr.stock, 0)
+                    productsData.filter((item) => item.subcategory === arrCategoriesNames[i]).length
+                    // .reduce((acc, curr) => acc + curr.stock, 0)
                 );
                 break;
         }
@@ -136,16 +134,14 @@ const createCurrentAmount = (
     switch (arrCategoriesNames) {
         case categoriesList:
             currentAmount.value = String(
-                currentArr
-                    .filter((item) => item.category === arrCategoriesNames[i])
-                    .reduce((acc, curr) => acc + curr.stock, 0)
+                currentArr.filter((item) => item.category === arrCategoriesNames[i]).length
+                // .reduce((acc, curr) => acc + curr.stock, 0)
             );
             break;
         case subCategoriesList:
             currentAmount.value = String(
-                currentArr
-                    .filter((item) => item.subcategory === arrCategoriesNames[i])
-                    .reduce((acc, curr) => acc + curr.stock, 0)
+                currentArr.filter((item) => item.subcategory === arrCategoriesNames[i]).length
+                // .reduce((acc, curr) => acc + curr.stock, 0)
             );
             break;
     }

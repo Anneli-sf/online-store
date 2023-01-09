@@ -5,6 +5,7 @@ import {
     createImage,
     createInput,
     createParagraph,
+    createSimpleInput,
 } from '../../global-components/global-components';
 import { createProductCard, keepViewStyle } from './item-card/item-card';
 import { IProductsData } from '../../global-components/interfaces';
@@ -21,16 +22,19 @@ const btnStartView = createButton('-', 'btn-start-view') as HTMLButtonElement;
 export const btnAnotherView = createButton('+', 'btn-another-view') as HTMLButtonElement;
 btnStartView.classList.add('active');
 
-const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;
+export const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;
 const popupCard = createElement('div', 'popup') as HTMLDivElement;
 const popupContent = createElement('div', 'popup-content') as HTMLDivElement;
 popupContent.innerHTML = 'ТОВАР НЕ НАЙДЕН';
+export const contentBlock = createElement('div', 'products') as HTMLDivElement;
+export const sortSpan = createElement('span', 'found-items') as HTMLSpanElement;
+// export const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
 export function createProductsSection(currentArr: IProductsData[]): HTMLDivElement {
-    const contentBlock = createElement('div', 'products') as HTMLDivElement;
-    const productsList = createProductsList(currentArr) as HTMLUListElement;
-    productsList.append(createPopup());
-    contentBlock.append(createProductsHeader(currentArr), productsList);
+    // const contentBlock = createElement('div', 'products') as HTMLDivElement;
+    const productsList = createProductsMainList(currentArr) as HTMLUListElement;
+    // productsList.append(createPopup());
+    contentBlock.append(createProductsHeader(currentArr), productsList, createPopup());
 
     return contentBlock;
 }
@@ -47,10 +51,11 @@ function createProductsHeader(currentArr: IProductsData[]) {
     sortItemPrixeDecr.textContent = 'Сортировать по цене 🠗';
 
     const sortText = createParagraph('Найдено товаров: ', 'sort__text') as HTMLParagraphElement;
-    const sortSpan = createElement('span', 'found-items');
-    sortSpan.textContent = currentArr.length.toString();
+    // const sortSpan = createElement('span', 'found-items') as HTMLSpanElement;
+    // sortSpan.innerHTML = currentArr.length.toString();
 
-    const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement;
+    // const sortInput = createInput('sort__input', 'search', 'Найти товар') as HTMLFormElement;
+    const sortInput = createSimpleInput('sort__input', 'search', 'Найти товар', '') as HTMLInputElement;
 
     sortText.append(sortSpan);
     sortList.append(sortItemAlphabetAZ, sortItemAlphabetZA, sortItemPriceInc, sortItemPrixeDecr, sortArrow);
@@ -61,20 +66,9 @@ function createProductsHeader(currentArr: IProductsData[]) {
 }
 
 //----------------------products list
-function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
+export function createProductsMainList(currentArr: IProductsData[]): HTMLUListElement {
     const productsList = createElement('ul', 'products__list') as HTMLUListElement;
 
-    // const array: IProductsData[] = JSON.parse(localStorage.getItem('productsList') as string);
-
-    // if (array !== null && array.length !== 0) {
-    //     array.forEach((item) => {
-    //         productsList.append(createProductCard(item.id));
-    //     });
-    // } else {
-    //     productsData.forEach((item) => {
-    //         productsList.append(createProductCard(item.id));
-    //     });
-    // }
     sortList.addEventListener('click', (e) => {
         if (e.target instanceof Element && e.target.classList.contains('sort__item')) {
             const sortList = document.querySelectorAll('.sort__item');
@@ -103,7 +97,9 @@ function createProductsList(currentArr: IProductsData[]): HTMLUListElement {
         }
     });
 
-    // keepViewStyle();
+    popup.classList.contains('popup-open')
+        ? (sortSpan.innerHTML = '0')
+        : (sortSpan.innerHTML = currentArr.length.toString());
 
     currentArr.forEach((item) => {
         productsList.append(createProductCard(item.id));
@@ -150,9 +146,12 @@ function createPopup(): HTMLDivElement {
     return popup;
 }
 
-export function popupToggle() {
-    const POPUP_CARD = document.querySelector('.popup-content') as HTMLDivElement;
-    const POPUP = document.querySelector('.popup-wrapper') as HTMLDivElement;
-    POPUP.classList.toggle('popup-open');
-    POPUP_CARD.classList.toggle('popup-open');
+export function openPopup() {
+    popup.classList.add('popup-open');
+    popupContent.classList.add('popup-open');
+}
+
+export function closePopup() {
+    popup.classList.remove('popup-open');
+    popupContent.classList.remove('popup-open');
 }
