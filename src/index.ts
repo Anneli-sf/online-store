@@ -273,7 +273,6 @@ document.addEventListener('change', (e) => {
     //----------------------CHECKBOXES
     if (element instanceof Element && element.closest('.filter-input')) {
         // const result: IProductsData[] = findCurrentFilters(element);
-
         result = findCurrentFilters(element, filters, minPrice.value, maxPrice.value);
         setPricesToSlider(result);
         setAmountToSlider(result);
