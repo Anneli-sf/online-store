@@ -1,13 +1,9 @@
 import './header.scss';
 import { createElement, createImage, createParagraph } from '../../global-components/global-components';
 
-// export const header = document.querySelector('.header') as HTMLBodyElement;
-// const basketLink = createLink('/#/cart', 'basket-link') as HTMLLinkElement;
-// const logoLink = createLink('/#/home', 'home-link') as HTMLLinkElement;
-
 export function createHeader(): HTMLBodyElement {
     const header = document.querySelector('.header') as HTMLBodyElement;
-    const logo = createImage('../../../assets/img/logo.gif', 'logo', 'logo') as HTMLImageElement;
+    const logo = createImage('assets/img/logo.gif', 'logo', 'logo') as HTMLImageElement;
 
     const logoLink = createElement('a', 'logo-link') as HTMLLinkElement;
     logoLink.append(logo);
@@ -24,7 +20,7 @@ export function createHeader(): HTMLBodyElement {
 
     const basketContainer = createElement('div', 'basket-container');
 
-    const basket = createImage('../../../assets/icons/basket.png', 'basket', 'basket') as HTMLImageElement;
+    const basket = createImage('assets/icons/basket.png', 'basket', 'basket') as HTMLImageElement;
     const basketSpan = createElement('span', 'found-products');
     if (localStorage.getItem('totalStock')) {
         basketSpan.textContent = localStorage.getItem('totalStock');

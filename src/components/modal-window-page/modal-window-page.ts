@@ -36,9 +36,9 @@ const createFrontBlock = () => {
     const frontBlock = createElement('div', 'front');
     const imagesBlock = createElement('div', 'image');
     const chipImage = createElement('img', 'chip') as HTMLImageElement;
-    chipImage.src = '../../assets/icons/chip.png';
+    chipImage.src = 'assets/icons/chip.png';
     const visaImage = createElement('img', 'card') as HTMLImageElement;
-    visaImage.src = '../../assets/icons/default.png';
+    visaImage.src = 'assets/icons/default.png';
     imagesBlock.append(chipImage, visaImage);
 
     const cardNumberBlock = createElement('div', 'card-number-box');
@@ -61,7 +61,7 @@ const createBackBlock = () => {
     const backBlock = createElement('div', 'back');
     const stripeBlock = createElement('div', 'stripe');
 
-    backBlock.append(stripeBlock, createBoxBlock('CVV', '', 'cvv-box', '../../assets/icons/default.png'));
+    backBlock.append(stripeBlock, createBoxBlock('CVV', '', 'cvv-box', 'assets/icons/default.png'));
 
     return backBlock;
 };
@@ -82,37 +82,37 @@ const setCardImage = (input: HTMLInputElement) => {
     switch (input.value[0]) {
         case '4':
             document.querySelectorAll('.card').forEach((item) => {
-                item.setAttribute('src', '../../assets/icons/visa.png');
+                item.setAttribute('src', 'assets/icons/visa.png');
             });
             break;
         case '5':
             document.querySelectorAll('.card').forEach((item) => {
-                item.setAttribute('src', '../../assets/icons/master-card.png');
+                item.setAttribute('src', 'assets/icons/master-card.png');
             });
             break;
         case '6':
             document.querySelectorAll('.card').forEach((item) => {
-                item.setAttribute('src', '../../assets/icons/maestro.png');
+                item.setAttribute('src', 'assets/icons/maestro.png');
             });
             break;
         case '7':
             document.querySelectorAll('.card').forEach((item) => {
-                item.setAttribute('src', '../../assets/icons/slytherin.png');
+                item.setAttribute('src', 'assets/icons/slytherin.png');
             });
             break;
         case '8':
             document.querySelectorAll('.card').forEach((item) => {
-                item.setAttribute('src', '../../assets/icons/griffindor.png');
+                item.setAttribute('src', 'assets/icons/griffindor.png');
             });
             break;
         case '9':
             document.querySelectorAll('.card').forEach((item) => {
-                item.setAttribute('src', '../../assets/icons/hufflepuff.png');
+                item.setAttribute('src', 'assets/icons/hufflepuff.png');
             });
             break;
         default:
             document.querySelectorAll('.card').forEach((item) => {
-                item.setAttribute('src', '../../assets/icons/default.png');
+                item.setAttribute('src', 'assets/icons/default.png');
             });
             break;
     }
