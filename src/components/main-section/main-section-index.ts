@@ -73,7 +73,7 @@ export const stateFilters = (
     maxPrice: string,
     minAmount: string,
     maxAmount: string,
-    resultArr: IProductsData[],
+    resultArr: IProductsData[]
     // element?: HTMLInputElement
 ) => {
     let categoryState = '';
@@ -83,7 +83,7 @@ export const stateFilters = (
     if (categories.length > 0) categoryState = 'category=' + categories.join('↕');
     if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
     // if (element.className === 'sort__input' && element.value.length > 0) searchWord = `&search=${element.value}`;
-    let state = `?${categoryState}&${subcategoryState}&price=${minPrice}↕${maxPrice}&stock=${minAmount}↕${maxAmount}${searchWord}`;
+    let state = `?${categoryState}&${subcategoryState}&price=${minPrice}↕${maxPrice}&stock=${minAmount}↕${maxAmount}`;
     if (resultArr.length === productsData.length) state = '/';
 
     return state;
