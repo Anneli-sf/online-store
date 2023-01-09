@@ -326,17 +326,17 @@ document.addEventListener('change', (e) => {
 
     //--------------------------set prices and stock  to slider
     // element.url = stateFilters(categories, subcategories, result);
-    console.log(`${window.location.href}${stateFilters(
-        categories,
-        subcategories,
-        minPrice.value,
-        maxPrice.value,
-        minAmount.value,
-        maxAmount.value,
-        result,
-        element
-    )}
-    }`);
+    console.log(
+        `${window.location.href}${stateFilters(
+            categories,
+            subcategories,
+            minPrice.value,
+            maxPrice.value,
+            minAmount.value,
+            maxAmount.value,
+            result
+        )}`
+    );
     window.history.pushState(
         {},
         '',
@@ -347,8 +347,7 @@ document.addEventListener('change', (e) => {
             maxPrice.value,
             minAmount.value,
             maxAmount.value,
-            result,
-            element
+            result
         )}
         }`
     );
