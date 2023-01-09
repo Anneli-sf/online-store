@@ -45,7 +45,6 @@ import { IProductsData, IComponent, IStock, IFilters } from './components/global
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
 import { getMaxAmount, getMaxPrice, getMinAmount, getMinPrice } from './components/helpers/helpers';
-import { isTSEnumMember } from '@babel/types';
 
 createHeader();
 createFooter();
@@ -327,6 +326,17 @@ document.addEventListener('change', (e) => {
 
     //--------------------------set prices and stock  to slider
     // element.url = stateFilters(categories, subcategories, result);
+    console.log(`${window.location.href}${stateFilters(
+        categories,
+        subcategories,
+        minPrice.value,
+        maxPrice.value,
+        minAmount.value,
+        maxAmount.value,
+        result,
+        element
+    )}
+    }`);
     window.history.pushState(
         {},
         '',
