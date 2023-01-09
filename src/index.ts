@@ -365,7 +365,8 @@ document.addEventListener('change', (e) => {
             maxPrice.value,
             minAmount.value,
             maxAmount.value,
-            result
+            result,
+            element
         )}`
     );
     // routes.push({ path: '/', component: MainPage });
