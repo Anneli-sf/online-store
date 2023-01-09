@@ -13,6 +13,7 @@ import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
 import { createCartPage, createProductsList } from './components/cart-page/cart-page';
+import { createProductsSection } from './components/main-section/products-section/products-section';
 
 import {
     closePopup,
@@ -44,6 +45,7 @@ import { IProductsData, IComponent, IStock, IFilters } from './components/global
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
 import { getMaxAmount, getMaxPrice, getMinAmount, getMinPrice } from './components/helpers/helpers';
+import { isTSEnumMember } from '@babel/types';
 
 createHeader();
 createFooter();
@@ -73,9 +75,9 @@ const MainPage = {
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
     const productsList = document.querySelector('.products__list') as HTMLUListElement;
-    productsList.remove();
+    if (productsList) productsList.remove();
     contentBlock.append(createProductsMainList(array));
-    
+
     keepViewStyle();
 
     return productsWrapper;
@@ -271,6 +273,7 @@ document.addEventListener('change', (e) => {
     //----------------------CHECKBOXES
     if (element instanceof Element && element.closest('.filter-input')) {
         // const result: IProductsData[] = findCurrentFilters(element);
+
         result = findCurrentFilters(element, filters, minPrice.value, maxPrice.value);
         setPricesToSlider(result);
         setAmountToSlider(result);
