@@ -319,9 +319,10 @@ document.addEventListener('change', (e) => {
     console.log('INDEXOF', window.location.href.indexOf('?'));
     console.log('HREF', window.location.href);
     console.log('SLICE', window.location.href.slice(0, window.location.href.indexOf('?')));
-    const x = window.location.href.indexOf('?')
-        ? window.location.href.slice(0, window.location.href.indexOf('?'))
-        : window.location.href;
+    const x =
+        window.location.href.indexOf('?') < 0
+            ? window.location.href.slice(0, window.location.href.indexOf('?'))
+            : window.location.href;
 
     window.history.pushState(
         {},
