@@ -10,7 +10,6 @@
     align-items: self-start;
     padding-bottom: 100px;
     .empty {
-        // display: none;
         width: 100%;
         height: 100%;
         padding-left: 50px;
@@ -19,6 +18,7 @@
     }
     input {
         background-color: transparent;
+        cursor: url("../../public/icons/cursor2.png"), auto;
     }
     .cart-products {
         background-attachment: fixed;
@@ -106,7 +106,7 @@
     }
 
     .stock-value {
-        cursor: auto;
+        cursor: url("../../public/icons/cursor2.png"), auto;
         width: 40px;
         text-align: end;
         font-size: 20px;
@@ -176,14 +176,14 @@
         .cart-item-image {
             flex: 0 1 20%;
             margin-right: 10px;
-            cursor: pointer;
+            cursor: url("../../public/icons/cursor2.png"), auto;
         }
 
         .description-cart-item {
             margin-right: 10px;
             width: 100%;
             overflow: hidden;
-            cursor: pointer;
+            cursor: url("../../public/icons/cursor2.png"), auto;
         }
 
         .mini-description-item {

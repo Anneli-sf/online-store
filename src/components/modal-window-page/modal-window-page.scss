@@ -37,6 +37,11 @@
     flex-flow: column;
     width: 30%;
     margin: 0 auto;
+    input,
+    select,
+    option {
+        cursor: url("../../public/icons/cursor2.png"), auto;
+    }
     form {
         background-color: #ffc500;
         color: #7f0909;

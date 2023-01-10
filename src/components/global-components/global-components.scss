@@ -4,7 +4,7 @@
     min-width: 10px;
     min-height: 10px;
     background-color: transparent;
-    cursor: pointer;
+    cursor: url("../../public/icons/cursor2.png"), auto;
     margin: 5px;
     font-size: 1rem;
 }
@@ -19,7 +19,7 @@
     padding: 5px 10px;
     color: white;
     font-size: 1rem;
-    cursor: pointer;
+    cursor: url("../../public/icons/cursor2.png"), auto;
 }
 
 .label {

@@ -46,7 +46,7 @@
 
 .products-image {
     transition: all 1s ease-in-out;
-    cursor: pointer;
+    cursor: url("../../../../public/icons/cursor2.png"), auto;
     width: 100%;
     height: 100%;
     &:hover {

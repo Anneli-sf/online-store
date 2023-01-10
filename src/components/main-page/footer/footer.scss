@@ -1,7 +1,7 @@
 @import '../../../sass/abstracts/mixins';
 
 .rs-logo {
-    cursor: pointer;
+    cursor: url("../../../public/icons/cursor2.png"), auto;
     position: relative;
     width: 100px;
     height: 43px;
@@ -19,7 +19,7 @@
 }
 
 .anneli-github-logo {
-    cursor: pointer;
+    cursor: url("../../../public/icons/cursor2.png"), auto;
     position: relative;
     top: -15px;
     transform: scale(.8);
@@ -40,7 +40,7 @@
 }
 
 .alex-github-logo {
-    cursor: pointer;
+    cursor: url("../../../public/icons/cursor2.png"), auto;
     position: relative;
     top: -15px;
     transform: scale(.8);

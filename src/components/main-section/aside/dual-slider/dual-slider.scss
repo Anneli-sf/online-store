@@ -63,7 +63,7 @@
         background-color: #fff;
         box-shadow: 0 0 0 1px #c6c6c6;
         z-index: 2;
-        cursor: pointer;
+        cursor: url("../../../../public/icons/cursor2.png"), auto;
     }
 
     input[type='range']::-moz-range-thumb {
@@ -74,7 +74,8 @@
         background-color: #fff;
         border-radius: 50%;
         box-shadow: 0 0 0 1px #c6c6c6;
-        cursor: pointer;
+        cursor: url("../../../../public/icons/cursor2.png"), auto;
+
     }
 
     input[type='range']::-webkit-slider-thumb:hover {

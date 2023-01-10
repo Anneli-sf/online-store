@@ -52,7 +52,8 @@
         position: relative;
         display: flex;
         justify-content: space-between;
-        cursor: pointer;
+        cursor: url("../../../../public/icons/cursor2.png"), auto;
+
 
         &:hover,
         &.checked {
@@ -82,7 +83,8 @@
 
     .category-input,
     .subcategory-input {
-        cursor: pointer;
+        cursor: url("../../../../public/icons/cursor2.png"), auto;
+
         position: relative;
         opacity: 0;
         z-index: -2;
@@ -90,7 +92,6 @@
 
     .amount-block {
         position: relative;
-        // right: 10%;
         right: 0px;
         @include flex-row(center, center);
         flex-wrap: nowrap;

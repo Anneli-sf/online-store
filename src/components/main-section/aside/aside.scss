@@ -20,7 +20,8 @@
 }
 
 .label-reset {
-    cursor: pointer;
+    cursor: url("../../../public/icons/cursor2.png"), auto;
+
 
     .input-reset {
         opacity: 0;
