@@ -6,10 +6,6 @@ import {
     createParagraph,
 } from '../../../global-components/global-components';
 import { productsData } from '../../../data/data';
-import { btnAnotherView } from '../products-section';
-
-// const detailsLink = createElement('a', 'btn__details-link') as HTMLLinkElement;
-// const buttonDetails = createButton('детали', 'btn__details') as HTMLButtonElement;
 
 //----------------CARD
 export function createProductCard(productId: number): HTMLElement {
@@ -21,6 +17,9 @@ export function createProductCard(productId: number): HTMLElement {
         'products-image'
     ) as HTMLImageElement;
     productImage.id = String(productsData[productId].id);
+    if (localStorage.getItem('view') === 'large') {
+        productsItem.classList.add('another-view');
+    }
 
     const productTitle = createParagraph(productsData[productId].title, 'products-title') as HTMLParagraphElement; //as HTMLLIElement;
     const productAvailable = createElement('div', 'products-available') as HTMLDivElement;
@@ -62,7 +61,9 @@ const createBtnText = (productId: number) => {
 //--------keep present card's view
 export const keepViewStyle = (): void => {
     const cards = [...document.querySelectorAll('.products__item')] as HTMLLIElement[];
-    btnAnotherView.classList.contains('active')
-        ? cards.forEach((el) => el.classList.add('another-view'))
-        : cards.forEach((el) => el.classList.remove('another-view'));
+    if (localStorage.getItem('view') === 'large') {
+        cards.forEach((el) => el.classList.add('another-view'));
+    } else {
+        cards.forEach((el) => el.classList.remove('another-view'));
+    }
 };

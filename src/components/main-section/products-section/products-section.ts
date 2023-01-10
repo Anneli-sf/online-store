@@ -20,7 +20,11 @@ const sortItemPrixeDecr = createElement('li', 'sort__item') as HTMLLIElement;
 const btnsViewBlock = createElement('div', 'view-btns');
 const btnStartView = createButton('-', 'btn-start-view') as HTMLButtonElement;
 export const btnAnotherView = createButton('+', 'btn-another-view') as HTMLButtonElement;
-btnStartView.classList.add('active');
+if (localStorage.getItem('view') === 'large') {
+    btnAnotherView.classList.add('active');
+} else {
+    btnStartView.classList.add('active');
+}
 
 export const popup = createElement('div', 'popup-wrapper') as HTMLDivElement;
 const popupCard = createElement('div', 'popup') as HTMLDivElement;
@@ -130,10 +134,12 @@ btnsViewBlock.addEventListener('click', (e) => {
             btnAnotherView.classList.add('active');
             btnStartView.classList.remove('active');
             cards.forEach((el) => el.classList.add('another-view'));
+            localStorage.setItem('view', 'large');
         } else {
             btnAnotherView.classList.remove('active');
             btnStartView.classList.add('active');
             cards.forEach((el) => el.classList.remove('another-view'));
+            localStorage.setItem('view', 'small');
         }
     }
 });
