@@ -132,7 +132,8 @@ const findComponentByPath = (path: string) => {
 
 const router = (option?: number | IProductsData[]) => {
     const path = parseLocation();
-    const { component = ErrorComponent } = findComponentByPath(path) || {};
+    // const { component = ErrorComponent } = findComponentByPath(path) || {};
+    const { component = ErrorComponent } = findComponentByPath(`/${path}`) || {};
     mainSection.append(component.render(option as number & IProductsData[]));
 };
 
