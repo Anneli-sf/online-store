@@ -123,8 +123,8 @@ const routes = [
 ];
 
 //-------------------------------ROUTING
-const parseLocation = () => location.hash.toLowerCase() || '/';
-// const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
+// const parseLocation = () => location.hash.toLowerCase() || '/';
+const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
 const findComponentByPath = (path: string) => {
     const namePage = path.split('/')[1];
     return routes.find((r) => r.path.includes(namePage)) || undefined;
