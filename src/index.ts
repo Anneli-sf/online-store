@@ -5,6 +5,7 @@ import './components/main-section/aside/dual-slider/dual-slider';
 import './components/main-section/aside/aside';
 import './components/main-section/main-section';
 import './components/main-page/header/header';
+import './components/error-page/error-page';
 
 import './components/modal-window-page/modal-window-page';
 import './components/cart-page/cart-page-target/cart-page-target';
@@ -12,8 +13,7 @@ import './components/cart-page/cart-page-target/cart-page-target';
 import { createHeader } from './components/main-page/header/header';
 import { createFooter } from './components/main-page/footer/footer';
 import { createDetailsPage } from './components/details-page/details';
-import { createCartPage, createProductsList } from './components/cart-page/cart-page';
-import { createProductsSection } from './components/main-section/products-section/products-section';
+import { createCartPage } from './components/cart-page/cart-page';
 
 import {
     closePopup,
@@ -44,6 +44,8 @@ import {
 import { IProductsData, IComponent, IStock, IFilters } from './components/global-components/interfaces';
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
+import { changeTotalPriceWithPromoWhenAddDelItems } from './components/cart-page/cart-page';
+import { createErrorPage } from './components/error-page/error-page';
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
@@ -68,7 +70,7 @@ window.addEventListener('load', () => {
         if (currArray.length) mainSection.append(createProducstPage(currArray));
         else {
             mainSection.innerHTML = '';
-            return (mainSection.innerHTML = `Error 404`);
+            return mainSection.append(createErrorPage());
         }
     }
 });
@@ -107,7 +109,7 @@ const DetailsPage = {
 const ErrorComponent = {
     render: () => {
         mainSection.innerHTML = '';
-        return (mainSection.innerHTML = `Error 404`);
+        return createErrorPage();
     },
 };
 
@@ -165,11 +167,13 @@ document.addEventListener('click', (e: Event) => {
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.delete-item')) {
         const element = e.target as HTMLInputElement;
         executeWhenDeleteBtnQuantityOfProduct(element, mainSection as HTMLDivElement);
+        changeTotalPriceWithPromoWhenAddDelItems();
     }
 
     if (e.target instanceof Element && e.target.parentElement && e.target.closest('.add-item')) {
         const element = e.target as HTMLInputElement;
         executeWhenAddBtnQuantityOfProduct(element);
+        changeTotalPriceWithPromoWhenAddDelItems();
     }
 });
 

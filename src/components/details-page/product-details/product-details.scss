@@ -10,7 +10,7 @@
         border: 1px solid #ffc500;
         border-radius: 10px;
         overflow: hidden;
-        cursor: pointer;
+        cursor: url("../../../public/icons/cursor2.png"), auto;
 
         .mini-photo-img {
             width: 100%;
@@ -38,7 +38,7 @@
 }
 
 .active-photo-section {
-    cursor: pointer;
+    cursor: url("../../../public/icons/cursor2.png"), auto;
 
     .active-photo-item {
         width: 100%;

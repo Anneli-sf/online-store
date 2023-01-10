@@ -376,9 +376,122 @@ export const createSummaryCartBlock = () => {
     ) as HTMLInputElement;
 
     const buyForm = createElement('form', 'promocode-form') as HTMLFormElement;
-    const endSumBlock = createElement('div', 'end-sum');
+    const endSumBlock = createElement('div', 'end-sum') as HTMLDivElement;
     const buyInput = createElement('input', 'promecode-input') as HTMLInputElement;
-    const promocodeBlock = createElement('div', 'promocode-block');
+    const promocodeBlock = createElement('div', 'promocode-block') as HTMLDivElement;
+
+    showPriceWithPromo(buyInput, promocodeBlock);
+    calcTotalPriceWithPromo();
+
+    const promoTest = createParagraph("Попробуйте: 'Гарри', 'Поттер'", 'promo-test') as HTMLParagraphElement;
+    const buttonBuyNow = createButton('Купить сейчас', 'btn-buy-now');
+    buttonBuyNow.type = 'button';
+    buttonBuyNow.classList.add('button-second');
+
+    buttonBuyNow.addEventListener('click', () => {
+        document.querySelector('.main')?.append(createContainerCard());
+    });
+
+    buyForm.append(endSumBlock, buyInput, promocodeBlock, promoTest, buttonBuyNow);
+
+    summarySectionBlock.append(quantityOfPoducts, quantityOfPoductsValue, totalSum, totalSumValue, buyForm);
+    // document.querySelector('.main')?.append(summaryBlock);
+
+    return summaryBlock;
+};
+
+const calcTotalPriceWithPromo = () => {
+    document.addEventListener('click', (e) => {
+        if (e.target instanceof Element && e.target.closest('.promocode-block .prom-btn-garry')) {
+            calcPriceWithGarryPromo();
+        }
+        if (e.target instanceof Element && e.target.closest('.promocode-block .prom-btn-potter')) {
+            calcPriceWithPotterPromo();
+        }
+
+        if (e.target instanceof Element && e.target.closest('.end-sum .prom-btn-garry')) {
+            removeGarryBlockPriceWithPromo();
+        }
+
+        if (e.target instanceof Element && e.target.closest('.end-sum .prom-btn-potter')) {
+            removePotterBlockPriceWithPromo();
+        }
+    });
+};
+
+const calcPriceWithGarryPromo = () => {
+    (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '1';
+    if (!document.querySelector('.end-sum .prom-cont-garry')) {
+        document
+            .querySelector('.end-sum')
+            ?.append(
+                createPromocodeItem('Гарри', 'prom-cont-garry', 'prom-text-garry', 'prom-btn-garry', 10, 'удалить')
+            );
+        (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'line-through';
+        if (!document.querySelector('.new-price')) {
+            document.querySelector('.total-sum-value')?.after(createNewPriceSpan(10));
+        } else {
+            (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
+                +(localStorage.getItem('totalPrice') as string) * 0.75
+            )}`;
+        }
+    }
+    if (!document.querySelector('.promocode-block .prom-cont-potter')) {
+        (document.querySelector('.promocode-block') as HTMLDivElement).style.opacity = '0';
+    }
+    document.querySelector('.promocode-block .prom-cont-garry')?.remove();
+};
+
+const removeGarryBlockPriceWithPromo = () => {
+    document.querySelector('.end-sum .prom-cont-garry')?.remove();
+    if (document.querySelector('.end-sum .prom-cont-potter')) {
+        (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
+            +((document.querySelector('.new-price') as HTMLSpanElement).textContent as string) / 0.9
+        )}`;
+    } else {
+        (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '0';
+        document.querySelector('.new-price')?.remove();
+        (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
+    }
+};
+
+const calcPriceWithPotterPromo = () => {
+    (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '1';
+    if (!document.querySelector('.end-sum .prom-cont-potter')) {
+        document
+            .querySelector('.end-sum')
+            ?.append(
+                createPromocodeItem('Поттер', 'prom-cont-potter', 'prom-text-potter', 'prom-btn-potter', 15, 'удалить')
+            );
+        (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'line-through';
+        if (!document.querySelector('.new-price')) {
+            document.querySelector('.total-sum-value')?.after(createNewPriceSpan(15));
+        } else {
+            (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
+                +(localStorage.getItem('totalPrice') as string) * 0.75
+            )}`;
+        }
+    }
+    if (!document.querySelector('.promocode-block .prom-cont-garry')) {
+        (document.querySelector('.promocode-block') as HTMLDivElement).style.opacity = '0';
+    }
+    document.querySelector('.promocode-block .prom-cont-potter')?.remove();
+};
+
+const removePotterBlockPriceWithPromo = () => {
+    document.querySelector('.end-sum .prom-cont-potter')?.remove();
+    if (document.querySelector('.end-sum .prom-cont-garry')) {
+        (document.querySelector('.new-price') as HTMLDivElement).textContent = `${Math.floor(
+            +((document.querySelector('.new-price') as HTMLSpanElement).textContent as string) / 0.85
+        )}`;
+    } else {
+        (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '0';
+        document.querySelector('.new-price')?.remove();
+        (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
+    }
+};
+
+const showPriceWithPromo = (buyInput: HTMLInputElement, promocodeBlock: HTMLDivElement) => {
     buyInput.oninput = () => {
         if (buyInput.value === 'Гарри') {
             if (!document.querySelector('.prom-cont-garry')) {
@@ -422,106 +535,23 @@ export const createSummaryCartBlock = () => {
             promocodeBlock.style.opacity = '0';
         }
     };
-    document.addEventListener('click', (e) => {
-        if (e.target instanceof Element && e.target.closest('.promocode-block .prom-btn-garry')) {
-            (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '1';
-            if (!document.querySelector('.end-sum .prom-cont-garry')) {
-                document
-                    .querySelector('.end-sum')
-                    ?.append(
-                        createPromocodeItem(
-                            'Гарри',
-                            'prom-cont-garry',
-                            'prom-text-garry',
-                            'prom-btn-garry',
-                            10,
-                            'удалить'
-                        )
-                    );
-                (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'line-through';
-                if (!document.querySelector('.new-price')) {
-                    document.querySelector('.total-sum-value')?.after(createNewPriceSpan(10));
-                } else {
-                    (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
-                        +(document.querySelector('.total-sum-value') as HTMLInputElement).value * 0.75
-                    )}`;
-                }
-            }
-            if (!document.querySelector('.promocode-block .prom-cont-potter')) {
-                (document.querySelector('.promocode-block') as HTMLDivElement).style.opacity = '0';
-            }
-            document.querySelector('.promocode-block .prom-cont-garry')?.remove();
-        }
-        if (e.target instanceof Element && e.target.closest('.promocode-block .prom-btn-potter')) {
-            (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '1';
-            if (!document.querySelector('.end-sum .prom-cont-potter')) {
-                document
-                    .querySelector('.end-sum')
-                    ?.append(
-                        createPromocodeItem(
-                            'Поттер',
-                            'prom-cont-potter',
-                            'prom-text-potter',
-                            'prom-btn-potter',
-                            15,
-                            'удалить'
-                        )
-                    );
-                (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'line-through';
-                if (!document.querySelector('.new-price')) {
-                    document.querySelector('.total-sum-value')?.after(createNewPriceSpan(15));
-                } else {
-                    (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
-                        +(document.querySelector('.total-sum-value') as HTMLInputElement)?.value * 0.75
-                    )}`;
-                }
-            }
-            if (!document.querySelector('.promocode-block .prom-cont-garry')) {
-                (document.querySelector('.promocode-block') as HTMLDivElement).style.opacity = '0';
-            }
-            document.querySelector('.promocode-block .prom-cont-potter')?.remove();
-        }
+};
 
-        if (e.target instanceof Element && e.target.closest('.end-sum .prom-btn-garry')) {
-            document.querySelector('.end-sum .prom-cont-garry')?.remove();
-            if (document.querySelector('.end-sum .prom-cont-potter')) {
-                (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
-                    +((document.querySelector('.new-price') as HTMLSpanElement).textContent as string) / 0.9
-                )}`;
-            } else {
-                (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '0';
-                document.querySelector('.new-price')?.remove();
-                (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
-            }
-        }
+export const changeTotalPriceWithPromoWhenAddDelItems = () => {
+    const garryBlock = document.querySelector('.end-sum .prom-cont-garry') as HTMLDivElement;
+    const potterBlock = document.querySelector('.end-sum .prom-cont-potter') as HTMLDivElement;
 
-        if (e.target instanceof Element && e.target.closest('.end-sum .prom-btn-potter')) {
-            document.querySelector('.end-sum .prom-cont-potter')?.remove();
-            if (document.querySelector('.end-sum .prom-cont-garry')) {
-                (document.querySelector('.new-price') as HTMLDivElement).textContent = `${Math.floor(
-                    +((document.querySelector('.new-price') as HTMLSpanElement).textContent as string) / 0.85
-                )}`;
-            } else {
-                (document.querySelector('.end-sum') as HTMLDivElement).style.opacity = '0';
-                document.querySelector('.new-price')?.remove();
-                (document.querySelector('.total-sum-value') as HTMLInputElement).style.textDecoration = 'none';
-            }
-        }
-    });
-
-    const promoTest = createParagraph("Попробуйте: 'Гарри', 'Поттер'", 'promo-test') as HTMLParagraphElement;
-    const buttonBuyNow = createButton('Купить сейчас', 'btn-buy-now');
-    buttonBuyNow.type = 'button';
-    buttonBuyNow.classList.add('button-second');
-
-    buttonBuyNow.addEventListener('click', () => {
-        document.querySelector('.main')?.append(createContainerCard());
-    });
-
-    buyForm.append(endSumBlock, buyInput, promocodeBlock, promoTest, buttonBuyNow);
-
-    summarySectionBlock.append(quantityOfPoducts, quantityOfPoductsValue, totalSum, totalSumValue, buyForm);
-    // document.querySelector('.main')?.append(summaryBlock);
-
-    return summaryBlock;
+    if (garryBlock && !potterBlock) {
+        (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
+            +(localStorage.getItem('totalPrice') as string) * 0.9
+        )}`;
+    } else if (!garryBlock && potterBlock) {
+        (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
+            +(localStorage.getItem('totalPrice') as string) * 0.85
+        )}`;
+    } else if (garryBlock && potterBlock) {
+        (document.querySelector('.new-price') as HTMLSpanElement).textContent = `${Math.floor(
+            +(localStorage.getItem('totalPrice') as string) * 0.75
+        )}`;
+    }
 };

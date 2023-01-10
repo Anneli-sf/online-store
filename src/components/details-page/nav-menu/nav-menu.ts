@@ -7,7 +7,7 @@ export const createNavigation = (productId: number): HTMLElement => {
     const list: HTMLElement = createElement('div', 'nav-list');
     const navStore = createElement('a', 'nav-list-btn') as HTMLLinkElement;
     navStore.classList.add('button');
-    navStore.href = '#/';
+    navStore.href = new URL(window.location.pathname, window.location.origin).href;
     navStore.textContent = 'Все товары';
     const navCategory: HTMLButtonElement = createButton(productsData[productId].category, 'nav-list-btn');
     const navSubCategory: HTMLButtonElement = createButton(productsData[productId].subcategory, 'nav-list-btn');

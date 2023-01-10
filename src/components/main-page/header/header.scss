@@ -1,12 +1,19 @@
 @import '../../../sass/abstracts/mixins';
 
+.logo-link,
+.cart-link,
+.logo,
+.found-products {
+    cursor: url("../../../public/icons/cursor2.png"), auto;
+}
+
 .logo {
     width: 100px;
 }
 
 .basket {
     width: 40px;
-    cursor: pointer;
+    cursor: url("../../../public/icons/cursor2.png"), auto;
     filter: invert(1);
 }
 
