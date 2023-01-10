@@ -2,7 +2,6 @@
     background-color: #ffc500;
     color: black;
     position: relative;
-    border-bottom: 5px solid #7f0909;
     @include flex-row();
     padding: 5px 50px;
     width: 100%;
@@ -11,6 +10,7 @@
     transition: all 0.5s ease-in-out;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    filter: drop-shadow(2px 4px 6px black);
     &:hover {
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;

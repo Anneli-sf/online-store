@@ -13,6 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 50px;
     .passed-time {
         background-color: transparent;
         font-size: 20px;
@@ -37,6 +38,7 @@
     flex-flow: column;
     width: 30%;
     margin: 0 auto;
+    filter: drop-shadow(2px 2px 2px black);
     input,
     select,
     option {
@@ -96,11 +98,11 @@
     }
 
     .card-container {
-        // position: fixed;
         position: absolute;
         height: 215px;
         width: 350px;
         transform: scale(0.7) translate(165%, -20%);
+        filter: drop-shadow(2px 2px 2px black);
     }
 
     .card-container .front {

@@ -9,40 +9,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all .5s ease-in-out;
 }
 
 .products-price {
     position: relative;
-    // animation: move 5s infinite linear;
+    transition: all .5s ease-in-out;
     &::after {
         position: absolute;
         content: '$';
     }
 }
-
-// @keyframes move {
-//     0% {
-//         transform: translateX(-50%);
-//     }
-//     25% {
-//         transform: translateX(0%);
-//     }
-//     40% {
-//         transform: translateX(50%);
-//     }
-//     55% {
-//         transform: translateX(100%);
-//     }
-//     70% {
-//         transform: translateX(50%);
-//     }
-//     85% {
-//         transform: translateX(0%);
-//     }
-//     100% {
-//         transform: translateX(-50%);
-//     }
-// }
 
 .products-image {
     transition: all 1s ease-in-out;

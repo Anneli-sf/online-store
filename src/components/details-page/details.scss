@@ -2,6 +2,7 @@
 
 .details-page {
     @include flex-column();
+    padding-top: 50px;
 
     .details-block {
         .details-section {
