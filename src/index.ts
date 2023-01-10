@@ -46,6 +46,7 @@ import { keepViewStyle } from './components/main-section/products-section/item-c
 import { searchByWord } from './components/main-section/main-section-index';
 import { changeTotalPriceWithPromoWhenAddDelItems } from './components/cart-page/cart-page';
 import { createErrorPage } from './components/error-page/error-page';
+import { savePageUrl } from './components/helpers/helpers';
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
@@ -67,8 +68,9 @@ window.addEventListener('load', () => {
     } else {
         const currArray = getDataFromUrl(searchParams);
 
-        if (currArray.length) mainSection.append(createProducstPage(currArray));
-        else {
+        if (currArray.length) {
+            mainSection.append(createProducstPage(currArray));
+        } else {
             mainSection.innerHTML = '';
             return mainSection.append(createErrorPage());
         }
@@ -114,13 +116,15 @@ const ErrorComponent = {
 };
 
 const routes = [
-    { path: '/', component: MainPage },
+    // { path: '/', component: MainPage },
+    { path: '#/', component: MainPage },
     { path: '/cart', component: CartPage },
     { path: '/product-details', component: DetailsPage },
 ];
 
 //-------------------------------ROUTING
-const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
+const parseLocation = () => location.hash.toLowerCase() || '/';
+// const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
 const findComponentByPath = (path: string) => {
     const namePage = path.split('/')[1];
     return routes.find((r) => r.path.includes(namePage)) || undefined;
@@ -175,6 +179,11 @@ document.addEventListener('click', (e: Event) => {
         executeWhenAddBtnQuantityOfProduct(element);
         changeTotalPriceWithPromoWhenAddDelItems();
     }
+
+    if (e.target instanceof Element && e.target.parentElement && e.target.closest('.btn-copy')) {
+        const element = e.target as HTMLButtonElement;
+        savePageUrl(element);
+    }
 });
 
 //-------------------------------------------------FILTERS
@@ -187,7 +196,13 @@ const filters: IFilters = {
     stack: [],
 };
 
-let result: IProductsData[] = [];
+let result: IProductsData[];
+
+if (localStorage.getItem('currentProducts')) {
+    result = JSON.parse(localStorage.getItem('currentProducts') as string) as IProductsData[];
+} else {
+    result = [];
+}
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
@@ -208,6 +223,7 @@ document.addEventListener('change', (e) => {
             result = stack;
             closePopup();
         }
+        localStorage.setItem('currentProducts', JSON.stringify(result));
         setPricesToSlider(result);
         setAmountToSlider(result);
     }
@@ -230,6 +246,7 @@ document.addEventListener('change', (e) => {
                 stack = [];
             }
         }
+        localStorage.setItem('currentProducts', JSON.stringify(result));
         setAmountToSlider(result);
     }
 
@@ -252,6 +269,7 @@ document.addEventListener('change', (e) => {
                 stack = [];
             }
         }
+        localStorage.setItem('currentProducts', JSON.stringify(result));
         setPricesToSlider(result);
     }
 
@@ -260,6 +278,7 @@ document.addEventListener('change', (e) => {
         result = findCurrentFilters(element, filters, minPrice.value, maxPrice.value);
         setPricesToSlider(result);
         setAmountToSlider(result);
+        localStorage.setItem('currentProducts', JSON.stringify(result));
     }
 
     //-----------------get unic names of categories/ subcategories
@@ -279,6 +298,7 @@ document.addEventListener('change', (e) => {
             currentSubCatStock[item.subcategoryEng] = (currentSubCatStock[item.subcategoryEng] || 0) + 1;
         } else currentSubCatStock[item.subcategoryEng] = 1;
     });
+    localStorage.setItem('currentProducts', JSON.stringify(result));
 
     const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
     currentAmounts.forEach((input: HTMLInputElement) => {
@@ -297,10 +317,17 @@ document.addEventListener('change', (e) => {
     window.addEventListener('popstate', () => {
         // console.log('W-H', window.history);
     });
+
+    const x = window.location.href.indexOf('?')
+        ? window.location.href.slice(0, window.location.href.indexOf('?'))
+        : window.location.href;
+
+    console.log('SLICE', window.location.href.slice(0, window.location.href.indexOf('?')));
+
     window.history.pushState(
-        { categories: categories },
+        {},
         '',
-        `${window.location.href}${stateFilters(
+        `${x}${stateFilters(
             categories,
             subcategories,
             minPrice.value,
