@@ -77,8 +77,7 @@ export const stateFilters = (
     if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
     if (element.className === 'sort__input' && element.value.length > 0) searchWord = `&search=${element.value}`;
     let state = `?${categoryState}&${subcategoryState}&price=${minPrice}↕${maxPrice}&stock=${minAmount}↕${maxAmount}${searchWord}`;
-    if (resultArr.length === productsData.length) state = '';
-    // if (resultArr.length === productsData.length) state = '/';
+    if (resultArr.length === productsData.length) state = '/';
 
     return state;
 };
