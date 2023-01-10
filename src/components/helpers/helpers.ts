@@ -107,3 +107,16 @@ export const fillLocalStorageOnStart = () => {
         localStorage.setItem('size', '3');
     }
 };
+
+export const savePageUrl = (element: HTMLButtonElement) => {
+    navigator.clipboard
+        .writeText(`${window.location.href}`)
+        .then(() => {
+            const text = element.textContent;
+            element.textContent = 'скопировано';
+            setTimeout(() => {
+                element.textContent = text;
+            }, 1000);
+        })
+        .catch((err) => console.error(err));
+};
