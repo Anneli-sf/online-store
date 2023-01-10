@@ -26,6 +26,8 @@ import {
     setAmountToSlider,
     setPricesToSlider,
     showNotFound,
+    setStylesToAvaliableCategories,
+    getDataFromUrl,
 } from './components/main-section/main-section-index';
 import { createProducstPage, productsWrapper } from './components/main-section/main-section';
 import { productsData } from './components/data/data';
@@ -43,6 +45,8 @@ import { IProductsData, IComponent, IStock, IFilters } from './components/global
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
 
+const mainSection = document.querySelector('.main') as HTMLElement;
+
 createHeader();
 createFooter();
 fillLocalStorageOnStart();
@@ -52,50 +56,22 @@ window.addEventListener('hashchange', () => {
 
     router(+arr[arr.length - 1]);
 });
-// window.addEventListener('load', () => router());
+
 window.addEventListener('load', () => {
     const searchParams = window.location.search;
-    console.log(searchParams);
 
     if (searchParams.length === 0) {
         mainSection.append(createProducstPage(productsData));
     } else {
         const currArray = getDataFromUrl(searchParams);
-        mainSection.append(createProducstPage(currArray));
-        console.log('currArray', result);
+
+        if (currArray.length) mainSection.append(createProducstPage(currArray));
+        else {
+            mainSection.innerHTML = '';
+            return (mainSection.innerHTML = `Error 404`);
+        }
     }
 });
-
-const mainSection = document.querySelector('.main') as HTMLElement;
-
-const getDataFromUrl = (searchParams: string): IProductsData[] => {
-    const dataForFilters = searchParams.split('&').map((item) => item.split('=').map((el) => el.split('%E2%86%95'))[1]);
-    const filters = {
-        categories: [] as string[],
-        subcategories: [] as string[],
-        price: [] as string[],
-        stock: [] as string[],
-    };
-    console.log(searchParams);
-    filters.categories = dataForFilters[0];
-    filters.subcategories = dataForFilters[1];
-    filters.price = dataForFilters[2];
-    filters.stock = dataForFilters[3];
-
-    const subcategories: string = filters.subcategories.join(' ');
-    const currArray: IProductsData[] = productsData.filter((item) => {
-        if (subcategories.includes(item.subcategoryEng)) return item;
-    });
-    currArray.filter(
-        (item) =>
-            item.price >= +filters.price[0] &&
-            item.price <= +filters.price[1] &&
-            item.stock >= +filters.stock[0] &&
-            item.stock <= +filters.stock[1]
-    );
-    console.log('currArray', currArray);
-    return currArray;
-};
 
 //---------------------------ROUTE------------------------//
 
@@ -131,7 +107,7 @@ const DetailsPage = {
 const ErrorComponent = {
     render: () => {
         mainSection.innerHTML = '';
-        return (mainSection.innerHTML = 'Error');
+        return (mainSection.innerHTML = `Error 404`);
     },
 };
 
@@ -146,7 +122,6 @@ const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
 const findComponentByPath = (path: string) => {
     const namePage = path.split('/')[1];
     return routes.find((r) => r.path.includes(namePage)) || undefined;
-    // return routes.find((r) => r.path.match(new RegExp(`^\\${path}$`, 'gmi'))) || undefined;
 };
 
 const router = (option?: number | IProductsData[]) => {
@@ -167,7 +142,6 @@ document.addEventListener('click', (e: Event) => {
         routes.push({ path: window.location.href.split('#')[1], component: DetailsPage as IComponent });
         router(Number(element.id));
     }
-    //---------/click on DETAILS----------
 
     //-------------------BASKET
 
@@ -213,7 +187,6 @@ let result: IProductsData[] = [];
 
 document.addEventListener('change', (e) => {
     const element = e.target as HTMLInputElement;
-    // console.log('element', element);
 
     const maxPrice = document.querySelector('#max-price') as HTMLInputElement;
     const minPrice = document.querySelector('#min-price') as HTMLInputElement;
@@ -231,7 +204,6 @@ document.addEventListener('change', (e) => {
             result = stack;
             closePopup();
         }
-        // console.log('result', result);
         setPricesToSlider(result);
         setAmountToSlider(result);
     }
@@ -239,27 +211,22 @@ document.addEventListener('change', (e) => {
     //----------------------SLIDER PRICE
     if (element instanceof Element && element.closest('.slider-price')) {
         if (filters.currArr.length === 0) {
-            // console.log('filters.currArr', filters.currArr);
             result = productsData.filter((item) => item.price >= +minPrice.value && item.price <= +maxPrice.value);
             filters.currArr = result;
         } else {
-            // console.log('filters.currArr', filters.currArr);
             let stack: IProductsData[] = filters.currArr.filter(
                 (item) => item.price >= +minPrice.value && item.price <= +maxPrice.value
             );
             if (stack.length === 0) {
-                result = filters.currArr; //result;
+                result = filters.currArr;
                 showNotFound();
             } else {
                 result = stack;
                 closePopup();
                 stack = [];
             }
-            // console.log('stack', stack);
         }
         setAmountToSlider(result);
-        // minAmount.value = `${getMinAmount(result)}`;
-        // maxAmount.value = `${getMaxAmount(result)}`;
     }
 
     //----------------------SLIDER AMOUNT
@@ -282,18 +249,14 @@ document.addEventListener('change', (e) => {
             }
         }
         setPricesToSlider(result);
-        // minPrice.value = `${getMinPrice(result)}`;
-        // maxPrice.value = `${getMaxPrice(result)}`;
     }
 
     //----------------------CHECKBOXES
     if (element instanceof Element && element.closest('.filter-input')) {
-        // const result: IProductsData[] = findCurrentFilters(element);
         result = findCurrentFilters(element, filters, minPrice.value, maxPrice.value);
         setPricesToSlider(result);
         setAmountToSlider(result);
     }
-    // console.log('result', result);
 
     //-----------------get unic names of categories/ subcategories
     const categories: string[] = unicCategories(result);
@@ -313,8 +276,6 @@ document.addEventListener('change', (e) => {
         } else currentSubCatStock[item.subcategoryEng] = 1;
     });
 
-    // console.log('currentCatStock', 'currentSubCatStock', currentCatStock, currentSubCatStock);
-
     const currentAmounts = [...document.querySelectorAll('.amount-input-current')] as HTMLInputElement[];
     currentAmounts.forEach((input: HTMLInputElement) => {
         if (Object.keys(currentCatStock).includes(input.id)) {
@@ -326,34 +287,11 @@ document.addEventListener('change', (e) => {
         }
     });
 
-    // console.log('currentAmounts', currentAmounts);
-
     //-------------------set styles of available labels
-    const currentLabels = [...document.querySelectorAll('.filter-label')] as HTMLLabelElement[];
-    currentLabels.forEach((label: HTMLLabelElement) => {
-        const attrFor = label.getAttribute('for') as string;
-        if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
-            label.style.opacity = '1';
-        } else {
-            label.style.opacity = '0.6';
-        }
-    });
+    setStylesToAvaliableCategories(currentCatStock, currentSubCatStock);
 
-    //--------------------------set prices and stock  to slider
-    // element.url = stateFilters(categories, subcategories, result);
-    // console.log(
-    //     `${window.location.href}${stateFilters(
-    //         categories,
-    //         subcategories,
-    //         minPrice.value,
-    //         maxPrice.value,
-    //         minAmount.value,
-    //         maxAmount.value,
-    //         result
-    //     )}`
-    // );
     window.addEventListener('popstate', () => {
-        console.log('W-H', window.history);
+        // console.log('W-H', window.history);
     });
     window.history.pushState(
         { categories: categories },
@@ -369,7 +307,7 @@ document.addEventListener('change', (e) => {
             element
         )}`
     );
-    // routes.push({ path: '/', component: MainPage });
+
     router(result);
 });
 
