@@ -317,16 +317,10 @@ document.addEventListener('change', (e) => {
         // console.log('W-H', window.history);
     });
 
-    const x = window.location.href.indexOf('?')
-        ? window.location.href.slice(0, window.location.href.indexOf('?'))
-        : window.location.href;
-
-    console.log('SLICE', window.location.href.slice(0, window.location.href.indexOf('?')));
-
     window.history.pushState(
         {},
         '',
-        `${x}${stateFilters(
+        `${window.location.href}${stateFilters(
             categories,
             subcategories,
             minPrice.value,
