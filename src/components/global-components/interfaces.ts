@@ -29,3 +29,7 @@ export interface IStock {
 export interface IFilters {
     [key: string]: IProductsData[];
 }
+
+export interface IString {
+    [key: string]: string[];
+}

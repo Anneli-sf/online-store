@@ -1,4 +1,4 @@
-import { IProductsData, IFilters } from '../global-components/interfaces';
+import { IProductsData, IFilters, IStock, IString } from '../global-components/interfaces';
 import { productsData } from '../data/data';
 import { deleteDoubleAddUnique, addDoubleDeleteUnique } from '../helpers/helpers';
 import { openPopup, closePopup } from './products-section/products-section';
@@ -12,9 +12,6 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minP
     );
 
     filters.categories = deleteDoubleAddUnique(filters.categories, chosenCategory);
-    // .filter(
-    //     (item) => item.price >= +minPrice && item.price <= +maxPrice
-    // );
     // console.log('filters.categories', filters.categories);
 
     //-----------содержит ли категории выбранные подкатегории
@@ -29,16 +26,13 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minP
 
         if (isContain == 0 && chosenSubCategory.length > 0) {
             filters.subcategories = filters.subcategories;
-            // .filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
             el.checked === true ? showNotFound() : closePopup();
         } else {
             filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
-            // .filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
             closePopup();
         } //---------------если категория не выбрана
     } else {
         filters.subcategories = deleteDoubleAddUnique(filters.subcategories, chosenSubCategory);
-        // .filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
     }
 
     // console.log('filters.subcategories', filters.subcategories);
@@ -61,8 +55,7 @@ export const findCurrentFilters = (el: HTMLInputElement, filters: IFilters, minP
         filters.subcategories = [];
         deleteCheckBoxStyles();
         return filters.currArr;
-    } else return filters.currArr; //.filter((item) => item.price >= +minPrice && item.price <= +maxPrice);
-    // return filters.currArr.length === 0 ? productsData : filters.currArr;
+    } else return filters.currArr;
 };
 
 //---------------------create URL
@@ -73,17 +66,17 @@ export const stateFilters = (
     maxPrice: string,
     minAmount: string,
     maxAmount: string,
-    resultArr: IProductsData[]
-    // element?: HTMLInputElement
+    resultArr: IProductsData[],
+    element: HTMLInputElement
 ) => {
     let categoryState = '';
     let subcategoryState = '';
-    // let searchWord = '';
+    let searchWord = '';
 
     if (categories.length > 0) categoryState = 'category=' + categories.join('↕');
     if (subcategories.length > 0) subcategoryState = 'subcategory=' + subcategories.join('↕');
-    // if (element.className === 'sort__input' && element.value.length > 0) searchWord = `&search=${element.value}`;
-    let state = `?${categoryState}&${subcategoryState}&price=${minPrice}↕${maxPrice}&stock=${minAmount}↕${maxAmount}`;
+    if (element.className === 'sort__input' && element.value.length > 0) searchWord = `&search=${element.value}`;
+    let state = `?${categoryState}&${subcategoryState}&price=${minPrice}↕${maxPrice}&stock=${minAmount}↕${maxAmount}${searchWord}`;
     if (resultArr.length === productsData.length) state = '/';
 
     return state;
@@ -150,4 +143,70 @@ export const setAmountToSlider = (resultArr: IProductsData[]): void => {
     maxAmount.value = Math.max(...stock).toString();
     minAmountNumber.value = minAmount.value;
     maxAmountNumber.value = maxAmount.value;
+};
+
+//-------------------set styles of available labels
+export const setStylesToAvaliableCategories = (currentCatStock: IStock, currentSubCatStock: IStock) => {
+    const currentLabels = [...document.querySelectorAll('.filter-label')] as HTMLLabelElement[];
+    currentLabels.forEach((label: HTMLLabelElement) => {
+        const attrFor = label.getAttribute('for') as string;
+        if (Object.keys(currentCatStock).includes(attrFor) || Object.keys(currentSubCatStock).includes(attrFor)) {
+            label.style.opacity = '1';
+        } else {
+            label.style.opacity = '0.6';
+        }
+    });
+};
+
+//---------------------------get data from current URL
+export const getDataFromUrl = (searchParams: string): IProductsData[] => {
+    const dataForFilters = searchParams.split('&').map((item) => item.split('=').map((el) => el.split('%E2%86%95'))[1]);
+    const filters: IString = {
+        categories: [],
+        subcategories: [],
+        price: [],
+        stock: [],
+    };
+    // console.log(searchParams);
+
+    if (dataForFilters[0]) filters.categories = dataForFilters[0];
+    if (dataForFilters[1]) filters.subcategories = dataForFilters[1];
+    if (dataForFilters[2]) filters.price = dataForFilters[2];
+    if (dataForFilters[3]) filters.stock = dataForFilters[3];
+    // console.log('filters.categories', filters.categories);
+    // console.log('filters.subcategories', filters.subcategories);
+    // console.log('filters.price', filters.price);
+    // console.log('filters.stock', filters.stock);
+
+    // console.log('filters.stock.length', filters.stock.length);
+
+    let categories = '';
+    let subcategories = '';
+
+    if (filters.categories.length > 0) categories = filters.categories.join(' ');
+    if (filters.subcategories.length > 0) subcategories = filters.subcategories.join(' ');
+    // console.log('categories', categories);
+    // console.log('subcategories', subcategories);
+    // console.log(productsData);
+    let currArray: IProductsData[] = productsData.filter((item) => {
+        if (categories.length && subcategories.length && subcategories.includes(item.subcategoryEng)) return item;
+        if (categories.length && !subcategories.length && categories.includes(item.categoryEng)) return item;
+        if (!categories.length && subcategories.length && subcategories.includes(item.subcategoryEng)) return item;
+    });
+
+    if (currArray.length > 0)
+        currArray = currArray.filter((item) => {
+            if (item.price && !item.stock) return item.price >= +filters.price[0] && item.price <= +filters.price[1];
+            if (item.stock && !item.price) return item.stock >= +filters.stock[0] && item.stock <= +filters.stock[1];
+            if (item.stock && item.price)
+                return (
+                    item.stock >= +filters.stock[0] &&
+                    item.stock <= +filters.stock[1] &&
+                    item.price >= +filters.price[0] &&
+                    item.price <= +filters.price[1]
+                );
+            else return item;
+        });
+    // console.log('currArray', currArray);
+    return currArray;
 };
