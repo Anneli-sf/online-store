@@ -116,8 +116,7 @@ const ErrorComponent = {
 };
 
 const routes = [
-    // { path: '/', component: MainPage },
-    { path: '#/', component: MainPage },
+    { path: '/', component: MainPage },
     { path: '/cart', component: CartPage },
     { path: '/product-details', component: DetailsPage },
 ];
