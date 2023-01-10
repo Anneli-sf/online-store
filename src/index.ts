@@ -320,7 +320,7 @@ document.addEventListener('change', (e) => {
     console.log('HREF', window.location.href);
     console.log('SLICE', window.location.href.slice(0, window.location.href.indexOf('?')));
     const x =
-        window.location.href.indexOf('?') < 0
+        window.location.href.indexOf('?') > 0
             ? window.location.href.slice(0, window.location.href.indexOf('?'))
             : window.location.href;
 
