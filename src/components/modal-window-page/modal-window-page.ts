@@ -144,8 +144,7 @@ const createCharacteristicInput = (input: HTMLInputElement, spanText: string): v
             input.placeholder = '###';
             break;
         case 'Адрес доставки':
-            input.pattern =
-                '[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}';
+            input.pattern = '[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}[ ]{1}[A-Za-zА-Яа-яЁё]{5,}';
             input.placeholder = 'страна область город микрорайон улица';
             break;
         case 'Номер телефона':
