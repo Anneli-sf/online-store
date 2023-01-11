@@ -3,6 +3,8 @@ import { createElement, createSimpleInput, createButton } from '../global-compon
 import { productsData } from '../data/data';
 import { createProducstPage } from '../main-section/main-section';
 import { productsWrapper } from '../main-section/main-section';
+import { doc } from 'prettier';
+import { IProductsData } from '../global-components/interfaces';
 
 // --------------------------------------BOX-----------------------------------//
 const createBoxBlock = (spanText: string, divText: string, divClassName: string, imgSrc?: string | undefined) => {
@@ -275,9 +277,9 @@ const createForm = () => {
             console.log('Форма заполнена успешно!');
             mainSection.innerHTML = '';
             mainSection.append(createBlockIfValidationPassed());
+            cleanBasketAfterValidation();
             setTimeout(() => {
-                mainSection.innerHTML = '';
-                return mainSection.append(productsWrapper);
+                window.location.href = new URL(window.location.pathname, window.location.origin).href;
             }, 5000);
         } else {
             console.log('Поля не заполнены, либо заполнены неправильно!');
@@ -295,6 +297,33 @@ const createForm = () => {
     return form;
 };
 // -------------------------------------------------------------------------//
+
+const cleanBasketAfterValidation = () => {
+    const totalSum = document.querySelector('.total-quantity-header') as HTMLSpanElement;
+    totalSum.textContent = '0';
+    const basketShowPrice = document.querySelector('.found-products') as HTMLSpanElement;
+    basketShowPrice.textContent = '0';
+
+    const productsList = JSON.parse(localStorage.getItem('cartList') as string) as IProductsData[];
+
+    productsList.forEach((item) => {
+        localStorage.removeItem(`btn_${item}`);
+        localStorage.removeItem(`stock_${item}`);
+        localStorage.removeItem(`quantityProduct${item}`);
+    });
+
+    localStorage.setItem('cartList', JSON.stringify([]));
+    localStorage.setItem('cartItems', JSON.stringify([]));
+    localStorage.setItem('totalPrice', '0');
+    localStorage.setItem('totalStock', '0');
+
+    setTimeout(() => {
+        document.querySelectorAll('.btn__add').forEach((item) => {
+            item.textContent = 'в корзину';
+        });
+        window.location.href = new URL(window.location.pathname, window.location.origin).href;
+    }, 5100);
+};
 
 // -----------------------------------CONTAINER--------------------------------------//
 export const createContainerCard = () => {
