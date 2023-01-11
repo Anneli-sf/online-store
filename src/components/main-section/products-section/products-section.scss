@@ -137,11 +137,16 @@
             height: 80%;
         }
         .products-available {
-            top: 65%;
-            height: 8%;
+            transform: scale(0);
 
             .products-price {
                 font-size: 150%;
+            }
+        }
+        .product-buttons-container {
+            flex-direction: column;
+            .button  {
+                width: 96%;
             }
         }
     }
