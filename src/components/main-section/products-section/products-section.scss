@@ -10,6 +10,7 @@
         cursor: url("../../../public/icons/cursor2.png"), auto;
         background-color: transparent;
         color: black;
+        filter: drop-shadow(2px 4px 6px black);
 
         &.open {
             background-color: #ffc500;
@@ -105,6 +106,7 @@
         font-size: 18px;
         gap: 2%;
         position: relative;
+        filter: drop-shadow(2px 4px 6px black);
     }
     &__item {
         background-color: #ffc500;
@@ -123,6 +125,7 @@
         border-radius: 5px;
         transition: all 0.5s ease-in-out;
         z-index: 2;
+        filter: drop-shadow(2px 4px 6px black);
         &:hover {
             box-shadow: 3px 4px 48px 25px rgba(0, 0, 0, .4);
             transform: scale(1.05);
@@ -165,6 +168,7 @@
         color: black;
         z-index: 10;
         filter: drop-shadow(2px 2px 2px black);
+        
     }
 
     &__discount {
