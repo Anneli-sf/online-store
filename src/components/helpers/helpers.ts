@@ -1,4 +1,5 @@
 import { IProductsData } from '../global-components/interfaces';
+import { categoriesEngNames, subcategoriesEngNames } from '../main-section/aside/filter/filter.constants';
 
 // export const deleteChosenCategory = (currentArr: IProductsData[], chosenCategory: IProductsData[]): IProductsData[] => {
 //     for (let i = 0; i < chosenCategory.length; i++) {
@@ -119,4 +120,24 @@ export const savePageUrl = (element: HTMLButtonElement) => {
             }, 1000);
         })
         .catch((err) => console.error(err));
+};
+
+export const checkExcess = (searchParams: string) => {
+    const indexPrice = searchParams.indexOf('price');
+    let x: string = searchParams
+        .replace(`${searchParams.slice(indexPrice)}`, '')
+        .replace('?', '')
+        .replace(/=/g, '')
+        .replace('category', '')
+        .replace('subcategory', '')
+        .replace(/%E2%86%95/g, '')
+        .replace(/&/g, '');
+
+    categoriesEngNames.forEach((item) => {
+        x = x.replace(item, '');
+    });
+    subcategoriesEngNames.forEach((item) => {
+        x = x.replace(item, '');
+    });
+    return x;
 };

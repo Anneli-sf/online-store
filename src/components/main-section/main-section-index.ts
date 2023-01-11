@@ -106,9 +106,10 @@ export const searchByWord = (word: string, arr: IProductsData[]) => {
 export const showNotFound = (): void => {
     const productsList = document.querySelector('.products__list') as HTMLUListElement;
     const sortSpan = document.querySelector('.found-items') as HTMLSpanElement;
-    productsList.style.display = 'none';
+    if (productsList) productsList.style.display = 'none';
     openPopup();
-    sortSpan.innerHTML = '0';
+    if (sortSpan) sortSpan.innerHTML = '0';
+    console.log('hey');
 };
 
 //--------------------------set prices to slider

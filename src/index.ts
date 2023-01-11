@@ -5,7 +5,6 @@ import './components/main-section/aside/dual-slider/dual-slider';
 import './components/main-section/aside/aside';
 import './components/main-section/main-section';
 import './components/main-page/header/header';
-import './components/error-page/error-page';
 
 import './components/modal-window-page/modal-window-page';
 import './components/cart-page/cart-page-target/cart-page-target';
@@ -45,8 +44,8 @@ import { IProductsData, IComponent, IStock, IFilters } from './components/global
 import { keepViewStyle } from './components/main-section/products-section/item-card/item-card';
 import { searchByWord } from './components/main-section/main-section-index';
 import { changeTotalPriceWithPromoWhenAddDelItems } from './components/cart-page/cart-page';
-import { createErrorPage } from './components/error-page/error-page';
 import { savePageUrl } from './components/helpers/helpers';
+import { checkExcess } from './components/helpers/helpers';
 
 const mainSection = document.querySelector('.main') as HTMLElement;
 
@@ -61,18 +60,19 @@ window.addEventListener('hashchange', () => {
 });
 
 window.addEventListener('load', () => {
-    const searchParams = window.location.search;
+    const searchParams: string = window.location.search as string;
 
     if (searchParams.length === 0) {
         mainSection.append(createProducstPage(productsData));
     } else {
         const currArray = getDataFromUrl(searchParams);
 
-        if (currArray.length) {
+        const x = checkExcess(searchParams);
+        if (x.length === 0) {
             mainSection.append(createProducstPage(currArray));
         } else {
-            mainSection.innerHTML = '';
-            return mainSection.append(createErrorPage());
+            mainSection.append(createProducstPage(currArray));
+            return showNotFound();
         }
     }
 });
