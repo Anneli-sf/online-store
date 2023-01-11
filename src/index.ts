@@ -80,7 +80,13 @@ window.addEventListener('load', () => {
 //---------------------------ROUTE------------------------//
 
 const MainPage = {
-    render: (array: IProductsData[] = productsData) => updateProductsSection(array), //window.history.state
+    render: (array: IProductsData[] = productsData) => {
+        if (localStorage.getItem('currentProducts')) {
+            return updateProductsSection(JSON.parse(localStorage.getItem('currentProducts') as string));
+        } else {
+            return updateProductsSection(array);
+        }
+    }, //window.history.state
 };
 
 function updateProductsSection(array: IProductsData[]): HTMLDivElement {
@@ -102,16 +108,8 @@ const CartPage = {
 
 const DetailsPage = {
     render: (id: number) => {
-        console.log('id', id);
         mainSection.innerHTML = '';
         return createDetailsPage(id);
-    },
-};
-
-const ErrorComponent = {
-    render: () => {
-        mainSection.innerHTML = '';
-        return createErrorPage();
     },
 };
 
@@ -132,8 +130,8 @@ const findComponentByPath = (path: string) => {
 
 const router = (option?: number | IProductsData[]) => {
     const path = parseLocation();
-    // const { component = ErrorComponent } = findComponentByPath(path) || {};
-    const { component = ErrorComponent } = findComponentByPath(`/${path}`) || {};
+    // const { component = ErrorComponent } = findComponentByPath{path) || {};
+    const { component = MainPage } = findComponentByPath(path) || {};
     mainSection.append(component.render(option as number & IProductsData[]));
 };
 
@@ -255,8 +253,6 @@ document.addEventListener('change', (e) => {
     if (element instanceof Element && element.closest('.slider-amount')) {
         if (filters.currArr.length === 0) {
             result = productsData.filter((item) => item.stock >= +minAmount.value && item.price <= +maxAmount.value);
-            console.log('categories', filters.categories);
-            console.log('subcategories', filters.subcategories);
         } else {
             let stack: IProductsData[] = filters.currArr.filter(
                 (item) => item.stock >= +minAmount.value && item.price <= +maxAmount.value
@@ -318,9 +314,9 @@ document.addEventListener('change', (e) => {
     window.addEventListener('popstate', () => {
         // console.log('W-H', window.history);
     });
-    console.log('INDEXOF', window.location.href.indexOf('?'));
-    console.log('HREF', window.location.href);
-    console.log('SLICE', window.location.href.slice(0, window.location.href.indexOf('?')));
+    // console.log('INDEXOF', window.location.href.indexOf('?'));
+    // console.log('HREF', window.location.href);
+    // console.log('SLICE', window.location.href.slice(0, window.location.href.indexOf('?')));
     const x =
         window.location.href.indexOf('?') > 0
             ? window.location.href.slice(0, window.location.href.indexOf('?'))
