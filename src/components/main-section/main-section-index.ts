@@ -109,7 +109,6 @@ export const showNotFound = (): void => {
     if (productsList) productsList.style.display = 'none';
     openPopup();
     if (sortSpan) sortSpan.innerHTML = '0';
-    console.log('hey');
 };
 
 //--------------------------set prices to slider
