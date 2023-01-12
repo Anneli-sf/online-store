@@ -145,6 +145,7 @@ const createCharacteristicInput = (input: HTMLInputElement, spanText: string): v
             input.pattern = '[0-9]{3}';
             input.oninput = function () {
                 input.value = input.value.replace(/[^0-9]/g, '');
+                (document.querySelector('.cvv-box') as HTMLDivElement).textContent = input.value;
             };
             input.placeholder = '###';
             break;
