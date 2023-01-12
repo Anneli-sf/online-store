@@ -500,6 +500,7 @@ const showPriceWithPromo = (buyInput: HTMLInputElement, promocodeBlock: HTMLDivE
                     createPromocodeItem('Гарри', 'prom-cont-garry', 'prom-text-garry', 'prom-btn-garry', 10, 'добавить')
                 );
             }
+            buyInput.value = '';
         } else if (buyInput.value === 'Поттер') {
             if (!document.querySelector('.prom-cont-potter')) {
                 promocodeBlock.style.opacity = '1';
@@ -514,6 +515,7 @@ const showPriceWithPromo = (buyInput: HTMLInputElement, promocodeBlock: HTMLDivE
                     )
                 );
             }
+            buyInput.value = '';
             localStorage.setItem(
                 'totalPriceProm',
                 String(Math.floor(+(localStorage.getItem('totalPrice') as string) * 0.9))
