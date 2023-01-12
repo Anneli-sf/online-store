@@ -143,9 +143,9 @@ const createCharacteristicInput = (input: HTMLInputElement, spanText: string): v
             break;
         case 'CVV':
             input.pattern = '[0-9]{3}';
-            input.addEventListener('keyup', function () {
-                input.value = input.value.replace(/[^\d]/g, '');
-            });
+            input.oninput = function () {
+                input.value = input.value.replace(/[^0-9]/g, '');
+            };
             input.placeholder = '###';
             break;
         case 'Адрес доставки':
