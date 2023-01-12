@@ -19,9 +19,11 @@ const createBoxBlock = (spanText: string, divText: string, divClassName: string,
     if (divClassName === 'expiration') {
         const monthSpan = createElement('span', 'exp-month') as HTMLSpanElement;
         monthSpan.textContent = 'мм';
+        const slash = createElement('span', 'slash') as HTMLSpanElement;
+        slash.textContent = '/';
         const yearSpan = createElement('span', 'exp-year') as HTMLSpanElement;
         yearSpan.textContent = 'гг';
-        div.append(monthSpan, yearSpan);
+        div.append(monthSpan, slash, yearSpan);
     }
     if (imgSrc) {
         const image = createElement('img', 'card') as HTMLImageElement;
@@ -80,7 +82,6 @@ const cardContainer = () => {
 
 // -------------------------------------------------------------------------//
 const setCardImage = (input: HTMLInputElement) => {
-    input.value = input.value.replace(/[^\d]/g, '');
     switch (input.value[0]) {
         case '4':
             document.querySelectorAll('.card').forEach((item) => {
@@ -126,6 +127,10 @@ const createCharacteristicInput = (input: HTMLInputElement, spanText: string): v
     switch (spanText) {
         case 'Номер карты':
             input.pattern = '[0-9]{16}';
+            input.oninput = function () {
+                input.value = input.value.replace(/[^0-9]/g, '');
+                (document.querySelector('.card-number-box') as HTMLDivElement).textContent = input.value;
+            };
             input.addEventListener('keyup', () => setCardImage(input));
             input.placeholder = '#### #### #### ####';
             break;
@@ -138,9 +143,10 @@ const createCharacteristicInput = (input: HTMLInputElement, spanText: string): v
             break;
         case 'CVV':
             input.pattern = '[0-9]{3}';
-            input.addEventListener('keyup', function () {
-                input.value = input.value.replace(/[^\d]/g, '');
-            });
+            input.oninput = function () {
+                input.value = input.value.replace(/[^0-9]/g, '');
+                (document.querySelector('.cvv-box') as HTMLDivElement).textContent = input.value;
+            };
             input.placeholder = '###';
             break;
         case 'Адрес доставки':
@@ -212,6 +218,7 @@ const createSelectBox = (text: string, selectClass: string, startCalcNumber: num
     if (select.classList.contains('month-input')) {
         select.oninput = () => {
             (document.querySelector('.exp-month') as HTMLDivElement).innerHTML = select.value;
+            (document.querySelector('.slash') as HTMLSpanElement).style.opacity = '1';
         };
     }
     if (select.classList.contains('year-input')) {
