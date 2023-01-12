@@ -203,13 +203,8 @@
         height: 30px;
     }
 
-    .exp-month {
-        position: relative;
-        &::after {
-            position: absolute;
-            content: '/';
-            right: -12px;
-        }
+    .slash {
+        opacity: 0;
     }
 
     .expiration {
