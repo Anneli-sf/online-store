@@ -82,7 +82,6 @@ const cardContainer = () => {
 
 // -------------------------------------------------------------------------//
 const setCardImage = (input: HTMLInputElement) => {
-    input.value = input.value.replace(/[^\d]/g, '');
     switch (input.value[0]) {
         case '4':
             document.querySelectorAll('.card').forEach((item) => {
@@ -130,6 +129,7 @@ const createCharacteristicInput = (input: HTMLInputElement, spanText: string): v
             input.pattern = '[0-9]{16}';
             input.oninput = function () {
                 input.value = input.value.replace(/[^0-9]/g, '');
+                (document.querySelector('.card-number-box') as HTMLDivElement).textContent = input.value;
             };
             input.addEventListener('keyup', () => setCardImage(input));
             input.placeholder = '#### #### #### ####';
