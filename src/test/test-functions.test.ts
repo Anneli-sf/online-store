@@ -3,6 +3,7 @@ import { productsData } from '../components/data/data';
 import { stateFilters } from '../components/main-section/main-section-index';
 import { isAlreadyHave, getMinPrice, getMaxPrice, getMinAmount, getMaxAmount } from '../components/helpers/helpers';
 import { IProductsData } from '../components/global-components/interfaces';
+import { createElement } from '../components/global-components/global-components';
 
 const testArray: IProductsData[] = [
     {
@@ -83,17 +84,26 @@ describe('sliceIntoChunks', () => {
     });
 });
 
-// describe('stateFilters', () => {
-//     test('Return slash!', () => {
-//         expect(stateFilters([], [], productsData)).toEqual('/');
-//     });
-//     test('Return only category!', () => {
-//         expect(stateFilters(['abc'], [], testArray)).toEqual('/?category=abc&');
-//     });
-//     test('Return categoty and subcategory!', () => {
-//         expect(stateFilters(['abc'], ['cba'], testArray)).toEqual('/?category=abc&subcategory=cba');
-//     });
-// });
+describe('stateFilters', () => {
+    const element = createElement('input', 'sort__input') as HTMLInputElement;
+    element.value = 'element';
+    test('Return slash!', () => {
+        expect(stateFilters([], [], '', '', '', '', productsData, element)).toEqual('');
+    });
+    test('Return only category!', () => {
+        expect(stateFilters(['abc'], [], '', '', '', '', testArray, element)).toEqual(
+            '?category=abc&&price=↕&stock=↕&search=element'
+        );
+    });
+    test('Return search value!', () => {
+        expect(stateFilters([], [], '', '', '', '', testArray, element)).toEqual('?&&price=↕&stock=↕&search=element');
+    });
+    test('Return category + subcategory + stock + price!', () => {
+        expect(stateFilters(['abc'], ['cba'], '0', '100', '0', '100', testArray, element)).toEqual(
+            '?category=abc&subcategory=cba&price=0↕100&stock=0↕100&search=element'
+        );
+    });
+});
 
 describe('isAlreadyHave', () => {
     test('It is true!', () => {
