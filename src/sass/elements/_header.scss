@@ -1,0 +1,19 @@
+.header {
+    background-color: #ffc500;
+    color: black;
+    position: relative;
+    @include flex-row();
+    padding: 5px 50px;
+    width: 100%;
+    position: fixed;
+    z-index: 4;
+    transition: all 0.5s ease-in-out;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    filter: drop-shadow(2px 4px 6px black);
+    &:hover {
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        box-shadow: -1px 17px 37px 16px rgba(255, 255, 255, 0.1);
+    }
+}

@@ -1,0 +1,37 @@
+@import '../../../sass/abstracts/mixins';
+
+.logo-link,
+.cart-link,
+.logo,
+.found-products {
+    cursor: url("../../../public/icons/cursor2.png"), auto;
+}
+
+.logo {
+    width: 100px;
+}
+
+.basket {
+    width: 40px;
+    cursor: url("../../../public/icons/cursor2.png"), auto;
+    filter: invert(1);
+}
+
+.basket-container {
+    position: relative;
+    transition: all 1s ease-in-out;
+    &:hover {
+        transform: scale(1.2);
+    }
+    .found-products {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        left: 24%;
+        top: 39%;
+        border-radius: 50%;
+        color: black;
+        text-align: center;
+    }
+}

@@ -1,0 +1,34 @@
+@import '../../../sass/abstracts/mixins';
+
+.main-aside {
+    flex: 1 0 20%;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0px;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.btn {
+    &-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+}
+
+.label-reset {
+    cursor: url("../../../public/icons/cursor2.png"), auto;
+
+
+    .input-reset {
+        opacity: 0;
+        z-index: -5;
+        width: 0px;
+    }
+}
+
+

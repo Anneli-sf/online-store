@@ -1,0 +1,122 @@
+.sliders {
+    width: 80%;
+    .filter {
+        &__price,
+        &__amount {
+            width: 100%;
+        }
+    }
+    .filter-amount-title,
+    .filter-price-title {
+        background-color: transparent;
+        color: white;
+        border-bottom: 1px solid white;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .checkbox {
+        position: absolute;
+        z-index: 1;
+        top: 20%;
+        right: 0px;
+        width: 15px;
+        height: 15px;
+    }
+
+    .range-container-price,
+    .range-container-amount {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .slider-control-price,
+    .slider-control-amount {
+        position: relative;
+        min-height: 50px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-control-price,
+    .form-control-amount {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        top: -30px;
+        color: white;
+    }
+
+    .form-control-container__time {
+        text-align: center;
+    }
+
+    input[type='range']::-webkit-slider-thumb {
+        position: relative;
+        -webkit-appearance: none;
+        pointer-events: all;
+        width: 14px;
+        height: 14px;
+        background-color: #fff;
+        box-shadow: 0 0 0 1px #c6c6c6;
+        z-index: 2;
+        cursor: url("../../../../public/icons/cursor2.png"), auto;
+    }
+
+    input[type='range']::-moz-range-thumb {
+        -webkit-appearance: none;
+        pointer-events: all;
+        width: 24px;
+        height: 24px;
+        background-color: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 1px #c6c6c6;
+        cursor: url("../../../../public/icons/cursor2.png"), auto;
+
+    }
+
+    input[type='range']::-webkit-slider-thumb:hover {
+        background-color: beige;
+    }
+
+    input[type='range']::-webkit-slider-thumb:active {
+        transform: scale(0.9);
+    }
+
+    input[type='number'] {
+        color: white;
+        text-align: center;
+        width: 50px;
+        height: 30px;
+        font-size: 20px;
+        border: none;
+    }
+
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+        opacity: 1;
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type='range'] {
+        -webkit-appearance: none;
+        width: 80%;
+        appearance: none;
+        height: 2px;
+        position: absolute;
+        top: 25%;
+        background-color: #c6c6c6;
+        pointer-events: none;
+    }
+
+    .form_control_container__time__input_max-price,
+    .form_control_container__time__input_min-amount,
+    .form_control_container__time__input_min-price,
+    .form_control_container__time__input_max-amount {
+        background-color: transparent;
+    }
+}

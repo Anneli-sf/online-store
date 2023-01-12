@@ -1,0 +1,43 @@
+.products-available {
+    position: absolute;
+    top: 52%;
+    left: 0px;
+    width: 100%;
+    height: 8%;
+    background-color: oldlace;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .5s ease-in-out;
+}
+
+.products-price {
+    position: relative;
+    transition: all .5s ease-in-out;
+    &::after {
+        position: absolute;
+        content: '$';
+    }
+}
+
+.products-image {
+    transition: all 1s ease-in-out;
+    cursor: url("../../../../public/icons/cursor2.png"), auto;
+    width: 100%;
+    height: 100%;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+.product-buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.products-title {
+    padding: 10px 0px;
+    font-size: 20px;
+}

@@ -1,0 +1,59 @@
+@import '../../sass/abstracts/mixins';
+
+.button {
+    min-width: 10px;
+    min-height: 10px;
+    background-color: transparent;
+    cursor: url("../../public/icons/cursor2.png"), auto;
+    margin: 5px;
+    font-size: 1rem;
+}
+
+.input {
+    margin: 5px;
+    min-width: 150px;
+    min-height: 50px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid white;
+    padding: 5px 10px;
+    color: white;
+    font-size: 1rem;
+    cursor: url("../../public/icons/cursor2.png"), auto;
+}
+
+.label {
+    font-size: inherit;
+    color: white;
+}
+
+.block {
+    min-width: 10px;
+    min-height: 10px;
+    @include flex-column();
+    color: white;
+    font-size: 1em;
+
+    .block-header {
+        height: 10%;
+        width: 100%;
+        @include flex-row(center);
+        padding: 5px 10px;
+
+        .block-title {
+            font-size: 2.17em;
+        }
+    }
+
+    .block-section {
+        padding: 10px 5px;
+        height: 100%;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .block-text {
+            text-align: center;
+        }
+    }
+}
